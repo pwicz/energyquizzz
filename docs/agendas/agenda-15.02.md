@@ -1,7 +1,5 @@
 ## Agenda for the 15.02 lab
 
----
-
 Date:           15.02.2022\
 Main focus:     Week 1 summary, Backlog draft\
 Chair:          Piotr Politowicz\
