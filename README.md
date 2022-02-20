@@ -10,6 +10,7 @@ Add your own name (do not add the names for others!) to the section below.
 
 | Profile Picture | Name | Email |
 |---|---|---|
+| ![](https://secure.gravatar.com/avatar/bbda4979c6998138da346cc07a7011e2?s=50&d=identicon) | Javier | J.PerezLopez@student.tudelft.nl |
 | ![](https://secure.gravatar.com/avatar/4d0c23cb9b4a3a99edf62fea5de8dd48?s=50&d=identicon) | Mike Erkemeij | M.J.J.S.Erkemeij@student.tudelft.nl |
 | ![](https://i.imgur.com/HT9ZzNn.jpeg) | Piotr Politowicz | P.A.Politowicz@student.tudelft.nl |
 | ![](https://eu.ui-avatars.com/api/?name=OOPP&length=4&size=50&color=DDD&background=777&font-size=0.325) | Your Name Here | Y.NameHere@student.tudelft.nl |
