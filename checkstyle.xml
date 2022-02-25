@@ -7,7 +7,7 @@
 
     <!--        max line of 80 char-->
     <module name="LineLength">
-        <property name="max" value="80"/>
+        <property name="max" value="120"/>
     </module>
 
     <module name="TreeWalker">
@@ -22,21 +22,25 @@
         <module name="AvoidNoArgumentSuperConstructorCall"/>
         <!--        no default case in switch()-->
         <module name="MissingSwitchDefault"/>
-        <!--        no unused local variables-->
-        <module name="UnusedLocalVariable"/>
+        <!--        no unused parameters-->
+        <module name="DefaultComesLast"/>
         <!--        no unnecessary parentheses-->
         <module name="UnnecessaryParentheses"/>
 
         <!--        max method length = 50-->
         <module name="MethodLength">
             <property name="tokens" value="METHOD_DEF"/>
-            <property name="max" value="50"/>
+            <property name="max" value="60"/>
         </module>
 
         <!--        default pattern '^[a-z][a-zA-Z0-9]*$'-->
-        <module name="MethodName"/>
+        <module name="MethodName">
+            <property name="format" value="^[a-z](_?[a-zA-Z0-9]+)*$"/>
+        </module>
         <!--        default pattern '^[a-z][a-zA-Z0-9]*$'-->
-        <module name="LocalVariableName"/>
+        <module name="LocalVariableName">
+            <property name="format" value="^[a-z](_?[a-zA-Z0-9]+)*$"/>
+        </module>
     </module>
 
 </module>
