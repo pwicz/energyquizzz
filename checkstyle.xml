@@ -4,6 +4,12 @@
         "https://checkstyle.org/dtds/configuration_1_3.dtd">
 
 <module name = "Checker">
+
+    <!--        max line of 80 char-->
+    <module name="LineLength">
+        <property name="max" value="80"/>
+    </module>
+
     <module name="TreeWalker">
         <!--        unused imports-->
         <module name="UnusedImports" />
@@ -27,10 +33,6 @@
             <property name="max" value="50"/>
         </module>
 
-        <!--        max line of 80 char-->
-        <module name="LineLength">
-            <property name="max" value="80"/>
-        </module>
         <!--        default pattern '^[a-z][a-zA-Z0-9]*$'-->
         <module name="MethodName"/>
         <!--        default pattern '^[a-z][a-zA-Z0-9]*$'-->
