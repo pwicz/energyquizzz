@@ -1,7 +1,7 @@
 # Agenda for the 22.02 lab
 
 Date:           22.02.2022\
-Main focus:     Week 1 summary, Backlog draft\
+Main focus:     Week 2 summary, HCI draft\
 Chair:          Mike Erkemeij\
 Note taker:     Ioana Ilincescu
 
