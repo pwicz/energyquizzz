@@ -5,7 +5,7 @@
 
 <module name = "Checker">
 
-    <!--        max line of 80 char-->
+    <!--        max line of 120 char-->
     <module name="LineLength">
         <property name="max" value="120"/>
     </module>
@@ -22,12 +22,12 @@
         <module name="AvoidNoArgumentSuperConstructorCall"/>
         <!--        no default case in switch()-->
         <module name="MissingSwitchDefault"/>
-        <!--        no unused parameters-->
+        <!--        Default comes last in switch()-->
         <module name="DefaultComesLast"/>
         <!--        no unnecessary parentheses-->
         <module name="UnnecessaryParentheses"/>
 
-        <!--        max method length = 50-->
+        <!--        max method length = 60-->
         <module name="MethodLength">
             <property name="tokens" value="METHOD_DEF"/>
             <property name="max" value="60"/>
