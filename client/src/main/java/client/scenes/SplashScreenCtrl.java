@@ -20,6 +20,10 @@ public class SplashScreenCtrl {
 
     }
 
+    public void leave(){
+        mainCtrl.showOverview();
+    }
+
 
 
 }
