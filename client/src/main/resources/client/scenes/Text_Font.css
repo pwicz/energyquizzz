@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('Roboto-Bold.ttf');
+}
+.text{
+    -fx-font-family: "Roboto";
+    -fx-font-size: 36;
+}
+

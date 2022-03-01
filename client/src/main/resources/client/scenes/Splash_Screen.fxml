@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" style="-fx-background-color: #272727;" stylesheets="@/client/scenes/Text_Font.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SplashScreenCtrl">
+   <children>
+      <Text layoutX="389.0" layoutY="257.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Roboto Thin';" text="ENERGYQUIZZZ" textAlignment="CENTER" wrappingWidth="734.13671875" AnchorPane.leftAnchor="389.0" AnchorPane.rightAnchor="388.86328125" AnchorPane.topAnchor="149.08984375">
+         <font>
+            <Font size="100.0" />
+         </font>
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.12941177189350128" green="0.6274510025978088" blue="0.9098039269447327" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.21960784494876862" green="0.7803921699523926" blue="0.40784314274787903" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Text>
+      <Label fx:id="singleplayerButton" alignment="CENTER" contentDisplay="CENTER" layoutX="596.0" layoutY="413.0" prefHeight="78.0" prefWidth="321.0" style="-fx-border-color: #38C768; -fx-border-radius: 5;" text="Singleplayer" textFill="#38c768" AnchorPane.leftAnchor="596.0" AnchorPane.topAnchor="413.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="596.0" layoutY="526.0" prefHeight="78.0" prefWidth="321.0" style="-fx-border-color: #38C768; -fx-border-radius: 5;" text="Multiplayer" textFill="#38c768" AnchorPane.leftAnchor="596.0" AnchorPane.topAnchor="526.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Text fill="WHITE" layoutX="1371.0" layoutY="943.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Roboto Thin' ;" text="Help" textAlignment="CENTER" wrappingWidth="103.13671875" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="1371.0" AnchorPane.rightAnchor="37.86328125" AnchorPane.topAnchor="904.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="23.0" layoutY="524.0" prefHeight="40.0" prefWidth="150.0" style="-fx-border-color: #E0503D; -fx-border-radius: 5;" text="Leave" textFill="#e0503d" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="50.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
