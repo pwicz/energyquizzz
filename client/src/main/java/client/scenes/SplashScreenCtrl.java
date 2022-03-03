@@ -24,6 +24,9 @@ public class SplashScreenCtrl {
         mainCtrl.showOverview();
     }
 
+    public void showMultiplayerScreen(){
+        mainCtrl.showMultiplayerScreen();
+    }
 
 
 }

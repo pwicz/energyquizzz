@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" style="-fx-background-color: #272727;" stylesheets="@/client/scenes/Text_Font.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SplashScreenCtrl">
    <children>
-      <Button layoutX="596.0" layoutY="526.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="321.0" style="-fx-background-color: none; -fx-border-color: #38C768; -fx-border-radius: 5;" text="Multiplayer" textFill="#38c768">
+      <Button layoutX="596.0" layoutY="526.0" mnemonicParsing="false" onAction="#showMultiplayerScreen" prefHeight="78.0" prefWidth="321.0" style="-fx-background-color: none; -fx-border-color: #38C768; -fx-border-radius: 5;" text="Multiplayer" textFill="#38c768">
          <font>
             <Font size="36.0" />
          </font>
