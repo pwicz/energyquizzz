@@ -51,7 +51,7 @@ public class MainCtrl {
         this.question = new Scene(question.getValue());
         this.multiplayerScreenCtrl = question.getKey();
 
-        showSplash();
+        showOverview();
         primaryStage.show();
     }
 
