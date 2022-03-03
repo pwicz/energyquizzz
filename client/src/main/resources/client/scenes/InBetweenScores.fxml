@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" xmlns="http://javafx.com/javafx/17"
+>
+    <Label layoutX="740.0" layoutY="73.0" text="SCORE"/>
+    <Label layoutX="742.0" layoutY="936.0" text="Score: 120"/>
+    <Button layoutX="52.0" layoutY="932.0" mnemonicParsing="false" text="LEAVE"/>
+    <Label layoutX="745.0" layoutY="716.0" text="Question"/>
+    <Label layoutX="756.0" layoutY="745.0" text="7/20"/>
+</AnchorPane>
