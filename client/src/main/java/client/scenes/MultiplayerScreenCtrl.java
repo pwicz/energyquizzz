@@ -119,6 +119,8 @@ public class MultiplayerScreenCtrl {
         ft.play();
 
         anchorPane.getChildren().add(imageView1);
+        anchorPane.getChildren().removeAll(option1, option2, option3);
+        anchorPane.getChildren().addAll(option1, option2, option3);
     }
 
     public void removeImage(Node node){

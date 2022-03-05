@@ -73,12 +73,12 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="694.0" layoutY="640.0" styleClass="questionTitle" text="Charging a car" textFill="WHITE">
+      <Label layoutX="696.0" layoutY="640.0" styleClass="questionTitle" text="Charging a car" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="1086.0" layoutY="640.0" styleClass="questionTitle" text="Gaming" textFill="WHITE">
+      <Label layoutX="1058.0" layoutY="637.0" styleClass="questionTitle" text="Gaming" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
@@ -89,12 +89,12 @@
             <Font size="15.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="656.0" layoutY="693.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" wrappingWidth="199.99999999999977">
+      <Text fill="WHITE" layoutX="658.0" layoutY="693.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" wrappingWidth="199.99999999999977">
          <font>
             <Font size="15.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="1021.0" layoutY="693.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" wrappingWidth="199.99999999999977">
+      <Text fill="WHITE" layoutX="993.0" layoutY="690.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" wrappingWidth="199.99999999999977">
          <font>
             <Font size="15.0" />
          </font>
@@ -109,19 +109,18 @@
             <Image url="@/client/scenes/tempShit.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="image2" fitHeight="200.0" fitWidth="200.0" layoutX="659.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image2" fitHeight="200.0" fitWidth="200.0" layoutX="661.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true">
          <image>
              <Image url="@/client/scenes/tempShit.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="image3" fitHeight="200.0" fitWidth="200.0" layoutX="1022.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image3" fitHeight="200.0" fitWidth="200.0" layoutX="994.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true">
          <image>
              <Image url="@/client/scenes/tempShit.png" />
          </image>
       </ImageView>
       <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="293.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" />
-      <Rectangle fx:id="option2" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="630.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" AnchorPane.leftAnchor="630.0" AnchorPane.topAnchor="393.0" />
-      <Rectangle fx:id="option3" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="996.0" layoutY="394.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" />
+      <Rectangle fx:id="option3" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="996.0" layoutY="394.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" AnchorPane.leftAnchor="968.0" />
       <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="1328.0" layoutY="443.0" onMouseClicked="#showEmoji" pickOnBounds="true" preserveRatio="true" styleClass="emoji">
          <image>
             <Image url="@/client/scenes/yoshiHigh.jpg" />
@@ -139,5 +138,6 @@
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" styleClass="joker" />
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="630.0" pickOnBounds="true" preserveRatio="true" styleClass="joker" />
+      <Rectangle fx:id="option2" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="634.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" AnchorPane.leftAnchor="634.0" AnchorPane.topAnchor="393.0" />
     </children>
 </AnchorPane>
