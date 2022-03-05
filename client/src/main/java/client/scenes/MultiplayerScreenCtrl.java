@@ -2,20 +2,29 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
+
+import java.util.Random;
 
 
 public class MultiplayerScreenCtrl {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+
+    @FXML
+    AnchorPane anchorPane;
 
     @FXML
     ProgressBar timeBar;
@@ -83,5 +92,26 @@ public class MultiplayerScreenCtrl {
         Rectangle rectangle = (Rectangle) mouseEvent.getSource();
         rectangle.setStyle("-fx-stroke: linear-gradient(#38c768, #21A0E8)");
         submit.setDisable(true);
+    }
+
+    public void showEmoji(MouseEvent mouseEvent){
+        double width = anchorPane.getWidth()- 90;
+        double height = anchorPane.getHeight()- 80;
+        System.out.println(anchorPane.getHeight());
+        ImageView imageView = (ImageView) mouseEvent.getSource();
+        ImageView imageView1 = new ImageView(imageView.getImage());
+        imageView1.setFitWidth(imageView.getFitWidth());
+        imageView1.setFitHeight(imageView.getFitHeight());
+        imageView1.setY(height);
+        imageView1.setX(width * Math.random());
+//
+        TranslateTransition transition = new TranslateTransition();
+        transition.setDuration(Duration.seconds(3));
+        transition.setToY(-200);
+        transition.setNode(imageView1);
+        transition.play();
+        anchorPane.getChildren().add(imageView1);
+        System.out.println("clicked");
+
     }
 }

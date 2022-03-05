@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" style="-fx-background-color: #272727;" stylesheets="@/client/scenes/Multiplayer_Game.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" style="-fx-background-color: #272727;" stylesheets="@/client/scenes/Multiplayer_Game.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
     <children>
         <Button fx:id="leave" layoutX="200.0" layoutY="887.0" mnemonicParsing="false" onAction="#leave" onMouseClicked="#lockAnswer" prefHeight="15.0" prefWidth="150.0" style="-fx-background-color: none; -fx-border-color: #E0503D; -fx-border-radius: 5;" text="Leave" textFill="#e0503d" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="1312.0" AnchorPane.topAnchor="887.0">
             <font>
@@ -122,13 +122,13 @@
       <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="293.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" />
       <Rectangle fx:id="option2" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="630.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" AnchorPane.leftAnchor="630.0" AnchorPane.topAnchor="393.0" />
       <Rectangle fx:id="option3" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="996.0" layoutY="394.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" />
-      <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="1328.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true" styleClass="emoji" />
-      <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="1328.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" styleClass="emoji">
+      <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="1328.0" layoutY="443.0" onMouseClicked="#showEmoji" pickOnBounds="true" preserveRatio="true" styleClass="emoji" />
+      <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="1328.0" layoutY="539.0" onMouseClicked="#showEmoji" pickOnBounds="true" preserveRatio="true" styleClass="emoji">
          <image>
             <Image url="@/client/scenes/tempShit.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="1328.0" layoutY="630.0" pickOnBounds="true" preserveRatio="true" styleClass="emoji" />
+      <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="1328.0" layoutY="630.0" onMouseClicked="#showEmoji" pickOnBounds="true" preserveRatio="true" styleClass="emoji" />
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true" styleClass="joker" />
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" styleClass="joker" />
