@@ -117,6 +117,7 @@ public class MultiplayerScreenCtrl {
         //start transitions
         transition.play();
         ft.play();
+
         anchorPane.getChildren().add(imageView1);
     }
 

@@ -131,7 +131,10 @@
             <Image url="@/client/scenes/tempShit.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="1328.0" layoutY="630.0" onMouseClicked="#showEmoji" pickOnBounds="true" preserveRatio="true" styleClass="emoji" />
+      <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="1328.0" layoutY="630.0" onMouseClicked="#showEmoji" pickOnBounds="true" preserveRatio="true" styleClass="emoji">
+         <image>
+            <Image url="@/client/scenes/mike.png" />
+         </image></ImageView>
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true" styleClass="joker" />
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" styleClass="joker" />
