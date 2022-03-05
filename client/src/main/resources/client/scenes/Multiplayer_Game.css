@@ -5,3 +5,13 @@
 .option:hover{
     -fx-stroke: linear-gradient(#38c768, #21A0E8);
 }
+
+#timeBar{
+    -fx-accent: #21A0E8;
+    -fx-border-color: #38c768;
+    -fx-border-radius: 5;
+}
+
+.progress-bar .track {
+    -fx-background-color: #272727;
+}

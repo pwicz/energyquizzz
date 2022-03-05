@@ -59,11 +59,15 @@ public class MultiplayerScreenCtrl {
                         @Override
                         public void run() {
                             timeBar.setProgress(progress);
-                            progress -= 0.01;
+                            progress -= 0.001;
+                            if(progress <= 0){
+                                timeBar.setProgress(0);
+                            }
                         }
                     });
-                    Thread.sleep(100);
+                    Thread.sleep(10);
                 }
+
                 return null;
             }
         };
