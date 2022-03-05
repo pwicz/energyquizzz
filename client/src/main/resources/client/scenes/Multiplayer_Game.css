@@ -1,0 +1,7 @@
+.option{
+    -fx-stroke: white;
+}
+
+.option:hover{
+    -fx-stroke: linear-gradient(#38c768, #21A0E8);
+}

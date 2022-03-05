@@ -5,7 +5,12 @@ import com.google.inject.Inject;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
 
 public class MultiplayerScreenCtrl {
 
@@ -14,6 +19,19 @@ public class MultiplayerScreenCtrl {
 
     @FXML
     ProgressBar timeBar;
+
+    @FXML
+    Rectangle option1;
+
+    @FXML
+    Rectangle option2;
+
+    @FXML
+    Rectangle option3;
+
+    @FXML
+    Button submit;
+
 
     double progress;
     Thread t;
@@ -54,4 +72,12 @@ public class MultiplayerScreenCtrl {
         t.start();
     }
 
+    public void lockAnswer(MouseEvent mouseEvent) {
+        option1.setStroke(Color.WHITE);
+        option2.setStroke(Color.WHITE);
+        option3.setStroke(Color.WHITE);
+        Rectangle rectangle = (Rectangle) mouseEvent.getSource();
+        rectangle.setStyle("-fx-stroke: linear-gradient(#38c768, #21A0E8)");
+        submit.setDisable(true);
+    }
 }
