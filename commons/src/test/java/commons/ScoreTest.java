@@ -22,6 +22,7 @@ public class ScoreTest {
         Score s1 = new Score(PLAYERNAME, PLAYERSCORE);
         Score s2 = new Score(PLAYERNAME, PLAYERSCORE);
 
+        assertEquals(s1, s2);
         assertEquals(s1.hashCode(), s2.hashCode());
     }
 
@@ -30,6 +31,7 @@ public class ScoreTest {
         Score s1 = new Score(PLAYERNAME + "a", PLAYERSCORE + 12);
         Score s2 = new Score(PLAYERNAME, PLAYERSCORE);
 
+        assertNotEquals(s1, s2);
         assertNotEquals(s1.hashCode(), s2.hashCode());
     }
 
