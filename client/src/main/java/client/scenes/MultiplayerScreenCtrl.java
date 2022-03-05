@@ -15,8 +15,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-import java.util.Random;
-
 
 public class MultiplayerScreenCtrl {
 
