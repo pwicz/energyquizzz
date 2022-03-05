@@ -2,10 +2,12 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
@@ -89,27 +91,36 @@ public class MultiplayerScreenCtrl {
         option3.setStroke(Color.WHITE);
         Rectangle rectangle = (Rectangle) mouseEvent.getSource();
         rectangle.setStyle("-fx-stroke: linear-gradient(#38c768, #21A0E8)");
-        submit.setDisable(true);
+        submit.setDisable(false);
     }
 
     public void showEmoji(MouseEvent mouseEvent){
-        double width = anchorPane.getWidth()- 90;
-        double height = anchorPane.getHeight()- 80;
-        System.out.println(anchorPane.getHeight());
         ImageView imageView = (ImageView) mouseEvent.getSource();
         ImageView imageView1 = new ImageView(imageView.getImage());
+        //make new image
         imageView1.setFitWidth(imageView.getFitWidth());
         imageView1.setFitHeight(imageView.getFitHeight());
-        imageView1.setY(height);
-        imageView1.setX(width * Math.random());
-//
+        imageView1.setY(anchorPane.getHeight()- 80);
+        imageView1.setX((anchorPane.getWidth()- 90) * Math.random());
+        //animation y coords
         TranslateTransition transition = new TranslateTransition();
         transition.setDuration(Duration.seconds(3));
-        transition.setToY(-200);
+        transition.setToY(-600);
         transition.setNode(imageView1);
+        transition.setOnFinished(event -> removeImage(transition.getNode()));
+        //animation fade
+        FadeTransition ft = new FadeTransition();
+        ft.setFromValue(1.0);
+        ft.setToValue(0);
+        ft.setDuration(Duration.seconds(3));
+        ft.setNode(imageView1);
+        //start transitions
         transition.play();
+        ft.play();
         anchorPane.getChildren().add(imageView1);
-        System.out.println("clicked");
+    }
 
+    public void removeImage(Node node){
+        anchorPane.getChildren().remove(node);
     }
 }
