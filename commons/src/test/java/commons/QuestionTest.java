@@ -27,6 +27,7 @@ public class QuestionTest {
         Question q1 = new Question(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
         Question q2 = new Question(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
 
+        assertEquals(q1, q2);
         assertEquals(q1.hashCode(), q2.hashCode());
     }
 
@@ -35,6 +36,7 @@ public class QuestionTest {
         Question q1 = new Question(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
         Question q2 = new Question(TITLE + " and something", CONSUMPTIONINWH + 4502, SOURCE, IMAGEPATH);
 
+        assertNotEquals(q1, q2);
         assertNotEquals(q1.hashCode(), q2.hashCode());
     }
 
