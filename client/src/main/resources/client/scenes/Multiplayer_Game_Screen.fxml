@@ -68,12 +68,6 @@
             </LinearGradient>
          </stroke>
       </Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="80.0" layoutX="95.0" layoutY="630.0" stroke="BLACK" strokeType="INSIDE" styleClass="joker" width="90.0" AnchorPane.topAnchor="630.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="80.0" layoutX="95.0" layoutY="443.0" stroke="BLACK" strokeType="INSIDE" styleClass="joker" width="90.0" AnchorPane.topAnchor="443.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="80.0" layoutX="95.0" layoutY="537.0" stroke="BLACK" strokeType="INSIDE" styleClass="joker" width="90.0" AnchorPane.topAnchor="537.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="80.0" layoutX="1328.0" layoutY="631.0" stroke="BLACK" strokeType="INSIDE" styleClass="emoji" width="90.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="80.0" layoutX="1328.0" layoutY="444.0" stroke="BLACK" strokeType="INSIDE" styleClass="emoji" width="90.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="80.0" layoutX="1328.0" layoutY="538.0" stroke="BLACK" strokeType="INSIDE" styleClass="emoji" width="90.0" />
       <Label layoutX="384.0" layoutY="640.0" styleClass="questionTitle" text="Gaming" textFill="WHITE">
          <font>
             <Font size="20.0" />
@@ -128,5 +122,16 @@
       <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="293.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" />
       <Rectangle fx:id="option2" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="630.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" AnchorPane.leftAnchor="630.0" AnchorPane.topAnchor="393.0" />
       <Rectangle fx:id="option3" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="996.0" layoutY="394.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" />
+      <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="1328.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true" styleClass="emoji" />
+      <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="1328.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" styleClass="emoji">
+         <image>
+            <Image url="@/client/scenes/tempShit.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="1328.0" layoutY="630.0" pickOnBounds="true" preserveRatio="true" styleClass="emoji" />
+      <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true" styleClass="joker" />
+      <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" styleClass="joker" />
+      <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="630.0" pickOnBounds="true" preserveRatio="true" styleClass="joker" />
     </children>
 </AnchorPane>
