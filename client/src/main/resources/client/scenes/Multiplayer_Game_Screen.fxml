@@ -122,7 +122,10 @@
       <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="293.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" />
       <Rectangle fx:id="option2" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="630.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" AnchorPane.leftAnchor="630.0" AnchorPane.topAnchor="393.0" />
       <Rectangle fx:id="option3" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="996.0" layoutY="394.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" />
-      <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="1328.0" layoutY="443.0" onMouseClicked="#showEmoji" pickOnBounds="true" preserveRatio="true" styleClass="emoji" />
+      <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="1328.0" layoutY="443.0" onMouseClicked="#showEmoji" pickOnBounds="true" preserveRatio="true" styleClass="emoji">
+         <image>
+            <Image url="@/client/scenes/yoshiHigh.jpg" />
+         </image></ImageView>
       <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="1328.0" layoutY="539.0" onMouseClicked="#showEmoji" pickOnBounds="true" preserveRatio="true" styleClass="emoji">
          <image>
             <Image url="@/client/scenes/tempShit.png" />
