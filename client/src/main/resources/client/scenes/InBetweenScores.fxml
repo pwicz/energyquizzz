@@ -4,11 +4,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="982.0" prefWidth="1512.0" stylesheets="@styles/InBetweenScores.css"
-            xmlns="http://javafx.com/javafx/17">
-    <Label layoutY="68.0" prefHeight="118.0" prefWidth="1513.0" styleClass="screen-header" text="SCORE" />
-    <Label layoutX="667.0" layoutY="912.0" styleClass="bottom-score" text="Score: 120" />
-    <Button layoutX="33.0" layoutY="913.0" mnemonicParsing="false" styleClass="leave-btn" text="LEAVE" />
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" stylesheets="@styles/InBetweenScores.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <Label layoutY="68.0" prefHeight="118.0" prefWidth="1513.0" styleClass="screen-header" text="SCORE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="68.0" />
+    <Label layoutX="667.0" layoutY="912.0" prefHeight="51.0" prefWidth="845.0" styleClass="bottom-score" text="Score: 120" AnchorPane.bottomAnchor="19.0" />
+    <Button layoutX="33.0" layoutY="913.0" mnemonicParsing="false" styleClass="leave-btn" text="LEAVE" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="33.0" />
     <Label layoutX="745.0" layoutY="716.0" text="Question" />
     <Label layoutX="756.0" layoutY="745.0" text="7/20" />
 </AnchorPane>
