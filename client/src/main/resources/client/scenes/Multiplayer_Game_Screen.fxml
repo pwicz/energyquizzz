@@ -15,24 +15,24 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" style="-fx-background-color: #272727;" stylesheets="@/client/scenes/Multiplayer_Game.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
     <children>
-        <Button fx:id="leave" layoutX="200.0" layoutY="887.0" mnemonicParsing="false" onAction="#leave" onMouseClicked="#lockAnswer" prefHeight="15.0" prefWidth="150.0" style="-fx-background-color: none; -fx-border-color: #E0503D; -fx-border-radius: 5;" text="Leave" textFill="#e0503d" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="1312.0" AnchorPane.topAnchor="887.0">
+        <Button fx:id="leave" layoutX="200.0" layoutY="887.0" mnemonicParsing="false" onAction="#leave" onMouseClicked="#lockAnswer" prefHeight="15.0" prefWidth="150.0" style="-fx-background-color: none; -fx-border-color: #E0503D; -fx-border-radius: 5;" text="Leave" textFill="#e0503d" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="50.0">
             <font>
                 <Font size="20.0" />
             </font>
         </Button>
       <Button fx:id="start" layoutX="89.0" layoutY="312.0" mnemonicParsing="false" onAction="#decreaseTime" prefHeight="101.0" prefWidth="150.0" text="Start" />
-      <ProgressBar fx:id="timeBar" layoutX="456.0" layoutY="295.0" prefHeight="40.0" prefWidth="1038.0" progress="0.0" AnchorPane.leftAnchor="239.0" AnchorPane.rightAnchor="235.0" AnchorPane.topAnchor="207.0" />
+      <ProgressBar fx:id="timeBar" layoutX="237.0" layoutY="207.0" prefHeight="40.0" prefWidth="1038.0" progress="0.0" AnchorPane.leftAnchor="237.0" AnchorPane.rightAnchor="237.0" AnchorPane.topAnchor="207.0" />
       <Label layoutX="688.0" layoutY="847.0" text="Score: 120" textFill="#38c768" AnchorPane.leftAnchor="688.0" AnchorPane.rightAnchor="687.0" AnchorPane.topAnchor="931.0">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Label layoutX="322.0" layoutY="51.0" text="Question 5: Which activity consumes most energy?" textFill="#38c768" AnchorPane.leftAnchor="322.0" AnchorPane.rightAnchor="183.0" AnchorPane.topAnchor="95.0">
+      <Label layoutX="252.0" layoutY="98.0" text="Question 5: Which activity consumes most energy?" textFill="#38c768" AnchorPane.leftAnchor="252.0" AnchorPane.rightAnchor="253.0" AnchorPane.topAnchor="98.0">
          <font>
             <Font size="45.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0074e000" height="292.0" layoutX="765.0" layoutY="431.0" strokeType="INSIDE" width="121.0" AnchorPane.leftAnchor="1312.0" AnchorPane.rightAnchor="79.0" AnchorPane.topAnchor="431.0">
+      <Rectangle fx:id="emojiHolder" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" height="292.0" layoutX="765.0" layoutY="431.0" strokeType="INSIDE" width="121.0" AnchorPane.leftAnchor="1312.0" AnchorPane.rightAnchor="79.0" AnchorPane.topAnchor="431.0">
          <stroke>
             <LinearGradient endX="1.0" endY="1.0">
                <stops>
@@ -50,7 +50,7 @@
             </LinearGradient>
          </stroke>
       </Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0074e000" height="292.0" layoutX="79.0" layoutY="431.0" strokeType="INSIDE" width="121.0">
+      <Rectangle fx:id="jokerHolder" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" height="292.0" layoutX="79.0" layoutY="431.0" strokeType="INSIDE" width="121.0" AnchorPane.leftAnchor="79.0" AnchorPane.rightAnchor="1312.0" AnchorPane.topAnchor="431.0">
          <stroke>
             <LinearGradient endX="1.0" endY="1.0">
                <stops>
@@ -78,7 +78,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="1086.0" layoutY="640.0" styleClass="questionTitle" text="Gaming" textFill="WHITE">
+      <Label layoutX="1058.0" layoutY="640.0" styleClass="questionTitle" text="Gaming" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
@@ -94,12 +94,12 @@
             <Font size="15.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="1021.0" layoutY="693.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" wrappingWidth="199.99999999999977">
+      <Text fill="WHITE" layoutX="993.0" layoutY="693.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" wrappingWidth="199.99999999999977">
          <font>
             <Font size="15.0" />
          </font>
       </Text>
-      <Button fx:id="submit" disable="true" layoutX="1312.0" layoutY="887.0" mnemonicParsing="false" onMouseClicked="#lockAnswer" prefHeight="15.0" prefWidth="150.0" style="-fx-background-color: none; -fx-border-color: #38c768; -fx-border-radius: 5;" text="submit" textFill="#38c768" AnchorPane.leftAnchor="1312.0">
+      <Button fx:id="submit" disable="true" layoutX="1312.0" layoutY="887.0" mnemonicParsing="false" onMouseClicked="#lockAnswer" prefHeight="15.0" prefWidth="150.0" style="-fx-background-color: none; -fx-border-color: #38c768; -fx-border-radius: 5;" text="submit" textFill="#38c768">
          <font>
             <Font size="20.0" />
          </font>
@@ -114,14 +114,13 @@
              <Image url="@/client/scenes/tempShit.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="image3" fitHeight="200.0" fitWidth="200.0" layoutX="1022.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image3" fitHeight="200.0" fitWidth="200.0" layoutX="994.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true">
          <image>
              <Image url="@/client/scenes/tempShit.png" />
          </image>
       </ImageView>
-      <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="293.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" />
-      <Rectangle fx:id="option2" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="630.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" AnchorPane.leftAnchor="630.0" AnchorPane.topAnchor="393.0" />
-      <Rectangle fx:id="option3" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="996.0" layoutY="394.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" />
+      <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="293.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" AnchorPane.leftAnchor="293.0" AnchorPane.rightAnchor="293.0" AnchorPane.topAnchor="393.0" />
+      <Rectangle fx:id="option2" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="630.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" AnchorPane.leftAnchor="630.0" AnchorPane.rightAnchor="293.0" AnchorPane.topAnchor="393.0" />
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="1328.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true" styleClass="emoji" />
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="1328.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" styleClass="emoji">
          <image>
@@ -133,5 +132,6 @@
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="539.0" pickOnBounds="true" preserveRatio="true" styleClass="joker" />
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="630.0" pickOnBounds="true" preserveRatio="true" styleClass="joker" />
+      <Rectangle fx:id="option3" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="961.0" layoutY="395.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" styleClass="option" width="251.0" AnchorPane.leftAnchor="968.0" AnchorPane.rightAnchor="293.0" AnchorPane.topAnchor="393.0" />
     </children>
 </AnchorPane>

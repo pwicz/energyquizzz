@@ -1,5 +1,17 @@
 .option{
     -fx-stroke: white;
+    -fx-background-color: none;
+    -fx-border-radius: 5;
+}
+
+#emojiHolder{
+    -fx-background-color: none;
+    -fx-stroke: linear-gradient(to right,#38c768, #21A0E8);
+}
+
+#jokerHolder{
+    -fx-background-color: none;
+    -fx-stroke: linear-gradient(to left,#38c768, #21A0E8);
 }
 
 .option:hover{
