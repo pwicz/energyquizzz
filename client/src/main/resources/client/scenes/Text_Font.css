@@ -1,1 +1,24 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('Roboto-Thin.ttf');
+}
+
+.button{
+    -fx-font-family: "Roboto";
+    -fx-font-size: 36 ;
+}
+
+.button:hover{
+    -fx-opacity: 0.2;
+}
+
+.label{
+    -fx-font-family: "Roboto";
+    -fx-font-size: 100;
+}
+
+#leave{
+    -fx-font-family: "Roboto";
+    -fx-font-size: 20 ;
+}
 
