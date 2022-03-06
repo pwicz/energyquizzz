@@ -63,6 +63,10 @@ public class QuoteOverviewCtrl implements Initializable {
         mainCtrl.showAdd();
     }
 
+    public void waitingRoom(){
+        mainCtrl.showWaitingRoom();
+    }
+
     public void refresh() {
         var quotes = server.getQuotes();
         data = FXCollections.observableList(quotes);

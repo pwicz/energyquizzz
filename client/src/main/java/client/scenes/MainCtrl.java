@@ -29,15 +29,17 @@ public class MainCtrl {
 
     private AddQuoteCtrl addCtrl;
     private Scene add;
+    private Scene waitingRoom;
 
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
-            Pair<AddQuoteCtrl, Parent> add) {
+                           Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom) {
         this.primaryStage = primaryStage;
         this.overviewCtrl = overview.getKey();
         this.overview = new Scene(overview.getValue());
 
         this.addCtrl = add.getKey();
         this.add = new Scene(add.getValue());
+        this.waitingRoom = new Scene(waitingRoom.getValue());
 
         showOverview();
         primaryStage.show();
@@ -54,4 +56,12 @@ public class MainCtrl {
         primaryStage.setScene(add);
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
+
+    public void showWaitingRoom() {
+        primaryStage.setTitle("WaitingRoomScreen");
+        primaryStage.setScene(waitingRoom);
+        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
+    }
+
+
 }
