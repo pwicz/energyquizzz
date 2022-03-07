@@ -73,7 +73,7 @@ public class QuestionController {
      * @param question question to be added in the database
      * @return an error if the question was not properly formatted or a question just added to the database
      */
-    @PostMapping("/")
+    @PostMapping(path = { "", "/"})
     public ResponseEntity<Question> addQuestion(@RequestBody Question question){
         // data validation
 
