@@ -95,6 +95,11 @@ public class TestQuestionRepository implements QuestionRepository {
     @Override
     public Optional<Question> findById(Long aLong) {
         call("findById");
+
+        for(var q : questions){
+            if(q.id == aLong) return Optional.of(q);
+        }
+
         return Optional.empty();
     }
 
