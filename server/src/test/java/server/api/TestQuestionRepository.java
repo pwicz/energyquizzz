@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class TestQuestionRepository implements QuestionRepository {
 
@@ -58,7 +59,8 @@ public class TestQuestionRepository implements QuestionRepository {
     public void deleteById(Long aLong) {
         call("deleteById");
 
-        questions.stream().filter(q -> q.id == aLong).forEach(questions::remove);
+        var found = questions.stream().filter(q -> q.id == aLong).collect(Collectors.toList());
+        if(found.size() > 0) questions.remove(found.get(0));
     }
 
     @Override
