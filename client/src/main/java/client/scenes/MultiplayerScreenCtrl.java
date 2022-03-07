@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.MouseEvent;
@@ -82,6 +83,7 @@ public class MultiplayerScreenCtrl {
         option3.setStroke(Color.WHITE);
         Rectangle rectangle = (Rectangle) mouseEvent.getSource();
         rectangle.setStyle("-fx-stroke: linear-gradient(#38c768, #21A0E8)");
-        submit.setDisable(true);
+        submit.setDisable(false);
+        submit.setCursor(Cursor.HAND);
     }
 }

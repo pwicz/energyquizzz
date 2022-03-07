@@ -1,15 +1,42 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('Roboto-Thin.ttf');
+}
+
+.root{
+    -fx-background-color: #272727;
+}
+
+.text{
+    -fx-font-family: "Roboto";
+    -fx-content-display: center;
+}
+
+.question{
+    -fx-text-fill: #38c768;
+    -fx-font-size: 45;
+}
+
+.description{
+    -fx-font-family: Roboto;
+}
+
 .option{
     -fx-stroke: white;
     -fx-background-color: none;
     -fx-border-radius: 5;
 }
 
-#emojiHolder{
+.questionTitle, #leave{
+    -fx-font-size: 20;
+}
+
+.emoji-box{
     -fx-background-color: none;
     -fx-stroke: linear-gradient(to right,#38c768, #21A0E8);
 }
 
-#jokerHolder{
+.joker-box{
     -fx-background-color: none;
     -fx-stroke: linear-gradient(to left,#38c768, #21A0E8);
 }
@@ -18,7 +45,13 @@
     -fx-stroke: linear-gradient(#38c768, #21A0E8);
 }
 
-#timeBar{
+.hover-element{
+    -fx-cursor: hand;
+}
+
+
+
+.timeBar{
     -fx-accent: #21A0E8;
     -fx-border-color: #38c768;
     -fx-border-radius: 5;
@@ -26,4 +59,23 @@
 
 .progress-bar .track {
     -fx-background-color: #272727;
+}
+
+.leave-btn{
+    -fx-font-family: "Roboto";
+    -fx-font-size: 20;
+    -fx-stroke: #e0503d;
+    -fx-text-fill:  #e0503d;
+}
+
+.submit-btn{
+    -fx-font-family: "Roboto";
+    -fx-font-size: 20;
+    -fx-stroke: #38c768;
+    -fx-text-fill:  #38c768;
+}
+
+.score{
+    -fx-font-size: 30;
+    -fx-text-fill:  #38c768;
 }

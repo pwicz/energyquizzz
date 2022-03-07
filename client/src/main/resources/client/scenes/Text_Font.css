@@ -3,10 +3,31 @@
     src: url('Roboto-Thin.ttf');
 }
 
+#anchorPane{
+    -fx-background-color:  #272727;
+}
+
+.text{
+    -fx-text-alignment: center;
+}
+
 .button{
     -fx-font-family: "Roboto";
-    -fx-font-size: 36 ;
+    -fx-font-size: 36;
     -fx-cursor: hand;
+    -fx-background-color: none;
+}
+
+.greenButton{
+    -fx-stroke: #38c768;
+    -fx-text-fill: #38c768;
+}
+.help-btn{
+    -fx-text-fill: white;
+}
+
+.title{
+    -fx-text-fill: linear-gradient(to left,#38c768, #21A0E8);
 }
 
 .button:hover{
@@ -18,9 +39,11 @@
     -fx-font-size: 100;
 }
 
-#leave{
+.leave-btn{
     -fx-font-family: "Roboto";
     -fx-font-size: 20 ;
+    -fx-stroke: #e0503d;
+    -fx-text-fill:  #e0503d;
 }
 
 
