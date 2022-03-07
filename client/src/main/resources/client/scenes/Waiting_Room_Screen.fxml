@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.Color?>
@@ -8,70 +9,75 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.control.Button?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #272727;" stylesheets="@/client/scenes/Text_Font.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WaitingRoomScreenCtrl">
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" style="-fx-background-color: #272727;" stylesheets="@/client/scenes/Text_Font.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WaitingRoomScreenCtrl">
 
     <children>
-        <Text layoutX="193.0" layoutY="176.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Roboto Thin';" text="Waiting Room" textAlignment="CENTER" wrappingWidth="694.13671875" AnchorPane.leftAnchor="193.0" AnchorPane.rightAnchor="734.0" AnchorPane.topAnchor="68.08984375">
-            <font>
-                <Font size="100.0" />
-            </font>
-            <fill>
-                <LinearGradient endX="1.0" endY="1.0">
-                    <stops>
-                        <Stop>
-                            <color>
-                                <Color red="0.12941177189350128" green="0.6274510025978088" blue="0.9098039269447327" />
-                            </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                            <color>
-                                <Color red="0.21960784494876862" green="0.7803921699523926" blue="0.40784314274787903" />
-                            </color>
-                        </Stop>
-                    </stops>
-                </LinearGradient>
-            </fill>
-        </Text>
-        <Text fill="WHITE" layoutX="62.0" layoutY="257.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Roboto Thin';" text="Start the game or wait for other players to join" textAlignment="CENTER" wrappingWidth="968.13671875" AnchorPane.leftAnchor="62.0" AnchorPane.rightAnchor="591.0" AnchorPane.topAnchor="220.0">
-            <font>
-                <Font size="34.0" />
-            </font>
-        </Text>
-
-        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="446.0" layoutY="571.0" prefHeight="40.0" prefWidth="188.0" style="-fx-border-color: #38C768; -fx-border-radius: 5;" text="Start" textFill="#38c768" AnchorPane.leftAnchor="446.0" AnchorPane.topAnchor="571.0">
-            <font>
-                <Font size="36.0" />
-            </font>
-        </Button>
-
-        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="43.0" layoutY="668.0" prefHeight="40.0" prefWidth="150.0" style="-fx-border-color: #E0503D; -fx-border-radius: 5;" text="Leave" textFill="#e0503d" AnchorPane.bottomAnchor="35.5" AnchorPane.leftAnchor="43.0">
+      <AnchorPane layoutX="97.0" layoutY="100.0" AnchorPane.leftAnchor="97.0" AnchorPane.topAnchor="100.0">
+         <children>
+              <Text layoutX="137.0" layoutY="77.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Roboto Thin';" text="Waiting Room" textAlignment="CENTER" wrappingWidth="694.13671875">
+                  <font>
+                      <Font size="100.0" />
+                  </font>
+                  <fill>
+                      <LinearGradient endX="1.0" endY="1.0">
+                          <stops>
+                              <Stop>
+                                  <color>
+                                      <Color red="0.12941177189350128" green="0.6274510025978088" blue="0.9098039269447327" />
+                                  </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                  <color>
+                                      <Color red="0.21960784494876862" green="0.7803921699523926" blue="0.40784314274787903" />
+                                  </color>
+                              </Stop>
+                          </stops>
+                      </LinearGradient>
+                  </fill>
+              </Text>
+              <Text fill="WHITE" layoutY="174.37890625" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Roboto Thin';" text="Start the game or wait for other players to join" textAlignment="CENTER" wrappingWidth="968.13671875">
+                  <font>
+                      <Font size="32.0" />
+                  </font>
+              </Text>
+         </children>
+      </AnchorPane>
+        <Button fx:id="leave" layoutX="45.0" layoutY="985.0" mnemonicParsing="false" onAction="#leave" prefHeight="29.0" prefWidth="196.0" style="-fx-background-color: none; -fx-border-color: #E0503D; -fx-border-radius: 5;" text="Leave" textAlignment="CENTER" textFill="#e0503d" AnchorPane.bottomAnchor="38.292893409729004" AnchorPane.leftAnchor="45.0">
             <font>
                 <Font size="20.0" />
             </font>
         </Button>
-      <Line endX="17.0" endY="728.5" layoutX="1029.0" layoutY="14.0" startX="17.0" startY="-14.0" />
-      <Text fill="#38c768" layoutX="1101.0" layoutY="67.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Roboto Thin';" text="Players waiting (3)" textAlignment="CENTER" wrappingWidth="196.13671875">
+      <Button fx:id="leave1" layoutX="478.0" layoutY="823.0" mnemonicParsing="false" onAction="#leave" prefHeight="53.0" prefWidth="208.0" style="-fx-background-color: none; -fx-border-color: #38c768; -fx-border-radius: 5;" text="Start" textFill="#38c768" textOverrun="CLIP" AnchorPane.bottomAnchor="176.292893409729" AnchorPane.leftAnchor="478.0" AnchorPane.rightAnchor="826.0">
          <font>
-            <Font size="22.0" />
+            <Font name="Roboto" size="20.0" />
          </font>
-      </Text>
-      <Text fill="WHITE" layoutX="1077.0" layoutY="117.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Roboto Thin';" text="#1 Peter" wrappingWidth="196.13671875">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="1077.0" layoutY="150.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Roboto Thin';" text="#2 Alex" wrappingWidth="196.13671875">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <Text fill="WHITE" layoutX="1077.0" layoutY="186.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Roboto Thin';" text="#3 Javi" wrappingWidth="196.13671875">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
-      <Label layoutX="199.0" layoutY="296.0" prefHeight="245.0" prefWidth="683.0" />
+      </Button>
+      <AnchorPane layoutX="1209.0" prefHeight="1039.0" prefWidth="414.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Line endX="25.792892456054688" endY="1037.43359375" startX="17.0" startY="-14.0" />
+            <Text fill="#38c768" layoutX="84.0" layoutY="65.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Roboto Thin';" text="Players waiting (3)" textAlignment="CENTER" wrappingWidth="196.13671875">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="57.0" layoutY="120.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Roboto Thin';" text="#1 Peter" wrappingWidth="196.13671875">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="56.0" layoutY="153.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Roboto Thin';" text="#2 Alex" wrappingWidth="196.13671875">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="56.0" layoutY="189.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'Roboto Thin';" text="#3 Javi" wrappingWidth="196.13671875">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <Label layoutX="308.0" layoutY="337.0" prefHeight="423.0" prefWidth="683.0" AnchorPane.bottomAnchor="291.43359375" AnchorPane.leftAnchor="308.0" AnchorPane.rightAnchor="657.13671875" AnchorPane.topAnchor="337.0" />
     </children>
 </AnchorPane>
