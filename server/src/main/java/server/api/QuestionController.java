@@ -11,10 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/api/questions")
 public class QuestionController {
+
+    private final Random random;
+
+    public QuestionController(Random random) {
+        this.random = random;
+    }
 
     /**
      * Returns all questions stored in the database.
