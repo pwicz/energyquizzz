@@ -36,8 +36,8 @@ public class QuestionController {
     }
 
     /**
-     * Returns {number} randomly chosen questions stored in the database.
-     * @return {number} randomly chosen questions stored in the database
+     * Returns a randomly chosen question stored in the database.
+     * @return a randomly chosen question stored in the database
      */
     @GetMapping("/random")
     public Question getRandom(){
