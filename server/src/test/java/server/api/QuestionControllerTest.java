@@ -4,12 +4,14 @@ import commons.Question;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class QuestionControllerTest {
 
@@ -74,6 +76,50 @@ public class QuestionControllerTest {
 
         assertEquals(expected, sut.getSpecificQuestion(12L).getBody());
         assertEquals(List.of("findById"), repo.calledMethods);
+    }
+
+    @Test
+    public void testGetSpecificQuestionNotFound(){
+        Question q1 = getQuestion("q1");
+        q1.id = 12L;
+        Question q2 = getQuestion("q42");
+        q2.id = 6L;
+        sut.addQuestion(q1);
+        sut.addQuestion(q2);
+        repo.calledMethods.clear();
+
+        assertNull(sut.getSpecificQuestion(9L).getBody());
+        assertEquals(List.of("findById"), repo.calledMethods);
+    }
+
+    @Test
+    public void testAddQuestion(){
+        Question q1 = new Question("Title to test", 420, "source::link", "image::path");
+        q1.id = 11L;
+        sut.addQuestion(q1);
+        assertEquals(List.of("save"), repo.calledMethods);
+
+        Question actual = sut.getSpecificQuestion(11L   ).getBody();
+
+        assertNotNull(actual);
+        assertEquals( 11L, actual.id);
+        assertEquals( "Title to test", actual.title);
+        assertEquals( 420, actual.consumptionInWh);
+        assertEquals("source::link", actual.source);
+        assertEquals("image::path", actual.imagePath);
+
+    }
+
+    @Test
+    public void testDeleteQuestion(){
+        Question expected = getQuestion("qqq2");
+        expected.id = 11L;
+        sut.addQuestion(expected);
+
+        Question actual = sut.deleteQuestion(11L).getBody();
+
+        assertEquals(expected, actual);
+        assertNull(sut.getSpecificQuestion(11L).getBody());
     }
 
     private static Question getQuestion(String data){
