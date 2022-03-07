@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import server.database.QuestionRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +19,11 @@ import java.util.Random;
 public class QuestionController {
 
     private final Random random;
+    private final QuestionRepository repo;
 
-    public QuestionController(Random random) {
+    public QuestionController(Random random, QuestionRepository repo) {
         this.random = random;
+        this.repo = repo;
     }
 
     /**
