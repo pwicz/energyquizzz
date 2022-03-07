@@ -1,5 +1,6 @@
 package server.api;
 
+import commons.Question;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import server.database.QuestionRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -31,27 +31,19 @@ public class QuestionController {
      * @return all questions stored in the database
      */
     @GetMapping("/")
-    public List<String> getAll(){
-        List<String> questions = new ArrayList<>();
-        questions.add("Question 1");
-        questions.add("Question 2");
-        questions.add("Question 3");
-
-        return questions;
+    public List<Question> getAll(){
+        return repo.findAll();
     }
 
     /**
      * Returns {number} randomly chosen questions stored in the database.
      * @return {number} randomly chosen questions stored in the database
      */
-    @GetMapping("/random/{number}")
-    public List<String> getRandomlyChosen(@PathVariable("number") int num){
-        List<String> questions = new ArrayList<>();
-        questions.add("Random question 1/"+num);
-        questions.add("Random question 2/"+num);
-        questions.add("Random question 3/"+num);
+    @GetMapping("/random")
+    public Question getRandom(){
+        int index = random.nextInt((int)repo.count());
 
-        return questions;
+        return repo.getById((long)index);
     }
 
     /**
