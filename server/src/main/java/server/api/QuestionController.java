@@ -44,8 +44,9 @@ public class QuestionController {
      */
     @GetMapping("/random")
     public ResponseEntity<Question> getRandom(){
-        if(repo.count() == 0) return ResponseEntity.notFound().build();
-        int index = random.nextInt((int)repo.count());
+        long count = repo.count();
+        if(count == 0L) return ResponseEntity.notFound().build();
+        int index = random.nextInt((int)count);
 
         // divide all questions into '1-question' pages and select a random page
         Page<Question> questionPage = repo.findAll(PageRequest.of(index, 1));
