@@ -4,10 +4,43 @@
         "https://checkstyle.org/dtds/configuration_1_3.dtd">
 
 <module name = "Checker">
-    <module name="TreeWalker">
-        <module name="UnusedImports" />
+
+    <!--        max line of 120 char-->
+    <module name="LineLength">
+        <property name="max" value="120"/>
     </module>
 
-    <!-- TODO: decide in your team with other checkers to add! -->
+    <module name="TreeWalker">
+        <!--        unused imports-->
+        <module name="UnusedImports" />
+        <!--        Import with star-->
+        <module name="AvoidStarImport"/>
+        <!--        max 4 consecutive capital letters, final + overridden methods are ignored-->
+        <module name="AbbreviationAsWordInName"/>
+
+        <!--        call super constructor with no args-->
+        <module name="AvoidNoArgumentSuperConstructorCall"/>
+        <!--        no default case in switch()-->
+        <module name="MissingSwitchDefault"/>
+        <!--        Default comes last in switch()-->
+        <module name="DefaultComesLast"/>
+        <!--        no unnecessary parentheses-->
+        <module name="UnnecessaryParentheses"/>
+
+        <!--        max method length = 60-->
+        <module name="MethodLength">
+            <property name="tokens" value="METHOD_DEF"/>
+            <property name="max" value="60"/>
+        </module>
+
+        <!--        default pattern '^[a-z][a-zA-Z0-9]*$'-->
+        <module name="MethodName">
+            <property name="format" value="^[a-z](_?[a-zA-Z0-9]+)*$"/>
+        </module>
+        <!--        default pattern '^[a-z][a-zA-Z0-9]*$'-->
+        <module name="LocalVariableName">
+            <property name="format" value="^[a-z](_?[a-zA-Z0-9]+)*$"/>
+        </module>
+    </module>
 
 </module>

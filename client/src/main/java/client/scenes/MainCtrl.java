@@ -30,14 +30,27 @@ public class MainCtrl {
     private AddQuoteCtrl addCtrl;
     private Scene add;
 
+    private SplashScreenCtrl splashScreenCtrl;
+    private Scene splash;
+
+    private Scene question;
+    private  MultiplayerScreenCtrl multiplayerScreenCtrl;
+
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
-            Pair<AddQuoteCtrl, Parent> add) {
+                           Pair<AddQuoteCtrl, Parent> add, Pair<SplashScreenCtrl, Parent> splash,
+                           Pair<MultiplayerScreenCtrl, Parent> question) {
         this.primaryStage = primaryStage;
         this.overviewCtrl = overview.getKey();
         this.overview = new Scene(overview.getValue());
 
         this.addCtrl = add.getKey();
         this.add = new Scene(add.getValue());
+
+        this.splash = new Scene(splash.getValue());
+        this.splashScreenCtrl = splash.getKey();
+
+        this.question = new Scene(question.getValue());
+        this.multiplayerScreenCtrl = question.getKey();
 
         showOverview();
         primaryStage.show();
@@ -54,4 +67,20 @@ public class MainCtrl {
         primaryStage.setScene(add);
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
+
+    public void showSplash() {
+        primaryStage.setTitle("SplashScreen");
+        primaryStage.setScene(splash);
+        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
+    }
+
+    public void showMultiplayerScreen() {
+        primaryStage.setTitle("Multiplayer");
+        primaryStage.setScene(question);
+        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
+    }
+
+
+
+
 }
