@@ -1,0 +1,66 @@
+.root{
+    -fx-background-color:  #272727;
+}
+
+.screen-header{
+    -fx-font-size: 80;
+    -fx-text-fill: linear-gradient(to right, #21a0e8, #38c768);
+    -fx-alignment: center;
+}
+
+.leave-btn{
+    -fx-background-color: none;
+    -fx-border-color:  #E0503D;
+    -fx-border-radius: 5;
+
+    -fx-text-fill: #E0503D;
+    -fx-font-size: 20;
+}
+
+.bottom-score{
+    -fx-text-fill: #38C768;
+    -fx-font-size: 35;
+}
+
+.question-label{
+    -fx-font-size: 48;
+    -fx-text-fill: #ffffff;
+}
+
+.question-number{
+    -fx-font-size: 36;
+    -fx-text-fill: #ffffff;
+}
+
+.wrong-box{
+    -fx-fill: none;
+    -fx-stroke:  #e0503d;
+    -fx-border-radius: 5;
+}
+
+.correct-box{
+    -fx-fill: none;
+    -fx-stroke:  #38c768;
+    -fx-border-radius: 5;
+}
+
+.picked-wrong{
+    -fx-font-size: 25;
+    -fx-text-fill: #ffffff;
+}
+
+.picked-correct{
+    -fx-font-size: 25;
+    -fx-text-fill: #ffffff;
+}
+
+.score-box{
+    -fx-fill: none;
+    -fx-stroke:  linear-gradient(to right, #21a0e8, #38c768);
+    -fx-border-radius: 5;
+}
+
+.list-text{
+    -fx-font-size: 36;
+    -fx-text-fill: #ffffff;
+}
