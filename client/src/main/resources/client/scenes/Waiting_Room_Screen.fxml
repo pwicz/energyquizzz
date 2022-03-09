@@ -43,12 +43,12 @@
               </Text>
          </children>
       </AnchorPane>
-        <Button fx:id="leave" layoutX="45.0" layoutY="985.0" mnemonicParsing="false" onAction="#leave" prefHeight="29.0" prefWidth="196.0" style="-fx-background-color: none; -fx-border-color: #E0503D; -fx-border-radius: 5;" text="Leave" textAlignment="CENTER" textFill="#e0503d" AnchorPane.bottomAnchor="38.292893409729004" AnchorPane.leftAnchor="45.0">
+        <Button fx:id="leave" layoutX="45.0" layoutY="985.0" mnemonicParsing="false" onAction="#leave" prefHeight="29.0" prefWidth="196.0" style="-fx-background-color: none; -fx-border-color: #E0503D; -fx-border-radius: 5; -fx-text-fill: #e0503d;" text="Leave" textAlignment="CENTER" textFill="#e0503d" AnchorPane.bottomAnchor="38.292893409729004" AnchorPane.leftAnchor="45.0">
             <font>
                 <Font size="20.0" />
             </font>
         </Button>
-      <Button fx:id="leave1" layoutX="478.0" layoutY="823.0" mnemonicParsing="false" onAction="#leave" prefHeight="53.0" prefWidth="208.0" style="-fx-background-color: none; -fx-border-color: #38c768; -fx-border-radius: 5;" text="Start" textFill="#38c768" textOverrun="CLIP" AnchorPane.bottomAnchor="176.292893409729" AnchorPane.leftAnchor="478.0" AnchorPane.rightAnchor="826.0">
+      <Button fx:id="leave1" layoutX="490.0" layoutY="829.0" mnemonicParsing="false" onAction="#leave" prefHeight="29.0" prefWidth="183.0" style="-fx-background-color: none; -fx-border-color: #38c768; -fx-border-radius: 5; -fx-text-fill: #38c768;" text="Start" textFill="#38c768" textOverrun="CLIP" AnchorPane.bottomAnchor="181.0" AnchorPane.leftAnchor="490.0">
          <font>
             <Font name="Roboto" size="20.0" />
          </font>
