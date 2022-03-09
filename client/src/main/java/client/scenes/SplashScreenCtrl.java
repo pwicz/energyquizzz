@@ -24,8 +24,14 @@ public class SplashScreenCtrl {
         mainCtrl.showOverview();
     }
 
+
     public void showMultiplayerScreen(){
         mainCtrl.showMultiplayerScreen();
+    }
+
+    //go to singleplayescreen
+    public void showSinglePlayerScreen(){
+        mainCtrl.showSinglePlayerScreen();
     }
 
 
