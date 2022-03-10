@@ -110,17 +110,17 @@
       </Button>
       <ImageView fx:id="image1" fitHeight="200.0" fitWidth="200.0" layoutX="319.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures">
          <image>
-            <Image url="@/client/scenes/tempShit.png" />
+            <Image url="@/client/scenes/images/tempShit.png" />
          </image>
       </ImageView>
       <ImageView fx:id="image2" fitHeight="200.0" fitWidth="200.0" layoutX="659.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures">
          <image>
-             <Image url="@/client/scenes/tempShit.png" />
+             <Image url="@/client/scenes/images/tempShit.png" />
          </image>
       </ImageView>
       <ImageView fx:id="image3" fitHeight="200.0" fitWidth="200.0" layoutX="994.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures">
          <image>
-             <Image url="@/client/scenes/tempShit.png" />
+             <Image url="@/client/scenes/images/tempShit.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="1328.0" layoutY="443.0" onMouseClicked="#showEmoji" pickOnBounds="true" preserveRatio="true">
@@ -130,7 +130,7 @@
          </styleClass></ImageView>
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="1328.0" layoutY="539.0" onMouseClicked="#showEmoji" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@/client/scenes/tempShit.png" />
+            <Image url="@/client/scenes/images/tempShit.png" />
          </image>
          <styleClass>
             <String fx:value="emoji" />
@@ -146,18 +146,27 @@
          <styleClass>
             <String fx:value="jokers" />
             <String fx:value="hover-element" />
-         </styleClass></ImageView>
+         </styleClass>
+         <image>
+            <Image url="@/client/scenes/images/scissor.png" />
+         </image></ImageView>
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="95.0" layoutY="539.0" onMouseClicked="#useJoker" pickOnBounds="true" preserveRatio="true">
          <styleClass>
             <String fx:value="jokers" />
             <String fx:value="hover-element" />
-         </styleClass></ImageView>
+         </styleClass>
+         <image>
+            <Image url="@/client/scenes/images/2x.png" />
+         </image></ImageView>
       <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="95.0" layoutY="630.0" onMouseClicked="#useJoker" pickOnBounds="true" preserveRatio="true">
          <styleClass>
             <String fx:value="jokers" />
             <String fx:value="hover-element" />
-         </styleClass></ImageView>
+         </styleClass>
+         <image>
+            <Image url="@/client/scenes/images/hourglass.png" />
+         </image></ImageView>
       <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="293.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="293.0" AnchorPane.rightAnchor="293.0" AnchorPane.topAnchor="393.0">
          <styleClass>
             <String fx:value="option" />

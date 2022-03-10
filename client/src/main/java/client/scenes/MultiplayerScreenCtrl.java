@@ -54,13 +54,13 @@ public class MultiplayerScreenCtrl {
     }
 
     //shows an emoji
-    public void showEmoji(){
-
+    public void showEmoji(MouseEvent event){
+        System.out.println(event.getSource());
     }
 
     //uses an joker if it's not yet used
-    public void useJoker(){
-
+    public void useJoker(MouseEvent event){
+        System.out.println(event.getSource());
     }
 
     public void decreaseTime(){
