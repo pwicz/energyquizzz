@@ -64,15 +64,19 @@
 .leave-btn{
     -fx-font-family: "Roboto";
     -fx-font-size: 20;
-    -fx-stroke: #e0503d;
     -fx-text-fill:  #e0503d;
+    -fx-background-color: none;
+    -fx-border-color: #e0503d;
+    -fx-border-radius: 5px;
 }
 
 .submit-btn{
     -fx-font-family: "Roboto";
     -fx-font-size: 20;
-    -fx-stroke: #38c768;
     -fx-text-fill:  #38c768;
+    -fx-background-color: none;
+    -fx-border-color: #38c768;
+    -fx-border-radius: 5px;
 }
 
 .score{
