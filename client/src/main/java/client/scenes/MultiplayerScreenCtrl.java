@@ -48,6 +48,21 @@ public class MultiplayerScreenCtrl {
         mainCtrl.showOverview();
     }
 
+    //submits answer, stops time,
+    public void submitAnswer(){
+
+    }
+
+    //shows an emoji
+    public void showEmoji(){
+
+    }
+
+    //uses an joker if it's not yet used
+    public void useJoker(){
+
+    }
+
     public void decreaseTime(){
         if(t != null)
             t.interrupt();
@@ -86,4 +101,5 @@ public class MultiplayerScreenCtrl {
         submit.setDisable(false);
         submit.setCursor(Cursor.HAND);
     }
+
 }

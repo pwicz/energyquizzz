@@ -77,6 +77,7 @@ public class MainCtrl {
     public void showMultiplayerScreen() {
         primaryStage.setTitle("Multiplayer");
         primaryStage.setScene(question);
+        multiplayerScreenCtrl.decreaseTime();
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
