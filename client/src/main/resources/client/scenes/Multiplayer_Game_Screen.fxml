@@ -142,7 +142,7 @@
             <String fx:value="emoji" />
             <String fx:value="hover-element" />
          </styleClass></ImageView>
-      <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="95.0" layoutY="443.0" onMouseClicked="#useJoker" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="95.0" layoutY="443.0" onMouseClicked="#cutAnswer" pickOnBounds="true" preserveRatio="true">
          <styleClass>
             <String fx:value="jokers" />
             <String fx:value="hover-element" />
@@ -151,7 +151,7 @@
             <Image url="@/client/scenes/images/scissor.png" />
          </image></ImageView>
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="95.0" layoutY="539.0" onMouseClicked="#useJoker" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="95.0" layoutY="539.0" onMouseClicked="#doublePoints" pickOnBounds="true" preserveRatio="true">
          <styleClass>
             <String fx:value="jokers" />
             <String fx:value="hover-element" />
@@ -159,7 +159,7 @@
          <image>
             <Image url="@/client/scenes/images/2x.png" />
          </image></ImageView>
-      <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="95.0" layoutY="630.0" onMouseClicked="#useJoker" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="95.0" layoutY="630.0" onMouseClicked="#lowerTime" pickOnBounds="true" preserveRatio="true">
          <styleClass>
             <String fx:value="jokers" />
             <String fx:value="hover-element" />
