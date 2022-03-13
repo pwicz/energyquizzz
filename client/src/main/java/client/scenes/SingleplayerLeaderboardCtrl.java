@@ -23,7 +23,7 @@ public class SingleplayerLeaderboardCtrl {
     TextField nameField;
 
     @FXML
-    ListView leaderboard;
+    ListView<String> leaderboard;
 
 
 
@@ -34,8 +34,8 @@ public class SingleplayerLeaderboardCtrl {
     }
 
     public void initialize() {
-        start.fire(); //this loads the leaderboard, it is currently bound to the start button,
-        // will need to be changed to either an invisible button or the singleplayer splash button
+        start.fire(); //this loads the leaderboard, it is currently bound to the start button
+
     }
 
 
@@ -50,7 +50,6 @@ public class SingleplayerLeaderboardCtrl {
 
     public void insertLeaderboard() { //needs to change to import the database leaderboard
         leaderboard.getItems().addAll("Justin", "Piotr", "Mike", "Ioana", "Alex");
-
     }
 
     public void leave(){
