@@ -42,6 +42,16 @@
     -fx-font-size: 25px;
 }
 
-.leaderboardlist {
+.list-view {
     -fx-border-color: linear-gradient(to left, #1BED62, #21A0E8);
 }
+
+
+.list-cell {
+    -fx-background-color: #272727;
+    -fx-text-fill: linear-gradient(to left, #1BED62, #21A0E8);
+    -fx-font-size: 15px;
+}
+
+
+
