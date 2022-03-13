@@ -41,7 +41,8 @@ public class MainCtrl {
 
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
                            Pair<AddQuoteCtrl, Parent> add, Pair<SplashScreenCtrl, Parent> splash,
-                           Pair<MultiplayerScreenCtrl, Parent> question, Pair<SingleplayerLeaderboardCtrl, Parent> singleLeaderboard) {
+                           Pair<MultiplayerScreenCtrl, Parent> question, Pair<SingleplayerLeaderboardCtrl,
+                           Parent> singleLeaderboard) {
         this.primaryStage = primaryStage;
         this.overviewCtrl = overview.getKey();
         this.overview = new Scene(overview.getValue());
