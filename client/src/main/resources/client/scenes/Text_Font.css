@@ -9,6 +9,7 @@
 
 .button:hover{
     -fx-opacity: 0.5;
+    -fx-cursor: hand;
 }
 
 .label{
