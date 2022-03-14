@@ -4,9 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+
+import javax.persistence.*;
+
 
 @Entity
+//@Table (name = "SCORE")
 public class Score {
 
     @Id
@@ -21,7 +24,10 @@ public class Score {
     )
     public long id;
 
+    //@Column (name="playerName")
     public String playerName;
+
+    //@Column (name="playerScore")
     public int playerScore;
 
     public Score(String playerName, int playerScore) {
@@ -60,4 +66,6 @@ public class Score {
                 ", playerScore=" + playerScore +
                 '}';
     }
+
+
 }

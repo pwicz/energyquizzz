@@ -15,54 +15,67 @@
  */
 package server.api;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.*;
+import java.util.*;
 
+import commons.Score;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import server.database.ScoreRepository;
 
 @RestController
 @RequestMapping("/api/scores")
 public class ScoreController {
 
-    private Map<String, Integer> playerScores;
+    //private Map<String, Integer> playerScores;
+    private final ScoreRepository repo;
 
-    public ScoreController() {
-        this.playerScores = new HashMap<>();
-        playerScores.put("Player 1", 1250);
-        playerScores.put("Player 2", 500);
-        playerScores.put("Player 3", 1500);
-        playerScores.put("Player 4", 700);
-        playerScores.put("Player 5", 0);
+    //make it get scores from database v
+    public ScoreController(ScoreRepository repo) {
+        this.repo = repo;
+
     }
 
-    @GetMapping("/getAllScores")
-    public Map<String, Integer> getAllScores() {
-        return playerScores;
+    /**
+     * Returns all scores stored in the database.
+     * @return all scores stored in the database
+     */
+    @GetMapping(path = {"","/"})
+    public List<Score> getAllScores() {
+        return repo.findAll();
     }
 
-    @GetMapping("/getScoreOf{playerName}")
+    /*@GetMapping("/getScoreOf{playerName}")
     public Integer getScoreAt(@PathVariable("playerName") String playerName) {
         return playerScores.get(playerName);
-    }
+    }*/ //delete this later**
 
     @GetMapping("/get{number}TopScores")
-    public List<Integer> getTopScores(@PathVariable("number") int number) {
+    public List<Integer> getTopScores(@PathVariable("number") int number) throws SQLException {
         List<Integer> topScores = new ArrayList<>();
-        for(String key: playerScores.keySet()) {
+        /*for(String key: playerScores.keySet()) {
             topScores.add(playerScores.get(key));
+        }*/
+        String url="jdbc:h2:file:./quizzzz";
+        Connection conn = DriverManager.getConnection(url,"","");
+        Statement stmt= conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT playerScore FROM score ORDER BY playerScore DESC");
+        while(rs.next()){
+            topScores.add(rs.getInt("playerScore"));
         }
-        Collections.sort(topScores);
+        // Collections.sort(topScores);
         List<Integer> res = new ArrayList<>();
         for(int i = 0; i < number; i++){
             res.add(topScores.get(i));
         }
-        Collections.reverse(res);
-        return res;
+        // Collections.reverse(res);
+         return res;
     }
+
+
+
+
+
 }
