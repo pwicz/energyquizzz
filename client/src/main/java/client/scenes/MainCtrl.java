@@ -63,5 +63,18 @@ public class MainCtrl {
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
+    public void showSplash() {
+        //NEED SPLASH SCREEN TO COMPLETE
+        /*
+        primaryStage.setTitle("SplashScreen");
+        primaryStage.setScene(splash);
+        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
+         */
+    }
+
+    public void startMultiplayer(){
+
+    }
+
 
 }
