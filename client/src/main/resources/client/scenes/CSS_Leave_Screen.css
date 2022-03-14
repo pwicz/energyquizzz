@@ -4,7 +4,8 @@
 }
 .label{
     -fx-text-fill:#f8f8f1;
-    -fx-font-size:19.0 px
+    -fx-font-size:19.0 px;
+    -fx-font-family: "Roboto Thin";
 }
 
 .button_stay{
@@ -13,7 +14,7 @@
     -fx-border-radius: 5;
     -fx-text-fill: WHITE;
     -fx-font-size: 17.0 px;
-
+    -fx-font-family: "Roboto Thin";
 }
 
 .button_leave{
@@ -22,5 +23,6 @@
     -fx-border-radius: 5;
     -fx-text-fill:#e0503d;
     -fx-font-size: 17.0 px;
+    -fx-font-family: "Roboto Thin";
 }
 
