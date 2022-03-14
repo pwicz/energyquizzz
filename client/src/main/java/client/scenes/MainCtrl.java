@@ -36,9 +36,13 @@ public class MainCtrl {
     private Scene question;
     private  MultiplayerScreenCtrl multiplayerScreenCtrl;
 
+    private Scene singleLeaderboard;
+    private SingleplayerLeaderboardCtrl singleplayerLeaderboardCtrl;
+
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
                            Pair<AddQuoteCtrl, Parent> add, Pair<SplashScreenCtrl, Parent> splash,
-                           Pair<MultiplayerScreenCtrl, Parent> question) {
+                           Pair<MultiplayerScreenCtrl, Parent> question, Pair<SingleplayerLeaderboardCtrl,
+                           Parent> singleLeaderboard) {
         this.primaryStage = primaryStage;
         this.overviewCtrl = overview.getKey();
         this.overview = new Scene(overview.getValue());
@@ -51,6 +55,9 @@ public class MainCtrl {
 
         this.question = new Scene(question.getValue());
         this.multiplayerScreenCtrl = question.getKey();
+
+        this.singleLeaderboard = new Scene(singleLeaderboard.getValue());
+        this.singleplayerLeaderboardCtrl = singleLeaderboard.getKey();
 
         showOverview();
         primaryStage.show();
@@ -78,6 +85,12 @@ public class MainCtrl {
         primaryStage.setTitle("Multiplayer");
         primaryStage.setScene(question);
         multiplayerScreenCtrl.decreaseTime();
+        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
+    }
+
+    public void showSingleLeaderboardScreen() {
+        primaryStage.setTitle("SingleplayerLeaderboard");
+        primaryStage.setScene(singleLeaderboard);
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 

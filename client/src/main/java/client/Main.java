@@ -25,7 +25,9 @@ import client.scenes.AddQuoteCtrl;
 import client.scenes.MultiplayerScreenCtrl;
 import client.scenes.QuoteOverviewCtrl;
 import client.scenes.SplashScreenCtrl;
+import client.scenes.SingleplayerLeaderboardCtrl;
 import client.scenes.MainCtrl;
+
 import com.google.inject.Injector;
 
 import javafx.application.Application;
@@ -47,8 +49,10 @@ public class Main extends Application {
         var add = FXML.load(AddQuoteCtrl.class, "client", "scenes", "AddQuote.fxml");
         var splash = FXML.load(SplashScreenCtrl.class, "client","scenes", "Splash_Screen.fxml");
         var question = FXML.load(MultiplayerScreenCtrl.class, "client","scenes", "Multiplayer_Game_Screen.fxml");
+        var singleplayerLeaderboard =
+                FXML.load(SingleplayerLeaderboardCtrl.class, "client", "scenes", "SingleplayerLeaderboard.fxml");
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 
-        mainCtrl.initialize(primaryStage, overview, add, splash, question);
+        mainCtrl.initialize(primaryStage, overview, add, splash, question, singleplayerLeaderboard);
     }
 }

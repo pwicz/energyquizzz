@@ -28,5 +28,9 @@ public class SplashScreenCtrl {
         mainCtrl.showMultiplayerScreen();
     }
 
+    public void showSingleplayerScreen() {
+        mainCtrl.showSingleLeaderboardScreen();
+    }
+
 
 }
