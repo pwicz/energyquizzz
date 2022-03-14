@@ -25,7 +25,8 @@ public class ScoreControllerTest {
 
     @Test
     public void testGetAllScores(){
-        List<Score> expected = new ArrayList<>();
+
+
 
     }
 

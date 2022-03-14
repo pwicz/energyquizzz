@@ -50,7 +50,7 @@ public class ScoreController {
     /*@GetMapping("/getScoreOf{playerName}")
     public Integer getScoreAt(@PathVariable("playerName") String playerName) {
         return playerScores.get(playerName);
-    }*/ //delete this later**
+    }*/
 
     @GetMapping("/get{number}TopScores")
     public List<Integer> getTopScores(@PathVariable("number") int number) throws SQLException {
