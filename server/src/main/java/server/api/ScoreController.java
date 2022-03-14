@@ -51,7 +51,7 @@ public class ScoreController {
     /*@GetMapping("/getScoreOf{playerName}")
     public Integer getScoreAt(@PathVariable("playerName") String playerName) {
         return playerScores.get(playerName);
-    }*/ //delete this later**
+    }*/
 
     @GetMapping("/get{number}TopScores")
     public ResponseEntity<List<Score>> getTopScores(@PathVariable("number") int number){
