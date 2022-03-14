@@ -7,11 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 public class ScoreControllerTest {
     public int nextInt;
     private TestScoreRepository repo;
@@ -26,7 +21,6 @@ public class ScoreControllerTest {
     @Test
     public void testGetAllScores(){
         List<Score> expected = new ArrayList<>();
-
     }
 
     private static  Score getScore(int score){
