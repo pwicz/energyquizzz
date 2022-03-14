@@ -5,26 +5,27 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="669.0" style="-fx-background-color: #272727;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<?import java.lang.String?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="669.0" styleClass="global"  stylesheets="@CSS_Leave_Screen.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <effect>
       <ColorAdjust />
    </effect>
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="-9.0" AnchorPane.leftAnchor="-8.0" AnchorPane.rightAnchor="-8.0" AnchorPane.topAnchor="-9.0" />
-      <Label layoutX="201.0" layoutY="33.0" text="Are you sure you want to leave?" textFill="#f8f8f1">
-         <font>
-            <Font size="19.0" />
-         </font>
+      <Label layoutX="201.0" layoutY="33.0" text="Are you sure you want to leave?" >
+         <styleClass>
+            <String fx:value="label" />
+         </styleClass>
       </Label>
-      <Button layoutX="105.0" layoutY="108.0" prefHeight="28.0" prefWidth="141.0" style="-fx-background-color: none; -fx-border-color: #FFFFFF; -fx-border-radius: 5;" text="Stay" textFill="WHITE">
-         <font>
-            <Font size="17.0" />
-         </font>
+      <Button layoutX="105.0" layoutY="108.0" prefHeight="28.0" prefWidth="141.0" text="Stay">
+         <styleClass>
+            <String fx:value="button_stay"/>
+         </styleClass>
       </Button>
-      <Button layoutX="426.0" layoutY="108.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="141.0" style="-fx-background-color: none; -fx-border-color: #E0503D; -fx-border-radius: 5;" text="Leave" textFill="#e0503d">
-         <font>
-            <Font size="17.0" />
-         </font>
+      <Button layoutX="426.0" layoutY="108.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="141.0" text="Leave" >
+         <styleClass>
+            <String fx:value="button_leave"/>
+         </styleClass>
       </Button>
    </children>
 </AnchorPane>
