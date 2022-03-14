@@ -14,28 +14,24 @@
  * limitations under the License.
  */
 package server.api;
-
-import java.sql.*;
-import java.util.*;
-
+import java.util.List;
 import commons.Score;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import server.database.ScoreRepository;
 
 @RestController
 @RequestMapping("/api/scores")
 public class ScoreController {
 
-    //private Map<String, Integer> playerScores;
     private final ScoreRepository repo;
 
     //make it get scores from database v
     public ScoreController(ScoreRepository repo) {
         this.repo = repo;
-
     }
 
     /**
@@ -53,28 +49,30 @@ public class ScoreController {
     }*/ //delete this later**
 
     @GetMapping("/get{number}TopScores")
-    public List<Integer> getTopScores(@PathVariable("number") int number) throws SQLException {
-        List<Integer> topScores = new ArrayList<>();
-        /*for(String key: playerScores.keySet()) {
-            topScores.add(playerScores.get(key));
-        }*/
-        String url="jdbc:h2:file:./quizzzz";
-        Connection conn = DriverManager.getConnection(url,"","");
-        Statement stmt= conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT playerScore FROM score ORDER BY playerScore DESC");
-        while(rs.next()){
-            topScores.add(rs.getInt("playerScore"));
-        }
-        // Collections.sort(topScores);
-        List<Integer> res = new ArrayList<>();
-        for(int i = 0; i < number; i++){
-            res.add(topScores.get(i));
-        }
-        // Collections.reverse(res);
-         return res;
+    public ResponseEntity<List<Score>> getTopScores(@PathVariable("number") int number){
+        Page<Score> page = repo.findAll(PageRequest.of(0, number, Sort.by(Sort.Order.desc("playerScore"))));
+        var result = page.getContent();
+
+        if(result.size() == 0) return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(result);
     }
 
+    @PostMapping(path = { "", "/"})
+    public ResponseEntity<Score> addScore(@RequestBody Score score){
+        // data validation
 
+//        if(question.title == null
+//                || question.consumptionInWh <= 0
+//                || question.source == null
+//                || question.imagePath == null)
+//        {
+//            return ResponseEntity.badRequest().build();
+//        }
+
+        Score saved = repo.save(score);
+        return ResponseEntity.ok(saved);
+    }
 
 
 
