@@ -9,12 +9,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="background" prefHeight="982.0" prefWidth="1512.0" stylesheets="@/client/scenes/Text_Font.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WaitingRoomScreenCtrl">
+<AnchorPane styleClass="background" prefHeight="982.0" prefWidth="1512.0" stylesheets="@/client/scenes/Text_Font.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WaitingRoomScreenCtrl">
 
     <children>
       <AnchorPane layoutX="97.0" layoutY="100.0" AnchorPane.leftAnchor="97.0" AnchorPane.topAnchor="100.0">
          <children>
-              <Text fx:id="title" layoutX="137.0" layoutY="77.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Waiting Room" textAlignment="CENTER" wrappingWidth="694.13671875">
+              <Text styleClass="title" layoutX="137.0" layoutY="77.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Waiting Room" textAlignment="CENTER" wrappingWidth="694.13671875">
                   <fill>
                       <LinearGradient endX="1.0" endY="1.0">
                           <stops>
@@ -32,15 +32,15 @@
                       </LinearGradient>
                   </fill>
               </Text>
-              <Text fx:id="description" fill="WHITE" layoutY="174.37890625" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Start the game or wait for other players to join" textAlignment="CENTER" wrappingWidth="968.13671875"> </Text>
+              <Text styleClass="description" fill="WHITE" layoutY="174.37890625" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Start the game or wait for other players to join" textAlignment="CENTER" wrappingWidth="968.13671875"> </Text>
          </children>
       </AnchorPane>
-        <Button fx:id="leave" layoutX="45.0" layoutY="985.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="196.0" text="Leave" textAlignment="CENTER" AnchorPane.bottomAnchor="38.292893409729004" AnchorPane.leftAnchor="45.0"> </Button>
-        <Button fx:id="start" layoutX="490.0" layoutY="829.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="183.0"  text="Start" textOverrun="CLIP" AnchorPane.bottomAnchor="181.0" AnchorPane.leftAnchor="490.0"> </Button>
+        <Button styleClass="leave-btn" layoutX="45.0" layoutY="985.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="196.0" text="Leave" textAlignment="CENTER" AnchorPane.bottomAnchor="38.292893409729004" AnchorPane.leftAnchor="45.0"> </Button>
+        <Button styleClass="start-btn" layoutX="490.0" layoutY="829.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="183.0"  text="Start" textOverrun="CLIP" AnchorPane.bottomAnchor="181.0" AnchorPane.leftAnchor="490.0"> </Button>
         <AnchorPane layoutX="1209.0" prefHeight="1039.0" prefWidth="414.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Line endX="25.792892456054688" endY="1037.43359375" startX="17.0" startY="-14.0" />
-            <Text fx:id="sidebarTitle" fill="#38c768" layoutX="84.0" layoutY="65.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Players waiting (3)" textAlignment="CENTER" wrappingWidth="196.13671875"> </Text>
+            <Text styleClass="sidebarTitle" fill="#38c768" layoutX="84.0" layoutY="65.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="Players waiting (3)" textAlignment="CENTER" wrappingWidth="196.13671875"> </Text>
             <Text styleClass="playersList" fill="WHITE" layoutX="57.0" layoutY="120.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="#1 Peter" wrappingWidth="196.13671875"> </Text>
             <Text styleClass="playersList" fill="WHITE" layoutX="56.0" layoutY="153.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="#2 Alex" wrappingWidth="196.13671875"> </Text>
             <Text styleClass="playersList" fill="WHITE" layoutX="56.0" layoutY="189.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="#3 Javi" wrappingWidth="196.13671875"> </Text>

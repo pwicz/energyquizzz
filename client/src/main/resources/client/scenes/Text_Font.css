@@ -1,4 +1,4 @@
-#background{
+.background{
     -fx-background-color: #272727;
 }
 
@@ -17,31 +17,31 @@
     -fx-font-size: 100;
 }
 
-#title{
+.title{
     -fx-font-family: 'Roboto Thin';
     -fx-font-size: 100;
 }
 
-#leave{
+.leave-btn{
     -fx-background-color: none;
     -fx-border-color: #E0503D;
     -fx-border-radius: 5;
     -fx-text-fill: #e0503d;
 }
 
-#start{
+.start-btn{
     -fx-background-color: none;
     -fx-border-color: #38c768;
     -fx-border-radius: 5;
     -fx-text-fill: #38c768;
 }
 
-#description{
+.description{
     -fx-font-family: 'Roboto Thin';
     -fx-font-size: 32;
 }
 
-#sidebarTitle{
+.sidebarTitle{
     -fx-font-family: 'Roboto Thin';
     -fx-font-size: 22;
 }
