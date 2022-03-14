@@ -54,10 +54,23 @@ public class AddQuoteCtrl {
     }
 
     public void ok() {
-        try {
-            server.addQuote(getQuote());
-        } catch (WebApplicationException e) {
+//        try {
+//            server.addQuote(getQuote());
+//        } catch (WebApplicationException e) {
+//
+//            var alert = new Alert(Alert.AlertType.ERROR);
+//            alert.initModality(Modality.APPLICATION_MODAL);
+//            alert.setContentText(e.getMessage());
+//            alert.showAndWait();
+//            return;
+//        }
+        // the above commented out to use websockets
 
+        try{
+            // send the quote to /app/quotes so that the server can handle it
+            server.send("/app/quotes", getQuote());
+        }
+        catch (WebApplicationException e) {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.initModality(Modality.APPLICATION_MODAL);
             alert.setContentText(e.getMessage());
