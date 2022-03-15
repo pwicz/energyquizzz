@@ -3,10 +3,10 @@ package commons;
 public class Player {
 
     private String name;
-    private int ID;
+    private long ID;
 
 
-    public Player(String name, int ID) {
+    public Player(String name, long ID) {
         this.name = name;
         this.ID = ID;
     }

@@ -5,9 +5,9 @@ import java.util.List;
 public class Game {
 
     private List<Player> players;
-    private int ID;
+    private long ID;
 
-    public Game(List<Player> players, int ID) {
+    public Game(List<Player> players, long ID) {
         this.players = players;
         this.ID = ID;
     }
