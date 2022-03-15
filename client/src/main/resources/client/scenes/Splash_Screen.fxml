@@ -15,7 +15,7 @@
             <Font size="36.0" />
          </font>
       </Button>
-      <Button layoutX="596.0" layoutY="413.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="321.0" style="-fx-background-color: none; -fx-border-color: #38C768; -fx-border-radius: 5;" styleClass="greenButton" text="Singleplayer" textFill="#38c768">
+      <Button layoutX="596.0" layoutY="413.0" mnemonicParsing="false" onAction="#showSingleplayerScreen" prefHeight="78.0" prefWidth="321.0" style="-fx-background-color: none; -fx-border-color: #38C768; -fx-border-radius: 5;" styleClass="greenButton" text="Singleplayer" textFill="#38c768">
          <font>
             <Font size="36.0" />
          </font>

@@ -9,7 +9,6 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 
@@ -48,6 +47,34 @@ public class MultiplayerScreenCtrl {
         mainCtrl.showOverview();
     }
 
+    //submits answer, stops time,
+    public void submitAnswer(){
+
+    }
+
+    //shows an emoji
+    public void showEmoji(MouseEvent event){
+        System.out.println(event.getSource());
+    }
+
+    //removes oneanswer
+    public void cutAnswer(MouseEvent event){
+        System.out.println(event.getSource());
+    }
+
+    //doubles your points for this round
+    public void doublePoints(MouseEvent event){
+        System.out.println(event.getSource());
+    }
+
+    //lowers your time by X% amount
+    public void lowerTime(MouseEvent event){
+        if(progress > 0.2) {
+            progress *= 0.8;
+            timeBar.setProgress(progress);
+        }
+    }
+
     public void decreaseTime(){
         if(t != null)
             t.interrupt();
@@ -78,12 +105,14 @@ public class MultiplayerScreenCtrl {
     }
 
     public void lockAnswer(MouseEvent mouseEvent) {
-        option1.setStroke(Color.WHITE);
-        option2.setStroke(Color.WHITE);
-        option3.setStroke(Color.WHITE);
+
+        option1.setStyle("-fx-border-color: white");
+        option2.setStyle("-fx-border-color: white");
+        option3.setStyle("-fx-border-color: white");
         Rectangle rectangle = (Rectangle) mouseEvent.getSource();
         rectangle.setStyle("-fx-stroke: linear-gradient(#38c768, #21A0E8)");
         submit.setDisable(false);
         submit.setCursor(Cursor.HAND);
     }
+
 }
