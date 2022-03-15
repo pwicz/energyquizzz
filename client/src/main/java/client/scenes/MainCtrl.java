@@ -15,12 +15,16 @@
  */
 package client.scenes;
 
+import client.utils.ServerUtils;
+import commons.ServerMessage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
 public class MainCtrl {
+
+    private final ServerUtils server;
 
     private Stage primaryStage;
 
@@ -38,6 +42,10 @@ public class MainCtrl {
 
     private Scene singleLeaderboard;
     private SingleplayerLeaderboardCtrl singleplayerLeaderboardCtrl;
+
+    public MainCtrl(ServerUtils server) {
+        this.server = server;
+    }
 
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
                            Pair<AddQuoteCtrl, Parent> add, Pair<SplashScreenCtrl, Parent> splash,
@@ -61,6 +69,25 @@ public class MainCtrl {
 
         showOverview();
         primaryStage.show();
+
+        Long clientID = 233L; // hardcoded: we need to somehow get it from the server
+
+        server.registerForMessage("topic/client/" + clientID, ServerMessage.class, m -> {
+            handleServerMessage(m);
+        });
+    }
+
+    public void handleServerMessage(ServerMessage msg){
+        switch(msg.type){
+            case NEW_MULTIPLAYER_GAME:
+                // do something
+                break;
+            case NEW_SINGLEPLAYER_GAME:
+                // do something else
+                break;
+            default:
+                // invalid msg type
+        }
     }
 
     public void showOverview() {
