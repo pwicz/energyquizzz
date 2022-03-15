@@ -31,6 +31,15 @@ public class MainCtrl {
     private Scene add;
     private Scene waitingRoom;
 
+    private SplashScreenCtrl splashScreenCtrl;
+    private Scene splash;
+
+    private Scene question;
+    private  MultiplayerScreenCtrl multiplayerScreenCtrl;
+
+    private Scene singleLeaderboard;
+    private SingleplayerLeaderboardCtrl singleplayerLeaderboardCtrl;
+
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
                            Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom) {
         this.primaryStage = primaryStage;
@@ -40,6 +49,15 @@ public class MainCtrl {
         this.addCtrl = add.getKey();
         this.add = new Scene(add.getValue());
         this.waitingRoom = new Scene(waitingRoom.getValue());
+
+        this.splash = new Scene(splash.getValue());
+        this.splashScreenCtrl = splash.getKey();
+
+        this.question = new Scene(question.getValue());
+        this.multiplayerScreenCtrl = question.getKey();
+
+        this.singleLeaderboard = new Scene(singleLeaderboard.getValue());
+        this.singleplayerLeaderboardCtrl = singleLeaderboard.getKey();
 
         showOverview();
         primaryStage.show();

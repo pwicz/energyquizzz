@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="global" stylesheets="/client/scenes/SingleplayerLeaderboard.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerLeaderboardCtrl">
+   <children>
+      <ListView fx:id="leaderboard" layoutX="656.0" layoutY="284.0" prefHeight="328.0" prefWidth="495.0" AnchorPane.leftAnchor="508.0" AnchorPane.topAnchor="280.0">
+         <styleClass>
+            <String fx:value="global" />
+            <String fx:value="list-view" />
+         </styleClass></ListView>
+      <TextField fx:id="nameField" layoutX="682.0" layoutY="699.0" maxHeight="49.0" maxWidth="495.0" onAction="#insertName" prefHeight="49.0" prefWidth="495.0" promptText="  Enter your name" AnchorPane.leftAnchor="508.0" AnchorPane.topAnchor="654.0">
+         <styleClass>
+            <String fx:value="textField" />
+            <String fx:value="global" />
+         </styleClass>
+      </TextField>
+      <Button fx:id="start" layoutX="730.0" layoutY="760.0" mnemonicParsing="false" onAction="#insertLeaderboard" onMouseClicked="#start" prefHeight="63.0" prefWidth="226.0" text="START" AnchorPane.leftAnchor="643.0" AnchorPane.topAnchor="750.0">
+         <styleClass>
+            <String fx:value="start" />
+            <String fx:value="global" />
+         </styleClass>
+      </Button>
+      <Button fx:id="leave" layoutX="119.0" layoutY="849.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="LEAVE" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="910.0">
+         <styleClass>
+            <String fx:value="leave" />
+            <String fx:value="global" />
+         </styleClass>
+      </Button>
+      <Text id="Title" boundsType="VISUAL" layoutX="529.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Leaderboard" textAlignment="CENTER" wrappingWidth="525.3685607910156" AnchorPane.leftAnchor="523.0" AnchorPane.topAnchor="141.0">
+      </Text>
+   </children>
+</AnchorPane>

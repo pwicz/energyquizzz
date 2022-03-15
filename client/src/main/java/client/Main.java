@@ -1,4 +1,4 @@
-/*
+ /*
  * Copyright 2021 Delft University of Technology
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,8 +25,14 @@ import client.scenes.WaitingRoomScreenCtrl;
 import com.google.inject.Injector;
 
 import client.scenes.AddQuoteCtrl;
-import client.scenes.MainCtrl;
+import client.scenes.MultiplayerScreenCtrl;
 import client.scenes.QuoteOverviewCtrl;
+import client.scenes.SplashScreenCtrl;
+import client.scenes.SingleplayerLeaderboardCtrl;
+import client.scenes.MainCtrl;
+
+import com.google.inject.Injector;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 

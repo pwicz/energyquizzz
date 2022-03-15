@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" style="-fx-background-color: #272727;" stylesheets="@/client/scenes/Text_Font.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SplashScreenCtrl">
+   <children>
+      <Button layoutX="596.0" layoutY="526.0" mnemonicParsing="false" onAction="#showMultiplayerScreen" prefHeight="78.0" prefWidth="321.0" style="-fx-background-color: none; -fx-border-color: #38C768; -fx-border-radius: 5;" styleClass="greenButton" text="Multiplayer" textFill="#38c768">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Button layoutX="596.0" layoutY="413.0" mnemonicParsing="false" onAction="#showSingleplayerScreen" prefHeight="78.0" prefWidth="321.0" style="-fx-background-color: none; -fx-border-color: #38C768; -fx-border-radius: 5;" styleClass="greenButton" text="Singleplayer" textFill="#38c768">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Button fx:id="leave" layoutX="200.0" layoutY="887.0" mnemonicParsing="false" onAction="#leave" prefHeight="15.0" prefWidth="150.0" style="-fx-background-color: none; -fx-border-color: #E0503D; -fx-border-radius: 5;" styleClass="leave-btn" text="Leave" textFill="#e0503d" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="50.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="help" alignment="CENTER" contentDisplay="CENTER" layoutX="1355.0" layoutY="892.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="136.0" style="-fx-background-color: none;" styleClass="help-btn" text="Help" textFill="WHITE">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="149.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="ENERGYQUIZZZ">
+         <font>
+            <Font size="100.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.12941177189350128" green="0.6274510025978088" blue="0.9098039269447327" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.21960784494876862" green="0.7803921699523926" blue="0.40784314274787903" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+   </children>
+</AnchorPane>
