@@ -50,15 +50,6 @@ public class MainCtrl {
         this.add = new Scene(add.getValue());
         this.waitingRoom = new Scene(waitingRoom.getValue());
 
-        this.splash = new Scene(splash.getValue());
-        this.splashScreenCtrl = splash.getKey();
-
-        this.question = new Scene(question.getValue());
-        this.multiplayerScreenCtrl = question.getKey();
-
-        this.singleLeaderboard = new Scene(singleLeaderboard.getValue());
-        this.singleplayerLeaderboardCtrl = singleLeaderboard.getKey();
-
         showOverview();
         primaryStage.show();
     }
@@ -67,6 +58,18 @@ public class MainCtrl {
         primaryStage.setTitle("Quotes: Overview");
         primaryStage.setScene(overview);
         overviewCtrl.refresh();
+    }
+
+    public void showSplash(){
+
+    }
+
+    public void showMultiplayerScreen(){
+
+    }
+
+    public void showSingleLeaderboardScreen(){
+
     }
 
     public void showAdd() {
