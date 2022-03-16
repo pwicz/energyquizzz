@@ -2,6 +2,7 @@ package server;
 
 import commons.ClientMessage;
 import commons.ServerMessage;
+import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,11 +29,24 @@ public class MainMessageController {
             case INIT_SINGLEPLAYER:
                 // do something else
                 break;
+            case TEST:
+                // for testing purposes
+                result = new ServerMessage(ServerMessage.Type.TEST);
             default:
                 // unknown message
         }
 
         // if we created a valid message, we send it to a specific client at /client/{ID}
-        if(result != null) this.simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
+        if(result == null) return;
+
+        try{
+            simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
+        }
+        catch(MessagingException ex){
+            System.out.println("MessagingException on handleClientMessages: " + ex.getMessage());
+        }
+
+
     }
+
 }
