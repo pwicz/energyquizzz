@@ -65,15 +65,11 @@ public class ScoreController {
 
     @PostMapping(path = { "", "/"})
     public ResponseEntity<Score> addScore(@RequestBody Score score){
-        // data validation
+        //data validation
 
-//        if(question.title == null
-//                || question.consumptionInWh <= 0
-//                || question.source == null
-//                || question.imagePath == null)
-//        {
-//            return ResponseEntity.badRequest().build();
-//        }
+        if(score.playerName.length()==0 || Integer.valueOf(score.playerScore)==null){
+            return ResponseEntity.badRequest().build();
+        }
 
         Score saved = repo.save(score);
         return ResponseEntity.ok(saved);

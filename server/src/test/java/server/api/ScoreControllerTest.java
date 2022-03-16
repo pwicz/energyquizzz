@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class ScoreControllerTest {
     public int nextInt;
     private TestScoreRepository repo;
@@ -21,6 +23,17 @@ public class ScoreControllerTest {
     @Test
     public void testGetAllScores(){
         List<Score> expected = new ArrayList<>();
+        expected.add(getScore(432));
+        expected.add(getScore(654));
+
+        s.addScore(expected.get(0));
+        s.addScore(expected.get(1));
+
+        var actual = s.getAllScores();
+        assertEquals(expected, actual);
+
+        List<String> expectedOperations = List.of("save", "save", "findAll");
+        assertEquals(expectedOperations, repo.calledMethods);
 
     }
 
@@ -28,4 +41,21 @@ public class ScoreControllerTest {
         String player = "player";
         return new Score( player, score);
     }
+
+    /*@Test //not working
+    public void testGetTopScores (){
+        List<Score> expected = new ArrayList<>();
+        expected.add(getScore(432));
+        expected.add(getScore(654));
+
+        s.addScore(expected.get(0));
+        s.addScore(expected.get(1));
+
+        var actual = s.getTopScores(1).getBody();
+        assertEquals(expected.get(0), actual);
+
+        List<String> expectedOperations = List.of("save", "save", "findAll");
+        assertEquals(expectedOperations, repo.calledMethods);
+
+    }*/
 }
