@@ -2,7 +2,7 @@ package commons;
 
 public class ClientMessage {
     public enum Type{
-        INIT_SINGLEPLAYER, INIT_MULTIPLAYER
+        INIT_SINGLEPLAYER, INIT_MULTIPLAYER, TEST
     }
 
     public Type type;
@@ -10,6 +10,9 @@ public class ClientMessage {
     public Long gameID;
     // add more fields as we start exchanging messages
 
+
+    public ClientMessage() {
+    }
 
     public ClientMessage(Type type, Long playerID, Long gameID) {
         this.type = type;
