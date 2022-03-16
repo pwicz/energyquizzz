@@ -1,8 +1,11 @@
 # Meeting Notes Week 6
 
 Location: Drebbelweg 5, PC1 Cubicle 3
+
 Date: 15/03/2022
+
 Time: 13:45-14:30
+
 Attendees: Justin Wisker, Alexandra Velicu, Piotr Politowicz, Javier Perez, Ioana Ilincescu, Mike Erkemeij
 
 ## DEADLINES:
