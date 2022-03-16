@@ -16,6 +16,8 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import com.google.inject.Inject;
+import commons.ClientMessage;
 import commons.ServerMessage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -43,6 +45,9 @@ public class MainCtrl {
     private Scene singleLeaderboard;
     private SingleplayerLeaderboardCtrl singleplayerLeaderboardCtrl;
 
+    private Long clientID = null;
+
+    @Inject
     public MainCtrl(ServerUtils server) {
         this.server = server;
     }
@@ -70,9 +75,9 @@ public class MainCtrl {
         showOverview();
         primaryStage.show();
 
-        Long clientID = 233L; // hardcoded: we need to somehow get it from the server
+        clientID = 233L; // hardcoded: we need to somehow get it from the server
 
-        server.registerForMessage("topic/client/" + clientID, ServerMessage.class, m -> {
+        server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, m -> {
             handleServerMessage(m);
         });
     }
@@ -85,6 +90,9 @@ public class MainCtrl {
             case NEW_SINGLEPLAYER_GAME:
                 // do something else
                 break;
+            case TEST:
+                // for testing purposes only
+                System.out.println("It works! Received a msg!");
             default:
                 // invalid msg type
         }
@@ -97,6 +105,10 @@ public class MainCtrl {
     }
 
     public void showAdd() {
+        // For testing only: send a test message to the server
+        server.send("/app/general", new ClientMessage(ClientMessage.Type.TEST, clientID, 0L));
+        System.out.println("DID sth");
+
         primaryStage.setTitle("Quotes: Adding Quote");
         primaryStage.setScene(add);
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
