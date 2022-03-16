@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="251.0" prefWidth="821.0" style="-fx-background-color: #272727;" stylesheets="@CSSInputNameScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="251.0" prefWidth="821.0" styleClass="anchor" stylesheets="@CSSInputNameScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button layoutX="58.0" layoutY="195.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="join" text="Leave" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="629.0" AnchorPane.topAnchor="195.0" />
       <Button layoutX="344.0" layoutY="126.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="134.0" style="" styleClass="leave" text="Join" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="344.0" AnchorPane.rightAnchor="343.0" AnchorPane.topAnchor="126.0" />
