@@ -117,12 +117,6 @@ public class MainCtrl {
 
     }
 
-    public void showAdd() {
-        primaryStage.setTitle("Quotes: Adding Quote");
-        primaryStage.setScene(add);
-        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
-    }
-
     public void showWaitingRoom() {
         primaryStage.setTitle("WaitingRoomScreen");
         primaryStage.setScene(waitingRoom);
