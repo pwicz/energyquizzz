@@ -64,12 +64,16 @@ public class SingleplayerLeaderboardCtrl {
      * Start a singleplayer game.
      */
     public void start() {
+        // 1. Get name from the input and validate
         String playerName = nameField.getText();
         if(playerName == null || playerName.isEmpty()){
+            // TODO: Error message displayed in the UI
             return;
         }
+        // 2. Create a message and assign player's name to it
         ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.INIT_SINGLEPLAYER, "233L", null);
         msg.playerName = playerName;
+        // 3. Send the message to the proper endpoint
         server.send("/app/general", msg);
     }
 
