@@ -8,7 +8,7 @@ import javax.persistence.SequenceGenerator;
 import java.util.Objects;
 
 @Entity
-public class Question {
+public class Activity {
 
     @Id
     @SequenceGenerator(
@@ -27,14 +27,14 @@ public class Question {
     public String source;
     public String imagePath;
 
-    public Question(String title, Integer consumptionInWh, String source, String imagePath) {
+    public Activity(String title, Integer consumptionInWh, String source, String imagePath) {
         this.title = title;
         this.consumptionInWh = consumptionInWh;
         this.source = source;
         this.imagePath = imagePath;
     }
 
-    public Question() {
+    public Activity() {
     }
 
     @Override
@@ -42,14 +42,14 @@ public class Question {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Question question = (Question) o;
+        Activity activity = (Activity) o;
 
-        if (id != question.id) return false;
-        if (!Objects.equals(title, question.title)) return false;
-        if (!Objects.equals(consumptionInWh, question.consumptionInWh))
+        if (id != activity.id) return false;
+        if (!Objects.equals(title, activity.title)) return false;
+        if (!Objects.equals(consumptionInWh, activity.consumptionInWh))
             return false;
-        if (!Objects.equals(source, question.source)) return false;
-        return Objects.equals(imagePath, question.imagePath);
+        if (!Objects.equals(source, activity.source)) return false;
+        return Objects.equals(imagePath, activity.imagePath);
     }
 
     @Override

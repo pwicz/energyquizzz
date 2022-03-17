@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-public class QuestionTest {
+public class ActivityTest {
     private static final String TITLE = "Taking a hot shower for 6 minutes";
     private static final int CONSUMPTIONINWH = 4000;
     private static final String SOURCE = "https://somelink.com";
@@ -14,7 +14,7 @@ public class QuestionTest {
 
     @Test
     public void testConstructor(){
-        Question q = new Question(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
+        Activity q = new Activity(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
 
         assertEquals(TITLE, q.title);
         assertEquals(CONSUMPTIONINWH, q.consumptionInWh);
@@ -24,8 +24,8 @@ public class QuestionTest {
 
     @Test
     public void equalsHashCode(){
-        Question q1 = new Question(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
-        Question q2 = new Question(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
+        Activity q1 = new Activity(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
+        Activity q2 = new Activity(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
 
         assertEquals(q1, q2);
         assertEquals(q1.hashCode(), q2.hashCode());
@@ -33,8 +33,8 @@ public class QuestionTest {
 
     @Test
     public void notEqualsHasCode(){
-        Question q1 = new Question(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
-        Question q2 = new Question(TITLE + " and something", CONSUMPTIONINWH + 4502, SOURCE, IMAGEPATH);
+        Activity q1 = new Activity(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
+        Activity q2 = new Activity(TITLE + " and something", CONSUMPTIONINWH + 4502, SOURCE, IMAGEPATH);
 
         assertNotEquals(q1, q2);
         assertNotEquals(q1.hashCode(), q2.hashCode());
@@ -42,10 +42,10 @@ public class QuestionTest {
 
     @Test
     public void testToString(){
-        Question q1 = new Question(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
+        Activity q1 = new Activity(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
         String questionString = q1.toString();
 
-        assertTrue(questionString.contains(Question.class.getSimpleName()));
+        assertTrue(questionString.contains(Activity.class.getSimpleName()));
         assertTrue(questionString.contains(TITLE));
         assertTrue(questionString.contains(SOURCE));
         assertTrue(questionString.contains(IMAGEPATH));
