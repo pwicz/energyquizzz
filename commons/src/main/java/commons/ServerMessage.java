@@ -1,8 +1,10 @@
 package commons;
 
+import java.util.List;
+
 public class ServerMessage {
     public enum Type{
-        NEW_SINGLEPLAYER_GAME, NEW_MULTIPLAYER_GAME, TEST
+        NEW_SINGLEPLAYER_GAME, NEW_MULTIPLAYER_GAME, TEST, LOAD_NEW_QUESTIONS
     }
 
     public Type type;

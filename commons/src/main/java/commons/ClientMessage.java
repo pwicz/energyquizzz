@@ -2,7 +2,7 @@ package commons;
 
 public class ClientMessage {
     public enum Type{
-        INIT_SINGLEPLAYER, INIT_MULTIPLAYER, TEST
+        INIT_SINGLEPLAYER, INIT_MULTIPLAYER, TEST, INIT_QUESTION
     }
 
     public Type type;

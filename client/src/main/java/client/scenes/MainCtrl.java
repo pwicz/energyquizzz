@@ -54,7 +54,8 @@ public class MainCtrl {
     }
 
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
-                           Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom) {
+                           Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
+                           Pair<MultiplayerScreenCtrl, Parent> multiplayer) {
         this.primaryStage = primaryStage;
         this.overviewCtrl = overview.getKey();
         this.overview = new Scene(overview.getValue());
@@ -62,6 +63,9 @@ public class MainCtrl {
         this.addCtrl = add.getKey();
         this.add = new Scene(add.getValue());
         this.waitingRoom = new Scene(waitingRoom.getValue());
+
+        this.multiplayerScreenCtrl = multiplayer.getKey();
+        this.question = new Scene(multiplayer.getValue());
 
         showOverview();
         primaryStage.show();
@@ -110,7 +114,9 @@ public class MainCtrl {
     }
 
     public void showMultiplayerScreen(){
-
+        primaryStage.setTitle("MultiplayerScreen");
+        primaryStage.setScene(question);
+        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     public void showSingleLeaderboardScreen(){

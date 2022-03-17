@@ -29,6 +29,8 @@ public class MainMessageController {
             case INIT_SINGLEPLAYER:
                 // do something else
                 break;
+            case INIT_QUESTION:
+                result = new ServerMessage(ServerMessage.Type.LOAD_NEW_QUESTIONS);
             case TEST:
                 // for testing purposes
                 result = new ServerMessage(ServerMessage.Type.TEST);

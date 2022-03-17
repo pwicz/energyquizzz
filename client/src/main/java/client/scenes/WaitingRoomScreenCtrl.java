@@ -14,4 +14,8 @@ public class WaitingRoomScreenCtrl {
         this.server = server;
 
     }
+
+    public void start(){
+        mainCtrl.showMultiplayerScreen();
+    }
 }
