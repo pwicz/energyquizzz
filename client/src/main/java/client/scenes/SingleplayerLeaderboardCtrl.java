@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import commons.ClientMessage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -35,12 +36,18 @@ public class SingleplayerLeaderboardCtrl {
 
     public void initialize() {
         start.fire(); //this loads the leaderboard, it is currently bound to the start button
-
     }
 
 
     public void start() { //start a singleplayer game
         System.out.println("test");
+        String playerName = nameField.getText();
+        if(playerName == null || playerName.isEmpty()){
+            return;
+        }
+        ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.INIT_SINGLEPLAYER, "233L", null);
+        msg.playerName = playerName;
+        server.send("/app/general", msg);
     }
 
     public void insertName() {
