@@ -10,6 +10,7 @@ public class ServerMessage {
 
     public Question question;
     public int score;
+    public String gameID;
 
     public ServerMessage() {
     }
