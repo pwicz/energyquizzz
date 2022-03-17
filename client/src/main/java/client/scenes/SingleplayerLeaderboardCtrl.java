@@ -71,7 +71,8 @@ public class SingleplayerLeaderboardCtrl {
             return;
         }
         // 2. Create a message and assign player's name to it
-        ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.INIT_SINGLEPLAYER, "233L", null);
+        ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.INIT_SINGLEPLAYER,
+                mainCtrl.getClientID(), null);
         msg.playerName = playerName;
         // 3. Send the message to the proper endpoint
         server.send("/app/general", msg);
