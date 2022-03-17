@@ -40,7 +40,7 @@ public class MainCtrl {
     private SplashScreenCtrl splashScreenCtrl;
     private Scene splash;
 
-    private Scene question;
+    private Scene multiplayer;
     private  MultiplayerScreenCtrl multiplayerScreenCtrl;
 
     private Scene singleLeaderboard;
@@ -54,14 +54,28 @@ public class MainCtrl {
     }
 
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
-                           Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom) {
+                           Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
+                           Pair<SingleplayerLeaderboardCtrl, Parent> singleplayerLeaderboard,
+                           Pair<MultiplayerScreenCtrl, Parent> multiplayer,
+                           Pair<SplashScreenCtrl, Parent> splashScreen) {
         this.primaryStage = primaryStage;
+
         this.overviewCtrl = overview.getKey();
         this.overview = new Scene(overview.getValue());
 
         this.addCtrl = add.getKey();
         this.add = new Scene(add.getValue());
+
         this.waitingRoom = new Scene(waitingRoom.getValue());
+
+        this.singleplayerLeaderboardCtrl = singleplayerLeaderboard.getKey();
+        this.singleLeaderboard = new Scene(singleplayerLeaderboard.getValue());
+
+        this.multiplayerScreenCtrl = multiplayer.getKey();
+        this.multiplayer = new Scene(multiplayer.getValue());
+
+        this.splashScreenCtrl = splashScreen.getKey();
+        this.splash = new Scene(splashScreen.getValue());
 
         showOverview();
         primaryStage.show();
@@ -107,15 +121,22 @@ public class MainCtrl {
     }
 
     public void showSplash(){
-        
+        primaryStage.setTitle("SplashScreen");
+        primaryStage.setScene(splash);
+        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     public void showMultiplayerScreen(){
-
+        primaryStage.setTitle("Multiplayer");
+        primaryStage.setScene(multiplayer);
+        multiplayerScreenCtrl.decreaseTime();
+        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     public void showSingleLeaderboardScreen(){
-
+        primaryStage.setTitle("Leaderboard");
+        primaryStage.setScene(singleLeaderboard);
+        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     public void showWaitingRoom() {

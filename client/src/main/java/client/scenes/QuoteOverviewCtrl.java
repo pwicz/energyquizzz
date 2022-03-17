@@ -74,7 +74,7 @@ public class QuoteOverviewCtrl implements Initializable {
     }
 
     public void waitingRoom(){
-        mainCtrl.showWaitingRoom();
+        mainCtrl.showSplash();
     }
 
     public void refresh() {

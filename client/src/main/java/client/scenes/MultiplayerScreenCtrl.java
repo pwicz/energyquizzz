@@ -44,7 +44,12 @@ public class MultiplayerScreenCtrl {
     }
 
     public void leave(){
-        mainCtrl.showOverview();
+
+        if(t != null){
+            t.interrupt();
+        }
+
+        mainCtrl.showSplash();
     }
 
     //submits answer, stops time,

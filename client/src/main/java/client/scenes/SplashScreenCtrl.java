@@ -24,8 +24,8 @@ public class SplashScreenCtrl {
         mainCtrl.showOverview();
     }
 
-    public void showMultiplayerScreen(){
-        mainCtrl.showMultiplayerScreen();
+    public void showWaitingRoom(){
+        mainCtrl.showWaitingRoom();
     }
 
     public void showSingleplayerScreen() {
