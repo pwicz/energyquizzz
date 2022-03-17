@@ -1,6 +1,10 @@
 package server;
 
-import commons.*;
+import commons.ClientMessage;
+import commons.Game;
+import commons.Player;
+import commons.Question;
+import commons.ServerMessage;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
