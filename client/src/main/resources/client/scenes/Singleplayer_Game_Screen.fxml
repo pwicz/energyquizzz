@@ -52,17 +52,17 @@
          </font>
       </Label>
       <Text layoutX="431.0" layoutY="535.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="28.373046875" />
-      <Text fill="WHITE" layoutX="319.0" layoutY="694.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" wrappingWidth="199.99999999999977">
+      <Text fx:id="description1" fill="WHITE" layoutX="319.0" layoutY="694.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" wrappingWidth="199.99999999999977">
          <font>
             <Font size="15.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="656.0" layoutY="693.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" wrappingWidth="199.99999999999977">
+      <Text fx:id="description2" fill="WHITE" layoutX="656.0" layoutY="693.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" wrappingWidth="199.99999999999977">
          <font>
             <Font size="15.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="993.0" layoutY="693.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" wrappingWidth="199.99999999999977">
+      <Text fx:id="description3" fill="WHITE" layoutX="993.0" layoutY="693.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" wrappingWidth="199.99999999999977">
          <font>
             <Font size="15.0" />
          </font>
