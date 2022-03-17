@@ -22,6 +22,8 @@ public class SingleplayerLeaderboardCtrl {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
+    private int counter = 0;
+
     @FXML
     Button start;
 
@@ -58,15 +60,17 @@ public class SingleplayerLeaderboardCtrl {
     }
 
     public void insertLeaderboard() throws MalformedURLException { //needs to change to import the database leaderboard
+        counter++;
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<int[]> response = restTemplate.getForEntity("http://localhost:8080/api/scores/get5TopScores",
+        ResponseEntity<int[]> response = restTemplate.getForEntity("http://localhost:8080/api/scores/get" + counter + "TopScores",
                 int[].class);
         int[] scores = response.getBody();
         ArrayList<String> topScores = new ArrayList<>();
         for(int i = 0; i<scores.length;i++) {
             topScores.add(String.valueOf(scores[i]));
         }
-        leaderboard.getItems().addAll(topScores);
+        System.out.println(topScores.toString());
+        leaderboard.getItems().setAll(topScores);
     }
 
     public void leave(){
