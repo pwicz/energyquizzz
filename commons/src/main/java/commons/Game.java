@@ -6,6 +6,7 @@ public class Game {
 
     private List<Player> players;
     private String ID;
+    private boolean isMultiplayer;
 
     public Game(List<Player> players, String ID) {
         this.players = players;
@@ -30,5 +31,13 @@ public class Game {
 
     public void setID(String ID) {
         this.ID = ID;
+    }
+
+    public boolean isMultiplayer() {
+        return isMultiplayer;
+    }
+
+    public void setMultiplayer(boolean multiplayer) {
+        isMultiplayer = multiplayer;
     }
 }
