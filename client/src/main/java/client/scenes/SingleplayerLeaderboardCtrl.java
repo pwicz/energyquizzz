@@ -9,13 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
-import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Stream;
 
 public class SingleplayerLeaderboardCtrl {
 
