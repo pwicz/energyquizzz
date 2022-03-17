@@ -85,6 +85,10 @@ public class MainCtrl {
             case NEW_SINGLEPLAYER_GAME:
                 // do something else
                 break;
+            case LOAD_NEW_QUESTIONS:
+                showMultiplayerScreen();
+                System.out.println("[msg] loadingGame");
+                break;
             case TEST:
                 // for testing purposes only
                 System.out.println("It works! Received a msg!");
@@ -129,5 +133,7 @@ public class MainCtrl {
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
-
+    public Long getClientID() {
+        return clientID;
+    }
 }

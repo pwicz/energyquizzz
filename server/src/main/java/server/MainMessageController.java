@@ -31,9 +31,11 @@ public class MainMessageController {
                 break;
             case INIT_QUESTION:
                 result = new ServerMessage(ServerMessage.Type.LOAD_NEW_QUESTIONS);
+                break;
             case TEST:
                 // for testing purposes
                 result = new ServerMessage(ServerMessage.Type.TEST);
+                break;
             default:
                 // unknown message
         }
