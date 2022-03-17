@@ -36,42 +36,6 @@
             <Font size="45.0" />
          </font>
       </Label>
-      <Rectangle fx:id="emojiHolder" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" height="292.0" layoutX="765.0" layoutY="431.0" strokeType="INSIDE" styleClass="emoji-box" width="121.0" AnchorPane.leftAnchor="1312.0" AnchorPane.rightAnchor="79.0" AnchorPane.topAnchor="431.0">
-         <stroke>
-            <LinearGradient endX="1.0" endY="1.0">
-               <stops>
-                  <Stop>
-                     <color>
-                        <Color red="0.12941177189350128" green="0.6274510025978088" blue="0.9098039269447327" />
-                     </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                     <color>
-                        <Color red="0.21960784494876862" green="0.7803921699523926" blue="0.40784314274787903" />
-                     </color>
-                  </Stop>
-               </stops>
-            </LinearGradient>
-         </stroke>
-      </Rectangle>
-      <Rectangle fx:id="jokerHolder" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" height="292.0" layoutX="79.0" layoutY="431.0" strokeType="INSIDE" styleClass="joker-box" width="121.0" AnchorPane.leftAnchor="79.0" AnchorPane.rightAnchor="1312.0" AnchorPane.topAnchor="431.0">
-         <stroke>
-            <LinearGradient endX="1.0" endY="1.0">
-               <stops>
-                  <Stop>
-                     <color>
-                        <Color red="0.12941177189350128" green="0.6274510025978088" blue="0.9098039269447327" />
-                     </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                     <color>
-                        <Color red="0.21960784494876862" green="0.7803921699523926" blue="0.40784314274787903" />
-                     </color>
-                  </Stop>
-               </stops>
-            </LinearGradient>
-         </stroke>
-      </Rectangle>
       <Label layoutX="384.0" layoutY="640.0" styleClass="questionTitle" text="Gaming" textFill="WHITE">
          <font>
             <Font size="20.0" />
@@ -123,50 +87,10 @@
              <Image url="@/client/scenes/images/tempShit.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="1328.0" layoutY="443.0" onMouseClicked="#showEmoji" pickOnBounds="true" preserveRatio="true">
-         <styleClass>
-            <String fx:value="emoji" />
-            <String fx:value="hover-element" />
-         </styleClass></ImageView>
-      <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="1328.0" layoutY="539.0" onMouseClicked="#showEmoji" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@/client/scenes/images/tempShit.png" />
-         </image>
-         <styleClass>
-            <String fx:value="emoji" />
-            <String fx:value="hover-element" />
-         </styleClass>
-      </ImageView>
-      <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="1328.0" layoutY="630.0" onMouseClicked="#showEmoji" pickOnBounds="true" preserveRatio="true">
-         <styleClass>
-            <String fx:value="emoji" />
-            <String fx:value="hover-element" />
-         </styleClass></ImageView>
-      <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="95.0" layoutY="443.0" onMouseClicked="#cutAnswer" pickOnBounds="true" preserveRatio="true">
-         <styleClass>
-            <String fx:value="jokers" />
-            <String fx:value="hover-element" />
-         </styleClass>
-         <image>
-            <Image url="@/client/scenes/images/scissor.png" />
-         </image></ImageView>
+
       <ImageView fitHeight="80.0" fitWidth="90.0" layoutX="95.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="95.0" layoutY="539.0" onMouseClicked="#doublePoints" pickOnBounds="true" preserveRatio="true">
-         <styleClass>
-            <String fx:value="jokers" />
-            <String fx:value="hover-element" />
-         </styleClass>
-         <image>
-            <Image url="@/client/scenes/images/2x.png" />
-         </image></ImageView>
-      <ImageView fitHeight="80.0" fitWidth="90.0" focusTraversable="true" layoutX="95.0" layoutY="630.0" onMouseClicked="#lowerTime" pickOnBounds="true" preserveRatio="true">
-         <styleClass>
-            <String fx:value="jokers" />
-            <String fx:value="hover-element" />
-         </styleClass>
-         <image>
-            <Image url="@/client/scenes/images/hourglass.png" />
-         </image></ImageView>
+
+
       <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="293.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="293.0" AnchorPane.rightAnchor="293.0" AnchorPane.topAnchor="393.0">
          <styleClass>
             <String fx:value="option" />

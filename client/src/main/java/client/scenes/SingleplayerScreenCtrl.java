@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 
 
-public class MultiplayerScreenCtrl {
+public class SingleplayerScreenCtrl {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
@@ -33,11 +33,8 @@ public class MultiplayerScreenCtrl {
     Button submit;
 
 
-    double progress;
-    Thread t;
-
     @Inject
-    public MultiplayerScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public SingleplayerScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
         this.server = server;
 
@@ -47,61 +44,8 @@ public class MultiplayerScreenCtrl {
         mainCtrl.showOverview();
     }
 
-    //submits answer, stops time,
     public void submitAnswer(){
 
-    }
-
-    //shows an emoji
-    public void showEmoji(MouseEvent event){
-        System.out.println(event.getSource());
-    }
-
-    //removes oneanswer
-    public void cutAnswer(MouseEvent event){
-        System.out.println(event.getSource());
-    }
-
-    //doubles your points for this round
-    public void doublePoints(MouseEvent event){
-        System.out.println(event.getSource());
-    }
-
-    //lowers your time by X% amount
-    public void lowerTime(MouseEvent event){
-        if(progress > 0.2) {
-            progress *= 0.8;
-            timeBar.setProgress(progress);
-        }
-    }
-
-    public void decreaseTime(){
-        if(t != null)
-            t.interrupt();
-        progress = 1.00;
-        Task task = new Task<Void>() {
-            @Override
-            public Void call() throws Exception {
-                while (progress>=0.00) {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            timeBar.setProgress(progress);
-                            progress -= 0.001;
-                            if(progress <= 0){
-                                timeBar.setProgress(0);
-                            }
-                        }
-                    });
-                    Thread.sleep(10);
-                }
-
-                return null;
-            }
-        };
-
-        t = new Thread(task);
-        t.start();
     }
 
     public void lockAnswer(MouseEvent mouseEvent) {

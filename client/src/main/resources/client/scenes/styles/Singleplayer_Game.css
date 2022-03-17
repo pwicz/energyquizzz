@@ -31,15 +31,6 @@
     -fx-font-size: 20;
 }
 
-.emoji-box{
-    -fx-background-color: none;
-    -fx-stroke: linear-gradient(to right,#38c768, #21A0E8);
-}
-
-.joker-box{
-    -fx-background-color: none;
-    -fx-stroke: linear-gradient(to left,#38c768, #21A0E8);
-}
 
 .option:hover{
     -fx-stroke: linear-gradient(#38c768, #21A0E8);
