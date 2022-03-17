@@ -64,7 +64,7 @@ public class Activity {
 
     @Override
     public String toString() {
-        return "Question{" +
+        return "Activity{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", consumptionInWh=" + consumptionInWh +
