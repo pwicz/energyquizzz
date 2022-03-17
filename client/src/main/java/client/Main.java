@@ -30,6 +30,8 @@ import client.scenes.MainCtrl;
 import client.scenes.SingleplayerLeaderboardCtrl;
 import client.scenes.SplashScreenCtrl;
 import client.scenes.MultiplayerScreenCtrl;
+import client.scenes.InBetweenScoreCtrl;
+import client.scenes.LeaveCtrl;
 
 
 import javafx.application.Application;
@@ -55,10 +57,12 @@ public class Main extends Application {
         var multiplayer =
                 FXML.load(MultiplayerScreenCtrl.class, "client","scenes", "Multiplayer_Game_Screen.fxml");
         var splashScreen = FXML.load(SplashScreenCtrl.class, "client","scenes", "Splash_Screen.fxml");
-
+        var inBetweenScore = FXML.load(InBetweenScoreCtrl.class, "client", "scenes", "InBetweenScores.fxml");
+        var leave = FXML.load(LeaveCtrl.class, "client", "scenes", "Leave_screen.fxml");
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
         
         mainCtrl.initialize(primaryStage, overview, add, waitingRoom,
-                singleplayerLeaderboard, multiplayer, splashScreen);
+                singleplayerLeaderboard, multiplayer, splashScreen, inBetweenScore,
+                leave);
     }
 }

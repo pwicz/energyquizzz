@@ -46,6 +46,12 @@ public class MainCtrl {
     private Scene singleLeaderboard;
     private SingleplayerLeaderboardCtrl singleplayerLeaderboardCtrl;
 
+    private Scene inBetweenScore;
+    private InBetweenScoreCtrl inBetweenScoreCtrl;
+
+    private Scene leave;
+    private LeaveCtrl leaveCtrl;
+
     private String clientID = null;
 
     @Inject
@@ -57,7 +63,9 @@ public class MainCtrl {
                            Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
                            Pair<SingleplayerLeaderboardCtrl, Parent> singleplayerLeaderboard,
                            Pair<MultiplayerScreenCtrl, Parent> multiplayer,
-                           Pair<SplashScreenCtrl, Parent> splashScreen) {
+                           Pair<SplashScreenCtrl, Parent> splashScreen,
+                           Pair<InBetweenScoreCtrl, Parent> inBetweenScore,
+                           Pair<LeaveCtrl, Parent> leave) {
         this.primaryStage = primaryStage;
 
         this.overviewCtrl = overview.getKey();
@@ -76,6 +84,13 @@ public class MainCtrl {
 
         this.splashScreenCtrl = splashScreen.getKey();
         this.splash = new Scene(splashScreen.getValue());
+
+        this.inBetweenScoreCtrl = inBetweenScore.getKey();
+        this.inBetweenScore = new Scene(inBetweenScore.getValue());
+
+        this.leave = new Scene(leave.getValue());
+        this.leaveCtrl = leave.getKey();
+
 
         showOverview();
         primaryStage.show();
@@ -110,6 +125,20 @@ public class MainCtrl {
         overviewCtrl.refresh();
     }
 
+    public void showInbetweenScore() {
+        primaryStage.setTitle("Score");
+        primaryStage.setScene(inBetweenScore);
+    }
+
+    public void showLeave(Scene scene){
+        leaveCtrl.setPrevious(scene);
+        primaryStage.setScene(leave);
+    }
+
+    public void stay(Scene previous){
+        primaryStage.setScene(previous);
+    }
+
     public void showAdd() {
         // For testing only: send a test message to the server
         server.send("/app/general", new ClientMessage(ClientMessage.Type.TEST, clientID, "0"));
@@ -117,33 +146,54 @@ public class MainCtrl {
 
         primaryStage.setTitle("Quotes: Adding Quote");
         primaryStage.setScene(add);
-        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     public void showSplash(){
         primaryStage.setTitle("SplashScreen");
         primaryStage.setScene(splash);
-        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     public void showMultiplayerScreen(){
         primaryStage.setTitle("Multiplayer");
         primaryStage.setScene(multiplayer);
         multiplayerScreenCtrl.decreaseTime();
-        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     public void showSingleLeaderboardScreen(){
         primaryStage.setTitle("Leaderboard");
         primaryStage.setScene(singleLeaderboard);
-        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     public void showWaitingRoom() {
         primaryStage.setTitle("WaitingRoomScreen");
         primaryStage.setScene(waitingRoom);
-        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
+    public Scene getInBetweenScore() {
+        return inBetweenScore;
+    }
 
+    public Scene getMultiplayer() {
+        return multiplayer;
+    }
+
+    public Scene getLeave() {
+        return leave;
+    }
+
+    public Scene getOverview() {
+        return overview;
+    }
+
+    public Scene getSingleLeaderboard() {
+        return singleLeaderboard;
+    }
+
+    public Scene getSplash() {
+        return splash;
+    }
+
+    public Scene getWaitingRoom() {
+        return waitingRoom;
+    }
 }

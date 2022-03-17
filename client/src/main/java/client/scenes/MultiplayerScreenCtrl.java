@@ -44,17 +44,12 @@ public class MultiplayerScreenCtrl {
     }
 
     public void leave(){
-
-        if(t != null){
-            t.interrupt();
-        }
-
-        mainCtrl.showSplash();
+        mainCtrl.showLeave(mainCtrl.getMultiplayer());
     }
 
     //submits answer, stops time,
     public void submitAnswer(){
-
+        mainCtrl.showInbetweenScore();
     }
 
     //shows an emoji

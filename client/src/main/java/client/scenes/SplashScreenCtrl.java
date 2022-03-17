@@ -21,7 +21,7 @@ public class SplashScreenCtrl {
     }
 
     public void leave(){
-        mainCtrl.showOverview();
+        mainCtrl.showLeave(mainCtrl.getSplash());
     }
 
     public void showWaitingRoom(){

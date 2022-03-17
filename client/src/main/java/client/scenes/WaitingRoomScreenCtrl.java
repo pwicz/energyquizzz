@@ -20,6 +20,6 @@ public class WaitingRoomScreenCtrl {
     }
 
     public void leave(){
-        mainCtrl.showSplash();
+        mainCtrl.showLeave(mainCtrl.getWaitingRoom());
     }
 }
