@@ -97,7 +97,7 @@ public class MainCtrl {
 
     public void showAdd() {
         // For testing only: send a test message to the server
-        server.send("/app/general", new ClientMessage(ClientMessage.Type.TEST, clientID, 0L));
+        server.send("/app/general", new ClientMessage(ClientMessage.Type.TEST, Long.toString(clientID), "0"));
         System.out.println("DID sth");
 
         primaryStage.setTitle("Quotes: Adding Quote");
