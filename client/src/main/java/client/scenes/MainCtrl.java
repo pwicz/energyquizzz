@@ -46,7 +46,7 @@ public class MainCtrl {
     private Scene singleLeaderboard;
     private SingleplayerLeaderboardCtrl singleplayerLeaderboardCtrl;
 
-    private Long clientID = null;
+    private String clientID = null;
 
     @Inject
     public MainCtrl(ServerUtils server) {
@@ -66,7 +66,7 @@ public class MainCtrl {
         showOverview();
         primaryStage.show();
 
-        clientID = 233L; // hardcoded: we need to somehow get it from the server
+        clientID = "233"; // hardcoded: we need to somehow get it from the server
 
         server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, m -> {
             handleServerMessage(m);
@@ -84,6 +84,7 @@ public class MainCtrl {
             case TEST:
                 // for testing purposes only
                 System.out.println("It works! Received a msg!");
+                break;
             default:
                 // invalid msg type
         }
@@ -97,7 +98,7 @@ public class MainCtrl {
 
     public void showAdd() {
         // For testing only: send a test message to the server
-        server.send("/app/general", new ClientMessage(ClientMessage.Type.TEST, clientID, 0L));
+        server.send("/app/general", new ClientMessage(ClientMessage.Type.TEST, clientID, "0"));
         System.out.println("DID sth");
 
         primaryStage.setTitle("Quotes: Adding Quote");
