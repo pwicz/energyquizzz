@@ -54,7 +54,8 @@ public class MainCtrl {
     }
 
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
-                           Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom) {
+                           Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
+                           Pair<SingleplayerLeaderboardCtrl, Parent> singleplayerLeaderboard) {
         this.primaryStage = primaryStage;
         this.overviewCtrl = overview.getKey();
         this.overview = new Scene(overview.getValue());
@@ -63,7 +64,11 @@ public class MainCtrl {
         this.add = new Scene(add.getValue());
         this.waitingRoom = new Scene(waitingRoom.getValue());
 
-        showOverview();
+        this.singleLeaderboard = new Scene(singleplayerLeaderboard.getValue());
+        this.singleplayerLeaderboardCtrl = singleplayerLeaderboard.getKey();
+
+        //        showOverview();
+        showSingleLeaderboardScreen();
         primaryStage.show();
 
         clientID = 233L; // hardcoded: we need to somehow get it from the server
@@ -114,7 +119,8 @@ public class MainCtrl {
     }
 
     public void showSingleLeaderboardScreen(){
-
+        primaryStage.setTitle("Start the singleplayer game");
+        primaryStage.setScene(singleLeaderboard);
     }
 
     public void showWaitingRoom() {
