@@ -6,16 +6,15 @@ public class ClientMessage {
     }
 
     public Type type;
-    public Long playerID;
-    public Long gameID;
+    public String playerID;
+    public String gameID;
     // add more fields as we start exchanging messages
 
     public String playerName;
-
     public ClientMessage() {
     }
 
-    public ClientMessage(Type type, Long playerID, Long gameID) {
+    public ClientMessage(Type type, String playerID, String gameID) {
         this.type = type;
         this.playerID = playerID;
         this.gameID = gameID;
