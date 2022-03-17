@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javax.swing.text.html.ImageView;
 
 
 public class SingleplayerScreenCtrl {
@@ -28,6 +30,24 @@ public class SingleplayerScreenCtrl {
     Rectangle option3;
 
     @FXML
+    ImageView image1;
+
+    @FXML
+    ImageView image2;
+
+    @FXML
+    ImageView image3;
+
+    @FXML
+    Text description1;
+
+    @FXML
+    Text description2;
+
+    @FXML
+    Text description3;
+
+    @FXML
     Button submit;
 
 
@@ -45,6 +65,7 @@ public class SingleplayerScreenCtrl {
     public void submitAnswer(){
 
     }
+
 
     public void lockAnswer(MouseEvent mouseEvent) {
 
