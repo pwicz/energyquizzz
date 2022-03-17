@@ -32,6 +32,7 @@ public class MainMessageController {
             case TEST:
                 // for testing purposes
                 result = new ServerMessage(ServerMessage.Type.TEST);
+                break;
             default:
                 // unknown message
         }
