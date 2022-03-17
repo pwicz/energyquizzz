@@ -22,11 +22,15 @@ import java.net.URISyntaxException;
 
 import client.scenes.WaitingRoomScreenCtrl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Injector;
 
 import client.scenes.AddQuoteCtrl;
 import client.scenes.QuoteOverviewCtrl;
 import client.scenes.MainCtrl;
+import client.scenes.SingleplayerLeaderboardCtrl;
+import client.scenes.SplashScreenCtrl;
+import client.scenes.MultiplayerScreenCtrl;
 
 
 import javafx.application.Application;
@@ -47,6 +51,12 @@ public class Main extends Application {
         var overview = FXML.load(QuoteOverviewCtrl.class, "client", "scenes", "QuoteOverview.fxml");
         var add = FXML.load(AddQuoteCtrl.class, "client", "scenes", "AddQuote.fxml");
         var waitingRoom = FXML.load(WaitingRoomScreenCtrl.class, "client","scenes", "Waiting_Room_Screen.fxml");
+        var singleplayer = FXML.load(WaitingRoomScreenCtrl.class, "client","scenes", "Waiting_Room_Screen.fxml");
+        var multiplayer = FXML.load(WaitingRoomScreenCtrl.class, "client","scenes", "Waiting_Room_Screen.fxml");
+        var splashScreen = FXML.load(WaitingRoomScreenCtrl.class, "client","scenes", "Waiting_Room_Screen.fxml");
+//        var inBetweenScore = FXML.load(WaitingRoomScreenCtrl.class, "client","scenes", "Waiting_Room_Screen.fxml");
+        var singleLeaderboard = FXML.load(WaitingRoomScreenCtrl.class, "client","scenes", "Waiting_Room_Screen.fxml");
+
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
         mainCtrl.initialize(primaryStage, overview, add, waitingRoom);
