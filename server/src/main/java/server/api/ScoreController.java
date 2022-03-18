@@ -41,16 +41,30 @@ public class ScoreController {
         playerScores.put("Player 5", 0);
     }
 
+    /**
+     *
+     * @return all scores in database
+     */
     @GetMapping("/getAllScores")
     public Map<String, Integer> getAllScores() {
         return playerScores;
     }
 
+    /**
+     *
+     * @param playerName name of player to return score
+     * @return score of a specific player
+     */
     @GetMapping("/getScoreOf{playerName}")
     public Integer getScoreAt(@PathVariable("playerName") String playerName) {
         return playerScores.get(playerName);
     }
 
+    /**
+     *
+     * @param number Number of top score to return
+     * @return Returns a specific top score
+     */
     @GetMapping("/get{number}TopScores")
     public List<Integer> getTopScores(@PathVariable("number") int number) {
         List<Integer> topScores = new ArrayList<>();
