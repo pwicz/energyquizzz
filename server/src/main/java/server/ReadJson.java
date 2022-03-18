@@ -22,7 +22,11 @@ public class ReadJson {
         mapper.registerModule(module);
 
         try {
-                activities = mapper.readValue(new File("server/src/main/java/server/package.json"), new TypeReference<List<Activity>>(){});
+            //uncomment for testing small size
+            activities = mapper.readValue(new File("server/src/main/java/server/test.json"), new TypeReference<List<Activity>>(){});
+            //uncomment for real game big size
+//            activities = mapper.readValue(new File("server/src/main/java/server/activities.json"), new TypeReference<List<Activity>>(){});
+
         }catch(IOException e) {
             e.printStackTrace();
         }
