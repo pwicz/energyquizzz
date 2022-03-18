@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import commons.Activity;
 
-import javax.servlet.http.HttpSessionIdListener;
 import java.io.IOException;
 
 public class CustomActivityDeserialiser extends StdDeserializer<Activity> {
