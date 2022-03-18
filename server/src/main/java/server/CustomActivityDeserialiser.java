@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import commons.Activity;
 
+import javax.servlet.http.HttpSessionIdListener;
 import java.io.IOException;
 
 public class CustomActivityDeserialiser extends StdDeserializer<Activity> {
@@ -24,6 +25,7 @@ public class CustomActivityDeserialiser extends StdDeserializer<Activity> {
     public Activity deserialize
             (JsonParser parser, DeserializationContext ctxt) throws IOException, JacksonException {
         Activity activity = new Activity();
+
         ObjectCodec codec = parser.getCodec();
         JsonNode node = codec.readTree(parser);
 

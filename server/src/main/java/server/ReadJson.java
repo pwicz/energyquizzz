@@ -6,9 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import commons.Activity;
 
@@ -19,9 +17,10 @@ public class ReadJson {
         ObjectMapper mapper = new ObjectMapper();
 
         SimpleModule module =
-                new SimpleModule("CustomCarDeserializer", new Version(1, 0, 0, null, null, null));
+                new SimpleModule("CustomActivityDeserializer", new Version(1, 0, 0, null, null, null));
         module.addDeserializer(Activity.class, new CustomActivityDeserialiser());
         mapper.registerModule(module);
+
         try {
                 activities = mapper.readValue(new File("server/src/main/java/server/package.json"), new TypeReference<List<Activity>>(){});
         }catch(IOException e) {
@@ -32,8 +31,4 @@ public class ReadJson {
             System.out.println(a);
         }
     }
-
-
-
-
 }
