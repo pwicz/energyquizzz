@@ -61,8 +61,8 @@ public class SingleplayerLeaderboardCtrl {
     public void insertLeaderboard() throws MalformedURLException { //needs to change to import the database leaderboard
         counter++;
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<int[]> response = restTemplate.getForEntity("http://localhost:8080/api/scores/get"
-                        + counter + "TopScores", int[].class);
+        ResponseEntity<int[]> response = restTemplate.getForEntity("http://localhost:8080/api/scores/get"+
+                        "Top" + counter + "Scores", int[].class);
         int[] scores = response.getBody();
         ArrayList<String> topScores = new ArrayList<>();
         if(scores != null){

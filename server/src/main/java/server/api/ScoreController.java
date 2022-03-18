@@ -34,6 +34,7 @@ public class ScoreController {
 
     public ScoreController() {
         this.playerScores = new HashMap<>();
+        //Testing purposes
         playerScores.put("Player 1", 1250);
         playerScores.put("Player 2", 500);
         playerScores.put("Player 3", 1500);
@@ -43,7 +44,7 @@ public class ScoreController {
 
     /**
      *
-     * @return all scores in database
+     * @return All scores unordered in database
      */
     @GetMapping("/getAllScores")
     public Map<String, Integer> getAllScores() {
@@ -56,27 +57,46 @@ public class ScoreController {
      * @return score of a specific player
      */
     @GetMapping("/getScoreOf{playerName}")
-    public Integer getScoreAt(@PathVariable("playerName") String playerName) {
+    public Integer getScoreOf(@PathVariable("playerName") String playerName) {
         return playerScores.get(playerName);
     }
 
     /**
      *
-     * @param number Number of top score to return
-     * @return Returns a specific top score
+     * @param number Amount of high scores to return
+     * @return A specific amount of high scores ordered from high to low
      */
-    @GetMapping("/get{number}TopScores")
+    @GetMapping("/getTop{number}Scores")
     public List<Integer> getTopScores(@PathVariable("number") int number) {
         List<Integer> topScores = new ArrayList<>();
         for(String key: playerScores.keySet()) {
             topScores.add(playerScores.get(key));
         }
+        if(number <= 0 || number > topScores.size()) throw new IllegalArgumentException("Index is out of boundaries of leaderboard");
         Collections.sort(topScores);
+        Collections.reverse(topScores);
+        System.out.println(topScores.toString());
         List<Integer> res = new ArrayList<>();
         for(int i = 0; i < number; i++){
             res.add(topScores.get(i));
         }
-        Collections.reverse(res);
         return res;
+    }
+
+    /**
+     * Gets specific score from leaderboard
+     * @param number Top high score to return (starting from 1)
+     * @return Specific high score
+     */
+    @GetMapping("/getTopScore{number}")
+    public int getTopScore(@PathVariable("number") int number) {
+        List<Integer> topScores = new ArrayList<>();
+        for(String key: playerScores.keySet()) {
+            topScores.add(playerScores.get(key));
+        }
+        if(number < 1 || number > topScores.size()) throw new IllegalArgumentException("Index is out of boundaries of leaderboard");
+        Collections.sort(topScores);
+        Collections.reverse(topScores);
+        return topScores.get(number - 1);
     }
 }
