@@ -65,9 +65,8 @@ public class TestScoreRepository implements ScoreRepository {
     public void deleteById(Long aLong) {
         call("deleteById");
 
-        var found = scores.stream().filter(q -> q.id == aLong).collect(Collectors.toList());
+        var found = scores.stream().filter(s -> s.id == aLong).collect(Collectors.toList());
         if(found.size() > 0) scores.remove(found.get(0));
-
     }
 
     @Override
