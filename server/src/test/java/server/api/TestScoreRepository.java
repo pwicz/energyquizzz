@@ -36,8 +36,17 @@ public class TestScoreRepository implements ScoreRepository {
     public Page<Score> findAll(Pageable pageable) {
         call("findAll");
 
+        var pageSize = pageable.getPageSize();
+        List<Score> sortedCopy = new ArrayList<>(List.copyOf(scores));
+        sortedCopy.sort((s1, s2) -> {
+            if(s1.playerScore < s2.playerScore) return 1;
+            if(s1.playerScore > s2.playerScore) return -1;
+            return 0;
+        });
         List<Score> toReturn = new ArrayList<>();
-        toReturn.add(scores.get(pageable.getPageNumber()));
+
+        for(int i = 0; i < sortedCopy.size() && i < pageSize; ++i) toReturn.add(sortedCopy.get(i));
+
         return new PageImpl<Score>(toReturn);
     }
 
