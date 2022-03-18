@@ -3,6 +3,8 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Activity;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -65,6 +67,9 @@ public class SingleplayerScreenCtrl {
     @FXML
     Button submit;
 
+    Thread timerThread;
+    double timerProgress;
+
     @Inject
     public SingleplayerScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
@@ -79,9 +84,7 @@ public class SingleplayerScreenCtrl {
 
     }
 
-
     public void lockAnswer(MouseEvent mouseEvent) {
-
         option1.setStyle("-fx-border-color: white");
         option2.setStyle("-fx-border-color: white");
         option3.setStyle("-fx-border-color: white");
@@ -100,12 +103,50 @@ public class SingleplayerScreenCtrl {
         for(int i = 0; i < activities.size() && i < 3; ++i){
             Activity a = activities.get(i);
 
+            if(a == null) continue;
+
             titles.get(i).setText(Integer.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
 
             File file = new File(a.imagePath);
             images.get(i).setImage(new Image(file.toURI().toString()));
         }
+    }
+
+    /**
+     * Sets visible timer to a desired value and starts decreasing it in the rate calculated using totalTime.
+     *
+     * @param fractionLeft fraction of a full timer that we should start counting down from
+     * @param totalTime time that the full timer corresponds to
+     */
+    public void setTimer(double fractionLeft, double totalTime){
+        timerProgress = fractionLeft;
+
+        // by default, our timer is 10.0s long
+        if(totalTime <= 0.0) totalTime = 10.0;
+        final double decreaseBy = 0.001 * 10.0 / totalTime;
+
+        if(timerThread != null) timerThread.interrupt();
+        Task task = new Task<Void>() {
+            @Override
+            public Void call() throws Exception {
+                while (timerProgress>=0.00) {
+                    Platform.runLater(() -> {
+                        timeBar.setProgress(timerProgress);
+                        timerProgress -= decreaseBy;
+                        if(timerProgress <= 0){
+                            timeBar.setProgress(0);
+                        }
+                    });
+                    Thread.sleep(10);
+                }
+
+                return null;
+            }
+        };
+
+        timerThread = new Thread(task);
+        timerThread.start();
     }
 
 }
