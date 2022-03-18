@@ -10,7 +10,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ScoreControllerTest {
-    public int nextInt;
     private TestScoreRepository repo;
     private ScoreController s;
 
@@ -34,16 +33,10 @@ public class ScoreControllerTest {
 
         List<String> expectedOperations = List.of("save", "save", "findAll");
         assertEquals(expectedOperations, repo.calledMethods);
-
-    }
-
-    private static  Score getScore(int score){
-        String player = "player";
-        return new Score( player, score);
     }
 
     @Test
-    public void testGetTopScores (){
+    public void testGetTopScores(){
         List<Score> expected = new ArrayList<>();
         expected.add(getScore(888));
         expected.add(getScore(654));
@@ -58,5 +51,22 @@ public class ScoreControllerTest {
         List<String> expectedOperations = List.of("save", "save", "save", "findAll");
         assertEquals(expectedOperations, repo.calledMethods);
 
+    }
+
+    @Test
+    public void testDeleteScore(){
+        Score expected = getScore(420);
+        expected.id = 422L;
+        s.addScore(expected);
+
+        Score actual = s.deleteScore(422L).getBody();
+
+        assertEquals(expected, actual);
+        assertEquals(s.getAllScores().stream().filter(s -> s.id == expected.id).count(), 0);
+    }
+
+    private static Score getScore(int score){
+        String player = "player";
+        return new Score( player, score);
     }
 }
