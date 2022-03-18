@@ -15,11 +15,14 @@
  */
 package server.api;
 import java.util.List;
+import java.util.Optional;
+
 import commons.Score;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,9 +68,9 @@ public class ScoreController {
 
     @PostMapping(path = { "", "/"})
     public ResponseEntity<Score> addScore(@RequestBody Score score){
-        //data validation
 
-        if(score.playerName.length()==0){
+        // data validation
+        if(score.playerName == null || score.playerName.isEmpty()){
             return ResponseEntity.badRequest().build();
         }
 
@@ -75,6 +78,14 @@ public class ScoreController {
         return ResponseEntity.ok(saved);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Score> deleteScore(@PathVariable("id") long id){
 
+        Optional<Score> scoreToRemove = repo.findById(id);
+        if(scoreToRemove.isEmpty()) return ResponseEntity.notFound().build();
+
+        repo.deleteById(id);
+        return ResponseEntity.ok(scoreToRemove.get());
+    }
 
 }
