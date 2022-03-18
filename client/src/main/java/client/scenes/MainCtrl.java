@@ -24,6 +24,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import static javafx.application.Platform.runLater;
+
 public class MainCtrl {
 
     private final ServerUtils server;
@@ -41,10 +43,13 @@ public class MainCtrl {
     private Scene splash;
 
     private Scene question;
-    private  MultiplayerScreenCtrl multiplayerScreenCtrl;
+    private MultiplayerScreenCtrl multiplayerScreenCtrl;
 
     private Scene singleLeaderboard;
     private SingleplayerLeaderboardCtrl singleplayerLeaderboardCtrl;
+
+    private Scene singleplayerScreen;
+    private SingleplayerScreenCtrl singleplayerScreenCtrl;
 
     private String clientID = null;
 
@@ -55,7 +60,8 @@ public class MainCtrl {
 
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
                            Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
-                           Pair<SingleplayerLeaderboardCtrl, Parent> singleplayerLeaderboard) {
+                           Pair<SingleplayerLeaderboardCtrl, Parent> singleplayerLeaderboard,
+                           Pair<SingleplayerScreenCtrl, Parent> singleplayerGame){
         this.primaryStage = primaryStage;
         this.overviewCtrl = overview.getKey();
         this.overview = new Scene(overview.getValue());
@@ -66,6 +72,9 @@ public class MainCtrl {
 
         this.singleLeaderboard = new Scene(singleplayerLeaderboard.getValue());
         this.singleplayerLeaderboardCtrl = singleplayerLeaderboard.getKey();
+
+        this.singleplayerScreen = new Scene(singleplayerGame.getValue());
+        this.singleplayerScreenCtrl = singleplayerGame.getKey();
 
         //        showOverview();
         showSingleLeaderboardScreen();
@@ -84,7 +93,12 @@ public class MainCtrl {
                 // do something
                 break;
             case NEW_SINGLEPLAYER_GAME:
-                // do something else
+                // runLater() must be used to run the following code
+                // on the JavaFX Application Thread
+                runLater(() -> {
+                    showSingleplayerGameScreen();
+//                    singleplayerScreenCtrl.displayActivities(msg.question.activities);
+                });
                 break;
             case TEST:
                 // for testing purposes only
@@ -128,6 +142,11 @@ public class MainCtrl {
         primaryStage.setTitle("WaitingRoomScreen");
         primaryStage.setScene(waitingRoom);
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
+    }
+
+    public void showSingleplayerGameScreen(){
+        primaryStage.setTitle("Singleplayer");
+        primaryStage.setScene(singleplayerScreen);
     }
 
     public String getClientID() {
