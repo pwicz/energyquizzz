@@ -17,7 +17,7 @@ public class ReadJson {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            activities = mapper.readValue(new File("package.json"), new TypeReference<List<Activity>>(){});
+            activities = mapper.readValue(new File("server/src/main/java/server/package.json"), new TypeReference<List<Activity>>(){});
         }catch(IOException e) {
             e.printStackTrace();
         }

@@ -1,11 +1,5 @@
 [
   {
-    "name": "database",
-    "version": "1.0.0",
-    "dependencies": {
-    }
-  },
-  {
     "id": "38-hairdryer",
     "image_path": "38/hairdryer.png",
     "title": "Using a hairdryer for an hour",
