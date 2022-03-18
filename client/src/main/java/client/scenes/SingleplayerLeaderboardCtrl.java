@@ -54,6 +54,10 @@ public class SingleplayerLeaderboardCtrl {
         System.out.println(name); // You need to press enter when inserting you name.
     }
 
+    /**
+     * Sets leaderboard elements to display top scores from server from high to low
+     * @throws MalformedURLException if url is invalid or changed from Score Controller
+     */
     public void insertLeaderboard() throws MalformedURLException { //needs to change to import the database leaderboard
         counter++;
         RestTemplate restTemplate = new RestTemplate();
@@ -61,9 +65,12 @@ public class SingleplayerLeaderboardCtrl {
                         + counter + "TopScores", int[].class);
         int[] scores = response.getBody();
         ArrayList<String> topScores = new ArrayList<>();
-        for(int i = 0; i<scores.length;i++) {
-            topScores.add(String.valueOf(scores[i]));
+        if(scores != null){
+            for (int score : scores) {
+                topScores.add(String.valueOf(score));
+            }
         }
+
         System.out.println(topScores.toString());
         leaderboard.getItems().setAll(topScores);
     }
