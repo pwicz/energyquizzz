@@ -72,7 +72,9 @@ public class ScoreController {
         for(String key: playerScores.keySet()) {
             topScores.add(playerScores.get(key));
         }
-        if(number <= 0 || number > topScores.size()) throw new IllegalArgumentException("Index is out of boundaries of leaderboard");
+        if(number <= 0 || number > topScores.size()){
+            throw new IllegalArgumentException("Index is out of boundaries of leaderboard");
+        }
         Collections.sort(topScores);
         Collections.reverse(topScores);
         System.out.println(topScores.toString());
@@ -94,7 +96,9 @@ public class ScoreController {
         for(String key: playerScores.keySet()) {
             topScores.add(playerScores.get(key));
         }
-        if(number < 1 || number > topScores.size()) throw new IllegalArgumentException("Index is out of boundaries of leaderboard");
+        if(number < 1 || number > topScores.size()){
+            throw new IllegalArgumentException("Index is out of boundaries of leaderboard");
+        }
         Collections.sort(topScores);
         Collections.reverse(topScores);
         return topScores.get(number - 1);
