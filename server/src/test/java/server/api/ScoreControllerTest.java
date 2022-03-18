@@ -42,20 +42,21 @@ public class ScoreControllerTest {
         return new Score( player, score);
     }
 
-    /*@Test //not working
+    @Test
     public void testGetTopScores (){
         List<Score> expected = new ArrayList<>();
-        expected.add(getScore(432));
+        expected.add(getScore(888));
         expected.add(getScore(654));
 
+        s.addScore(getScore(432));
         s.addScore(expected.get(0));
         s.addScore(expected.get(1));
 
-        var actual = s.getTopScores(1).getBody();
-        assertEquals(expected.get(0), actual);
+        var actual = s.getTopScores(2).getBody();
+        assertEquals(expected, actual);
 
-        List<String> expectedOperations = List.of("save", "save", "findAll");
+        List<String> expectedOperations = List.of("save", "save", "save", "findAll");
         assertEquals(expectedOperations, repo.calledMethods);
 
-    }*/
+    }
 }
