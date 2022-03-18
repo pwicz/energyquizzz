@@ -18,7 +18,7 @@ public class ReadJson {
 
         SimpleModule module =
                 new SimpleModule("CustomActivityDeserializer", new Version(1, 0, 0, null, null, null));
-        module.addDeserializer(Activity.class, new CustomActivityDeserialiser());
+        module.addDeserializer(Activity.class, new CustomActivityDeserializer());
         mapper.registerModule(module);
 
         try {

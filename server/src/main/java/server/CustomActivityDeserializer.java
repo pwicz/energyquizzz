@@ -10,13 +10,13 @@ import commons.Activity;
 
 import java.io.IOException;
 
-public class CustomActivityDeserialiser extends StdDeserializer<Activity> {
+public class CustomActivityDeserializer extends StdDeserializer<Activity> {
 
-    public CustomActivityDeserialiser() {
+    public CustomActivityDeserializer() {
         this(null);
     }
 
-    public CustomActivityDeserialiser(Class<Activity> a) {
+    public CustomActivityDeserializer(Class<Activity> a) {
         super(a);
     }
 
