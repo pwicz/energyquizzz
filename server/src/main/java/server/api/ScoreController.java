@@ -67,7 +67,7 @@ public class ScoreController {
     public ResponseEntity<Score> addScore(@RequestBody Score score){
         //data validation
 
-        if(score.playerName.length()==0 || Integer.valueOf(score.playerScore)==null){
+        if(score.playerName.length()==0){
             return ResponseEntity.badRequest().build();
         }
 
