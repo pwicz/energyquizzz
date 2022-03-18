@@ -20,7 +20,12 @@ import static com.google.inject.Guice.createInjector;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import client.scenes.*;
+import client.scenes.AddQuoteCtrl;
+import client.scenes.MainCtrl;
+import client.scenes.QuoteOverviewCtrl;
+import client.scenes.SingleplayerLeaderboardCtrl;
+import client.scenes.SingleplayerScreenCtrl;
+import client.scenes.WaitingRoomScreenCtrl;
 import com.google.inject.Injector;
 
 
@@ -38,7 +43,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-
         var overview = FXML.load(QuoteOverviewCtrl.class, "client", "scenes", "QuoteOverview.fxml");
         var add = FXML.load(AddQuoteCtrl.class, "client", "scenes", "AddQuote.fxml");
         var waitingRoom = FXML.load(WaitingRoomScreenCtrl.class, "client","scenes", "Waiting_Room_Screen.fxml");
