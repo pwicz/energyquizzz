@@ -9,6 +9,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import server.database.ActivityRepository;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 @Controller
@@ -39,6 +41,8 @@ public class MainMessageController {
                 break;
             case SUBMIT_ANSWER:
                 result = new ServerMessage(ServerMessage.Type.DISPLAY_ANSWER);
+                showLeaderboard(msg.playerID);
+                showQuestions(msg.playerID);
                 break;
             case TEST:
                 // for testing purposes
@@ -59,6 +63,38 @@ public class MainMessageController {
         }
 
 
+    }
+
+    public void showLeaderboard(String playerID) {
+        Thread myThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                simpMessagingTemplate.convertAndSend("/topic/client/" + playerID,
+                        new ServerMessage(ServerMessage.Type.DISPLAY_INBETWEENSCORES));
+            }
+        };
+        myThread.start();
+    }
+
+    public void showQuestions(String playerID) {
+        Thread myThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(6000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                simpMessagingTemplate.convertAndSend("/topic/client/" + playerID,
+                        new ServerMessage(ServerMessage.Type.LOAD_NEW_QUESTIONS));
+            }
+        };
+        myThread.start();
     }
 
     private ServerMessage initMultiplayerGame(ClientMessage msg){

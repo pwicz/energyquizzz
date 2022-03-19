@@ -107,6 +107,12 @@ public class MainCtrl {
                 });
                 System.out.println("[msg] Answer was displayed");
                 break;
+            case DISPLAY_INBETWEENSCORES:
+                runLater(() -> {
+                    showWaitingRoom();
+                });
+                System.out.println("[msg] show leaderboard ");
+                break;
             case TEST:
                 // for testing purposes only
                 System.out.println("It works! Received a msg!");
