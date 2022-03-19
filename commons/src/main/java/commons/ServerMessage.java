@@ -10,6 +10,10 @@ public class ServerMessage {
     public Type type;
     // add more fields as we start exchanging messages
 
+    public Question question;
+    public int score;
+    public String gameID;
+
     public ServerMessage() {
     }
 

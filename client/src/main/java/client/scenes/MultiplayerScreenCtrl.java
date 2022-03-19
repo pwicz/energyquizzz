@@ -2,14 +2,23 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import commons.Activity;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+
+
+import java.io.File;
+import java.util.List;
 
 
 public class MultiplayerScreenCtrl {
@@ -31,6 +40,37 @@ public class MultiplayerScreenCtrl {
 
     @FXML
     Button submit;
+
+    @FXML
+    ImageView image1;
+
+    @FXML
+    ImageView image2;
+
+    @FXML
+    ImageView image3;
+
+    @FXML
+    Label title1;
+
+    @FXML
+    Label title2;
+
+    @FXML
+    Label title3;
+
+    @FXML
+    Text description1;
+
+    @FXML
+    Text description2;
+
+    @FXML
+    Text description3;
+
+    @FXML
+    Label score;
+
 
 
     double progress;
@@ -102,6 +142,25 @@ public class MultiplayerScreenCtrl {
 
         t = new Thread(task);
         t.start();
+    }
+
+    public void displayActivities(List<Activity> activities){
+        // for convenience
+        List<Label> titles = List.of(title1, title2, title3);
+        List<Text> descriptions = List.of(description1, description2, description3);
+        List<ImageView> images = List.of(image1, image2, image3);
+
+        for(int i = 0; i < activities.size() && i < 3; ++i){
+            Activity a = activities.get(i);
+
+            if(a == null) continue;
+
+            titles.get(i).setText(Integer.toString(a.consumptionInWh));
+            descriptions.get(i).setText(a.title);
+
+            File file = new File(a.imagePath);
+            images.get(i).setImage(new Image(file.toURI().toString()));
+        }
     }
 
     public void lockAnswer(MouseEvent mouseEvent) {
