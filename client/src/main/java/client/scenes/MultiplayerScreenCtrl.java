@@ -146,6 +146,8 @@ public class MultiplayerScreenCtrl {
 
     public void displayActivities(List<Activity> activities){
         // for convenience
+        activities = server.getActivites();
+        System.out.println(activities);
         List<Label> titles = List.of(title1, title2, title3);
         List<Text> descriptions = List.of(description1, description2, description3);
         List<ImageView> images = List.of(image1, image2, image3);
@@ -154,11 +156,11 @@ public class MultiplayerScreenCtrl {
             Activity a = activities.get(i);
 
             if(a == null) continue;
-
+            
             titles.get(i).setText(Integer.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
 
-            File file = new File(a.imagePath);
+            File file = new File("server/src/main/resources/public/activities/" + a.imagePath);
             images.get(i).setImage(new Image(file.toURI().toString()));
         }
     }
