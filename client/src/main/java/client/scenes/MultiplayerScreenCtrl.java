@@ -3,6 +3,7 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Activity;
+import commons.ClientMessage;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -90,7 +91,26 @@ public class MultiplayerScreenCtrl {
 
     //submits answer, stops time,
     public void submitAnswer(){
+        server.send("/app/general", new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER, mainCtrl.getClientID(), "0"));
+        System.out.println("Answer submitted");
 
+    }
+    public void showAnswer(){
+        System.out.println("Answer showed");
+        switch (choice){
+            case "option1":
+                option1.setStyle("-fx-border-color: #38c768");
+                break;
+            case "option2":
+                option2.setStyle("-fx-border-color: #38c768");
+                break;
+            case "option3":
+                option3.setStyle("-fx-border-color: #38c768");
+                break;
+            default:
+                System.out.println("Invalid answer");
+                break;
+        }
     }
 
     //shows an emoji
@@ -180,5 +200,6 @@ public class MultiplayerScreenCtrl {
         System.out.println(rectangle.getId());
         System.out.println(choice);
     }
+
 
 }

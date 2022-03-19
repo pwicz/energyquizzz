@@ -100,6 +100,13 @@ public class MainCtrl {
 
                 System.out.println("[msg] loadingGame");
                 break;
+            case DISPLAY_ANSWER:
+                runLater(() -> {
+                    multiplayerScreenCtrl.showAnswer();
+
+                });
+                System.out.println("[msg] Answer was displayed");
+                break;
             case TEST:
                 // for testing purposes only
                 System.out.println("It works! Received a msg!");

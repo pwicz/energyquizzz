@@ -37,6 +37,9 @@ public class MainMessageController {
             case INIT_QUESTION:
                 result = initMultiplayerGame(msg);
                 break;
+            case SUBMIT_ANSWER:
+                result = new ServerMessage(ServerMessage.Type.DISPLAY_ANSWER);
+                break;
             case TEST:
                 // for testing purposes
                 result = new ServerMessage(ServerMessage.Type.TEST);

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ServerMessage {
     public enum Type{
-        NEW_SINGLEPLAYER_GAME, NEW_MULTIPLAYER_GAME, TEST, LOAD_NEW_QUESTIONS
+        NEW_SINGLEPLAYER_GAME, NEW_MULTIPLAYER_GAME, TEST, LOAD_NEW_QUESTIONS, DISPLAY_ANSWER
     }
 
     public Type type;
