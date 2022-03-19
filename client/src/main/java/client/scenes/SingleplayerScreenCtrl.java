@@ -16,7 +16,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-import java.io.File;
 import java.util.List;
 
 
@@ -66,6 +65,9 @@ public class SingleplayerScreenCtrl {
 
     @FXML
     Button submit;
+
+    @FXML
+    Label score;
 
     Thread timerThread;
     double timerProgress;
@@ -146,6 +148,14 @@ public class SingleplayerScreenCtrl {
 
         timerThread = new Thread(task);
         timerThread.start();
+    }
+
+    public void setScoreTo(int s){
+        score.setText("Score " + s);
+    }
+
+    public void stopThreads(){
+        timerThread.interrupt();
     }
 
 }
