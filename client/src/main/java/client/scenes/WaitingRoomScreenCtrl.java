@@ -17,7 +17,7 @@ public class WaitingRoomScreenCtrl {
     }
 
     public void start(){
-        server.send("/app/general", new ClientMessage(ClientMessage.Type.INIT_QUESTION, mainCtrl.getClientID(), 0L));
+        server.send("/app/general", new ClientMessage(ClientMessage.Type.INIT_QUESTION, mainCtrl.getClientID(), "0"));
         System.out.println("message sent");
     }
 }

@@ -134,7 +134,7 @@ public class MainCtrl {
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
-    public Long getClientID() {
+    public String getClientID() {
         return clientID;
     }
 }
