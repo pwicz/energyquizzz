@@ -16,21 +16,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@/client/scenes/Multiplayer_Game.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
     <children>
-      <Rectangle fx:id="option3" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="961.0" layoutY="395.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="968.0" AnchorPane.rightAnchor="293.0" AnchorPane.topAnchor="393.0">
-         <styleClass>
-            <String fx:value="option" />
-            <String fx:value="hover-element" />
-         </styleClass></Rectangle>
-      <Rectangle fx:id="option2" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="630.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="630.0" AnchorPane.rightAnchor="293.0" AnchorPane.topAnchor="393.0">
-         <styleClass>
-            <String fx:value="option" />
-            <String fx:value="hover-element" />
-         </styleClass></Rectangle>
-      <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="293.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="293.0" AnchorPane.rightAnchor="293.0" AnchorPane.topAnchor="393.0">
-         <styleClass>
-            <String fx:value="option" />
-            <String fx:value="hover-element" />
-         </styleClass></Rectangle>
         <Button layoutX="200.0" layoutY="887.0" mnemonicParsing="false" onAction="#leave" prefHeight="15.0" prefWidth="150.0" text="Leave" textFill="#e0503d" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="50.0">
             <font>
                 <Font size="20.0" />
@@ -118,7 +103,7 @@
             <Font size="15.0" />
          </font>
       </Text>
-      <Button fx:id="submit" disable="true" layoutX="1312.0" layoutY="887.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="15.0" prefWidth="150.0" styleClass="submit-btn" text="submit" textFill="#38c768">
+      <Button fx:id="submit" disable="true" layoutX="1312.0" layoutY="887.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="15.0" prefWidth="150.0" styleClass="submit-btn" text="submit" textFill="#38c768" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="1312.0" AnchorPane.rightAnchor="50.0">
          <font>
             <Font size="20.0" />
          </font>
@@ -182,5 +167,20 @@
          <image>
             <Image url="@/client/scenes/images/hourglass.png" />
          </image></ImageView>
+      <Rectangle fx:id="option2" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="630.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="630.0" AnchorPane.rightAnchor="293.0" AnchorPane.topAnchor="393.0">
+         <styleClass>
+            <String fx:value="option" />
+            <String fx:value="hover-element" />
+         </styleClass></Rectangle>
+      <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="293.0" layoutY="393.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="293.0" AnchorPane.rightAnchor="293.0" AnchorPane.topAnchor="393.0">
+         <styleClass>
+            <String fx:value="option" />
+            <String fx:value="hover-element" />
+         </styleClass></Rectangle>
+      <Rectangle fx:id="option3" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="961.0" layoutY="395.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="968.0" AnchorPane.rightAnchor="293.0" AnchorPane.topAnchor="393.0">
+         <styleClass>
+            <String fx:value="option" />
+            <String fx:value="hover-element" />
+         </styleClass></Rectangle>
     </children>
 </AnchorPane>

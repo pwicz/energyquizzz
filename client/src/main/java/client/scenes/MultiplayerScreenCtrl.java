@@ -99,13 +99,13 @@ public class MultiplayerScreenCtrl {
         System.out.println("Answer showed");
         switch (choice){
             case "option1":
-                option1.setStyle("-fx-border-color: #38c768");
+                option1.setStyle("-fx-stroke: #38c768");
                 break;
             case "option2":
-                option2.setStyle("-fx-border-color: #38c768");
+                option2.setStyle("-fx-stroke: #38c768");
                 break;
             case "option3":
-                option3.setStyle("-fx-border-color: #38c768");
+                option3.setStyle("-fx-stroke: #38c768");
                 break;
             default:
                 System.out.println("Invalid answer");
