@@ -1,6 +1,7 @@
 package server;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import commons.Activity;
 
 public class ReadJson {
 
-    private List<Activity> activities= new ArrayList<>();
+    private List<Activity> activities = new ArrayList<>();
     public void readFile() throws InterruptedException{
         ObjectMapper mapper = new ObjectMapper();
 
@@ -22,19 +23,15 @@ public class ReadJson {
         mapper.registerModule(module);
 
         try {
-            //uncomment for testing small size
-            activities = mapper.readValue(new File("server/src/main/java/server/test.json"),
+            // normal size
+            activities = mapper.readValue(new File(getClass().getResource("/activities/activities.json").toURI()),
                     new TypeReference<List<Activity>>(){});
-            //uncomment for real game big size
-//            activities = mapper.readValue(new File("server/src/main/java/server/activities.json"),
-//            new TypeReference<List<Activity>>(){});
-
-        }catch(IOException e) {
+        } catch(IOException | URISyntaxException e) {
             e.printStackTrace();
         }
 
-        for (Activity a : activities) {
-            System.out.println(a);
-        }
+//        for (Activity a : activities) {
+//            System.out.println(a);
+//        }
     }
 }
