@@ -22,7 +22,7 @@ public class CustomActivityDeserializer extends StdDeserializer<Activity> {
 
     @Override
     public Activity deserialize
-            (JsonParser parser, DeserializationContext ctxt) throws IOException, JacksonException {
+            (JsonParser parser, DeserializationContext ctxt) throws IOException {
         Activity activity = new Activity();
 
         ObjectCodec codec = parser.getCodec();
@@ -32,6 +32,10 @@ public class CustomActivityDeserializer extends StdDeserializer<Activity> {
         activity.title = node.get("title").asText();
         activity.consumptionInWh = node.get("consumption_in_wh").asInt();
         activity.source = node.get("source").asText();
+
+        // length checks so that DB doesn't fail
+        if(activity.title.length() > 250) activity.title = "TITLE TOO LONG";
+        if(activity.source.length() > 250) activity.source = "SRC TOO LONG";
 
         return activity;
     }
