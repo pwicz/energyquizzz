@@ -94,6 +94,7 @@ public class MainCtrl {
                 // on the JavaFX Application Thread
                 runLater(() -> {
                     showMultiplayerScreen();
+                    multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
                     multiplayerScreenCtrl.displayActivities(msg.question.getActivities());
 //                    singleplayerScreenCtrl.displayActivities(msg.question.activities);
                 });

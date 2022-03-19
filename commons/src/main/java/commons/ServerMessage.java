@@ -13,6 +13,8 @@ public class ServerMessage {
     public Question question;
     public int score;
     public String gameID;
+    public double timerFull;
+    public double timerFraction;
 
     public ServerMessage() {
     }

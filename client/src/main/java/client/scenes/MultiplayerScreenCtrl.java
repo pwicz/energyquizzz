@@ -167,8 +167,6 @@ public class MultiplayerScreenCtrl {
 
     public void displayActivities(List<Activity> activities){
         // for convenience
-        activities = server.getActivites();
-        System.out.println(activities);
         List<Label> titles = List.of(title1, title2, title3);
         List<Text> descriptions = List.of(description1, description2, description3);
         List<ImageView> images = List.of(image1, image2, image3);
