@@ -23,9 +23,17 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 @EntityScan(basePackages = { "commons", "server" })
 public class Main {
 
+    static ReadJson readJson;
+
     public static void main(String[] args) throws InterruptedException {
-        SpringApplication.run(Main.class, args);
-        ReadJson readJson = new ReadJson();
+        var context = SpringApplication.run(Main.class, args);
+
+        readJson = context.getBean(ReadJson.class);
+
+        // Right now we add activities everytime we start the server - this must be changed
+        // later, as the example backlog says so. We will allow players to reload the activities
+        // from an admin panel
         readJson.readFile();
+        readJson.saveAllToDB();
     }
 }
