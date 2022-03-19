@@ -39,3 +39,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### App related ###
+/server/src/main/resources/activities/
