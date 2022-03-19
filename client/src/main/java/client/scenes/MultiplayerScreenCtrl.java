@@ -73,8 +73,8 @@ public class MultiplayerScreenCtrl {
 
 
 
-    double progress;
-    Thread t;
+    Thread timerThread;
+    double timerProgress;
 
     @Inject
     public MultiplayerScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
@@ -106,31 +106,31 @@ public class MultiplayerScreenCtrl {
     public void doublePoints(MouseEvent event){
         System.out.println(event.getSource());
     }
+    
 
-    //lowers your time by X% amount
-    public void lowerTime(MouseEvent event){
-        if(progress > 0.2) {
-            progress *= 0.8;
-            timeBar.setProgress(progress);
-        }
-    }
+    /**
+     * Sets visible timer to a desired value and starts decreasing it in the rate calculated using totalTime.
+     *
+     * @param fractionLeft fraction of a full timer that we should start counting down from
+     * @param totalTime time that the full timer corresponds to
+     */
+    public void setTimer(double fractionLeft, double totalTime){
+        timerProgress = fractionLeft;
 
-    public void decreaseTime(){
-        if(t != null)
-            t.interrupt();
-        progress = 1.00;
+        // by default, our timer is 10.0s long
+        if(totalTime <= 0.0) totalTime = 10.0;
+        final double decreaseBy = 0.001 * 10.0 / totalTime;
+
+        if(timerThread != null) timerThread.interrupt();
         Task task = new Task<Void>() {
             @Override
             public Void call() throws Exception {
-                while (progress>=0.00) {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            timeBar.setProgress(progress);
-                            progress -= 0.001;
-                            if(progress <= 0){
-                                timeBar.setProgress(0);
-                            }
+                while (timerProgress>=0.00) {
+                    Platform.runLater(() -> {
+                        timeBar.setProgress(timerProgress);
+                        timerProgress -= decreaseBy;
+                        if(timerProgress <= 0){
+                            timeBar.setProgress(0);
                         }
                     });
                     Thread.sleep(10);
@@ -140,8 +140,8 @@ public class MultiplayerScreenCtrl {
             }
         };
 
-        t = new Thread(task);
-        t.start();
+        timerThread = new Thread(task);
+        timerThread.start();
     }
 
     public void displayActivities(List<Activity> activities){
