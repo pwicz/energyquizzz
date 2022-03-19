@@ -1,6 +1,7 @@
 package server;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +10,20 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import commons.Activity;
+import org.springframework.stereotype.Service;
+import server.database.ActivityRepository;
 
+@Service
 public class ReadJson {
 
-    private List<Activity> activities= new ArrayList<>();
-    public void readFile() throws InterruptedException{
+    private List<Activity> activities = new ArrayList<>();
+    private final ActivityRepository repo;
+
+    public ReadJson(ActivityRepository repo) {
+        this.repo = repo;
+    }
+
+    public void readFile(){
         ObjectMapper mapper = new ObjectMapper();
 
         SimpleModule module =
@@ -22,19 +32,25 @@ public class ReadJson {
         mapper.registerModule(module);
 
         try {
-            //uncomment for testing small size
-            activities = mapper.readValue(new File("server/src/main/java/server/test.json"),
-                    new TypeReference<List<Activity>>(){});
-            //uncomment for real game big size
-//            activities = mapper.readValue(new File("server/src/main/java/server/activities.json"),
-//            new TypeReference<List<Activity>>(){});
+            // Activities should be placed in public/activities so that their images are accessible
+            // through paths such as localhost:8080/activities/20/dryer.jpg
+            var resource = getClass().getResource("/public/activities/activities.json");
+            if(resource == null) throw new IOException("Activities.json file not found!");
 
-        }catch(IOException e) {
+            activities = mapper.readValue(
+                             new File(getClass().getResource("/public/activities/activities.json")
+                            .toURI()),
+                    new TypeReference<>(){});
+        } catch(IOException | URISyntaxException e) {
             e.printStackTrace();
         }
+    }
 
-        for (Activity a : activities) {
-            System.out.println(a);
-        }
+    public void saveAllToDB(){
+        repo.saveAll(activities);
+    }
+
+    public void saveSomeToDB(int numberOfActivitiesToSave){
+        for(int i = 0; i < numberOfActivitiesToSave; ++i) repo.save(activities.get(i));
     }
 }
