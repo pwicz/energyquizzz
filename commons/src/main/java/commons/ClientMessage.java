@@ -10,6 +10,7 @@ public class ClientMessage {
     public String gameID;
     // add more fields as we start exchanging messages
 
+    public String playerName;
     public ClientMessage() {
     }
 

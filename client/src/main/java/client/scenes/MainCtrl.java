@@ -24,6 +24,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import static javafx.application.Platform.runLater;
+
 public class MainCtrl {
 
     private final ServerUtils server;
@@ -41,12 +43,17 @@ public class MainCtrl {
     private Scene splash;
 
     private Scene question;
-    private  MultiplayerScreenCtrl multiplayerScreenCtrl;
+    private MultiplayerScreenCtrl multiplayerScreenCtrl;
 
     private Scene singleLeaderboard;
     private SingleplayerLeaderboardCtrl singleplayerLeaderboardCtrl;
 
+    private Scene singleplayerScreen;
+    private SingleplayerScreenCtrl singleplayerScreenCtrl;
+
     private String clientID = null;
+    private String gameID = null;
+    private int score;
 
     @Inject
     public MainCtrl(ServerUtils server) {
@@ -54,7 +61,9 @@ public class MainCtrl {
     }
 
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
-                           Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom) {
+                           Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
+                           Pair<SingleplayerLeaderboardCtrl, Parent> singleplayerLeaderboard,
+                           Pair<SingleplayerScreenCtrl, Parent> singleplayerGame){
         this.primaryStage = primaryStage;
         this.overviewCtrl = overview.getKey();
         this.overview = new Scene(overview.getValue());
@@ -63,7 +72,14 @@ public class MainCtrl {
         this.add = new Scene(add.getValue());
         this.waitingRoom = new Scene(waitingRoom.getValue());
 
-        showOverview();
+        this.singleLeaderboard = new Scene(singleplayerLeaderboard.getValue());
+        this.singleplayerLeaderboardCtrl = singleplayerLeaderboard.getKey();
+
+        this.singleplayerScreen = new Scene(singleplayerGame.getValue());
+        this.singleplayerScreenCtrl = singleplayerGame.getKey();
+
+        //        showOverview();
+        showSingleLeaderboardScreen();
         primaryStage.show();
 
         clientID = "233"; // hardcoded: we need to somehow get it from the server
@@ -79,7 +95,17 @@ public class MainCtrl {
                 // do something
                 break;
             case NEW_SINGLEPLAYER_GAME:
-                // do something else
+                gameID = msg.gameID;
+                break;
+            case NEXT_QUESTION:
+                // runLater() must be used to run the following code
+                // on the JavaFX Application Thread
+                runLater(() -> {
+                    showSingleplayerGameScreen();
+                    singleplayerScreenCtrl.displayActivities(msg.question.activities);
+                    singleplayerScreenCtrl.setScoreTo(msg.score);
+                    singleplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                });
                 break;
             case TEST:
                 // for testing purposes only
@@ -115,7 +141,8 @@ public class MainCtrl {
     }
 
     public void showSingleLeaderboardScreen(){
-
+        primaryStage.setTitle("Start the singleplayer game");
+        primaryStage.setScene(singleLeaderboard);
     }
 
     public void showWaitingRoom() {
@@ -124,5 +151,12 @@ public class MainCtrl {
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
+    public void showSingleplayerGameScreen(){
+        primaryStage.setTitle("Singleplayer");
+        primaryStage.setScene(singleplayerScreen);
+    }
 
+    public String getClientID() {
+        return clientID;
+    }
 }
