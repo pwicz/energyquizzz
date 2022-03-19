@@ -108,8 +108,7 @@ public class SingleplayerScreenCtrl {
             titles.get(i).setText(Integer.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
 
-            File file = new File(a.imagePath);
-            images.get(i).setImage(new Image(file.toURI().toString()));
+            images.get(i).setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
         }
     }
 
