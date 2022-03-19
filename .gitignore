@@ -41,4 +41,4 @@ out/
 .vscode/
 
 ### App related ###
-/server/src/main/resources/activities/
+/server/src/main/resources/public/activities/
