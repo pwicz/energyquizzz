@@ -25,6 +25,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import static javafx.application.Platform.runLater;
+
 public class MainCtrl {
 
     private final ServerUtils server;
@@ -87,7 +89,14 @@ public class MainCtrl {
                 // do something else
                 break;
             case LOAD_NEW_QUESTIONS:
-                showMultiplayerScreenMsg();
+
+                // runLater() must be used to run the following code
+                // on the JavaFX Application Thread
+                runLater(() -> {
+                    showMultiplayerScreen();
+//                    singleplayerScreenCtrl.displayActivities(msg.question.activities);
+                });
+
                 System.out.println("[msg] loadingGame");
                 break;
             case TEST:
@@ -97,14 +106,6 @@ public class MainCtrl {
             default:
                 // invalid msg type
         }
-    }
-
-    public void showMultiplayerScreenMsg() {
-        Platform.runLater(new Runnable() {
-            @Override public void run() {
-                showMultiplayerScreen();
-            }
-        });
     }
 
     public void showOverview() {
