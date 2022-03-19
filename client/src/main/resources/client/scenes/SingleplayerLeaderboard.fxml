@@ -7,26 +7,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="global" stylesheets="@SingleplayerLeaderboard.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerLeaderboardCtrl">
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="global" stylesheets="/client/scenes/SingleplayerLeaderboard.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerLeaderboardCtrl">
    <children>
-      <ListView layoutX="656.0" layoutY="284.0" prefHeight="328.0" prefWidth="495.0" AnchorPane.leftAnchor="508.0" AnchorPane.topAnchor="280.0">
+      <ListView fx:id="leaderboard" layoutX="656.0" layoutY="284.0" prefHeight="328.0" prefWidth="495.0" AnchorPane.leftAnchor="508.0" AnchorPane.topAnchor="280.0">
          <styleClass>
             <String fx:value="global" />
-            <String fx:value="leaderboardlist" />
+            <String fx:value="list-view" />
          </styleClass></ListView>
-      <TextField layoutX="682.0" layoutY="699.0" maxHeight="49.0" maxWidth="495.0" prefHeight="49.0" prefWidth="495.0" promptText="  Enter your name" AnchorPane.leftAnchor="508.0" AnchorPane.topAnchor="654.0">
+      <TextField fx:id="nameField" layoutX="682.0" layoutY="699.0" maxHeight="49.0" maxWidth="495.0" onAction="#insertName" prefHeight="49.0" prefWidth="495.0" promptText="  Enter your name" AnchorPane.leftAnchor="508.0" AnchorPane.topAnchor="654.0">
          <styleClass>
             <String fx:value="textField" />
             <String fx:value="global" />
          </styleClass>
       </TextField>
-      <Button layoutX="730.0" layoutY="760.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="226.0" text="START" AnchorPane.leftAnchor="643.0" AnchorPane.topAnchor="750.0">
+      <Button fx:id="start" layoutX="730.0" layoutY="760.0" mnemonicParsing="false" onAction="#insertLeaderboard" onMouseClicked="#start" prefHeight="63.0" prefWidth="226.0" text="START" AnchorPane.leftAnchor="643.0" AnchorPane.topAnchor="750.0">
          <styleClass>
             <String fx:value="start" />
             <String fx:value="global" />
          </styleClass>
       </Button>
-      <Button layoutX="119.0" layoutY="849.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="LEAVE" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="910.0">
+      <Button fx:id="leave" layoutX="119.0" layoutY="849.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="LEAVE" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="910.0">
          <styleClass>
             <String fx:value="leave" />
             <String fx:value="global" />
