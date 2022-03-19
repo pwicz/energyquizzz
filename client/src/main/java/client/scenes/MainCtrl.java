@@ -19,6 +19,7 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.ClientMessage;
 import commons.ServerMessage;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -86,7 +87,7 @@ public class MainCtrl {
                 // do something else
                 break;
             case LOAD_NEW_QUESTIONS:
-                showMultiplayerScreen();
+                showMultiplayerScreenMsg();
                 System.out.println("[msg] loadingGame");
                 break;
             case TEST:
@@ -96,6 +97,14 @@ public class MainCtrl {
             default:
                 // invalid msg type
         }
+    }
+
+    public void showMultiplayerScreenMsg() {
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+                showMultiplayerScreen();
+            }
+        });
     }
 
     public void showOverview() {
