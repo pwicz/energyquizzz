@@ -52,6 +52,8 @@ public class MainCtrl {
     private SingleplayerScreenCtrl singleplayerScreenCtrl;
 
     private String clientID = null;
+    private String gameID = null;
+    private int score;
 
     @Inject
     public MainCtrl(ServerUtils server) {
@@ -93,11 +95,16 @@ public class MainCtrl {
                 // do something
                 break;
             case NEW_SINGLEPLAYER_GAME:
+                gameID = msg.gameID;
+                break;
+            case NEXT_QUESTION:
                 // runLater() must be used to run the following code
                 // on the JavaFX Application Thread
                 runLater(() -> {
                     showSingleplayerGameScreen();
-//                    singleplayerScreenCtrl.displayActivities(msg.question.activities);
+                    singleplayerScreenCtrl.displayActivities(msg.question.activities);
+                    singleplayerScreenCtrl.setScoreTo(msg.score);
+                    singleplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
                 });
                 break;
             case TEST:
