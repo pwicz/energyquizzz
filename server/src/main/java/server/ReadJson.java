@@ -35,9 +35,11 @@ public class ReadJson {
         try {
             // Activities should be placed in public/activities so that their images are accessible
             // through paths such as localhost:8080/activities/20/dryer.jpg
+            var resource = getClass().getResource("/public/activities/activities.json");
+            if(resource == null) throw new IOException("Activities.json file not found!");
+
             activities = mapper.readValue(
-                             new File(Objects.requireNonNull(getClass()
-                                             .getResource("/public/activities/activities.json"))
+                             new File(getClass().getResource("/public/activities/activities.json")
                             .toURI()),
                     new TypeReference<>(){});
         } catch(IOException | URISyntaxException e) {
