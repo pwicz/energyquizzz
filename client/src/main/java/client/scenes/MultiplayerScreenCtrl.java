@@ -25,6 +25,7 @@ public class MultiplayerScreenCtrl {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private String choice;
 
     @FXML
     ProgressBar timeBar;
@@ -106,8 +107,8 @@ public class MultiplayerScreenCtrl {
     public void doublePoints(MouseEvent event){
         System.out.println(event.getSource());
     }
-    
 
+    public void lowerTime(){}
     /**
      * Sets visible timer to a desired value and starts decreasing it in the rate calculated using totalTime.
      *
@@ -174,6 +175,10 @@ public class MultiplayerScreenCtrl {
         rectangle.setStyle("-fx-stroke: linear-gradient(#38c768, #21A0E8)");
         submit.setDisable(false);
         submit.setCursor(Cursor.HAND);
+        choice = rectangle.getId();
+
+        System.out.println(rectangle.getId());
+        System.out.println(choice);
     }
 
 }
