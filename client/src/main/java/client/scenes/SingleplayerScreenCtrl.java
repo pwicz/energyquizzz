@@ -3,6 +3,7 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Activity;
+import commons.ClientMessage;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -23,6 +24,7 @@ public class SingleplayerScreenCtrl {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
+    private String choice;
 
     @FXML
     ProgressBar timeBar;
@@ -82,9 +84,6 @@ public class SingleplayerScreenCtrl {
         mainCtrl.showOverview();
     }
 
-    public void submitAnswer(){
-
-    }
 
     public void lockAnswer(MouseEvent mouseEvent) {
         option1.setStyle("-fx-border-color: white");
@@ -94,7 +93,10 @@ public class SingleplayerScreenCtrl {
         rectangle.setStyle("-fx-stroke: linear-gradient(#38c768, #21A0E8)");
         submit.setDisable(false);
         submit.setCursor(Cursor.HAND);
+
+        choice = rectangle.getId();
     }
+
 
     public void displayActivities(List<Activity> activities){
         // for convenience
@@ -148,6 +150,17 @@ public class SingleplayerScreenCtrl {
 
         timerThread = new Thread(task);
         timerThread.start();
+    }
+
+    public void submitAnswer(){
+        timerThread.interrupt();
+        double time = timerProgress;
+
+        ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
+                mainCtrl.getClientID(), null);
+        msg.time = time;
+        msg.choice = choice;
+        server.send("/app/general", msg);
     }
 
     public void setScoreTo(int s){

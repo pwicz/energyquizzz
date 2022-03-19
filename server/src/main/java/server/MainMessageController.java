@@ -56,6 +56,9 @@ public class MainMessageController {
                 case TEST:
                     // for testing purposes
                     result = new ServerMessage(ServerMessage.Type.TEST);
+                case SUBMIT_SINGLEPLAYER:
+                    //calculate score
+                    break;
                 default:
                     // unknown message
             }
