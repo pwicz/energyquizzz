@@ -42,8 +42,8 @@ public class MainMessageController {
                 break;
             case SUBMIT_ANSWER:
                 result = new ServerMessage(ServerMessage.Type.DISPLAY_ANSWER);
-                showLeaderboard(msg.playerID);
-                showQuestions(msg.playerID);
+                showLeaderboard(msg);
+                showQuestions(msg);
                 break;
             case TEST:
                 // for testing purposes
@@ -66,7 +66,7 @@ public class MainMessageController {
 
     }
 
-    public void showLeaderboard(String playerID) {
+    public void showLeaderboard(ClientMessage msg) {
         Thread myThread = new Thread() {
             @Override
             public void run() {
@@ -75,14 +75,14 @@ public class MainMessageController {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                simpMessagingTemplate.convertAndSend("/topic/client/" + playerID,
+                simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
                         new ServerMessage(ServerMessage.Type.DISPLAY_INBETWEENSCORES));
             }
         };
         myThread.start();
     }
 
-    public void showQuestions(String playerID) {
+    public void showQuestions(ClientMessage msg) {
         Thread myThread = new Thread() {
             @Override
             public void run() {
@@ -91,8 +91,7 @@ public class MainMessageController {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                simpMessagingTemplate.convertAndSend("/topic/client/" + playerID,
-                        new ServerMessage(ServerMessage.Type.LOAD_NEW_QUESTIONS));
+                simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, initMultiplayerGame(msg));
             }
         };
         myThread.start();

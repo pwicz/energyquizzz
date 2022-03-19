@@ -77,6 +77,7 @@ public class MultiplayerScreenCtrl {
 
     Thread timerThread;
     double timerProgress;
+    boolean submitted = false;
 
     @Inject
     public MultiplayerScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
@@ -91,6 +92,8 @@ public class MultiplayerScreenCtrl {
 
     //submits answer, stops time,
     public void submitAnswer(){
+        submit.setDisable(true);
+        submitted = true;
         server.send("/app/general", new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER, mainCtrl.getClientID(), "0"));
         System.out.println("Answer submitted");
 
@@ -100,11 +103,17 @@ public class MultiplayerScreenCtrl {
         switch (choice){
             case "option1":
                 option1.setStyle("-fx-stroke: #38c768");
+                option2.setStyle("-fx-stroke: #E0503D");
+                option3.setStyle("-fx-stroke: #E0503D");
                 break;
             case "option2":
+                option1.setStyle("-fx-stroke: #E0503D");
                 option2.setStyle("-fx-stroke: #38c768");
+                option3.setStyle("-fx-stroke: #E0503D");
                 break;
             case "option3":
+                option1.setStyle("-fx-stroke: #E0503D");
+                option2.setStyle("-fx-stroke: #E0503D");
                 option3.setStyle("-fx-stroke: #38c768");
                 break;
             default:
@@ -167,6 +176,7 @@ public class MultiplayerScreenCtrl {
 
     public void displayActivities(List<Activity> activities){
         // for convenience
+       resetUI();
         List<Label> titles = List.of(title1, title2, title3);
         List<Text> descriptions = List.of(description1, description2, description3);
         List<ImageView> images = List.of(image1, image2, image3);
@@ -184,7 +194,17 @@ public class MultiplayerScreenCtrl {
         }
     }
 
+    public void resetUI(){
+        submitted = false;
+        option1.setStyle("-fx-border-color: white");
+        option2.setStyle("-fx-border-color: white");
+        option3.setStyle("-fx-border-color: white");
+
+    }
+
     public void lockAnswer(MouseEvent mouseEvent) {
+        if(submitted)
+            return;
 
         option1.setStyle("-fx-border-color: white");
         option2.setStyle("-fx-border-color: white");

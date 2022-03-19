@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@/client/scenes/Multiplayer_Game.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@/client/scenes/Multiplayer_Game.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
     <children>
         <Button layoutX="200.0" layoutY="887.0" mnemonicParsing="false" onAction="#leave" prefHeight="15.0" prefWidth="150.0" text="Leave" textFill="#e0503d" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="50.0">
             <font>
@@ -97,7 +103,7 @@
             <Font size="15.0" />
          </font>
       </Text>
-      <Button fx:id="submit" disable="true" layoutX="300.0" layoutY="300.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="15.0" prefWidth="150.0" styleClass="submit-btn" text="submit" textFill="#38c768">
+      <Button fx:id="submit" disable="true" layoutX="300.0" layoutY="300.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="15.0" prefWidth="150.0" styleClass="submit-btn" text="submit" textFill="#38c768" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="1312.0" AnchorPane.rightAnchor="50.0">
          <font>
             <Font size="20.0" />
          </font>
