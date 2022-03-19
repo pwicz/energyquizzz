@@ -11,10 +11,19 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import commons.Activity;
+import org.springframework.stereotype.Service;
+import server.database.ActivityRepository;
 
+@Service
 public class ReadJson {
 
     private List<Activity> activities = new ArrayList<>();
+    private final ActivityRepository repo;
+
+    public ReadJson(ActivityRepository repo) {
+        this.repo = repo;
+    }
+
     public void readFile(){
         ObjectMapper mapper = new ObjectMapper();
 
@@ -34,9 +43,13 @@ public class ReadJson {
         } catch(IOException | URISyntaxException e) {
             e.printStackTrace();
         }
+    }
 
-//        for (Activity a : activities) {
-//            System.out.println(a);
-//        }
+    public void saveAllToDB(){
+        repo.saveAll(activities);
+    }
+
+    public void saveSomeToDB(int numberOfActivitiesToSave){
+        for(int i = 0; i < numberOfActivitiesToSave; ++i) repo.save(activities.get(i));
     }
 }
