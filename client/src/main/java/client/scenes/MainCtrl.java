@@ -19,7 +19,6 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.ClientMessage;
 import commons.ServerMessage;
-import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -49,6 +48,9 @@ public class MainCtrl {
     private Scene singleLeaderboard;
     private SingleplayerLeaderboardCtrl singleplayerLeaderboardCtrl;
 
+    private Scene inBetweenScore;
+    private InBetweenScoresCtrl inBetweenScoreCtrl;
+
     private String clientID = null;
 
     @Inject
@@ -58,7 +60,7 @@ public class MainCtrl {
 
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
                            Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
-                           Pair<MultiplayerScreenCtrl, Parent> multiplayer) {
+                           Pair<MultiplayerScreenCtrl, Parent> multiplayer, Pair<InBetweenScoresCtrl, Parent> inBetweenScore) {
         this.primaryStage = primaryStage;
         this.overviewCtrl = overview.getKey();
         this.overview = new Scene(overview.getValue());
@@ -69,6 +71,9 @@ public class MainCtrl {
 
         this.multiplayerScreenCtrl = multiplayer.getKey();
         this.question = new Scene(multiplayer.getValue());
+
+        this.inBetweenScoreCtrl = inBetweenScore.getKey();
+        this.inBetweenScore = new Scene(inBetweenScore.getValue());
 
         showOverview();
         primaryStage.show();
@@ -110,7 +115,7 @@ public class MainCtrl {
                 break;
             case DISPLAY_INBETWEENSCORES:
                 runLater(() -> {
-                    showWaitingRoom();
+                    showInBetweenScore();
                 });
                 System.out.println("[msg] show leaderboard ");
                 break;
@@ -159,6 +164,10 @@ public class MainCtrl {
         add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
+    public void showInBetweenScore(){
+        primaryStage.setTitle("InBetweenScore screen");
+        primaryStage.setScene(inBetweenScore);
+    }
     public String getClientID() {
         return clientID;
     }

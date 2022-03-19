@@ -20,14 +20,15 @@ import static com.google.inject.Guice.createInjector;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import client.scenes.WaitingRoomScreenCtrl;
-
-import com.google.inject.Injector;
-
 import client.scenes.AddQuoteCtrl;
-import client.scenes.QuoteOverviewCtrl;
+import client.scenes.InBetweenScoresCtrl;
 import client.scenes.MainCtrl;
 import client.scenes.MultiplayerScreenCtrl;
+import client.scenes.QuoteOverviewCtrl;
+import client.scenes.WaitingRoomScreenCtrl;
+
+
+import com.google.inject.Injector;
 
 
 import javafx.application.Application;
@@ -48,9 +49,9 @@ public class Main extends Application {
         var overview = FXML.load(QuoteOverviewCtrl.class, "client", "scenes", "QuoteOverview.fxml");
         var add = FXML.load(AddQuoteCtrl.class, "client", "scenes", "AddQuote.fxml");
         var waitingRoom = FXML.load(WaitingRoomScreenCtrl.class, "client","scenes", "Waiting_Room_Screen.fxml");
-
+        var inBetweenScore = FXML.load(InBetweenScoresCtrl.class, "client", "scenes", "InBetweenScores.fxml");
         var multiplayer = FXML.load(MultiplayerScreenCtrl.class, "client", "scenes", "Multiplayer_Game_Screen.fxml");
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
-        mainCtrl.initialize(primaryStage, overview, add, waitingRoom, multiplayer );
+        mainCtrl.initialize(primaryStage, overview, add, waitingRoom, multiplayer, inBetweenScore );
     }
 }
