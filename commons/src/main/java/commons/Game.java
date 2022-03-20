@@ -47,7 +47,12 @@ public class Game {
         return questionCounter;
     }
 
-    public int incrementQuestionCounter() {
-        return questionCounter++;
+    public int incCounter() {
+        this.questionCounter = questionCounter + 1;
+        return  questionCounter;
+    }
+
+    public void setQuestionCounter(int questionCounter) {
+        this.questionCounter = questionCounter;
     }
 }

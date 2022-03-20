@@ -19,6 +19,9 @@ public class InBetweenScoresCtrl {
     }
 
     public void updateQuestionCounter(int number) {
-        questionCounter.setText(number + "/20");
+        if(number <= 20)
+              questionCounter.setText(number + "/20");
+        else
+            questionCounter.setText("End of the game");
     }
 }
