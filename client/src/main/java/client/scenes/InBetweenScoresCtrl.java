@@ -3,6 +3,7 @@ import com.google.inject.Inject;
 import client.utils.ServerUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.text.TextAlignment;
 
 public class InBetweenScoresCtrl {
     private final ServerUtils server;
@@ -22,10 +23,10 @@ public class InBetweenScoresCtrl {
     }
 
     public void updateQuestionCounter(int number) {
-        if(number <= 20)
+        if(number != 20)
               questionCounter.setText(number + "/20");
         else
-            questionCounter.setText("End of the game");
+            questionCounter.setText("20/20\nEnd of the game");
     }
 
     public void updateScore(int score){

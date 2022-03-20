@@ -81,6 +81,9 @@ public class MultiplayerScreenCtrl {
     @FXML
     Text picked;
 
+    @FXML
+    Label headTitle;
+
 
     boolean submitted = false;
 
@@ -108,7 +111,6 @@ public class MultiplayerScreenCtrl {
         submit.setDisable(true);
         submitted = true;
         server.send("/app/general", msg);
-        System.out.println("Answer submitted");
 
     }
 
@@ -234,9 +236,12 @@ public class MultiplayerScreenCtrl {
 
     }
 
+    public void updateTitle(int question){
+        headTitle.setText("Question " + (question+1) +": Which activity consumes most energy?");
+    }
+
     public void updateScore(int score){
         this.score.setText("Score: " + score);
-
     }
 
 

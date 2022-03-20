@@ -83,14 +83,13 @@ public class MainCtrl {
         primaryStage.show();
 
 
-        clientID = UUID.randomUUID().toString(); // hardcoded: we need to somehow get it from the server
+        clientID = UUID.randomUUID().toString();
         server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, m -> {
             handleServerMessage(m);
         });
     }
 
     public void handleServerMessage(ServerMessage msg){
-        System.out.println("[test] message received");
         switch(msg.type){
             case INIT_PLAYER:
                 gameID = msg.gameID;
@@ -110,23 +109,21 @@ public class MainCtrl {
                     multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
                     multiplayerScreenCtrl.displayActivities(msg.question.getActivities());
                 });
-
                 System.out.println("[msg] loadingGame");
                 break;
             case DISPLAY_ANSWER:
                 runLater(() -> {
-                    for (String s : msg.topScores) {
-                        System.out.println(s);
-                    }
+                    System.out.println("[update] topScores: " + msg.topScores);
                     multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
                     multiplayerScreenCtrl.updateScore(msg.score);
                     inBetweenScoreCtrl.updateScore(msg.score);
                 });
-                System.out.println("[msg] Answer was displayed");
+                System.out.println("[msg] display answer");
 
                 break;
             case DISPLAY_INBETWEENSCORES:
                 runLater(() -> {
+                    multiplayerScreenCtrl.updateTitle(msg.questionCounter);
                     inBetweenScoreCtrl.updateQuestionCounter(msg.questionCounter);
                     showInBetweenScore();
                 });
@@ -136,11 +133,11 @@ public class MainCtrl {
                 runLater(() -> {
                     showWaitingRoom();
                 });
-                System.out.println("[msg] Ending game ");
+                System.out.println("[msg] end game");
                 break;
             case TEST:
                 // for testing purposes only
-                System.out.println("It works! Received a msg!");
+                System.out.println("[test] message received");
                 break;
             default:
                 // invalid msg type

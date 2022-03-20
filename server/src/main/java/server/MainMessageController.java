@@ -51,11 +51,10 @@ public class MainMessageController {
                 // do something else
                 break;
             case INIT_QUESTION:
-
                 result = nextMultiQuestion(
                         games.get(msg.gameID).getPlayerWithID(msg.playerID).getScore(), games.get(msg.gameID));
-
-//                result.questionCounter = games.get(msg.gameID).getQuestionCounter();
+                result.questionCounter = games.get(msg.gameID).getQuestionCounter();
+                System.out.println("[msg] init question");
                 break;
             case SUBMIT_ANSWER:
                 Game g = games.get(msg.gameID);
@@ -66,10 +65,13 @@ public class MainMessageController {
                 //set time between each scene
                 showLeaderboard(msg);
                 showQuestions(msg);
+                System.out.println("[msg] submit answer");
+
                 break;
             case TEST:
                 // for testing purposes
                 result = new ServerMessage(ServerMessage.Type.TEST);
+                System.out.println("[test] message received");
                 break;
             default:
                 // unknown message
@@ -168,7 +170,7 @@ public class MainMessageController {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if(games.get(msg.gameID).getQuestionCounter() <=20)
+                if(games.get(msg.gameID).getQuestionCounter() <20)
                      simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, nextMultiQuestion(
                              games.get(msg.gameID).getPlayerWithID(msg.playerID).getScore(), games.get(msg.gameID))
                      );
