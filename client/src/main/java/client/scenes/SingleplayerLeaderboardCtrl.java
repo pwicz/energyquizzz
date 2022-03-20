@@ -23,8 +23,6 @@ public class SingleplayerLeaderboardCtrl {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
-    private int counter = 0;
-
     @FXML
     Button start;
 
@@ -97,14 +95,19 @@ public class SingleplayerLeaderboardCtrl {
      */
     public void insertLeaderboard() { //needs to change to import the database leaderboard
 
-        counter++;
         /*
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List> response = restTemplate.getForEntity("http://localhost:8080/api/scores/get"+
                         "Top" + counter + "Scores", List.class);*/
 
-        List<Score> response = ClientBuilder.newClient(new ClientConfig())
+        int scoreSize = ClientBuilder.newClient(new ClientConfig())
                 .target("http://localhost:8080/").path("api/scores/")
+                .request(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .get(new GenericType<List<Score>>() {}).size();
+
+        List<Score> response = ClientBuilder.newClient(new ClientConfig())
+                .target("http://localhost:8080/").path("api/scores/getTop" + scoreSize + "Scores")
                 .request(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .get(new GenericType<List<Score>>() {});
