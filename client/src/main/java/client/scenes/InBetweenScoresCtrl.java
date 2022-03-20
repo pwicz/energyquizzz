@@ -11,6 +11,9 @@ public class InBetweenScoresCtrl {
     @FXML
     Label questionCounter;
 
+    @FXML
+    Label score;
+
     @Inject
     public InBetweenScoresCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
@@ -24,4 +27,10 @@ public class InBetweenScoresCtrl {
         else
             questionCounter.setText("End of the game");
     }
+
+    public void updateScore(int score){
+        this.score.setText("Score: " + score);
+
+    }
+
 }

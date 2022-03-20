@@ -7,7 +7,7 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@/client/scenes/styles/InBetweenScores.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.InBetweenScoresCtrl">
     <Label layoutY="68.0" prefHeight="118.0" prefWidth="1513.0" styleClass="screen-header" text="SCORE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="68.0" />
-    <Label layoutX="674.0" layoutY="921.0" prefHeight="51.0" prefWidth="845.0" styleClass="bottom-score" text="Score: 120" AnchorPane.bottomAnchor="20.799999999999955" />
+    <Label fx:id="score" layoutX="674.0" layoutY="921.0" prefHeight="51.0" prefWidth="845.0" styleClass="bottom-score" text="Score: 120" AnchorPane.bottomAnchor="20.799999999999955" />
 
    <Button layoutX="50.0" layoutY="910.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="leave-btn" text="LEAVE" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="33.0" />
 

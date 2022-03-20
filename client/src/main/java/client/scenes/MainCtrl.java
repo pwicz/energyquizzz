@@ -24,6 +24,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import java.util.UUID;
+
 import static javafx.application.Platform.runLater;
 
 public class MainCtrl {
@@ -80,7 +82,7 @@ public class MainCtrl {
         primaryStage.show();
 
 
-        clientID = "233"; // hardcoded: we need to somehow get it from the server
+        clientID = UUID.randomUUID().toString(); // hardcoded: we need to somehow get it from the server
         server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, m -> {
             handleServerMessage(m);
         });
@@ -91,6 +93,7 @@ public class MainCtrl {
         switch(msg.type){
             case INIT_PLAYER:
                 gameID = msg.gameID;
+                multiplayerScreenCtrl.updateScore(0);
                 break;
             case NEW_MULTIPLAYER_GAME:
                 // do something
@@ -115,6 +118,7 @@ public class MainCtrl {
                 runLater(() -> {
                     multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
                     multiplayerScreenCtrl.updateScore(msg.score);
+                    inBetweenScoreCtrl.updateScore(msg.score);
 
                 });
                 System.out.println("[msg] Answer was displayed");

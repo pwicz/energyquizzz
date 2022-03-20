@@ -31,8 +31,7 @@ public class MainMessageController {
         switch(msg.type){
 
             case INIT_GAME:
-                result = initGame();
-                msg.playerID = "233";
+                result = initGame(msg);
                 break;
             case INIT_MULTIPLAYER:
                 // do something
@@ -82,10 +81,10 @@ public class MainMessageController {
         }
     }
 
-    public ServerMessage initGame(){
+    public ServerMessage initGame(ClientMessage msg){
         Game g = new Game(new ArrayList<>(), UUID.randomUUID().toString());
         g.addPlayer(new Player("Alex", "222"));
-        g.addPlayer(new Player("Mike", "233"));
+        g.addPlayer(new Player("Mike", msg.playerID));
         g.addPlayer(new Player("awd", "222"));
         g.addPlayer(new Player("awhd", "200"));
         g.addPlayer(new Player("sdhgsge", "278"));
@@ -94,7 +93,6 @@ public class MainMessageController {
         games.put(g.getID(), g);
         ServerMessage result = new ServerMessage(ServerMessage.Type.INIT_PLAYER);
         result.gameID = g.getID();
-        result.playerID = "233";
 
         return result;
     }

@@ -17,8 +17,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
