@@ -115,9 +115,11 @@ public class MainCtrl {
             case DISPLAY_ANSWER:
                 runLater(() -> {
                     multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
+                    multiplayerScreenCtrl.updateScore(msg.score);
 
                 });
                 System.out.println("[msg] Answer was displayed");
+
                 break;
             case DISPLAY_INBETWEENSCORES:
                 runLater(() -> {

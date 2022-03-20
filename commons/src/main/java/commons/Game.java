@@ -1,6 +1,7 @@
 package commons;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Game {
 
@@ -59,6 +60,13 @@ public class Game {
     public int incCounter() {
         this.questionCounter = questionCounter + 1;
         return  questionCounter;
+    }
+    public Player getPlayerWithID(String playerID){
+        for(var p : players){
+            if(Objects.equals(p.getID(), playerID)) return p;
+        }
+
+        return null;
     }
 
     public void setQuestionCounter(int questionCounter) {

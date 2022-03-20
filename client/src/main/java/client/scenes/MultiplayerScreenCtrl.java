@@ -233,5 +233,10 @@ public class MultiplayerScreenCtrl {
 
     }
 
+    public void updateScore(int score){
+        this.score.setText("Score: " + score);
+
+    }
+
 
 }

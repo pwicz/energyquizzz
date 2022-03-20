@@ -48,6 +48,7 @@ public class MainMessageController {
                 break;
             case SUBMIT_ANSWER:
                 Game g = games.get(msg.gameID);
+                Player p = g.getPlayerWithID(msg.playerID);
                 //Player p = g.getPlayers().get();
                 result = new ServerMessage(ServerMessage.Type.DISPLAY_ANSWER);
                 games.get(msg.gameID).incCounter();
@@ -57,6 +58,8 @@ public class MainMessageController {
                 if(Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())){
                     scoreForQuestion = 100 + (int)(100 * msg.time);
                 }
+                p.setScore(p.getScore() + scoreForQuestion);
+                result.score = p.getScore();
                 result.pickedID = msg.chosenActivity;
                 result.correctID = g.getCorrectAnswerID();
                 break;
