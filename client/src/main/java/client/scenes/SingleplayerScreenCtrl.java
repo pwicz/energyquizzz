@@ -75,6 +75,9 @@ public class SingleplayerScreenCtrl {
     @FXML
     Label score;
 
+    @FXML
+    Label picked;
+
     @Inject
     public SingleplayerScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
@@ -169,8 +172,41 @@ public class SingleplayerScreenCtrl {
         msg.time = time;
         msg.chosenActivity = optionToID.get(choice);
         server.send("/app/general", msg);
+
+        option1.setStyle("-fx-border-color: white");
+        option2.setStyle("-fx-border-color: white");
+        option3.setStyle("-fx-border-color: white");
     }
 
+    public void showAnswer(Long correctID, Long pickedID){
+        if (pickedID == optionToID.get(option1.getId())) {
+            picked.setStyle("-fx-border-color: white");
+            double x = option1.getLayoutX();
+            picked.setLayoutX(x);
+        } else if (pickedID == optionToID.get(option2.getId())) {
+            picked.setStyle("-fx-border-color: white");
+            double x = option2.getLayoutX();
+            picked.setLayoutX(x);
+        } else if (pickedID == optionToID.get(option3.getId())) {
+            picked.setStyle("-fx-border-color: white");
+            double x = option3.getLayoutX();
+            picked.setLayoutX(x);
+        }
+
+        if(optionToID.get(option1.getId()) == correctID){
+            option1.setStyle("-fx-border-color: #38c768");
+            option2.setStyle("-fx-border-color: #e0503d");
+            option3.setStyle("-fx-border-color: #e0503d");
+        }else if(optionToID.get(option2.getId()) == correctID){
+            option1.setStyle("-fx-border-color: #e0503d");
+            option2.setStyle("-fx-border-color: #38c768");
+            option3.setStyle("-fx-border-color: #e0503d");
+        }else if(optionToID.get(option3.getId()) == correctID){
+            option1.setStyle("-fx-border-color: #e0503d");
+            option2.setStyle("-fx-border-color: #e0503d");
+            option3.setStyle("-fx-border-color: #38c768");
+        }
+    }
     public void setScoreTo(int s){
         score.setText("Score " + s);
     }

@@ -37,7 +37,6 @@ public class MainMessageController {
     @MessageMapping("/general")
     public void handleClientMessages(ClientMessage msg){
         ServerMessage result = null;
-
         try{
             switch(msg.type){
                 case INIT_MULTIPLAYER:
@@ -73,8 +72,14 @@ public class MainMessageController {
                     }
                     p.setScore(p.getScore() + scoreForQuestion);
 
-                    // send results msg
+                    //send the correct answer id and the picked answer id
+                    ServerMessage m = new ServerMessage(ServerMessage.Type.RESULT);
+                    m.correctAnswerID = g.getCorrectAnswerID();
+                    m.pickedAnswerID = msg.chosenActivity;;
+                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, m);
+                    // send score msg
                     result = nextQuestion(p.getScore(), g);
+
                     break;
                 default:
                     // unknown message

@@ -64,7 +64,7 @@
             <Font size="15.0" />
          </font>
       </Text>
-      <Button fx:id="submit" disable="true" layoutX="1312.0" layoutY="887.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="15.0" prefWidth="150.0" styleClass="submit-btn" text="submit" textFill="#38c768">
+      <Button fx:id="submit" disable="true" layoutX="1312.0" layoutY="700.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="15.0" prefWidth="150.0" styleClass="submit-btn" text="submit" textFill="#38c768">
          <font>
             <Font size="20.0" />
          </font>
@@ -101,5 +101,10 @@
             <String fx:value="option" />
             <String fx:value="hover-element" />
          </styleClass></Rectangle>
+        <Label fx:id="picked" layoutX="630.0" layoutY="380.0" styleClass="text-field" text="You picked this one!" textFill= "#272727" AnchorPane.leftAnchor="687.0" AnchorPane.rightAnchor="688.0" AnchorPane.topAnchor="889.0">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
     </children>
 </AnchorPane>

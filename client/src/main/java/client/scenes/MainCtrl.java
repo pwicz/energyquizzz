@@ -107,6 +107,10 @@ public class MainCtrl {
                     singleplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
                 });
                 break;
+            case RESULT:
+                long correctID = msg.correctAnswerID;
+                long pickedID = msg.pickedAnswerID;
+                singleplayerScreenCtrl.showAnswer(correctID, pickedID);
             case TEST:
                 // for testing purposes only
                 System.out.println("It works! Received a msg!");
