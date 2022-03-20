@@ -4,8 +4,9 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Activity;
 import commons.ClientMessage;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -16,21 +17,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-
 
 public class SingleplayerScreenCtrl {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private Rectangle choice;
-    private Thread timerThread;
-    private double timerProgress;
     private HashMap<Rectangle, Long> optionToID;
     private boolean canInteractWithUI;
+
+    Timeline timer;
 
     @FXML
     ProgressBar timeBar;
@@ -146,41 +147,26 @@ public class SingleplayerScreenCtrl {
      * @param totalTime time that the full timer corresponds to
      */
     public void setTimer(double fractionLeft, double totalTime){
-        timerProgress = fractionLeft;
-
         // by default, our timer is 10.0s long
         if(totalTime <= 0.0) totalTime = 10.0;
-        final double decreaseBy = 0.001 * 10.0 / totalTime;
 
-        if(timerThread != null) timerThread.interrupt();
-        Task task = new Task<Void>() {
-            @Override
-            public Void call() throws Exception {
-                while (timerProgress>=0.00) {
-                    Platform.runLater(() -> {
-                        timeBar.setProgress(timerProgress);
-                        timerProgress -= decreaseBy;
-                        if(timerProgress <= 0){
-                            timeBar.setProgress(0);
-                        }
-                    });
-                    Thread.sleep(10);
-                }
-
-                return null;
-            }
-        };
-
-        timerThread = new Thread(task);
-        timerThread.start();
+        timer = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(timeBar.progressProperty(), fractionLeft)),
+                new KeyFrame(Duration.seconds(totalTime), new KeyValue(timeBar.progressProperty(), 0.0))
+        );
+        timer.play();
     }
 
     public void submitAnswer(){
         if(!canInteractWithUI) return;
         canInteractWithUI = false;
 
-        timerThread.interrupt();
-        double time = timerProgress;
+        double time = 0.0;
+        if(timer != null){
+            time = (timer.getTotalDuration().toSeconds() - timer.getCurrentTime().toSeconds())
+                    / timer.getTotalDuration().toSeconds();
+            timer.stop();
+        }
 
         ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
@@ -216,11 +202,6 @@ public class SingleplayerScreenCtrl {
 
     public void setTitleTo(String title){
         screenTitle.setText(title);
-    }
-
-    public void stopThreads(){
-        if(timerThread != null)
-            timerThread.interrupt();
     }
 
     public void restoreView(){

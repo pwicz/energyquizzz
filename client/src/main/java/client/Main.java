@@ -55,9 +55,5 @@ public class Main extends Application {
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 
         mainCtrl.initialize(primaryStage, overview, add, waitingRoom, singleplayerLeaderboard, singleplayerGame);
-
-        primaryStage.setOnCloseRequest(e -> {
-            singleplayerGame.getKey().stopThreads();
-        });
     }
 }
