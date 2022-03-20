@@ -3,6 +3,7 @@ package client.scenes;
 import client.utils.ServerUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
 import javax.inject.Inject;
@@ -23,6 +24,9 @@ public class InBetweenScoresCtrl {
     @FXML
     ListView<String> leaderboardR;
 
+    @FXML
+    Label questionNo;
+
     @Inject
     public InBetweenScoresCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
@@ -42,6 +46,8 @@ public class InBetweenScoresCtrl {
     public void insertLeaderboardR() { //needs to change to import the database leaderboard
         leaderboardR.getItems().addAll("Blah", "Blah", "Blah");
     }
+
+    public void setQuestionNo(int n){questionNo.setText(n + "/20");}
 
     public void leave(){
         mainCtrl.showSplash();

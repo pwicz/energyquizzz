@@ -14,7 +14,7 @@
    <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="leave-btn" text="LEAVE" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="33.0" />
 
     <Label layoutX="660.0" layoutY="642.0" styleClass="question-label" text="Question" />
-    <Label layoutX="716.0" layoutY="719.0" styleClass="question-number" text="7/20" />
+    <Label fx:id="questionNo" layoutX="716.0" layoutY="719.0" styleClass="question-number" text="7/20" />
 
    <Rectangle arcHeight="5.0" arcWidth="5.0" height="291.0" layoutX="1138.0" layoutY="234.0" strokeType="INSIDE" strokeWidth="3.0" styleClass="correct-box" width="304.0" />
    <Rectangle arcHeight="5.0" arcWidth="5.0" height="291.0" layoutX="95.0" layoutY="244.0" strokeType="INSIDE" strokeWidth="3.0" styleClass="wrong-box" width="304.0" />
