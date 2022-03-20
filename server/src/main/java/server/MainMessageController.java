@@ -53,10 +53,6 @@ public class MainMessageController {
                                 nextQuestion(initMsg.score, games.get(initMsg.gameID)));
                     }
                     break;
-                case TEST:
-                    // for testing purposes
-                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
-                            new ServerMessage(ServerMessage.Type.TEST));
                 case SUBMIT_SINGLEPLAYER:
                     if(msg.gameID == null || msg.playerID == null) return;
 
@@ -70,6 +66,21 @@ public class MainMessageController {
                     p.setHasAnswered(true);
                     submitSingleplayer(msg, g, p);
                     break;
+                case QUIT:
+                    playerGameCorrectnessCheck(msg.gameID, msg.playerID);
+
+                    // remove player from the game
+                    Game game = games.get(msg.gameID);
+                    game.getPlayers().remove(game.getPlayerWithID(msg.playerID));
+                    // end game if there are no more players
+                    if(game.getPlayers().size() == 0) endGame(game);
+
+                    break;
+                case TEST:
+                    // for testing purposes
+                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
+                            new ServerMessage(ServerMessage.Type.TEST));
+                    break;
                 default:
                     // unknown message
             }
@@ -77,6 +88,16 @@ public class MainMessageController {
         catch(MessagingException ex){
             System.out.println("MessagingException on handleClientMessages: " + ex.getMessage());
         }
+    }
+
+    private boolean playerGameCorrectnessCheck(String gameID, String playerID){
+        if(gameID == null || playerID == null) return false;
+
+        // check if specified game and player exist
+
+        if(!games.containsKey(gameID)) return false;
+        Player p = games.get(gameID).getPlayerWithID(playerID);
+        return p != null && !p.hasAnswered();
     }
 
     private ServerMessage initSingleplayerGame(ClientMessage msg){
@@ -137,7 +158,7 @@ public class MainMessageController {
         // send the correct answer id and the picked answer id
         ServerMessage m = new ServerMessage(ServerMessage.Type.RESULT);
         m.correctAnswerID = g.getCorrectAnswerID();
-        m.pickedAnswerID = msg.chosenActivity;;
+        m.pickedAnswerID = msg.chosenActivity;
         m.score = p.getScore();
         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, m);
 
@@ -146,6 +167,8 @@ public class MainMessageController {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    if(g.hasEnded()) return;
+
                     g.setRound(g.getRound() + 1);
                     simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
                             nextQuestion(p.getScore(), g));
@@ -169,6 +192,7 @@ public class MainMessageController {
     }
 
     private void endGame(Game g){
+        g.setHasEnded(true);
         games.remove(g.getID());
     }
 }
