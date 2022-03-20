@@ -72,10 +72,11 @@
 
 .score{
     -fx-font-size: 30;
-    -fx-text-fill:  #38c768;
+    -fx-text-fill: #38c768;
 }
 
-.picked{
-    -fx-text-fill: #272727;
+.picked-text{
+    -fx-fill: #FFFFFF;
     -fx-font-size: 25px;
+    visibility: hidden;
 }
