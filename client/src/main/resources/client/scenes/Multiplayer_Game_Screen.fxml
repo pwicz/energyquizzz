@@ -31,7 +31,7 @@
             <Font size="30.0" />
          </font>
       </Label>
-      <Label layoutX="252.0" layoutY="98.0" styleClass="question" text="Question 5: Which activity consumes most energy?" textFill="#38c768" AnchorPane.leftAnchor="252.0" AnchorPane.rightAnchor="253.0" AnchorPane.topAnchor="98.0">
+      <Label layoutX="256.0" layoutY="98.0" styleClass="question" text="Question 5: Which activity consumes most energy?" textFill="#38c768" AnchorPane.leftAnchor="256.0" AnchorPane.rightAnchor="249.0" AnchorPane.topAnchor="98.0">
          <font>
             <Font size="45.0" />
          </font>
@@ -182,5 +182,6 @@
             <String fx:value="option" />
             <String fx:value="hover-element" />
          </styleClass></Rectangle>
+      <Text fx:id="picked" layoutX="270.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="picked-text" text="you picked this one!" />
     </children>
 </AnchorPane>

@@ -28,10 +28,10 @@ public class MultiplayerScreenCtrl {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
-    private String choice;
+    private Rectangle choice;
     private Thread timerThread;
     private double timerProgress;
-    private HashMap<String, Long> optionToID;
+    private HashMap<Rectangle, Long> optionToID;
 
     @FXML
     ProgressBar timeBar;
@@ -78,6 +78,9 @@ public class MultiplayerScreenCtrl {
     @FXML
     Label score;
 
+    @FXML
+    Text picked;
+
 
     boolean submitted = false;
 
@@ -97,6 +100,7 @@ public class MultiplayerScreenCtrl {
     public void submitAnswer(){
         timerThread.interrupt();
         double time = timerProgress;
+
         ClientMessage msg = new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
         msg.time = time;
@@ -108,25 +112,23 @@ public class MultiplayerScreenCtrl {
 
     }
 
-    public void showAnswer(Long correctID, Long pickedID){
-            for(var entry : optionToID.entrySet()){
-                Long activityID = entry.getValue();
-                Rectangle op = entry.getKey();
+    public void showAnswer(Long correctID, Long pickedID) {
+        for (var entry : optionToID.entrySet()) {
+            Long activityID = entry.getValue();
+            Rectangle op = entry.getKey();
 
-                // set rectangle color
-                if(Objects.equals(activityID, correctID)){
-                    op.setStyle("-fx-stroke: #38c768");
-                }
-                else{
-                    op.setStyle("-fx-stroke: #e0503d");
-                }
+            // set rectangle color
+            if (Objects.equals(activityID, correctID)) {
+                op.setStyle("-fx-stroke: #38c768");
+            } else {
+                op.setStyle("-fx-stroke: #e0503d");
+            }
 
-                if(Objects.equals(activityID, pickedID)){
-                    // render the "You picked this one" text
-                    picked.setLayoutX(op.getLayoutX() + (op.getWidth() - picked.getLayoutBounds().getWidth()) / 2.0);
-                    picked.setLayoutY(op.getLayoutY() - 15.0);
-                    picked.setStyle("visibility: visible");
-                }
+            if (Objects.equals(activityID, pickedID)) {
+                // render the "You picked this one" text
+                picked.setLayoutX(op.getLayoutX() + (op.getWidth() - picked.getLayoutBounds().getWidth()) / 2.0);
+                picked.setLayoutY(op.getLayoutY() - 15.0);
+                picked.setStyle("visibility: visible");
             }
         }
     }
@@ -196,7 +198,7 @@ public class MultiplayerScreenCtrl {
             Activity a = activities.get(i);
 
             if(a == null) continue;
-            optionToID.put(options.get(i).getId(), a.id);
+            optionToID.put(options.get(i), a.id);
             
             titles.get(i).setText(Integer.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
@@ -226,7 +228,8 @@ public class MultiplayerScreenCtrl {
         rectangle.setStyle("-fx-stroke: linear-gradient(#38c768, #21A0E8)");
         submit.setDisable(false);
         submit.setCursor(Cursor.HAND);
-        choice = rectangle.getId();
+
+        choice = rectangle;
 
     }
 

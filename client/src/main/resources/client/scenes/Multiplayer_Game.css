@@ -17,6 +17,12 @@
     -fx-font-size: 45;
 }
 
+.picked-text{
+    -fx-text-fill: white;
+    -fx-font-size: 25px;
+    -fx-content-display: none;
+}
+
 .description{
     -fx-font-family: Roboto;
 }
