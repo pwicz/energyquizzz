@@ -119,6 +119,17 @@ public class MainMessageController {
                         activityController.getRandom().getBody(),
                         activityController.getRandom().getBody());
         result.question = new Question(selectedActivities, Question.Type.COMPARE);
+        // TEMPORARY SOLUTION
+        Activity max = selectedActivities.get(0);
+        for(int i = 1; i < selectedActivities.size(); ++i){
+            Activity activity = selectedActivities.get(i);
+            if(activity.consumptionInWh > max.consumptionInWh) max = activity;
+        }
+
+        // save the correct answer in the Game object
+
+        forGame.setCorrectAnswerID(max.id);
+
         result.score = playerScore;
         result.timerFull = 10.0; // 10 seconds
         result.timerFraction = 1.0;
