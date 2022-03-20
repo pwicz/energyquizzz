@@ -28,7 +28,7 @@
             <Font size="30.0" />
          </font>
       </Label>
-      <Label layoutX="252.0" layoutY="98.0" styleClass="question" text="Question 5: Which activity consumes most energy?" textFill="#38c768" AnchorPane.leftAnchor="252.0" AnchorPane.rightAnchor="253.0" AnchorPane.topAnchor="98.0">
+      <Label fx:id="screenTitle" layoutX="252.0" layoutY="98.0" styleClass="question" text="Question 5: Which activity consumes most energy?" textFill="#38c768" AnchorPane.leftAnchor="252.0" AnchorPane.rightAnchor="253.0" AnchorPane.topAnchor="98.0">
          <font>
             <Font size="45.0" />
          </font>
