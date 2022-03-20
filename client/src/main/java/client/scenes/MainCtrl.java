@@ -52,6 +52,7 @@ public class MainCtrl {
     private InBetweenScoresCtrl inBetweenScoreCtrl;
 
     private String clientID = null;
+    private String gameID = null;
 
     @Inject
     public MainCtrl(ServerUtils server) {
@@ -78,15 +79,19 @@ public class MainCtrl {
         showOverview();
         primaryStage.show();
 
-        clientID = "233"; // hardcoded: we need to somehow get it from the server
 
+        clientID = "233"; // hardcoded: we need to somehow get it from the server
         server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, m -> {
             handleServerMessage(m);
         });
     }
 
     public void handleServerMessage(ServerMessage msg){
+        System.out.println("[test] message received");
         switch(msg.type){
+            case INIT_PLAYER:
+                gameID = msg.gameID;
+                break;
             case NEW_MULTIPLAYER_GAME:
                 // do something
                 break;
@@ -115,9 +120,16 @@ public class MainCtrl {
                 break;
             case DISPLAY_INBETWEENSCORES:
                 runLater(() -> {
+                    inBetweenScoreCtrl.updateQuestionCounter(msg.questionCounter);
                     showInBetweenScore();
                 });
                 System.out.println("[msg] show leaderboard ");
+                break;
+            case END_GAME:
+                runLater(() -> {
+                    showWaitingRoom();
+                });
+                System.out.println("[msg] Ending game ");
                 break;
             case TEST:
                 // for testing purposes only
@@ -171,4 +183,9 @@ public class MainCtrl {
     public String getClientID() {
         return clientID;
     }
+
+    public String getGameID() {
+        return gameID;
+    }
+
 }

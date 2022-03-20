@@ -2,7 +2,7 @@ package commons;
 
 public class ClientMessage {
     public enum Type{
-        INIT_SINGLEPLAYER, INIT_MULTIPLAYER, TEST, INIT_QUESTION, SUBMIT_ANSWER
+        INIT_SINGLEPLAYER, INIT_MULTIPLAYER, TEST, INIT_QUESTION, SUBMIT_ANSWER, INIT_GAME
     }
 
     public Type type;
@@ -14,6 +14,10 @@ public class ClientMessage {
 
 
     public ClientMessage() {
+    }
+
+    public ClientMessage(Type type) {
+        this.type = type;
     }
 
     public ClientMessage(Type type, String playerID, String gameID) {

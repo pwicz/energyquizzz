@@ -7,11 +7,13 @@ public class Game {
     private List<Player> players;
     private String ID;
     private boolean isMultiplayer;
+    private int questionCounter = 0;
 
     public Game(List<Player> players, String ID) {
         this.players = players;
         this.ID = ID;
     }
+
 
     public void addPlayer(Player p){
         players.add(p);
@@ -39,5 +41,13 @@ public class Game {
 
     public void setMultiplayer(boolean multiplayer) {
         isMultiplayer = multiplayer;
+    }
+
+    public int getQuestionCounter() {
+        return questionCounter;
+    }
+
+    public int incrementQuestionCounter() {
+        return questionCounter++;
     }
 }

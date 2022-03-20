@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 import com.google.inject.Inject;
 
 import client.utils.ServerUtils;
+import commons.ClientMessage;
 import commons.Quote;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -74,6 +75,7 @@ public class QuoteOverviewCtrl implements Initializable {
     }
 
     public void waitingRoom(){
+        server.send("/app/general", new ClientMessage(ClientMessage.Type.INIT_GAME));
         mainCtrl.showWaitingRoom();
     }
 

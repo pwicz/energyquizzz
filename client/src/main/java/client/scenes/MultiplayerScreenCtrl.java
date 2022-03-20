@@ -94,7 +94,7 @@ public class MultiplayerScreenCtrl {
     public void submitAnswer(){
         submit.setDisable(true);
         submitted = true;
-        server.send("/app/general", new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER, mainCtrl.getClientID(), "0"));
+        server.send("/app/general", new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER, mainCtrl.getClientID(), mainCtrl.getGameID()));
         System.out.println("Answer submitted");
 
     }
