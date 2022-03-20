@@ -10,6 +10,7 @@ public class Game {
     private boolean isMultiplayer;
     private Long correctAnswerID;
     private int round;
+    private boolean hasEnded;
 
     public Game(List<Player> players, String ID) {
         this.players = players;
@@ -68,5 +69,13 @@ public class Game {
 
     public void setRound(int round) {
         this.round = round;
+    }
+
+    public boolean hasEnded() {
+        return hasEnded;
+    }
+
+    public void setHasEnded(boolean hasEnded) {
+        this.hasEnded = hasEnded;
     }
 }
