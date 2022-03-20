@@ -5,6 +5,7 @@ import commons.ClientMessage;
 import commons.Score;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.GenericType;
+import jakarta.ws.rs.core.MediaType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -95,26 +96,28 @@ public class SingleplayerLeaderboardCtrl {
      *
      */
     public void insertLeaderboard() { //needs to change to import the database leaderboard
+
         counter++;
         /*
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<List> response = restTemplate.getForEntity("http://localhost:8080/api/scores/get"+
                         "Top" + counter + "Scores", List.class);*/
 
-        List<Score> scores = ClientBuilder.newClient(new ClientConfig())
-                .target(String.valueOf(server)).path("api/scores/getTop" + counter + "Scores")
-                .request("APPLICATION_JSON")
-                .accept("APPLICATION_JSON")
-                .get(new GenericType<>() {});
+        List<Score> response = ClientBuilder.newClient(new ClientConfig())
+                .target("http://localhost:8080/").path("api/scores/")
+                .request(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .get(new GenericType<List<Score>>() {});
 
         ArrayList<String> topScores = new ArrayList<>();
-        if(scores != null){
-            for(Score score : scores){
+        if(response != null){
+            for(Score score : response){
                 topScores.add(score.toString());
             }
         }
 
         System.out.println(topScores);
+        System.out.println(response);
         leaderboard.getItems().setAll(topScores);
     }
 
