@@ -77,6 +77,9 @@ public class SingleplayerScreenCtrl {
     Label score;
 
     @FXML
+    Label screenTitle;
+
+    @FXML
     Text picked;
 
     @Inject
@@ -173,10 +176,6 @@ public class SingleplayerScreenCtrl {
         msg.time = time;
         msg.chosenActivity = optionToID.get(choice);
         server.send("/app/general", msg);
-
-        option1.setStyle("-fx-stroke: white");
-        option2.setStyle("-fx-stroke: white");
-        option3.setStyle("-fx-stroke: white");
     }
 
     public void showAnswer(Long correctID, Long pickedID){
@@ -204,9 +203,21 @@ public class SingleplayerScreenCtrl {
         score.setText("Score " + s);
     }
 
+    public void setTitleTo(String title){
+        screenTitle.setText(title);
+    }
+
     public void stopThreads(){
         if(timerThread != null)
             timerThread.interrupt();
+    }
+
+    public void restoreView(){
+        picked.setStyle("visibility: hidden");
+
+        option1.setStyle("-fx-stroke: #fff");
+        option2.setStyle("-fx-stroke: #fff");
+        option3.setStyle("-fx-stroke: #fff");
     }
 
 }
