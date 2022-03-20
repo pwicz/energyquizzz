@@ -74,6 +74,8 @@ public class MainMessageController {
                     p.setScore(p.getScore() + scoreForQuestion);
 
                     // send results msg
+                    // TODO: change to send results message (if you answered correctly and your score)
+                    // TODO: add some deferred method to send a next question after 3-5 seconds
                     result = nextQuestion(p.getScore(), g);
                     break;
                 default:
