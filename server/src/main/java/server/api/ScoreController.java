@@ -14,93 +14,78 @@
  * limitations under the License.
  */
 package server.api;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
+import commons.Score;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import server.database.ScoreRepository;
 
 @RestController
 @RequestMapping("/api/scores")
 public class ScoreController {
 
-    private Map<String, Integer> playerScores;
+    private final ScoreRepository repo;
 
-    public ScoreController() {
-        this.playerScores = new HashMap<>();
-        //Testing purposes
-        playerScores.put("Player 1", 1250);
-        playerScores.put("Player 2", 500);
-        playerScores.put("Player 3", 1500);
-        playerScores.put("Player 4", 700);
-        playerScores.put("Player 5", 0);
+    //make it get scores from database v
+    public ScoreController(ScoreRepository repo) {
+        this.repo = repo;
     }
 
     /**
-     *
-     * @return All scores unordered in database
+     * Returns all scores stored in the database.
+     * @return all scores stored in the database
      */
-    @GetMapping("/getAllScores")
-    public Map<String, Integer> getAllScores() {
-        return playerScores;
+    @GetMapping(path = {"","/"})
+    public List<Score> getAllScores() {
+        return repo.findAll();
     }
 
-    /**
-     *
-     * @param playerName name of player to return score
-     * @return score of a specific player
-     */
-    @GetMapping("/getScoreOf{playerName}")
-    public Integer getScoreOf(@PathVariable("playerName") String playerName) {
+    /*@GetMapping("/getScoreOf{playerName}")
+    public Integer getScoreAt(@PathVariable("playerName") String playerName) {
         return playerScores.get(playerName);
+    }*/
+
+    @GetMapping("/get{number}TopScores")
+    public ResponseEntity<List<Score>> getTopScores(@PathVariable("number") int number){
+        Page<Score> page = repo.findAll(PageRequest.of(0, number, Sort.by(Sort.Order.desc("playerScore"))));
+        var result = page.getContent();
+
+        if(result.size() == 0) return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(result);
     }
 
-    /**
-     *
-     * @param number Amount of high scores to return
-     * @return A specific amount of high scores ordered from high to low
-     */
-    @GetMapping("/getTop{number}Scores")
-    public List<Integer> getTopScores(@PathVariable("number") int number) {
-        List<Integer> topScores = new ArrayList<>();
-        for(String key: playerScores.keySet()) {
-            topScores.add(playerScores.get(key));
+    @PostMapping(path = { "", "/"})
+    public ResponseEntity<Score> addScore(@RequestBody Score score){
+
+        // data validation
+        if(score.playerName == null || score.playerName.isEmpty()){
+            return ResponseEntity.badRequest().build();
         }
-        if(number <= 0 || number > topScores.size()){
-            throw new IllegalArgumentException("Index is out of boundaries of leaderboard");
-        }
-        Collections.sort(topScores);
-        Collections.reverse(topScores);
-        System.out.println(topScores.toString());
-        List<Integer> res = new ArrayList<>();
-        for(int i = 0; i < number; i++){
-            res.add(topScores.get(i));
-        }
-        return res;
+
+        Score saved = repo.save(score);
+        return ResponseEntity.ok(saved);
     }
 
-    /**
-     * Gets specific score from leaderboard
-     * @param number Top high score to return (starting from 1)
-     * @return Specific high score
-     */
-    @GetMapping("/getTopScore{number}")
-    public int getTopScore(@PathVariable("number") int number) {
-        List<Integer> topScores = new ArrayList<>();
-        for(String key: playerScores.keySet()) {
-            topScores.add(playerScores.get(key));
-        }
-        if(number < 1 || number > topScores.size()){
-            throw new IllegalArgumentException("Index is out of boundaries of leaderboard");
-        }
-        Collections.sort(topScores);
-        Collections.reverse(topScores);
-        return topScores.get(number - 1);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Score> deleteScore(@PathVariable("id") long id){
+
+        Optional<Score> scoreToRemove = repo.findById(id);
+        if(scoreToRemove.isEmpty()) return ResponseEntity.notFound().build();
+
+        repo.deleteById(id);
+        return ResponseEntity.ok(scoreToRemove.get());
     }
+
 }
