@@ -40,11 +40,6 @@ public class ScoreController {
     //make it get scores from database v
     public ScoreController(ScoreRepository repo) {
         this.repo = repo;
-        repo.save(new Score("Player 1", 500));
-        repo.save(new Score("Player 2", 100));
-        repo.save(new Score("Player 3", 1500));
-        repo.save(new Score("Player 4", 0));
-        repo.save(new Score("Player 5", 750));
     }
 
     /**
