@@ -117,6 +117,9 @@ public class MainCtrl {
                 break;
             case DISPLAY_ANSWER:
                 runLater(() -> {
+                    for (String s : msg.topScores) {
+                        System.out.println(s);
+                    }
                     multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
                     multiplayerScreenCtrl.updateScore(msg.score);
                     inBetweenScoreCtrl.updateScore(msg.score);

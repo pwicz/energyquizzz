@@ -19,7 +19,7 @@ public class ServerMessage {
     public double timerFull;
     public double timerFraction;
     public int questionCounter;
-    public List<Player> topScores;
+    public List<String> topScores;
     public long pickedID;
     public long correctID;
 

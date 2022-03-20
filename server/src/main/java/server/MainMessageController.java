@@ -59,16 +59,19 @@ public class MainMessageController {
             case SUBMIT_ANSWER:
                 Game g = games.get(msg.gameID);
                 Player p = g.getPlayerWithID(msg.playerID);
-                //Player p = g.getPlayers().get();
                 result = new ServerMessage(ServerMessage.Type.DISPLAY_ANSWER);
                 games.get(msg.gameID).incCounter();
+                //set time between each scene
                 showLeaderboard(msg);
                 showQuestions(msg);
+
                 int scoreForQuestion = 0;
                 if(Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())){
                     scoreForQuestion = 100 + (int)(100 * msg.time);
                 }
                 p.setScore(p.getScore() + scoreForQuestion);
+
+                result.topScores = getTopScores(games.get(msg.gameID));
                 result.score = p.getScore();
                 result.pickedID = msg.chosenActivity;
                 result.correctID = g.getCorrectAnswerID();
@@ -130,11 +133,16 @@ public class MainMessageController {
         myThread.start();
     }
 
-    public List<Player> getTopScores(Game game){
-        return game.getPlayers().stream()
+    public List<String> getTopScores(Game game){
+        List<Player> playerList = game.getPlayers().stream()
                 .sorted(Comparator.comparing(Player::getScore).thenComparing(Player::getID).reversed())
                 .limit(5)
                 .collect(Collectors.toList());
+        List<String> topScores = new ArrayList<>();
+        for (Player p : playerList) {
+            topScores.add(p.getName() + ":" + p.getScore());
+        }
+        return topScores;
     }
 
 
