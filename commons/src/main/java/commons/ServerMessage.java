@@ -2,7 +2,7 @@ package commons;
 
 public class ServerMessage {
     public enum Type{
-        NEW_SINGLEPLAYER_GAME, NEW_MULTIPLAYER_GAME, TEST, NEXT_QUESTION, RESULT
+        NEW_SINGLEPLAYER_GAME, NEW_MULTIPLAYER_GAME, TEST, NEXT_QUESTION, RESULT, END
     }
 
     public Type type;
@@ -15,6 +15,7 @@ public class ServerMessage {
     public String gameID;
     public Long correctAnswerID;
     public Long pickedAnswerID;
+    public int round;
 
     public ServerMessage() {
     }
