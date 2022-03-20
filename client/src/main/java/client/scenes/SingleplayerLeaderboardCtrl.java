@@ -2,16 +2,17 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import commons.ClientMessage;
+import commons.Score;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.core.GenericType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
-
+import org.glassfish.jersey.client.ClientConfig;//import org.springframework.web.bind.annotation.RequestMapping;
 import javax.inject.Inject;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The type Singleplayer leaderboard ctrl.
@@ -91,22 +92,29 @@ public class SingleplayerLeaderboardCtrl {
 
     /**
      * Sets leaderboard elements to display top scores from server from high to low
-     * @throws MalformedURLException if url is invalid or changed from Score Controller
+     *
      */
-    public void insertLeaderboard() throws MalformedURLException { //needs to change to import the database leaderboard
+    public void insertLeaderboard() { //needs to change to import the database leaderboard
         counter++;
+        /*
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<int[]> response = restTemplate.getForEntity("http://localhost:8080/api/scores/get"+
-                        "Top" + counter + "Scores", int[].class);
-        int[] scores = response.getBody();
+        ResponseEntity<List> response = restTemplate.getForEntity("http://localhost:8080/api/scores/get"+
+                        "Top" + counter + "Scores", List.class);*/
+
+        List<Score> scores = ClientBuilder.newClient(new ClientConfig())
+                .target(String.valueOf(server)).path("api/scores/getTop" + counter + "Scores")
+                .request("APPLICATION_JSON")
+                .accept("APPLICATION_JSON")
+                .get(new GenericType<>() {});
+
         ArrayList<String> topScores = new ArrayList<>();
         if(scores != null){
-            for (int score : scores) {
-                topScores.add(String.valueOf(score));
+            for(Score score : scores){
+                topScores.add(score.toString());
             }
         }
 
-        System.out.println(topScores.toString());
+        System.out.println(topScores);
         leaderboard.getItems().setAll(topScores);
     }
 

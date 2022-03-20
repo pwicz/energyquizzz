@@ -40,6 +40,11 @@ public class ScoreController {
     //make it get scores from database v
     public ScoreController(ScoreRepository repo) {
         this.repo = repo;
+        repo.save(new Score("Player 1", 500));
+        repo.save(new Score("Player 2", 100));
+        repo.save(new Score("Player 3", 1500));
+        repo.save(new Score("Player 4", 0));
+        repo.save(new Score("Player 5", 750));
     }
 
     /**
@@ -56,7 +61,7 @@ public class ScoreController {
         return playerScores.get(playerName);
     }*/
 
-    @GetMapping("/get{number}TopScores")
+    @GetMapping("/getTop{number}Scores")
     public ResponseEntity<List<Score>> getTopScores(@PathVariable("number") int number){
         Page<Score> page = repo.findAll(PageRequest.of(0, number, Sort.by(Sort.Order.desc("playerScore"))));
         var result = page.getContent();
