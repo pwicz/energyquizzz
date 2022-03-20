@@ -27,6 +27,9 @@ public class InBetweenScoresCtrl {
     @FXML
     Label questionNo;
 
+    @FXML
+    Label score;
+
     @Inject
     public InBetweenScoresCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
@@ -48,6 +51,7 @@ public class InBetweenScoresCtrl {
     }
 
     public void setQuestionNo(int n){questionNo.setText(n + "/20");}
+    public void setScoreTo(int s){score.setText("Score: " + s);}
 
     public void leave(){
         mainCtrl.showSplash();
