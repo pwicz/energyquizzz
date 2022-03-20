@@ -9,10 +9,13 @@ public class Game {
     private String ID;
     private boolean isMultiplayer;
     private Long correctAnswerID;
+    private int round;
 
     public Game(List<Player> players, String ID) {
         this.players = players;
         this.ID = ID;
+
+        this.round = 1;
     }
 
     public void addPlayer(Player p){
@@ -57,5 +60,13 @@ public class Game {
 
     public void setCorrectAnswerID(Long correctAnswerID) {
         this.correctAnswerID = correctAnswerID;
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
     }
 }
