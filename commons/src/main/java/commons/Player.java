@@ -2,6 +2,7 @@ package commons;
 
 public class Player {
 
+    private boolean hasAnswered;
     private String name;
     private String ID;
     private int score;
@@ -33,5 +34,13 @@ public class Player {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public boolean hasAnswered() {
+        return hasAnswered;
+    }
+
+    public void setHasAnswered(boolean hasAnswered) {
+        this.hasAnswered = hasAnswered;
     }
 }
