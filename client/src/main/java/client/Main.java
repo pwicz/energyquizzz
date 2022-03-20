@@ -30,6 +30,8 @@ import com.google.inject.Injector;
 
 import client.scenes.SplashScreenCtrl;
 import client.scenes.MultiplayerScreenCtrl;
+import client.scenes.InBetweenScoreCtrl;
+import client.scenes.LeaveCtrl;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
