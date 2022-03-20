@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -25,6 +26,9 @@ public class SingleplayerScreenCtrl {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private String choice;
+    private Thread timerThread;
+    private double timerProgress;
+    private HashMap<String, Long> optionToID;
 
     @FXML
     ProgressBar timeBar;
@@ -71,13 +75,12 @@ public class SingleplayerScreenCtrl {
     @FXML
     Label score;
 
-    Thread timerThread;
-    double timerProgress;
-
     @Inject
     public SingleplayerScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+
+        optionToID = new HashMap<>();
     }
 
     public void leave(){
@@ -99,7 +102,10 @@ public class SingleplayerScreenCtrl {
 
 
     public void displayActivities(List<Activity> activities){
+        optionToID = new HashMap<>();
+
         // for convenience
+        List<Rectangle> options = List.of(option1, option2, option3);
         List<Label> titles = List.of(title1, title2, title3);
         List<Text> descriptions = List.of(description1, description2, description3);
         List<ImageView> images = List.of(image1, image2, image3);
@@ -108,6 +114,8 @@ public class SingleplayerScreenCtrl {
             Activity a = activities.get(i);
 
             if(a == null) continue;
+
+            optionToID.put(options.get(i).getId(), a.id);
 
             titles.get(i).setText(Integer.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
@@ -157,9 +165,9 @@ public class SingleplayerScreenCtrl {
         double time = timerProgress;
 
         ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
-                mainCtrl.getClientID(), null);
+                mainCtrl.getClientID(), mainCtrl.getGameID());
         msg.time = time;
-        msg.choice = choice;
+        msg.chosenActivity = optionToID.get(choice);
         server.send("/app/general", msg);
     }
 
