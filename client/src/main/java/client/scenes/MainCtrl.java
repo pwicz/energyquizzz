@@ -24,6 +24,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import static javafx.application.Platform.runLater;
+
 public class MainCtrl {
 
     private final ServerUtils server;
@@ -52,7 +54,12 @@ public class MainCtrl {
     private Scene leave;
     private LeaveCtrl leaveCtrl;
 
+    private Scene singleplayerScreen;
+    private SingleplayerScreenCtrl singleplayerScreenCtrl;
+
     private String clientID = null;
+    private String gameID = null;
+    private int score;
 
     @Inject
     public MainCtrl(ServerUtils server) {
@@ -65,7 +72,8 @@ public class MainCtrl {
                            Pair<MultiplayerScreenCtrl, Parent> multiplayer,
                            Pair<SplashScreenCtrl, Parent> splashScreen,
                            Pair<InBetweenScoreCtrl, Parent> inBetweenScore,
-                           Pair<LeaveCtrl, Parent> leave) {
+                           Pair<LeaveCtrl, Parent> leave,
+                           Pair<SingleplayerScreenCtrl, Parent> singleplayerGame){
         this.primaryStage = primaryStage;
 
         this.overviewCtrl = overview.getKey();
@@ -91,6 +99,8 @@ public class MainCtrl {
         this.leave = new Scene(leave.getValue());
         this.leaveCtrl = leave.getKey();
 
+        this.singleplayerScreen = new Scene(singleplayerGame.getValue());
+        this.singleplayerScreenCtrl = singleplayerGame.getKey();
 
         showOverview();
         primaryStage.show();
@@ -108,7 +118,17 @@ public class MainCtrl {
                 // do something
                 break;
             case NEW_SINGLEPLAYER_GAME:
-                // do something else
+                gameID = msg.gameID;
+                break;
+            case NEXT_QUESTION:
+                // runLater() must be used to run the following code
+                // on the JavaFX Application Thread
+                runLater(() -> {
+                    showSingleplayerGameScreen();
+                    singleplayerScreenCtrl.displayActivities(msg.question.activities);
+                    singleplayerScreenCtrl.setScoreTo(msg.score);
+                    singleplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                });
                 break;
             case TEST:
                 // for testing purposes only
@@ -169,6 +189,10 @@ public class MainCtrl {
         primaryStage.setScene(waitingRoom);
     }
 
+    public void showSingleplayerGameScreen(){
+        primaryStage.setTitle("Singleplayer");
+        primaryStage.setScene(singleplayerScreen);
+    }
     public Scene getInBetweenScore() {
         return inBetweenScore;
     }
@@ -195,5 +219,8 @@ public class MainCtrl {
 
     public Scene getWaitingRoom() {
         return waitingRoom;
+    }
+    public String getClientID() {
+        return clientID;
     }
 }
