@@ -63,7 +63,8 @@ public class MainCtrl {
 
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
                            Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
-                           Pair<MultiplayerScreenCtrl, Parent> multiplayer, Pair<InBetweenScoresCtrl, Parent> inBetweenScore) {
+                           Pair<MultiplayerScreenCtrl, Parent> multiplayer,
+                           Pair<InBetweenScoresCtrl, Parent> inBetweenScore) {
         this.primaryStage = primaryStage;
         this.overviewCtrl = overview.getKey();
         this.overview = new Scene(overview.getValue());
@@ -162,7 +163,7 @@ public class MainCtrl {
 
         primaryStage.setTitle("Quotes: Adding Quote");
         primaryStage.setScene(add);
-        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
+
     }
 
     public void showSplash(){
@@ -172,7 +173,7 @@ public class MainCtrl {
     public void showMultiplayerScreen(){
         primaryStage.setTitle("MultiplayerScreen");
         primaryStage.setScene(question);
-        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
+
     }
 
     public void showSingleLeaderboardScreen(){
@@ -182,7 +183,7 @@ public class MainCtrl {
     public void showWaitingRoom() {
         primaryStage.setTitle("WaitingRoomScreen");
         primaryStage.setScene(waitingRoom);
-        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
+
     }
 
     public void showInBetweenScore(){

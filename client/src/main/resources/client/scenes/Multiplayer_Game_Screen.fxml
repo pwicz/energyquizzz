@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@/client/scenes/Multiplayer_Game.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
+<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#enterAnswer" prefHeight="982.0" prefWidth="1512.0" stylesheets="@/client/scenes/Multiplayer_Game.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
     <children>
         <Button layoutX="200.0" layoutY="887.0" mnemonicParsing="false" onAction="#leave" prefHeight="15.0" prefWidth="150.0" text="Leave" textFill="#e0503d" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="50.0">
             <font>
@@ -182,6 +182,6 @@
             <String fx:value="option" />
             <String fx:value="hover-element" />
          </styleClass></Rectangle>
-      <Text fx:id="picked" layoutX="270.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="picked-text" text="you picked this one!" />
+      <Text fx:id="picked" fill="WHITE" layoutX="270.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="picked-text" text="you picked this one!" />
     </children>
 </AnchorPane>

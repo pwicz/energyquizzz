@@ -13,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -212,6 +214,7 @@ public class MultiplayerScreenCtrl {
         option2.setStyle("-fx-border-color: white");
         option3.setStyle("-fx-border-color: white");
         optionToID = new HashMap<>();
+        picked.setStyle("visibility: invisible");
 
     }
 
@@ -237,4 +240,12 @@ public class MultiplayerScreenCtrl {
     }
 
 
+    public void enterAnswer(KeyEvent keyEvent) {
+        if(choice == null){
+            return;
+        }
+        if(keyEvent.getCode().equals(KeyCode.L)){ //later should replace L with ENTER
+            submitAnswer();
+        }
+    }
 }

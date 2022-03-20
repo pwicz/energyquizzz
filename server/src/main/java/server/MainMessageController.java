@@ -1,16 +1,27 @@
 package server;
 
-import commons.*;
+import commons.Activity;
+import commons.ClientMessage;
+import commons.Game;
+import commons.Player;
+import commons.Question;
+import commons.ServerMessage;
+
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import server.api.ActivityController;
-import java.util.HashMap;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.List;
+import java.util.HashMap;
+import java.util.UUID;
+import java.util.Comparator;
 import java.util.stream.Collectors;
+
 
 @Controller
 @RequestMapping("/")
@@ -139,7 +150,8 @@ public class MainMessageController {
                 if(games.get(msg.gameID).getQuestionCounter() <=20)
                      simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, initMultiplayerGame(msg));
                 else {
-                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, new ServerMessage(ServerMessage.Type.END_GAME));
+                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
+                                                            new ServerMessage(ServerMessage.Type.END_GAME));
                     games.get(msg.gameID).setQuestionCounter(0);
                 }
             }
