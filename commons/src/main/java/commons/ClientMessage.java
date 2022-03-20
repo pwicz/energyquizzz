@@ -11,7 +11,7 @@ public class ClientMessage {
     // add more fields as we start exchanging messages
 
     public String playerName;
-    public String choice;
+    public Long chosenActivity;
     public double time;
     public ClientMessage() {
     }
