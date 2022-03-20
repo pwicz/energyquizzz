@@ -57,6 +57,8 @@ public class MainMessageController {
                 if(Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())){
                     scoreForQuestion = 100 + (int)(100 * msg.time);
                 }
+                result.pickedID = msg.chosenActivity;
+                result.correctID = g.getCorrectAnswerID();
                 break;
             case TEST:
                 // for testing purposes
