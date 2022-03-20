@@ -12,8 +12,6 @@ public class ClientMessage {
     public long chosenActivity;
     // add more fields as we start exchanging messages
 
-    public String submittedAnswer;
-
 
     public ClientMessage() {
     }

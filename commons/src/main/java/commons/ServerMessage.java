@@ -15,7 +15,6 @@ public class ServerMessage {
     public Question question;
     public int score;
     public String gameID;
-    public String playerID;
     public double timerFull;
     public double timerFraction;
     public int questionCounter;
