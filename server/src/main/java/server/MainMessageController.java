@@ -7,9 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import server.api.ActivityController;
-import server.database.ActivityRepository;
+import java.util.HashMap;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/")
@@ -30,10 +31,7 @@ public class MainMessageController {
         switch(msg.type){
 
             case INIT_GAME:
-                Game g = new Game(new ArrayList<>(), UUID.randomUUID().toString());
-                games.put(g.getID(), g);
-                result = new ServerMessage(ServerMessage.Type.INIT_PLAYER);
-                result.gameID = g.getID();
+                result = initGame();
                 msg.playerID = "233";
                 break;
             case INIT_MULTIPLAYER:
@@ -46,7 +44,7 @@ public class MainMessageController {
 
                 result = initMultiplayerGame(msg);
 
-                result.questionCounter = games.get(msg.gameID).getQuestionCounter();
+//                result.questionCounter = games.get(msg.gameID).getQuestionCounter();
                 break;
             case SUBMIT_ANSWER:
                 result = new ServerMessage(ServerMessage.Type.DISPLAY_ANSWER);
@@ -72,8 +70,23 @@ public class MainMessageController {
         catch(MessagingException ex){
             System.out.println("MessagingException on handleClientMessages: " + ex.getMessage());
         }
+    }
 
+    public ServerMessage initGame(){
+        Game g = new Game(new ArrayList<>(), UUID.randomUUID().toString());
+        g.addPlayer(new Player("Alex", "222"));
+        g.addPlayer(new Player("Mike", "233"));
+        g.addPlayer(new Player("awd", "222"));
+        g.addPlayer(new Player("awhd", "200"));
+        g.addPlayer(new Player("sdhgsge", "278"));
+        g.addPlayer(new Player("awdafg", "256"));
 
+        games.put(g.getID(), g);
+        ServerMessage result = new ServerMessage(ServerMessage.Type.INIT_PLAYER);
+        result.gameID = g.getID();
+        result.playerID = "233";
+
+        return result;
     }
 
     public void showLeaderboard(ClientMessage msg) {
@@ -85,7 +98,10 @@ public class MainMessageController {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
                 ServerMessage result = new ServerMessage(ServerMessage.Type.DISPLAY_INBETWEENSCORES);
+//                result.topScores = getTopScores(games.get(msg.gameID));
+
                 result.questionCounter = games.get(msg.gameID).getQuestionCounter();
 
                 simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
@@ -93,6 +109,13 @@ public class MainMessageController {
             }
         };
         myThread.start();
+    }
+
+    public List<Player> getTopScores(Game game){
+        return game.getPlayers().stream()
+                .sorted(Comparator.comparing(Player::getScore).thenComparing(Player::getID).reversed())
+                .limit(5)
+                .collect(Collectors.toList());
     }
 
 

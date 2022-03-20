@@ -18,6 +18,7 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.ClientMessage;
+import commons.Player;
 import commons.ServerMessage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -121,6 +122,9 @@ public class MainCtrl {
             case DISPLAY_INBETWEENSCORES:
                 runLater(() -> {
                     inBetweenScoreCtrl.updateQuestionCounter(msg.questionCounter);
+//                    for (Player p : msg.topScores) {
+//                        System.out.println(p);
+//                    }
                     showInBetweenScore();
                 });
                 System.out.println("[msg] show leaderboard ");
