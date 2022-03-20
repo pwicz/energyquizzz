@@ -8,6 +8,8 @@ public class ClientMessage {
     public Type type;
     public String playerID;
     public String gameID;
+    public double time;
+    public long chosenActivity;
     // add more fields as we start exchanging messages
 
     public String submittedAnswer;

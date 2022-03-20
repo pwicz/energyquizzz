@@ -19,6 +19,7 @@ import javafx.scene.text.Text;
 
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -27,6 +28,9 @@ public class MultiplayerScreenCtrl {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private String choice;
+    private Thread timerThread;
+    private double timerProgress;
+    private HashMap<String, Long> optionToID;
 
     @FXML
     ProgressBar timeBar;
@@ -74,15 +78,13 @@ public class MultiplayerScreenCtrl {
     Label score;
 
 
-
-    Thread timerThread;
-    double timerProgress;
     boolean submitted = false;
 
     @Inject
     public MultiplayerScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
         this.server = server;
+        optionToID = new HashMap<>();
 
     }
 
@@ -92,9 +94,15 @@ public class MultiplayerScreenCtrl {
 
     //submits answer, stops time,
     public void submitAnswer(){
+        timerThread.interrupt();
+        double time = timerProgress;
+        ClientMessage msg = new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER,
+                mainCtrl.getClientID(), mainCtrl.getGameID());
+        msg.time = time;
+        msg.chosenActivity = optionToID.get(choice);
         submit.setDisable(true);
         submitted = true;
-        server.send("/app/general", new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER, mainCtrl.getClientID(), mainCtrl.getGameID()));
+        server.send("/app/general", msg);
         System.out.println("Answer submitted");
 
     }
@@ -176,7 +184,9 @@ public class MultiplayerScreenCtrl {
 
     public void displayActivities(List<Activity> activities){
         // for convenience
+
        resetUI();
+        List<Rectangle> options = List.of(option1, option2, option3);
         List<Label> titles = List.of(title1, title2, title3);
         List<Text> descriptions = List.of(description1, description2, description3);
         List<ImageView> images = List.of(image1, image2, image3);
@@ -185,6 +195,7 @@ public class MultiplayerScreenCtrl {
             Activity a = activities.get(i);
 
             if(a == null) continue;
+            optionToID.put(options.get(i).getId(), a.id);
             
             titles.get(i).setText(Integer.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
@@ -199,6 +210,7 @@ public class MultiplayerScreenCtrl {
         option1.setStyle("-fx-border-color: white");
         option2.setStyle("-fx-border-color: white");
         option3.setStyle("-fx-border-color: white");
+        optionToID = new HashMap<>();
 
     }
 
@@ -215,8 +227,6 @@ public class MultiplayerScreenCtrl {
         submit.setCursor(Cursor.HAND);
         choice = rectangle.getId();
 
-        System.out.println(rectangle.getId());
-        System.out.println(choice);
     }
 
 

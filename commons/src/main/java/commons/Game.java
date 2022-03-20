@@ -8,6 +8,7 @@ public class Game {
     private String ID;
     private boolean isMultiplayer;
     private int questionCounter = 0;
+    private long correctAnswerID;
 
     public Game(List<Player> players, String ID) {
         this.players = players;
@@ -45,6 +46,14 @@ public class Game {
 
     public int getQuestionCounter() {
         return questionCounter;
+    }
+
+    public Long getCorrectAnswerID() {
+        return correctAnswerID;
+    }
+
+    public void setCorrectAnswerID(Long correctAnswerID) {
+        this.correctAnswerID = correctAnswerID;
     }
 
     public int incCounter() {
