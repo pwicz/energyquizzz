@@ -84,6 +84,9 @@ public class SingleplayerScreenCtrl {
     @FXML
     Text picked;
 
+    @FXML
+    Text result;
+
     @Inject
     public SingleplayerScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
@@ -176,6 +179,7 @@ public class SingleplayerScreenCtrl {
     }
 
     public void showAnswer(Long correctID, Long pickedID){
+        timeBar.setProgress(0.0);
         for(var entry : optionToID.entrySet()){
             Long activityID = entry.getValue();
             Rectangle op = entry.getKey();
@@ -194,6 +198,16 @@ public class SingleplayerScreenCtrl {
                 picked.setLayoutY(op.getLayoutY() - 15.0);
                 picked.setStyle("visibility: visible");
             }
+
+            if(Objects.equals(correctID, pickedID)){
+                result.setText("You got it right :)");
+                result.setStyle("visibility: visible");
+                timeBar.setStyle("-fx-border-color: #38c768");
+            }else{
+                result.setText("You got it wrong :(");
+                result.setStyle("visibility: visible");
+                timeBar.setStyle("-fx-border-color: #e0503d");
+            }
         }
     }
     public void setScoreTo(int s){
@@ -211,6 +225,8 @@ public class SingleplayerScreenCtrl {
         option1.setStyle("-fx-stroke: #fff");
         option2.setStyle("-fx-stroke: #fff");
         option3.setStyle("-fx-stroke: #fff");
+
+        result.setStyle("visibility: hidden");
     }
 
 }
