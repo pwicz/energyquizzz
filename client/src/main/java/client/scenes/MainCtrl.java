@@ -103,14 +103,12 @@ public class MainCtrl {
                 // do something else
                 break;
             case LOAD_NEW_QUESTIONS:
-
                 // runLater() must be used to run the following code
                 // on the JavaFX Application Thread
                 runLater(() -> {
                     showMultiplayerScreen();
                     multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
                     multiplayerScreenCtrl.displayActivities(msg.question.getActivities());
-//                    singleplayerScreenCtrl.displayActivities(msg.question.activities);
                 });
 
                 System.out.println("[msg] loadingGame");
@@ -123,7 +121,6 @@ public class MainCtrl {
                     multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
                     multiplayerScreenCtrl.updateScore(msg.score);
                     inBetweenScoreCtrl.updateScore(msg.score);
-
                 });
                 System.out.println("[msg] Answer was displayed");
 
@@ -131,9 +128,6 @@ public class MainCtrl {
             case DISPLAY_INBETWEENSCORES:
                 runLater(() -> {
                     inBetweenScoreCtrl.updateQuestionCounter(msg.questionCounter);
-//                    for (Player p : msg.topScores) {
-//                        System.out.println(p);
-//                    }
                     showInBetweenScore();
                 });
                 System.out.println("[msg] show leaderboard ");
