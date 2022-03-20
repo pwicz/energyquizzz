@@ -1,13 +1,13 @@
 package server.api;
 
-import commons.Question;
+import commons.Activity;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
-import server.database.QuestionRepository;
+import server.database.ActivityRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +15,9 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class TestQuestionRepository implements QuestionRepository {
+public class TestActivityRepository implements ActivityRepository {
 
-    public final List<Question> questions = new ArrayList<>();
+    public final List<Activity> activities = new ArrayList<>();
     public final List<String> calledMethods = new ArrayList<>();
 
     private void call(String name) {
@@ -25,46 +25,46 @@ public class TestQuestionRepository implements QuestionRepository {
     }
 
     @Override
-    public List<Question> findAll() {
+    public List<Activity> findAll() {
         call("findAll");
-        return questions;
+        return activities;
     }
 
     @Override
-    public List<Question> findAll(Sort sort) {
+    public List<Activity> findAll(Sort sort) {
         return null;
     }
 
     @Override
-    public Page<Question> findAll(Pageable pageable) {
+    public Page<Activity> findAll(Pageable pageable) {
         call("findAll");
 
-        List<Question> toReturn = new ArrayList<>();
-        toReturn.add(questions.get(pageable.getPageNumber()));
-        return new PageImpl<Question>(toReturn);
+        List<Activity> toReturn = new ArrayList<>();
+        toReturn.add(activities.get(pageable.getPageNumber()));
+        return new PageImpl<Activity>(toReturn);
     }
 
     @Override
-    public List<Question> findAllById(Iterable<Long> longs) {
+    public List<Activity> findAllById(Iterable<Long> longs) {
         return null;
     }
 
     @Override
     public long count() {
         call("count");
-        return questions.size();
+        return activities.size();
     }
 
     @Override
     public void deleteById(Long aLong) {
         call("deleteById");
 
-        var found = questions.stream().filter(q -> q.id == aLong).collect(Collectors.toList());
-        if(found.size() > 0) questions.remove(found.get(0));
+        var found = activities.stream().filter(q -> q.id == aLong).collect(Collectors.toList());
+        if(found.size() > 0) activities.remove(found.get(0));
     }
 
     @Override
-    public void delete(Question entity) {
+    public void delete(Activity entity) {
     }
 
     @Override
@@ -73,7 +73,7 @@ public class TestQuestionRepository implements QuestionRepository {
     }
 
     @Override
-    public void deleteAll(Iterable<? extends Question> entities) {
+    public void deleteAll(Iterable<? extends Activity> entities) {
 
     }
 
@@ -83,22 +83,22 @@ public class TestQuestionRepository implements QuestionRepository {
     }
 
     @Override
-    public <S extends Question> S save(S entity) {
+    public <S extends Activity> S save(S entity) {
         call("save");
-        questions.add(entity);
+        activities.add(entity);
         return null;
     }
 
     @Override
-    public <S extends Question> List<S> saveAll(Iterable<S> entities) {
+    public <S extends Activity> List<S> saveAll(Iterable<S> entities) {
         return null;
     }
 
     @Override
-    public Optional<Question> findById(Long aLong) {
+    public Optional<Activity> findById(Long aLong) {
         call("findById");
 
-        for(var q : questions){
+        for(var q : activities){
             if(q.id == aLong) return Optional.of(q);
         }
 
@@ -116,17 +116,17 @@ public class TestQuestionRepository implements QuestionRepository {
     }
 
     @Override
-    public <S extends Question> S saveAndFlush(S entity) {
+    public <S extends Activity> S saveAndFlush(S entity) {
         return null;
     }
 
     @Override
-    public <S extends Question> List<S> saveAllAndFlush(Iterable<S> entities) {
+    public <S extends Activity> List<S> saveAllAndFlush(Iterable<S> entities) {
         return null;
     }
 
     @Override
-    public void deleteAllInBatch(Iterable<Question> entities) {
+    public void deleteAllInBatch(Iterable<Activity> entities) {
 
     }
 
@@ -141,47 +141,47 @@ public class TestQuestionRepository implements QuestionRepository {
     }
 
     @Override
-    public Question getOne(Long aLong) {
+    public Activity getOne(Long aLong) {
         return null;
     }
 
     @Override
-    public Question getById(Long aLong) {
+    public Activity getById(Long aLong) {
         return null;
     }
 
     @Override
-    public <S extends Question> Optional<S> findOne(Example<S> example) {
+    public <S extends Activity> Optional<S> findOne(Example<S> example) {
         return Optional.empty();
     }
 
     @Override
-    public <S extends Question> List<S> findAll(Example<S> example) {
+    public <S extends Activity> List<S> findAll(Example<S> example) {
         return null;
     }
 
     @Override
-    public <S extends Question> List<S> findAll(Example<S> example, Sort sort) {
+    public <S extends Activity> List<S> findAll(Example<S> example, Sort sort) {
         return null;
     }
 
     @Override
-    public <S extends Question> Page<S> findAll(Example<S> example, Pageable pageable) {
+    public <S extends Activity> Page<S> findAll(Example<S> example, Pageable pageable) {
         return null;
     }
 
     @Override
-    public <S extends Question> long count(Example<S> example) {
+    public <S extends Activity> long count(Example<S> example) {
         return 0;
     }
 
     @Override
-    public <S extends Question> boolean exists(Example<S> example) {
+    public <S extends Activity> boolean exists(Example<S> example) {
         return false;
     }
 
     @Override
-    public <S extends Question, R> R findBy(Example<S> example,
+    public <S extends Activity, R> R findBy(Example<S> example,
                                             Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return null;
     }

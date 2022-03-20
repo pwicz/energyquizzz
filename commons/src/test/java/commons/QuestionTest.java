@@ -1,31 +1,25 @@
 package commons;
 
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Test;
-
 public class QuestionTest {
-    private static final String TITLE = "Taking a hot shower for 6 minutes";
-    private static final int CONSUMPTIONINWH = 4000;
-    private static final String SOURCE = "https://somelink.com";
-    private static final String IMAGEPATH = "https://source.com";
-
     @Test
     public void testConstructor(){
-        Question q = new Question(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
+        Question q = new Question(new ArrayList<>(), Question.Type.COMPARE);
 
-        assertEquals(TITLE, q.title);
-        assertEquals(CONSUMPTIONINWH, q.consumptionInWh);
-        assertEquals(SOURCE, q.source);
-        assertEquals(IMAGEPATH, q.imagePath);
+        assertEquals(Question.Type.COMPARE, q.getType());
     }
 
     @Test
     public void equalsHashCode(){
-        Question q1 = new Question(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
-        Question q2 = new Question(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
+        Question q1 = new Question(new ArrayList<>(), Question.Type.COMPARE);
+        Question q2 = new Question(new ArrayList<>(), Question.Type.COMPARE);
 
         assertEquals(q1, q2);
         assertEquals(q1.hashCode(), q2.hashCode());
@@ -33,8 +27,8 @@ public class QuestionTest {
 
     @Test
     public void notEqualsHasCode(){
-        Question q1 = new Question(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
-        Question q2 = new Question(TITLE + " and something", CONSUMPTIONINWH + 4502, SOURCE, IMAGEPATH);
+        Question q1 = new Question(new ArrayList<>(), Question.Type.COMPARE);
+        Question q2 = new Question(new ArrayList<>(), Question.Type.ESTIMATION);
 
         assertNotEquals(q1, q2);
         assertNotEquals(q1.hashCode(), q2.hashCode());
@@ -42,12 +36,10 @@ public class QuestionTest {
 
     @Test
     public void testToString(){
-        Question q1 = new Question(TITLE, CONSUMPTIONINWH, SOURCE, IMAGEPATH);
-        String questionString = q1.toString();
+        Question q = new Question(new ArrayList<>(), Question.Type.COMPARE);
+        String questionString = q.toString();
 
         assertTrue(questionString.contains(Question.class.getSimpleName()));
-        assertTrue(questionString.contains(TITLE));
-        assertTrue(questionString.contains(SOURCE));
-        assertTrue(questionString.contains(IMAGEPATH));
+        assertTrue(questionString.contains("COMPARE"));
     }
 }

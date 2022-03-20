@@ -1,37 +1,15 @@
-@font-face {
-    font-family: 'Roboto';
-    src: url('Roboto-Thin.ttf');
-}
-
-#anchorPane{
-    -fx-background-color:  #272727;
-}
-
-.text{
-    -fx-text-alignment: center;
+.background{
+    -fx-background-color: #272727;
 }
 
 .button{
     -fx-font-family: "Roboto";
-    -fx-font-size: 36;
-    -fx-cursor: hand;
-    -fx-background-color: none;
-}
-
-.greenButton{
-    -fx-stroke: #38c768;
-    -fx-text-fill: #38c768;
-}
-.help-btn{
-    -fx-text-fill: white;
-}
-
-.title{
-    -fx-text-fill: linear-gradient(to left,#38c768, #21A0E8);
+    -fx-font-size: 36 ;
 }
 
 .button:hover{
-    -fx-opacity: 0.2;
+    -fx-opacity: 0.5;
+    -fx-cursor: hand;
 }
 
 .label{
@@ -39,11 +17,38 @@
     -fx-font-size: 100;
 }
 
+.title{
+    -fx-font-family: 'Roboto Thin';
+    -fx-font-size: 100;
+}
+
 .leave-btn{
-    -fx-font-family: "Roboto";
-    -fx-font-size: 20 ;
-    -fx-stroke: #e0503d;
-    -fx-text-fill:  #e0503d;
+    -fx-background-color: none;
+    -fx-border-color: #E0503D;
+    -fx-border-radius: 5;
+    -fx-text-fill: #e0503d;
+}
+
+.start-btn{
+    -fx-background-color: none;
+    -fx-border-color: #38c768;
+    -fx-border-radius: 5;
+    -fx-text-fill: #38c768;
+}
+
+.description{
+    -fx-font-family: 'Roboto Thin';
+    -fx-font-size: 32;
+}
+
+.sidebarTitle{
+    -fx-font-family: 'Roboto Thin';
+    -fx-font-size: 22;
+}
+
+.playersList{
+    -fx-font-size: 20;
+    -fx-font-family: 'Roboto Thin';
 }
 
 
