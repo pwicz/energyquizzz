@@ -4,7 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import javax.persistence.SequenceGenerator;
+
 
 @Entity
 public class Score {
@@ -22,6 +24,7 @@ public class Score {
     public long id;
 
     public String playerName;
+
     public int playerScore;
 
     public Score(String playerName, int playerScore) {
@@ -60,4 +63,6 @@ public class Score {
                 ", playerScore=" + playerScore +
                 '}';
     }
+
+
 }
