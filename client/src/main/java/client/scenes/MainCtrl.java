@@ -18,7 +18,6 @@ package client.scenes;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.ClientMessage;
-import commons.Player;
 import commons.ServerMessage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
