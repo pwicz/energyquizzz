@@ -101,6 +101,7 @@
             <String fx:value="option" />
             <String fx:value="hover-element" />
          </styleClass></Rectangle>
-      <Text fx:id="picked" layoutX="367.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="picked-text" text="You picked this one" />
+      <Text fx:id="picked" layoutX="367.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text="You picked this one" />
+      <Text fx:id="result" layoutX="698.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text=" " />
     </children>
 </AnchorPane>
