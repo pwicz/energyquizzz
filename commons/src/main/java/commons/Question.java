@@ -6,6 +6,7 @@ import java.util.List;
 public class Question {
     public List<Activity> activities;
     public Type type;
+    public String title;
 
     public enum Type{
         COMPARE,
@@ -21,6 +22,9 @@ public class Question {
     public Question(List<Activity> activities, Type type) {
         this.activities = activities;
         this.type = type;
+
+        // predefined titles for each type:
+        if(type == Type.COMPARE) this.title = "Which activity consumes most energy?";
     }
 
     public void addActivity(Activity a){
