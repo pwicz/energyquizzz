@@ -159,4 +159,8 @@ public class MainCtrl {
     public String getClientID() {
         return clientID;
     }
+
+    public String getGameID() {
+        return gameID;
+    }
 }
