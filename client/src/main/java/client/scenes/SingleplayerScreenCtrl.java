@@ -19,16 +19,17 @@ import javafx.scene.text.Text;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 
 public class SingleplayerScreenCtrl {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
-    private String choice;
+    private Rectangle choice;
     private Thread timerThread;
     private double timerProgress;
-    private HashMap<String, Long> optionToID;
+    private HashMap<Rectangle, Long> optionToID;
 
     @FXML
     ProgressBar timeBar;
@@ -76,7 +77,7 @@ public class SingleplayerScreenCtrl {
     Label score;
 
     @FXML
-    Label picked;
+    Text picked;
 
     @Inject
     public SingleplayerScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
@@ -92,15 +93,15 @@ public class SingleplayerScreenCtrl {
 
 
     public void lockAnswer(MouseEvent mouseEvent) {
-        option1.setStyle("-fx-border-color: white");
-        option2.setStyle("-fx-border-color: white");
-        option3.setStyle("-fx-border-color: white");
+        option1.setStyle("-fx-stroke: white");
+        option2.setStyle("-fx-stroke: white");
+        option3.setStyle("-fx-stroke: white");
         Rectangle rectangle = (Rectangle) mouseEvent.getSource();
         rectangle.setStyle("-fx-stroke: linear-gradient(#38c768, #21A0E8)");
         submit.setDisable(false);
         submit.setCursor(Cursor.HAND);
 
-        choice = rectangle.getId();
+        choice = rectangle;
     }
 
 
@@ -118,7 +119,7 @@ public class SingleplayerScreenCtrl {
 
             if(a == null) continue;
 
-            optionToID.put(options.get(i).getId(), a.id);
+            optionToID.put(options.get(i), a.id);
 
             titles.get(i).setText(Integer.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
@@ -173,38 +174,30 @@ public class SingleplayerScreenCtrl {
         msg.chosenActivity = optionToID.get(choice);
         server.send("/app/general", msg);
 
-        option1.setStyle("-fx-border-color: white");
-        option2.setStyle("-fx-border-color: white");
-        option3.setStyle("-fx-border-color: white");
+        option1.setStyle("-fx-stroke: white");
+        option2.setStyle("-fx-stroke: white");
+        option3.setStyle("-fx-stroke: white");
     }
 
     public void showAnswer(Long correctID, Long pickedID){
-        if (pickedID == optionToID.get(option1.getId())) {
-            picked.setStyle("-fx-border-color: white");
-            double x = option1.getLayoutX();
-            picked.setLayoutX(x);
-        } else if (pickedID == optionToID.get(option2.getId())) {
-            picked.setStyle("-fx-border-color: white");
-            double x = option2.getLayoutX();
-            picked.setLayoutX(x);
-        } else if (pickedID == optionToID.get(option3.getId())) {
-            picked.setStyle("-fx-border-color: white");
-            double x = option3.getLayoutX();
-            picked.setLayoutX(x);
-        }
+        for(var entry : optionToID.entrySet()){
+            Long activityID = entry.getValue();
+            Rectangle op = entry.getKey();
 
-        if(optionToID.get(option1.getId()) == correctID){
-            option1.setStyle("-fx-border-color: #38c768");
-            option2.setStyle("-fx-border-color: #e0503d");
-            option3.setStyle("-fx-border-color: #e0503d");
-        }else if(optionToID.get(option2.getId()) == correctID){
-            option1.setStyle("-fx-border-color: #e0503d");
-            option2.setStyle("-fx-border-color: #38c768");
-            option3.setStyle("-fx-border-color: #e0503d");
-        }else if(optionToID.get(option3.getId()) == correctID){
-            option1.setStyle("-fx-border-color: #e0503d");
-            option2.setStyle("-fx-border-color: #e0503d");
-            option3.setStyle("-fx-border-color: #38c768");
+            // set rectangle color
+            if(Objects.equals(activityID, correctID)){
+                op.setStyle("-fx-stroke: #38c768");
+            }
+            else{
+                op.setStyle("-fx-stroke: #e0503d");
+            }
+
+            if(Objects.equals(activityID, pickedID)){
+                // render the "You picked this one" text
+                picked.setLayoutX(op.getLayoutX() + (op.getWidth() - picked.getLayoutBounds().getWidth()) / 2.0);
+                picked.setLayoutY(op.getLayoutY() - 15.0);
+                picked.setStyle("visibility: visible");
+            }
         }
     }
     public void setScoreTo(int s){
@@ -212,7 +205,8 @@ public class SingleplayerScreenCtrl {
     }
 
     public void stopThreads(){
-        timerThread.interrupt();
+        if(timerThread != null)
+            timerThread.interrupt();
     }
 
 }
