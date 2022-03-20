@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 @Controller
@@ -36,7 +38,6 @@ public class MainMessageController {
 
     @MessageMapping("/general")
     public void handleClientMessages(ClientMessage msg){
-        ServerMessage result = null;
         try{
             switch(msg.type){
                 case INIT_MULTIPLAYER:
@@ -48,13 +49,14 @@ public class MainMessageController {
                     if(initMsg != null){
                         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, initMsg);
                         // then send a first question
-                        result = nextQuestion(initMsg.score, games.get(initMsg.gameID));
+                        simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
+                                nextQuestion(initMsg.score, games.get(initMsg.gameID)));
                     }
-
                     break;
                 case TEST:
                     // for testing purposes
-                    result = new ServerMessage(ServerMessage.Type.TEST);
+                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
+                            new ServerMessage(ServerMessage.Type.TEST));
                 case SUBMIT_SINGLEPLAYER:
                     if(msg.gameID == null || msg.playerID == null) return;
 
@@ -62,38 +64,19 @@ public class MainMessageController {
                     Game g = games.get(msg.gameID);
                     if(g == null) return;
                     Player p = g.getPlayerWithID(msg.playerID);
-                    if(p == null) return;
+                    if(p == null || p.hasAnswered()) return;
 
-                    // update player's score
-                    int scoreForQuestion = 0;
-                    if(Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())){
-                        scoreForQuestion = 100 + (int)(100 * msg.time);
-                    }
-                    p.setScore(p.getScore() + scoreForQuestion);
-                    //send the correct answer id and the picked answer id
-                    ServerMessage m = new ServerMessage(ServerMessage.Type.RESULT);
-                    m.correctAnswerID = g.getCorrectAnswerID();
-                    m.pickedAnswerID = msg.chosenActivity;;
-                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, m);
-                    // send score msg
-                    // TODO: change to send results message (if you answered correctly and your score)
-                    // TODO: add some deferred method to send a next question after 3-5 seconds
-//                    result = nextQuestion(p.getScore(), g);
 
+                    p.setHasAnswered(true);
+                    submitSingleplayer(msg, g, p);
                     break;
                 default:
                     // unknown message
             }
-
-            // if we created a valid message, we send it to a specific client at /client/{ID}
-            if(result == null) return;
-
-            simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
         }
         catch(MessagingException ex){
             System.out.println("MessagingException on handleClientMessages: " + ex.getMessage());
         }
-
     }
 
     private ServerMessage initSingleplayerGame(ClientMessage msg){
@@ -138,7 +121,54 @@ public class MainMessageController {
         result.score = playerScore;
         result.timerFull = 10.0; // 10 seconds
         result.timerFraction = 1.0;
+        result.round = forGame.getRound();
 
         return result;
+    }
+
+    private void submitSingleplayer(ClientMessage msg, Game g, Player p){
+        // update player's score
+        int scoreForQuestion = 0;
+        if(Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())){
+            scoreForQuestion = 100 + (int)(100 * msg.time);
+        }
+        p.setScore(p.getScore() + scoreForQuestion);
+        // send score msg
+        // send the correct answer id and the picked answer id
+        ServerMessage m = new ServerMessage(ServerMessage.Type.RESULT);
+        m.correctAnswerID = g.getCorrectAnswerID();
+        m.pickedAnswerID = msg.chosenActivity;;
+        m.score = p.getScore();
+        simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, m);
+
+        if(g.getRound() < 5){
+            // send next question after 3 seconds
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    g.setRound(g.getRound() + 1);
+                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
+                            nextQuestion(p.getScore(), g));
+                    p.setHasAnswered(false);
+                }
+            }, 3000);
+        }
+        else{
+            // end game
+            endGame(g);
+            // send player to the leaderboard
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
+                            new ServerMessage(ServerMessage.Type.END));
+                }
+            }, 3000);
+        }
+
+    }
+
+    private void endGame(Game g){
+        games.remove(g.getID());
     }
 }
