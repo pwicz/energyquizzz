@@ -30,6 +30,7 @@ public class SingleplayerScreenCtrl {
     private Thread timerThread;
     private double timerProgress;
     private HashMap<Rectangle, Long> optionToID;
+    private boolean canInteractWithUI;
 
     @FXML
     ProgressBar timeBar;
@@ -96,6 +97,8 @@ public class SingleplayerScreenCtrl {
 
 
     public void lockAnswer(MouseEvent mouseEvent) {
+        if(!canInteractWithUI) return;
+
         option1.setStyle("-fx-stroke: white");
         option2.setStyle("-fx-stroke: white");
         option3.setStyle("-fx-stroke: white");
@@ -168,6 +171,9 @@ public class SingleplayerScreenCtrl {
     }
 
     public void submitAnswer(){
+        if(!canInteractWithUI) return;
+        canInteractWithUI = false;
+
         timerThread.interrupt();
         double time = timerProgress;
 
@@ -213,6 +219,7 @@ public class SingleplayerScreenCtrl {
     }
 
     public void restoreView(){
+        canInteractWithUI = true;
         picked.setStyle("visibility: hidden");
 
         option1.setStyle("-fx-stroke: #fff");
