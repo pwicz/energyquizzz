@@ -189,6 +189,7 @@ public class MultiplayerScreenCtrl {
         // for convenience
 
        resetUI();
+
         List<Rectangle> options = List.of(option1, option2, option3);
         List<Label> titles = List.of(title1, title2, title3);
         List<Text> descriptions = List.of(description1, description2, description3);
@@ -203,8 +204,7 @@ public class MultiplayerScreenCtrl {
             titles.get(i).setText(Integer.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
 
-            File file = new File("server/src/main/resources/public/activities/" + a.imagePath);
-            images.get(i).setImage(new Image(file.toURI().toString()));
+            images.get(i).setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
         }
     }
 
