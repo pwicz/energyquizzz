@@ -3,6 +3,7 @@ package commons;
 import java.util.List;
 
 public class ServerMessage {
+
     public enum Type{
         NEW_SINGLEPLAYER_GAME, NEW_MULTIPLAYER_GAME, TEST, LOAD_NEW_QUESTIONS, DISPLAY_ANSWER,
         DISPLAY_INBETWEENSCORES, END_GAME, INIT_PLAYER
@@ -19,6 +20,8 @@ public class ServerMessage {
     public double timerFraction;
     public int questionCounter;
     public List<Player> topScores;
+    public long pickedID;
+    public long correctID;
 
     public ServerMessage() {
     }

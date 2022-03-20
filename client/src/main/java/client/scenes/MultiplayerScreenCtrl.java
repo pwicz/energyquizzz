@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 
 public class MultiplayerScreenCtrl {
@@ -106,27 +107,27 @@ public class MultiplayerScreenCtrl {
         System.out.println("Answer submitted");
 
     }
-    public void showAnswer(){
-        System.out.println("Answer showed");
-        switch (choice){
-            case "option1":
-                option1.setStyle("-fx-stroke: #38c768");
-                option2.setStyle("-fx-stroke: #E0503D");
-                option3.setStyle("-fx-stroke: #E0503D");
-                break;
-            case "option2":
-                option1.setStyle("-fx-stroke: #E0503D");
-                option2.setStyle("-fx-stroke: #38c768");
-                option3.setStyle("-fx-stroke: #E0503D");
-                break;
-            case "option3":
-                option1.setStyle("-fx-stroke: #E0503D");
-                option2.setStyle("-fx-stroke: #E0503D");
-                option3.setStyle("-fx-stroke: #38c768");
-                break;
-            default:
-                System.out.println("Invalid answer");
-                break;
+
+    public void showAnswer(Long correctID, Long pickedID){
+            for(var entry : optionToID.entrySet()){
+                Long activityID = entry.getValue();
+                Rectangle op = entry.getKey();
+
+                // set rectangle color
+                if(Objects.equals(activityID, correctID)){
+                    op.setStyle("-fx-stroke: #38c768");
+                }
+                else{
+                    op.setStyle("-fx-stroke: #e0503d");
+                }
+
+                if(Objects.equals(activityID, pickedID)){
+                    // render the "You picked this one" text
+                    picked.setLayoutX(op.getLayoutX() + (op.getWidth() - picked.getLayoutBounds().getWidth()) / 2.0);
+                    picked.setLayoutY(op.getLayoutY() - 15.0);
+                    picked.setStyle("visibility: visible");
+                }
+            }
         }
     }
 

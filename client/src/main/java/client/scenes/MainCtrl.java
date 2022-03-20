@@ -114,7 +114,7 @@ public class MainCtrl {
                 break;
             case DISPLAY_ANSWER:
                 runLater(() -> {
-                    multiplayerScreenCtrl.showAnswer();
+                    multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
 
                 });
                 System.out.println("[msg] Answer was displayed");
