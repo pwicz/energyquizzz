@@ -48,7 +48,6 @@ public class MainMessageController {
                     if(initMsg != null){
                         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, initMsg);
                         // then send a first question
-
                         result = nextQuestion(initMsg.score, games.get(initMsg.gameID));
                     }
 
@@ -71,13 +70,14 @@ public class MainMessageController {
                         scoreForQuestion = 100 + (int)(100 * msg.time);
                     }
                     p.setScore(p.getScore() + scoreForQuestion);
-
                     //send the correct answer id and the picked answer id
                     ServerMessage m = new ServerMessage(ServerMessage.Type.RESULT);
                     m.correctAnswerID = g.getCorrectAnswerID();
                     m.pickedAnswerID = msg.chosenActivity;;
                     simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, m);
                     // send score msg
+                    // TODO: change to send results message (if you answered correctly and your score)
+                    // TODO: add some deferred method to send a next question after 3-5 seconds
                     result = nextQuestion(p.getScore(), g);
 
                     break;
