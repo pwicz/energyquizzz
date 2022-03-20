@@ -1,4 +1,4 @@
-.root{
+git.root{
     -fx-background-color:  #272727;
 }
 
@@ -60,15 +60,22 @@
     -fx-border-radius: 5;
 }
 
-.list-text{
-    -fx-font-size: 36;
-    -fx-text-fill: #ffffff;
-}
+/*.list-text{*/
+/*    -fx-font-size: 36;*/
+/*    -fx-text-fill: #ffffff;*/
+/*}*/
 
-.list-view {
+.leaderboard{
     -fx-border-color: linear-gradient(to left, #1BED62, #21A0E8);
 }
 
+.leaderboardG{
+    -fx-border-color: #38c768;
+}
+
+.leaderboardR{
+    -fx-border-color: #e0503d;
+}
 
 .list-cell {
     -fx-background-color: #272727;
