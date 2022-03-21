@@ -228,5 +228,4 @@ public class SingleplayerScreenCtrl {
 
         result.setStyle("visibility: hidden");
     }
-
 }
