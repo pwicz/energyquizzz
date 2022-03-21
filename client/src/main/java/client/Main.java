@@ -26,11 +26,11 @@ import client.scenes.QuoteOverviewCtrl;
 import client.scenes.SingleplayerLeaderboardCtrl;
 import client.scenes.SingleplayerScreenCtrl;
 import client.scenes.WaitingRoomScreenCtrl;
+import client.scenes.InBetweenScoreCtrl;
 import com.google.inject.Injector;
 
 import client.scenes.SplashScreenCtrl;
 import client.scenes.MultiplayerScreenCtrl;
-import client.scenes.InBetweenScoreCtrl;
 import client.scenes.LeaveCtrl;
 
 import javafx.application.Application;

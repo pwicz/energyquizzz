@@ -155,7 +155,8 @@ public class SingleplayerScreenCtrl {
     }
 
     public void stopThreads(){
-        timerThread.interrupt();
+        if(timerThread!=null)
+            timerThread.interrupt();
     }
 
 }
