@@ -21,11 +21,11 @@ public class SplashScreenCtrl {
     }
 
     public void leave(){
-        mainCtrl.showOverview();
+        mainCtrl.showLeave(mainCtrl.getSplash());
     }
 
-    public void showMultiplayerScreen(){
-        mainCtrl.showMultiplayerScreen();
+    public void showWaitingRoom(){
+        mainCtrl.showWaitingRoom();
     }
 
     public void showSingleplayerScreen() {

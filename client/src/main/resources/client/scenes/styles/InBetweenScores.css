@@ -32,18 +32,6 @@
     -fx-text-fill: #ffffff;
 }
 
-.wrong-box{
-    -fx-fill: none;
-    -fx-stroke:  #e0503d;
-    -fx-border-radius: 5;
-}
-
-.correct-box{
-    -fx-fill: none;
-    -fx-stroke:  #38c768;
-    -fx-border-radius: 5;
-}
-
 .picked-wrong{
     -fx-font-size: 25;
     -fx-text-fill: #ffffff;
@@ -54,13 +42,24 @@
     -fx-text-fill: #ffffff;
 }
 
-.score-box{
-    -fx-fill: none;
-    -fx-stroke:  linear-gradient(to right, #21a0e8, #38c768);
+.leaderboard{
+    -fx-border-color: linear-gradient(to left, #1BED62, #21A0E8);
     -fx-border-radius: 5;
 }
 
-.list-text{
-    -fx-font-size: 36;
-    -fx-text-fill: #ffffff;
+.leaderboardG{
+    -fx-border-color: #38c768;
+    -fx-border-radius: 5;
 }
+
+.leaderboardR{
+    -fx-border-color: #e0503d;
+    -fx-border-radius: 5;
+}
+
+.list-cell {
+    -fx-background-color: #272727;
+    -fx-text-fill: linear-gradient(to left, #1BED62, #21A0E8);
+    -fx-font-size: 15px;
+}
+

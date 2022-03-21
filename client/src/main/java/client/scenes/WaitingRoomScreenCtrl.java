@@ -14,4 +14,12 @@ public class WaitingRoomScreenCtrl {
         this.server = server;
 
     }
+
+    public void startGame(){
+        mainCtrl.showMultiplayerScreen();
+    }
+
+    public void leave(){
+        mainCtrl.showLeave(mainCtrl.getWaitingRoom());
+    }
 }
