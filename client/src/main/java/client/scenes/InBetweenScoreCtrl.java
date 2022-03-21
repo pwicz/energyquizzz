@@ -50,8 +50,16 @@ public class InBetweenScoreCtrl {
         leaderboardR.getItems().addAll("Blah", "Blah", "Blah");
     }
 
-    public void setQuestionNo(int n){questionNo.setText(n + "/20");}
-    public void setScoreTo(int s){score.setText("Score: " + s);}
+    public void setQuestionNo(int n){
+        if(n != 20)
+            questionNo.setText(n + "/20");
+        else
+            questionNo.setText("20/20\nEnd of the game");
+    }
+
+    public void setScoreTo(int s){
+        score.setText("Score: " + s);
+    }
 
     public void leave(){
         mainCtrl.showLeave(mainCtrl.getInBetweenScore());

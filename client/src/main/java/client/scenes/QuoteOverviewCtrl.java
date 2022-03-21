@@ -74,13 +74,6 @@ public class QuoteOverviewCtrl implements Initializable {
         mainCtrl.showSplash();
     }
 
-    public void waitingRoom(){
-        ClientMessage msg= new ClientMessage(ClientMessage.Type.INIT_GAME);
-        msg.playerID = mainCtrl.getClientID();
-        server.send("/app/general", msg);
-        mainCtrl.showWaitingRoom();
-        
-    }
 
     public void refresh() {
         var quotes = server.getQuotes();

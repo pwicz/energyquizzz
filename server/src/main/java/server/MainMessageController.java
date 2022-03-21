@@ -40,58 +40,60 @@ public class MainMessageController {
     }
 
     @MessageMapping("/general")
-    public void handleClientMessages(ClientMessage msg){
+    public void handleClientMessages(ClientMessage msg) {
         ServerMessage result = null;
-        try{
-            switch(msg.type){
+        try {
+            Game g = null;
+            Player p = null;
+            if(games.get(msg.gameID) != null) {
+                g = games.get(msg.gameID);
+                if (g.getPlayerWithID(msg.playerID) != null)
+                    p = g.getPlayerWithID(msg.playerID);
+            }
+            switch (msg.type) {
+
                 case INIT_SINGLEPLAYER:
                     // first init the game
                     var initMsg = initSingleplayerGame(msg);
-                    if(initMsg != null){
+                    if (initMsg != null) {
                         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, initMsg);
                         // then send a first question
                         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
                                 nextQuestion(initMsg.score, games.get(initMsg.gameID)));
                     }
                     break;
-       
+                case INIT_GAME:
+                    result = initGame(msg);
+                    break;
+                case INIT_MULTIPLAYER:
+                    // do something
+                    break;
+                case INIT_QUESTION:
+                    result = nextMultiQuestion(
+                            games.get(msg.gameID).getPlayerWithID(msg.playerID).getScore(), games.get(msg.gameID));
+                    result.questionCounter = games.get(msg.gameID).getQuestionCounter();
+                    System.out.println("[msg] init question");
+                    break;
+                case SUBMIT_ANSWER:
+                    updatScore(msg, p, g);
+                    //make message
+                    result = displayAnswer(p, g, msg);
+                    //set time between each scene
+                    showLeaderboard(msg);
+                    showQuestions(msg);
+                    System.out.println("[msg] submit answer");
 
-            case INIT_GAME:
-                result = initGame(msg);
-                break;
-            case INIT_MULTIPLAYER:
-                // do something
-                break;
-            case INIT_QUESTION:
-                result = nextMultiQuestion(
-                        games.get(msg.gameID).getPlayerWithID(msg.playerID).getScore(), games.get(msg.gameID));
-                result.questionCounter = games.get(msg.gameID).getQuestionCounter();
-                System.out.println("[msg] init question");
-                break;
-            case SUBMIT_ANSWER:
-                Game g = games.get(msg.gameID);
-                Player p = g.getPlayerWithID(msg.playerID);
-                updatScore(msg, p, g);
-                //make message
-                result = displayAnswer(p, g, msg);
-                //set time between each scene
-                showLeaderboard(msg);
-                showQuestions(msg);
-                System.out.println("[msg] submit answer");
-
-                break;
-            case TEST:
-                // for testing purposes
-                result = new ServerMessage(ServerMessage.Type.TEST);
-                System.out.println("[test] message received");
-                break;
+                    break;
+                case TEST:
+                    // for testing purposes
+                    result = new ServerMessage(ServerMessage.Type.TEST);
+                    System.out.println("[test] message received");
+                    break;
                 case SUBMIT_SINGLEPLAYER:
-                    if(msg.gameID == null || msg.playerID == null) return;
+                    if (msg.gameID == null || msg.playerID == null) return;
                     // check if specified game and player exist
-                    Game g = games.get(msg.gameID);
-                    if(g == null) return;
-                    Player p = g.getPlayerWithID(msg.playerID);
-                    if(p == null || p.hasAnswered()) return;
+                    if (g == null) return;
+                    if (p == null || p.hasAnswered()) return;
 
 
                     p.setHasAnswered(true);
@@ -104,48 +106,46 @@ public class MainMessageController {
                     Game game = games.get(msg.gameID);
                     game.getPlayers().remove(game.getPlayerWithID(msg.playerID));
                     // end game if there are no more players
-                    if(game.getPlayers().size() == 0) endGame(game);
-
-                    break;
-                case TEST:
-                    // for testing purposes
-                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
-                            new ServerMessage(ServerMessage.Type.TEST));
+                    if (game.getPlayers().size() == 0) endGame(game);
                     break;
                 default:
                     // unknown message
             }
-        }
-        catch(MessagingException ex){
+
+            if(result == null) return;
+
+            simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
+
+        } catch (MessagingException ex) {
             System.out.println("MessagingException on handleClientMessages: " + ex.getMessage());
         }
     }
 
-    private boolean playerGameCorrectnessCheck(String gameID, String playerID){
-        if(gameID == null || playerID == null) return false;
+    private boolean playerGameCorrectnessCheck(String gameID, String playerID) {
+        if (gameID == null || playerID == null) return false;
 
         // check if specified game and player exist
 
-        if(!games.containsKey(gameID)) return false;
+        if (!games.containsKey(gameID)) return false;
         Player p = games.get(gameID).getPlayerWithID(playerID);
         return p != null && !p.hasAnswered();
     }
 
-    
-    public void updatScore(ClientMessage msg, Player p, Game g){
+
+    public void updatScore(ClientMessage msg, Player p, Game g) {
 
         games.get(msg.gameID).incCounter();
 
         int scoreForQuestion = 0;
-        if(Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())){
-            scoreForQuestion = 100 + (int)(100 * msg.time);
+        if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
+            scoreForQuestion = 100 + (int) (100 * msg.time);
         }
         p.setScore(p.getScore() + scoreForQuestion);
     }
 
-    private ServerMessage initSingleplayerGame(ClientMessage msg){
+    private ServerMessage initSingleplayerGame(ClientMessage msg) {
         // 0. Check if player name is correct
-        if(msg.playerName == null || msg.playerName.isEmpty()){
+        if (msg.playerName == null || msg.playerName.isEmpty()) {
             // TODO: send error message
             return null;
         }
@@ -163,7 +163,7 @@ public class MainMessageController {
         return result;
     }
 
-    private ServerMessage nextQuestion(int playerScore, Game forGame){
+    private ServerMessage nextQuestion(int playerScore, Game forGame) {
         ServerMessage result = new ServerMessage(ServerMessage.Type.NEXT_QUESTION);
         // TODO: Question class should be generated by a proper method
         List<Activity> selectedActivities =
@@ -173,9 +173,9 @@ public class MainMessageController {
         result.question = new Question(selectedActivities, Question.Type.COMPARE);
         // TEMPORARY SOLUTION
         Activity max = selectedActivities.get(0);
-        for(int i = 1; i < selectedActivities.size(); ++i){
+        for (int i = 1; i < selectedActivities.size(); ++i) {
             Activity activity = selectedActivities.get(i);
-            if(activity.consumptionInWh > max.consumptionInWh) max = activity;
+            if (activity.consumptionInWh > max.consumptionInWh) max = activity;
         }
 
         // save the correct answer in the Game object
@@ -190,11 +190,11 @@ public class MainMessageController {
         return result;
     }
 
-    private void submitSingleplayer(ClientMessage msg, Game g, Player p){
+    private void submitSingleplayer(ClientMessage msg, Game g, Player p) {
         // update player's score
         int scoreForQuestion = 0;
-        if(Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())){
-            scoreForQuestion = 100 + (int)(100 * msg.time);
+        if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
+            scoreForQuestion = 100 + (int) (100 * msg.time);
         }
         p.setScore(p.getScore() + scoreForQuestion);
         // send score msg
@@ -205,12 +205,12 @@ public class MainMessageController {
         m.score = p.getScore();
         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, m);
 
-        if(g.getRound() < 5){
+        if (g.getRound() < 5) {
             // send next question after 3 seconds
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if(g.hasEnded()) return;
+                    if (g.hasEnded()) return;
 
                     g.setRound(g.getRound() + 1);
                     simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
@@ -218,8 +218,7 @@ public class MainMessageController {
                     p.setHasAnswered(false);
                 }
             }, 3000);
-        }
-        else{
+        } else {
             // end game
             endGame(g);
             // send player to the leaderboard
@@ -234,12 +233,13 @@ public class MainMessageController {
 
     }
 
-    private void endGame(Game g){
+    private void endGame(Game g) {
         g.setHasEnded(true);
         games.remove(g.getID());
     }
+
     //make game with dummy players for now
-    public ServerMessage initGame(ClientMessage msg){
+    public ServerMessage initGame(ClientMessage msg) {
         Game g = new Game(new ArrayList<>(), UUID.randomUUID().toString());
         g.addPlayer(new Player("Alex", "222"));
         g.addPlayer(new Player("Mike", msg.playerID));
@@ -255,7 +255,7 @@ public class MainMessageController {
         return result;
     }
 
-    public ServerMessage displayAnswer(Player p, Game g, ClientMessage msg){
+    public ServerMessage displayAnswer(Player p, Game g, ClientMessage msg) {
         ServerMessage result = new ServerMessage(ServerMessage.Type.DISPLAY_ANSWER);
         result.topScores = getTopScores(games.get(msg.gameID));
         result.score = p.getScore();
@@ -287,7 +287,7 @@ public class MainMessageController {
         myThread.start();
     }
 
-    public List<String> getTopScores(Game game){
+    public List<String> getTopScores(Game game) {
         List<Player> playerList = game.getPlayers().stream()
                 .sorted(Comparator.comparing(Player::getScore).thenComparing(Player::getID).reversed())
                 .limit(5)
@@ -309,13 +309,13 @@ public class MainMessageController {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if(games.get(msg.gameID).getQuestionCounter() <20)
-                     simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, nextMultiQuestion(
-                             games.get(msg.gameID).getPlayerWithID(msg.playerID).getScore(), games.get(msg.gameID))
-                     );
+                if (games.get(msg.gameID).getQuestionCounter() < 20)
+                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, nextMultiQuestion(
+                            games.get(msg.gameID).getPlayerWithID(msg.playerID).getScore(), games.get(msg.gameID))
+                    );
                 else {
                     simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
-                                                            new ServerMessage(ServerMessage.Type.END_GAME));
+                            new ServerMessage(ServerMessage.Type.END_GAME));
                     games.get(msg.gameID).setQuestionCounter(0);
                 }
             }
@@ -323,7 +323,7 @@ public class MainMessageController {
         myThread.start();
     }
 
-    private ServerMessage nextMultiQuestion(int playerScore, Game forGame){
+    private ServerMessage nextMultiQuestion(int playerScore, Game forGame) {
 
         ServerMessage result = new ServerMessage(ServerMessage.Type.LOAD_NEW_QUESTIONS);
         // TODO: Question class should be generated by a proper method
@@ -333,9 +333,9 @@ public class MainMessageController {
                         activityController.getRandom().getBody());
         result.question = new Question(selectedActivities, Question.Type.COMPARE);
         Activity max = selectedActivities.get(0);
-        for(int i = 1; i < selectedActivities.size(); ++i){
+        for (int i = 1; i < selectedActivities.size(); ++i) {
             Activity activity = selectedActivities.get(i);
-            if(activity.consumptionInWh > max.consumptionInWh) max = activity;
+            if (activity.consumptionInWh > max.consumptionInWh) max = activity;
         }
 
         // save the correct answer in the Game object

@@ -60,6 +60,7 @@ public class MainCtrl {
     private SingleplayerScreenCtrl singleplayerScreenCtrl;
 
     private String clientID = null;
+    private String gameID = null;
 
     @Inject
     public MainCtrl(ServerUtils server) {
@@ -139,7 +140,7 @@ public class MainCtrl {
                     System.out.println("[update] topScores: " + msg.topScores);
                     multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
                     multiplayerScreenCtrl.updateScore(msg.score);
-                    inBetweenScoreCtrl.updateScore(msg.score);
+                    inBetweenScoreCtrl.setScoreTo(msg.score);
                 });
                 System.out.println("[msg] display answer");
 
@@ -147,8 +148,8 @@ public class MainCtrl {
             case DISPLAY_INBETWEENSCORES:
                 runLater(() -> {
                     multiplayerScreenCtrl.updateTitle(msg.questionCounter);
-                    inBetweenScoreCtrl.updateQuestionCounter(msg.questionCounter);
-                    showInBetweenScore();
+                    inBetweenScoreCtrl.setQuestionNo(msg.questionCounter);
+                    showInbetweenScore();
                 });
                 System.out.println("[msg] show leaderboard ");
                 break;
@@ -217,7 +218,6 @@ public class MainCtrl {
 
         primaryStage.setTitle("Quotes: Adding Quote");
         primaryStage.setScene(add);
-        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     public void showSplash(){
@@ -227,7 +227,7 @@ public class MainCtrl {
 
     public void showMultiplayerScreen(){
         primaryStage.setTitle("MultiplayerScreen");
-        primaryStage.setScene(question);
+        primaryStage.setScene(multiplayer);
 
     }
 
@@ -239,7 +239,6 @@ public class MainCtrl {
     public void showWaitingRoom() {
         primaryStage.setTitle("WaitingRoomScreen");
         primaryStage.setScene(waitingRoom);
-        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     public void showSingleplayerGameScreen(){
