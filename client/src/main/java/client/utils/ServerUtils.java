@@ -22,10 +22,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
+import commons.Score;
 import org.glassfish.jersey.client.ClientConfig;
 
 import commons.Quote;
@@ -61,6 +63,21 @@ public class ServerUtils {
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<List<Quote>>() {});
     }
+
+
+    public List<Score> getTopScores(){
+        List<Score> scores = ClientBuilder.newClient(new ClientConfig())
+                .target("SERVER").path("api/scores/")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<List<Score>>() {});
+
+        scores.sort(Comparator.comparingInt(Score::getPlayerScore));
+        System.out.println(scores);
+        return scores;
+    }
+
+
 
     public Quote addQuote(Quote quote) {
         return ClientBuilder.newClient(new ClientConfig()) //

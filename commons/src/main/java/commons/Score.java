@@ -35,6 +35,18 @@ public class Score {
     public Score() {
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public int getPlayerScore() {
+        return playerScore;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import org.glassfish.jersey.client.ClientConfig;//import org.springframework.web.bind.annotation.RequestMapping;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,19 +99,8 @@ public class SingleplayerLeaderboardCtrl {
         ResponseEntity<List> response = restTemplate.getForEntity("http://localhost:8080/api/scores/get"+
                         "Top" + counter + "Scores", List.class);*/
 
-        int scoreSize = ClientBuilder.newClient(new ClientConfig())
-                .target("http://localhost:8080/").path("api/scores/")
-                .request(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .get(new GenericType<List<Score>>() {}).size();
-
-        List<Score> response = ClientBuilder.newClient(new ClientConfig())
-                .target("http://localhost:8080/").path("api/scores/getTop" + scoreSize + "Scores")
-                .request(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .get(new GenericType<List<Score>>() {});
-
-        ArrayList<String> topScores = new ArrayList<>();
+        List<String> topScores = new ArrayList<>();
+        List<Score> response = server.getTopScores();
         if(response != null){
             for(Score score : response){
                 topScores.add(score.toString());
