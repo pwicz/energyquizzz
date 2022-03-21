@@ -68,7 +68,7 @@ public class ServerUtils {
 
     public List<Score> getTopScores(){
         List<Score> scores = ClientBuilder.newClient(new ClientConfig())
-                .target("SERVER").path("api/scores/")
+                .target(SERVER).path("api/scores/")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .get(new GenericType<List<Score>>() {});
