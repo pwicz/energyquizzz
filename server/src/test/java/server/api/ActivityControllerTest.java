@@ -1,6 +1,6 @@
 package server.api;
 
-import commons.Question;
+import commons.Activity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,30 +13,30 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class QuestionControllerTest {
+public class ActivityControllerTest {
 
     public int nextInt;
     private MyRandom random;
-    private TestQuestionRepository repo;
+    private TestActivityRepository repo;
 
-    private QuestionController sut;
+    private ActivityController sut;
 
     @BeforeEach
     public void setup(){
         random = new MyRandom();
-        repo = new TestQuestionRepository();
+        repo = new TestActivityRepository();
 
-        sut = new QuestionController(random, repo);
+        sut = new ActivityController(random, repo);
     }
 
     @Test
     public void testGetAll(){
-        List<Question> expected = new ArrayList<>();
-        expected.add(getQuestion("q1"));
-        expected.add(getQuestion("q2"));
+        List<Activity> expected = new ArrayList<>();
+        expected.add(getActivity("q1"));
+        expected.add(getActivity("q2"));
 
-        sut.addQuestion(expected.get(0));
-        sut.addQuestion(expected.get(1));
+        sut.addActivity(expected.get(0));
+        sut.addActivity(expected.get(1));
 
         var actual = sut.getAll();
         assertEquals(expected, actual);
@@ -47,15 +47,15 @@ public class QuestionControllerTest {
 
     @Test
     public void testGetRandom(){
-        Question expected = getQuestion("q1");
+        Activity expected = getActivity("q1");
 
-        sut.addQuestion(getQuestion("q9"));
-        sut.addQuestion(expected);
-        sut.addQuestion(getQuestion("q5"));
+        sut.addActivity(getActivity("q9"));
+        sut.addActivity(expected);
+        sut.addActivity(getActivity("q5"));
 
         nextInt = 1;
         repo.calledMethods.clear();
-        Question actual = sut.getRandom().getBody();
+        Activity actual = sut.getRandom().getBody();
 
         assertEquals(expected, actual);
         assertTrue(random.wasCalled);
@@ -63,43 +63,43 @@ public class QuestionControllerTest {
     }
 
     @Test
-    public void testGetSpecificQuestion(){
-        Question expected = getQuestion("q1");
+    public void testGetSpecificActivity(){
+        Activity expected = getActivity("q1");
         expected.id = 12L;
 
-        Question other = getQuestion("q42");
+        Activity other = getActivity("q42");
         other.id = 6L;
 
-        sut.addQuestion(expected);
-        sut.addQuestion(other);
+        sut.addActivity(expected);
+        sut.addActivity(other);
         repo.calledMethods.clear();
 
-        assertEquals(expected, sut.getSpecificQuestion(12L).getBody());
+        assertEquals(expected, sut.getSpecificActivity(12L).getBody());
         assertEquals(List.of("findById"), repo.calledMethods);
     }
 
     @Test
-    public void testGetSpecificQuestionNotFound(){
-        Question q1 = getQuestion("q1");
+    public void testGetSpecificActivityNotFound(){
+        Activity q1 = getActivity("q1");
         q1.id = 12L;
-        Question q2 = getQuestion("q42");
+        Activity q2 = getActivity("q42");
         q2.id = 6L;
-        sut.addQuestion(q1);
-        sut.addQuestion(q2);
+        sut.addActivity(q1);
+        sut.addActivity(q2);
         repo.calledMethods.clear();
 
-        assertNull(sut.getSpecificQuestion(9L).getBody());
+        assertNull(sut.getSpecificActivity(9L).getBody());
         assertEquals(List.of("findById"), repo.calledMethods);
     }
 
     @Test
-    public void testAddQuestion(){
-        Question q1 = new Question("Title to test", 420, "source::link", "image::path");
+    public void testAddActivity(){
+        Activity q1 = new Activity("Title to test", 420, "source::link", "image::path");
         q1.id = 11L;
-        sut.addQuestion(q1);
+        sut.addActivity(q1);
         assertEquals(List.of("save"), repo.calledMethods);
 
-        Question actual = sut.getSpecificQuestion(11L   ).getBody();
+        Activity actual = sut.getSpecificActivity(11L   ).getBody();
 
         assertNotNull(actual);
         assertEquals( 11L, actual.id);
@@ -111,19 +111,19 @@ public class QuestionControllerTest {
     }
 
     @Test
-    public void testDeleteQuestion(){
-        Question expected = getQuestion("qqq2");
+    public void testDeleteActivity(){
+        Activity expected = getActivity("qqq2");
         expected.id = 11L;
-        sut.addQuestion(expected);
+        sut.addActivity(expected);
 
-        Question actual = sut.deleteQuestion(11L).getBody();
+        Activity actual = sut.deleteActivity(11L).getBody();
 
         assertEquals(expected, actual);
-        assertNull(sut.getSpecificQuestion(11L).getBody());
+        assertNull(sut.getSpecificActivity(11L).getBody());
     }
 
-    private static Question getQuestion(String data){
-        return new Question(data, 420, data, data);
+    private static Activity getActivity(String data){
+        return new Activity(data, 420, data, data);
     }
 
     public class MyRandom extends Random {

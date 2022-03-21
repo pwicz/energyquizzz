@@ -1,40 +1,50 @@
 package commons;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
 public class Question {
-
-    @Id
-    @SequenceGenerator(
-            name = "question_sequence",
-            sequenceName = "question_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "question_sequence"
-    )
-    public long id;
-
+    public List<Activity> activities;
+    public Type type;
     public String title;
-    public Integer consumptionInWh;
-    public String source;
-    public String imagePath;
 
-    public Question(String title, Integer consumptionInWh, String source, String imagePath) {
-        this.title = title;
-        this.consumptionInWh = consumptionInWh;
-        this.source = source;
-        this.imagePath = imagePath;
+    public enum Type{
+        COMPARE,
+        GUESS,
+        HOW_MANY_TIMES,
+        ESTIMATION
     }
 
     public Question() {
+        activities = new ArrayList<>();
+    }
+
+    public Question(List<Activity> activities, Type type) {
+        this.activities = activities;
+        this.type = type;
+
+        // predefined titles for each type:
+        if(type == Type.COMPARE) this.title = "Which activity consumes most energy?";
+    }
+
+    public void addActivity(Activity a){
+        activities.add(a);
+    }
+
+    public List<Activity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override
@@ -44,32 +54,22 @@ public class Question {
 
         Question question = (Question) o;
 
-        if (id != question.id) return false;
-        if (!Objects.equals(title, question.title)) return false;
-        if (!Objects.equals(consumptionInWh, question.consumptionInWh))
-            return false;
-        if (!Objects.equals(source, question.source)) return false;
-        return Objects.equals(imagePath, question.imagePath);
+        if (activities != null ? !activities.equals(question.activities) : question.activities != null) return false;
+        return type == question.type;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (consumptionInWh != null ? consumptionInWh.hashCode() : 0);
-        result = 31 * result + (source != null ? source.hashCode() : 0);
-        result = 31 * result + (imagePath != null ? imagePath.hashCode() : 0);
+        int result = activities != null ? activities.hashCode() : 0;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "Question{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", consumptionInWh=" + consumptionInWh +
-                ", source='" + source + '\'' +
-                ", imagePath='" + imagePath + '\'' +
+                "activities=" + activities +
+                ", type=" + type +
                 '}';
     }
 }

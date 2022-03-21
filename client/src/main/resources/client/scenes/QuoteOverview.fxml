@@ -7,6 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.QuoteOverviewCtrl">
    <children>
+      <Button layoutX="362.0" layoutY="360.0" mnemonicParsing="false" onAction="#splash" text="Splash" />
       <Button layoutX="503.0" layoutY="360.0" mnemonicParsing="false" onAction="#addQuote" text="Add Quote" />
       <Button layoutX="431.0" layoutY="360.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
       <TableView fx:id="table" layoutX="14.0" layoutY="14.0" prefHeight="337.0" prefWidth="572.0">
@@ -16,6 +17,5 @@
             <TableColumn fx:id="colQuote" prefWidth="344.0" text="Quote" />
         </columns>
       </TableView>
-      <Button layoutX="362.0" layoutY="360.0" mnemonicParsing="false" onAction="#splash" text="Splash" />
    </children>
 </AnchorPane>
