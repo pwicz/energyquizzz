@@ -10,10 +10,14 @@ public class Game {
     private boolean isMultiplayer;
     private int questionCounter = 0;
     private long correctAnswerID;
+    private int round;
+    private boolean hasEnded;
 
     public Game(List<Player> players, String ID) {
         this.players = players;
         this.ID = ID;
+
+        this.round = 1;
     }
 
 
@@ -45,8 +49,12 @@ public class Game {
         isMultiplayer = multiplayer;
     }
 
-    public int getQuestionCounter() {
-        return questionCounter;
+    public Player getPlayerWithID(String playerID){
+        for(var p : players){
+            if(Objects.equals(p.getID(), playerID)) return p;
+        }
+
+        return null;
     }
 
     public Long getCorrectAnswerID() {
@@ -57,16 +65,29 @@ public class Game {
         this.correctAnswerID = correctAnswerID;
     }
 
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
+    }
+
+    public boolean hasEnded() {
+        return hasEnded;
+    }
+
+    public void setHasEnded(boolean hasEnded) {
+        this.hasEnded = hasEnded;
+    }
+
+    public int getQuestionCounter() {
+        return questionCounter;
+    }
+
     public int incCounter() {
         this.questionCounter = questionCounter + 1;
         return  questionCounter;
-    }
-    public Player getPlayerWithID(String playerID){
-        for(var p : players){
-            if(Objects.equals(p.getID(), playerID)) return p;
-        }
-
-        return null;
     }
 
     public void setQuestionCounter(int questionCounter) {

@@ -5,8 +5,8 @@ import java.util.List;
 public class ServerMessage {
 
     public enum Type{
-        NEW_SINGLEPLAYER_GAME, NEW_MULTIPLAYER_GAME, TEST, LOAD_NEW_QUESTIONS, DISPLAY_ANSWER,
-        DISPLAY_INBETWEENSCORES, END_GAME, INIT_PLAYER
+        NEW_SINGLEPLAYER_GAME, NEW_MULTIPLAYER_GAME, TEST, NEXT_QUESTION, RESULT, END,
+        LOAD_NEW_QUESTIONS, DISPLAY_ANSWER, DISPLAY_INBETWEENSCORES, END_GAME, INIT_PLAYER
     }
 
     public Type type;
@@ -14,14 +14,17 @@ public class ServerMessage {
 
     public Question question;
     public int score;
-    public String gameID;
     public double timerFull;
     public double timerFraction;
-    public int questionCounter;
+    public String gameID;
+    public Long correctAnswerID;
+    public Long pickedAnswerID;
+    public int round;
+
     public List<String> topScores;
     public long pickedID;
     public long correctID;
-
+    public int questionCounter;
     public ServerMessage() {
     }
 

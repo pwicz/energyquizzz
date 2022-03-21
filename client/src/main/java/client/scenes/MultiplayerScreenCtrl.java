@@ -96,7 +96,7 @@ public class MultiplayerScreenCtrl {
     }
 
     public void leave(){
-        mainCtrl.showOverview();
+        mainCtrl.showLeave(mainCtrl.getMultiplayer());
     }
 
     //submits answer, stops time,
@@ -111,7 +111,6 @@ public class MultiplayerScreenCtrl {
         submit.setDisable(true);
         submitted = true;
         server.send("/app/general", msg);
-
     }
 
     public void showAnswer(Long correctID, Long pickedID) {

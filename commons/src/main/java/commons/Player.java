@@ -2,9 +2,10 @@ package commons;
 
 public class Player {
 
+    private boolean hasAnswered;
     private String name;
     private String ID;
-    private Integer score = 0;
+    private int score = 0;
 
     public Player(String name, String ID) {
         this.name = name;
@@ -27,11 +28,19 @@ public class Player {
         this.ID = ID;
     }
 
-    public Integer getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(int score) {
         this.score = score;
+    }
+
+    public boolean hasAnswered() {
+        return hasAnswered;
+    }
+
+    public void setHasAnswered(boolean hasAnswered) {
+        this.hasAnswered = hasAnswered;
     }
 }

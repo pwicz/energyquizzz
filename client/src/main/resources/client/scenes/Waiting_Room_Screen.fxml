@@ -34,7 +34,7 @@
               <Text fill="WHITE" layoutY="174.37890625" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Start the game or wait for other players to join" textAlignment="CENTER" wrappingWidth="968.13671875"> </Text>
          </children>
       </AnchorPane>
-        <Button layoutX="45.0" layoutY="985.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="196.0" styleClass="leave-btn" text="Leave" textAlignment="CENTER" AnchorPane.bottomAnchor="38.292893409729004" AnchorPane.leftAnchor="45.0"> </Button>
+        <Button layoutX="45.0" layoutY="985.0" mnemonicParsing="false" onAction="#leave" prefHeight="29.0" prefWidth="196.0" styleClass="leave-btn" text="Leave" textAlignment="CENTER" AnchorPane.bottomAnchor="38.292893409729004" AnchorPane.leftAnchor="45.0"> </Button>
         <Button layoutX="490.0" layoutY="829.0" mnemonicParsing="false" onAction="#start" prefHeight="29.0" prefWidth="183.0" styleClass="start-btn" text="Start" textOverrun="CLIP" AnchorPane.bottomAnchor="181.0" AnchorPane.leftAnchor="490.0"> </Button>
         <AnchorPane layoutX="1209.0" prefHeight="1039.0" prefWidth="414.0" AnchorPane.rightAnchor="0.0">
          <children>

@@ -20,4 +20,8 @@ public class WaitingRoomScreenCtrl {
         server.send("/app/general",
                 new ClientMessage(ClientMessage.Type.INIT_QUESTION, mainCtrl.getClientID(), mainCtrl.getGameID()));
     }
+
+    public void leave(){
+        mainCtrl.showLeave(mainCtrl.getWaitingRoom());
+    }
 }

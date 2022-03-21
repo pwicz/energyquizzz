@@ -2,7 +2,8 @@ package commons;
 
 public class ClientMessage {
     public enum Type{
-        INIT_SINGLEPLAYER, INIT_MULTIPLAYER, TEST, INIT_QUESTION, SUBMIT_ANSWER, INIT_GAME
+        INIT_SINGLEPLAYER, INIT_MULTIPLAYER, TEST, SUBMIT_SINGLEPLAYER, QUIT,
+        INIT_QUESTION, SUBMIT_ANSWER, INIT_GAME
     }
 
     public Type type;
@@ -11,8 +12,8 @@ public class ClientMessage {
     public double time;
     public long chosenActivity;
     // add more fields as we start exchanging messages
-
-
+    public String playerName;
+    
     public ClientMessage() {
     }
 
