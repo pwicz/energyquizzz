@@ -28,7 +28,7 @@
             <Font size="30.0" />
          </font>
       </Label>
-      <Label layoutX="252.0" layoutY="98.0" styleClass="question" text="Question 5: Which activity consumes most energy?" textFill="#38c768" AnchorPane.leftAnchor="252.0" AnchorPane.rightAnchor="253.0" AnchorPane.topAnchor="98.0">
+      <Label fx:id="screenTitle" layoutX="252.0" layoutY="98.0" styleClass="question" text="Question 5: Which activity consumes most energy?" textFill="#38c768" AnchorPane.leftAnchor="252.0" AnchorPane.rightAnchor="253.0" AnchorPane.topAnchor="98.0">
          <font>
             <Font size="45.0" />
          </font>
@@ -64,7 +64,7 @@
             <Font size="15.0" />
          </font>
       </Text>
-      <Button fx:id="submit" disable="true" layoutX="1312.0" layoutY="887.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="15.0" prefWidth="150.0" styleClass="submit-btn" text="submit" textFill="#38c768">
+      <Button fx:id="submit" disable="true" layoutX="1312.0" layoutY="700.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="15.0" prefWidth="150.0" styleClass="submit-btn" text="submit" textFill="#38c768">
          <font>
             <Font size="20.0" />
          </font>
@@ -101,5 +101,7 @@
             <String fx:value="option" />
             <String fx:value="hover-element" />
          </styleClass></Rectangle>
+      <Text fx:id="picked" layoutX="367.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text="You picked this one" />
+      <Text fx:id="result" layoutX="698.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text=" " />
     </children>
 </AnchorPane>

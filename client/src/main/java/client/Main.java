@@ -60,13 +60,9 @@ public class Main extends Application {
         var singleplayerGame = FXML.load(SingleplayerScreenCtrl.class,
                 "client","scenes", "Singleplayer_Game_Screen.fxml");
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
-        
+
         mainCtrl.initialize(primaryStage, overview, add, waitingRoom,
                 singleplayerLeaderboard, multiplayer, splashScreen, inBetweenScore,
                 leave, singleplayerGame);
-                
-        primaryStage.setOnCloseRequest(e -> {
-            singleplayerGame.getKey().stopThreads();
-        });
     }
 }

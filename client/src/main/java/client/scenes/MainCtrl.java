@@ -124,12 +124,24 @@ public class MainCtrl {
                 // runLater() must be used to run the following code
                 // on the JavaFX Application Thread
                 runLater(() -> {
-                    showSingleplayerGameScreen();
+                    singleplayerScreenCtrl.restoreView();
                     singleplayerScreenCtrl.displayActivities(msg.question.activities);
                     singleplayerScreenCtrl.setScoreTo(msg.score);
+                    singleplayerScreenCtrl.setTitleTo("Question " + msg.round + ": " + msg.question.title);
                     singleplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                    showSingleplayerGameScreen();
                 });
                 break;
+            case RESULT:
+                long correctID = msg.correctAnswerID;
+                long pickedID = msg.pickedAnswerID;
+                runLater(() -> {
+                    singleplayerScreenCtrl.setScoreTo(msg.score);
+                    singleplayerScreenCtrl.showAnswer(correctID, pickedID);
+                });
+                break;
+            case END:
+                runLater(this::showSingleLeaderboardScreen);
             case TEST:
                 // for testing purposes only
                 System.out.println("It works! Received a msg!");
@@ -220,8 +232,13 @@ public class MainCtrl {
     public Scene getWaitingRoom() {
         return waitingRoom;
     }
+
     public String getClientID() {
         return clientID;
     }
-    
+
+    public String getGameID() {
+        return gameID;
+    }
+
 }
