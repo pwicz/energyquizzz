@@ -3,9 +3,6 @@ package client.scenes;
 import client.utils.ServerUtils;
 import commons.ClientMessage;
 import commons.Score;
-import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.core.GenericType;
-import jakarta.ws.rs.core.MediaType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -93,12 +90,6 @@ public class SingleplayerLeaderboardCtrl {
      *
      */
     public void insertLeaderboard() { //needs to change to import the database leaderboard
-
-        /*
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List> response = restTemplate.getForEntity("http://localhost:8080/api/scores/get"+
-                        "Top" + counter + "Scores", List.class);*/
-
         List<String> topScores = new ArrayList<>();
         List<Score> response = server.getTopScores();
         if(response != null){
