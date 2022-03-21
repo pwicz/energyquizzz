@@ -42,11 +42,17 @@ public class MainCtrl {
     private SplashScreenCtrl splashScreenCtrl;
     private Scene splash;
 
-    private Scene question;
-    private MultiplayerScreenCtrl multiplayerScreenCtrl;
+    private Scene multiplayer;
+    private  MultiplayerScreenCtrl multiplayerScreenCtrl;
 
     private Scene singleLeaderboard;
     private SingleplayerLeaderboardCtrl singleplayerLeaderboardCtrl;
+
+    private Scene inBetweenScore;
+    private InBetweenScoreCtrl inBetweenScoreCtrl;
+
+    private Scene leave;
+    private LeaveCtrl leaveCtrl;
 
     private Scene singleplayerScreen;
     private SingleplayerScreenCtrl singleplayerScreenCtrl;
@@ -63,23 +69,40 @@ public class MainCtrl {
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
                            Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
                            Pair<SingleplayerLeaderboardCtrl, Parent> singleplayerLeaderboard,
+                           Pair<MultiplayerScreenCtrl, Parent> multiplayer,
+                           Pair<SplashScreenCtrl, Parent> splashScreen,
+                           Pair<InBetweenScoreCtrl, Parent> inBetweenScore,
+                           Pair<LeaveCtrl, Parent> leave,
                            Pair<SingleplayerScreenCtrl, Parent> singleplayerGame){
         this.primaryStage = primaryStage;
+
         this.overviewCtrl = overview.getKey();
         this.overview = new Scene(overview.getValue());
 
         this.addCtrl = add.getKey();
         this.add = new Scene(add.getValue());
+
         this.waitingRoom = new Scene(waitingRoom.getValue());
 
-        this.singleLeaderboard = new Scene(singleplayerLeaderboard.getValue());
         this.singleplayerLeaderboardCtrl = singleplayerLeaderboard.getKey();
+        this.singleLeaderboard = new Scene(singleplayerLeaderboard.getValue());
+
+        this.multiplayerScreenCtrl = multiplayer.getKey();
+        this.multiplayer = new Scene(multiplayer.getValue());
+
+        this.splashScreenCtrl = splashScreen.getKey();
+        this.splash = new Scene(splashScreen.getValue());
+
+        this.inBetweenScoreCtrl = inBetweenScore.getKey();
+        this.inBetweenScore = new Scene(inBetweenScore.getValue());
+
+        this.leave = new Scene(leave.getValue());
+        this.leaveCtrl = leave.getKey();
 
         this.singleplayerScreen = new Scene(singleplayerGame.getValue());
         this.singleplayerScreenCtrl = singleplayerGame.getKey();
 
-        //        showOverview();
-        showSingleLeaderboardScreen();
+        showOverview();
         primaryStage.show();
 
         clientID = "233"; // hardcoded: we need to somehow get it from the server
@@ -122,6 +145,20 @@ public class MainCtrl {
         overviewCtrl.refresh();
     }
 
+    public void showInbetweenScore() {
+        primaryStage.setTitle("Score");
+        primaryStage.setScene(inBetweenScore);
+    }
+
+    public void showLeave(Scene scene){
+        leaveCtrl.setPrevious(scene);
+        primaryStage.setScene(leave);
+    }
+
+    public void stay(Scene previous){
+        primaryStage.setScene(previous);
+    }
+
     public void showAdd() {
         // For testing only: send a test message to the server
         server.send("/app/general", new ClientMessage(ClientMessage.Type.TEST, clientID, "0"));
@@ -129,34 +166,62 @@ public class MainCtrl {
 
         primaryStage.setTitle("Quotes: Adding Quote");
         primaryStage.setScene(add);
-        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     public void showSplash(){
-        
+        primaryStage.setTitle("SplashScreen");
+        primaryStage.setScene(splash);
     }
 
     public void showMultiplayerScreen(){
-
+        primaryStage.setTitle("Multiplayer");
+        primaryStage.setScene(multiplayer);
+        multiplayerScreenCtrl.decreaseTime();
     }
 
     public void showSingleLeaderboardScreen(){
-        primaryStage.setTitle("Start the singleplayer game");
+        primaryStage.setTitle("Leaderboard");
         primaryStage.setScene(singleLeaderboard);
     }
 
     public void showWaitingRoom() {
         primaryStage.setTitle("WaitingRoomScreen");
         primaryStage.setScene(waitingRoom);
-        add.setOnKeyPressed(e -> addCtrl.keyPressed(e));
     }
 
     public void showSingleplayerGameScreen(){
         primaryStage.setTitle("Singleplayer");
         primaryStage.setScene(singleplayerScreen);
     }
+    public Scene getInBetweenScore() {
+        return inBetweenScore;
+    }
 
+    public Scene getMultiplayer() {
+        return multiplayer;
+    }
+
+    public Scene getLeave() {
+        return leave;
+    }
+
+    public Scene getOverview() {
+        return overview;
+    }
+
+    public Scene getSingleLeaderboard() {
+        return singleLeaderboard;
+    }
+
+    public Scene getSplash() {
+        return splash;
+    }
+
+    public Scene getWaitingRoom() {
+        return waitingRoom;
+    }
     public String getClientID() {
         return clientID;
     }
+    
 }

@@ -7,11 +7,11 @@
 <?import javafx.scene.control.ListView?>
 
 <?import java.lang.String?>
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@styles/InBetweenScores.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@/client/scenes/styles/InBetweenScores.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.InBetweenScoreCtrl">
     <Label layoutY="68.0" prefHeight="118.0" prefWidth="1513.0" styleClass="screen-header" text="SCORE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="68.0" />
     <Label fx:id="score" layoutX="674.0" layoutY="921.0" prefHeight="51.0" prefWidth="845.0" styleClass="bottom-score" text="Score: 120" AnchorPane.bottomAnchor="20.799999999999955" />
 
-   <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" styleClass="leave-btn" text="LEAVE" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="33.0" />
+   <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" styleClass="leave-btn" text="LEAVE" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="33.0" />
 
     <Label layoutX="660.0" layoutY="642.0" styleClass="question-label" text="Question" />
     <Label fx:id="questionNo" layoutX="716.0" layoutY="719.0" styleClass="question-number" text="7/20" />

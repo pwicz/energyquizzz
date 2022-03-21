@@ -28,6 +28,10 @@ import client.scenes.SingleplayerScreenCtrl;
 import client.scenes.WaitingRoomScreenCtrl;
 import com.google.inject.Injector;
 
+import client.scenes.SplashScreenCtrl;
+import client.scenes.MultiplayerScreenCtrl;
+import client.scenes.InBetweenScoreCtrl;
+import client.scenes.LeaveCtrl;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -46,16 +50,21 @@ public class Main extends Application {
         var overview = FXML.load(QuoteOverviewCtrl.class, "client", "scenes", "QuoteOverview.fxml");
         var add = FXML.load(AddQuoteCtrl.class, "client", "scenes", "AddQuote.fxml");
         var waitingRoom = FXML.load(WaitingRoomScreenCtrl.class, "client","scenes", "Waiting_Room_Screen.fxml");
-        var singleplayerLeaderboard = FXML.load(SingleplayerLeaderboardCtrl.class,
-                "client","scenes", "SingleplayerLeaderboard.fxml");
-
+        var singleplayerLeaderboard =
+                FXML.load(SingleplayerLeaderboardCtrl.class, "client","scenes", "SingleplayerLeaderboard.fxml");
+        var multiplayer =
+                FXML.load(MultiplayerScreenCtrl.class, "client","scenes", "Multiplayer_Game_Screen.fxml");
+        var splashScreen = FXML.load(SplashScreenCtrl.class, "client","scenes", "Splash_Screen.fxml");
+        var inBetweenScore = FXML.load(InBetweenScoreCtrl.class, "client", "scenes", "InBetweenScores.fxml");
+        var leave = FXML.load(LeaveCtrl.class, "client", "scenes", "Leave_screen.fxml");
         var singleplayerGame = FXML.load(SingleplayerScreenCtrl.class,
                 "client","scenes", "Singleplayer_Game_Screen.fxml");
-
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
-
-        mainCtrl.initialize(primaryStage, overview, add, waitingRoom, singleplayerLeaderboard, singleplayerGame);
-
+        
+        mainCtrl.initialize(primaryStage, overview, add, waitingRoom,
+                singleplayerLeaderboard, multiplayer, splashScreen, inBetweenScore,
+                leave, singleplayerGame);
+                
         primaryStage.setOnCloseRequest(e -> {
             singleplayerGame.getKey().stopThreads();
         });

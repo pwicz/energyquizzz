@@ -97,6 +97,6 @@ public class SingleplayerLeaderboardCtrl {
      * Leave.
      */
     public void leave(){
-        mainCtrl.showSplash();
+        mainCtrl.showLeave(mainCtrl.getSingleLeaderboard());
     }
 }
