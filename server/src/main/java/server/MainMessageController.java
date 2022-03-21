@@ -39,6 +39,7 @@ public class MainMessageController {
         games = new HashMap<>();
     }
 
+    //CHECKSTYLE:OFF
     @MessageMapping("/general")
     public void handleClientMessages(ClientMessage msg) {
         ServerMessage result = null;
@@ -120,7 +121,8 @@ public class MainMessageController {
             System.out.println("MessagingException on handleClientMessages: " + ex.getMessage());
         }
     }
-
+    //CHECKSTYLE:ON
+    
     private boolean playerGameCorrectnessCheck(String gameID, String playerID) {
         if (gameID == null || playerID == null) return false;
 

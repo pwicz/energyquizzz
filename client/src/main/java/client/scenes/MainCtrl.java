@@ -113,7 +113,9 @@ public class MainCtrl {
         });
     }
 
+    //CHECKSTYLE:OFF
     public void handleServerMessage(ServerMessage msg){
+
         switch(msg.type){
             case INIT_PLAYER:
                 gameID = msg.gameID;
@@ -190,6 +192,7 @@ public class MainCtrl {
                 // invalid msg type
         }
     }
+    //CHECKSTYLE:ON
 
     public void showOverview() {
         primaryStage.setTitle("Quotes: Overview");
