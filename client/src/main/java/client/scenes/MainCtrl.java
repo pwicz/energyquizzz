@@ -106,6 +106,7 @@ public class MainCtrl {
         showOverview();
         primaryStage.show();
 
+
         clientID = UUID.randomUUID().toString();
         server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, m -> {
             handleServerMessage(m);
@@ -116,11 +117,14 @@ public class MainCtrl {
         switch(msg.type){
             case INIT_PLAYER:
                 gameID = msg.gameID;
-                multiplayerScreenCtrl.updateScore(0); break;
+                multiplayerScreenCtrl.updateScore(0);
+                break;
             case NEW_MULTIPLAYER_GAME:
+                // do something
                 break;
             case NEW_SINGLEPLAYER_GAME:
-                gameID = msg.gameID; break;
+                gameID = msg.gameID;
+                break;
             case LOAD_NEW_QUESTIONS:
                 // runLater() must be used to run the following code
                 // on the JavaFX Application Thread
@@ -128,24 +132,33 @@ public class MainCtrl {
                     showMultiplayerScreen();
                     multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
                     multiplayerScreenCtrl.displayActivities(msg.question.getActivities());
-                }); System.out.println("[msg] loadingGame"); break;
+                });
+                System.out.println("[msg] loadingGame");
+                break;
             case DISPLAY_ANSWER:
                 runLater(() -> {
                     System.out.println("[update] topScores: " + msg.topScores);
                     multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
                     multiplayerScreenCtrl.updateScore(msg.score);
                     inBetweenScoreCtrl.setScoreTo(msg.score);
-                }); System.out.println("[msg] display answer"); break;
+                });
+                System.out.println("[msg] display answer");
+
+                break;
             case DISPLAY_INBETWEENSCORES:
                 runLater(() -> {
                     multiplayerScreenCtrl.updateTitle(msg.questionCounter);
                     inBetweenScoreCtrl.setQuestionNo(msg.questionCounter);
                     showInbetweenScore();
-                }); System.out.println("[msg] show leaderboard "); break;
+                });
+                System.out.println("[msg] show leaderboard ");
+                break;
             case END_GAME:
                 runLater(() -> {
                     showWaitingRoom();
-                }); System.out.println("[msg] end game"); break;
+                });
+                System.out.println("[msg] end game");
+                break;
             case NEXT_QUESTION:
                 // runLater() must be used to run the following code
                 // on the JavaFX Application Thread
@@ -156,18 +169,23 @@ public class MainCtrl {
                     singleplayerScreenCtrl.setTitleTo("Question " + msg.round + ": " + msg.question.title);
                     singleplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
                     showSingleplayerGameScreen();
-                }); break;
+                });
+                break;
             case RESULT:
                 long correctID = msg.correctAnswerID;
                 long pickedID = msg.pickedAnswerID;
                 runLater(() -> {
                     singleplayerScreenCtrl.setScoreTo(msg.score);
                     singleplayerScreenCtrl.showAnswer(correctID, pickedID);
-                }); break;
+                });
+                break;
             case END:
-                runLater(this::showSingleLeaderboardScreen); break;
+                runLater(this::showSingleLeaderboardScreen);
+                break;
             case TEST:
-                System.out.println("[test] message received"); break;
+                // for testing purposes only
+                System.out.println("[test] message received");
+                break;
             default:
                 // invalid msg type
         }

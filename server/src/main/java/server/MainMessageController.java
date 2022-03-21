@@ -51,6 +51,7 @@ public class MainMessageController {
                     p = g.getPlayerWithID(msg.playerID);
             }
             switch (msg.type) {
+
                 case INIT_SINGLEPLAYER:
                     // first init the game
                     var initMsg = initSingleplayerGame(msg);
@@ -59,42 +60,62 @@ public class MainMessageController {
                         // then send a first question
                         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
                                 nextQuestion(initMsg.score, games.get(initMsg.gameID)));
-                    } break;
-                case INIT_GAME: result = initGame(msg); break;
-                case INIT_MULTIPLAYER: break;
+                    }
+                    break;
+                case INIT_GAME:
+                    result = initGame(msg);
+                    break;
+                case INIT_MULTIPLAYER:
+                    // do something
+                    break;
                 case INIT_QUESTION:
                     result = nextMultiQuestion(
                             games.get(msg.gameID).getPlayerWithID(msg.playerID).getScore(), games.get(msg.gameID));
                     result.questionCounter = games.get(msg.gameID).getQuestionCounter();
-                    System.out.println("[msg] init question"); break;
+                    System.out.println("[msg] init question");
+                    break;
                 case SUBMIT_ANSWER:
                     updatScore(msg, p, g);
                     //make message
                     result = displayAnswer(p, g, msg);
                     //set time between each scene
                     showLeaderboard(msg);
-                    showQuestions(msg); System.out.println("[msg] submit answer"); break;
-                case TEST: result = new ServerMessage(ServerMessage.Type.TEST);
-                    System.out.println("[test] message received"); break;
+                    showQuestions(msg);
+                    System.out.println("[msg] submit answer");
+
+                    break;
+                case TEST:
+                    // for testing purposes
+                    result = new ServerMessage(ServerMessage.Type.TEST);
+                    System.out.println("[test] message received");
+                    break;
                 case SUBMIT_SINGLEPLAYER:
                     if (msg.gameID == null || msg.playerID == null) return;
                     // check if specified game and player exist
                     if (g == null) return;
                     if (p == null || p.hasAnswered()) return;
+
+
                     p.setHasAnswered(true);
-                    submitSingleplayer(msg, g, p); break;
+                    submitSingleplayer(msg, g, p);
+                    break;
                 case QUIT:
                     playerGameCorrectnessCheck(msg.gameID, msg.playerID);
+
                     // remove player from the game
                     Game game = games.get(msg.gameID);
                     game.getPlayers().remove(game.getPlayerWithID(msg.playerID));
                     // end game if there are no more players
-                    if (game.getPlayers().size() == 0) endGame(game); break;
+                    if (game.getPlayers().size() == 0) endGame(game);
+                    break;
                 default:
                     // unknown message
             }
+
             if(result == null) return;
+
             simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
+
         } catch (MessagingException ex) {
             System.out.println("MessagingException on handleClientMessages: " + ex.getMessage());
         }
