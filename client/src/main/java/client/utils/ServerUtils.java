@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URL;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -73,7 +74,7 @@ public class ServerUtils {
                 .get(new GenericType<List<Score>>() {});
 
         scores.sort(Comparator.comparingInt(Score::getPlayerScore));
-        System.out.println(scores);
+        Collections.reverse(scores);
         return scores;
     }
 

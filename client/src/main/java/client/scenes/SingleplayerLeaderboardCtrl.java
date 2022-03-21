@@ -106,9 +106,6 @@ public class SingleplayerLeaderboardCtrl {
                 topScores.add(score.toString());
             }
         }
-
-        System.out.println(topScores);
-        System.out.println(response);
         leaderboard.getItems().setAll(topScores);
     }
 
