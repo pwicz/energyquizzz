@@ -56,7 +56,7 @@ public class ScoreController {
         return playerScores.get(playerName);
     }*/
 
-    @GetMapping("/get{number}TopScores")
+    @GetMapping("/getTop{number}Scores")
     public ResponseEntity<List<Score>> getTopScores(@PathVariable("number") int number){
         Page<Score> page = repo.findAll(PageRequest.of(0, number, Sort.by(Sort.Order.desc("playerScore"))));
         var result = page.getContent();

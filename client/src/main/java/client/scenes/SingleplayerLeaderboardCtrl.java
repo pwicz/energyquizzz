@@ -2,12 +2,14 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import commons.ClientMessage;
+import commons.Score;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The type Singleplayer leaderboard ctrl.
@@ -17,9 +19,6 @@ public class SingleplayerLeaderboardCtrl {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
-    /**
-     * The Start.
-     */
     @FXML
     Button start;
 
@@ -87,10 +86,18 @@ public class SingleplayerLeaderboardCtrl {
     }
 
     /**
-     * Insert leaderboard.
+     * Sets leaderboard elements to display top scores from server from high to low
+     *
      */
     public void insertLeaderboard() { //needs to change to import the database leaderboard
-        leaderboard.getItems().addAll("Justin", "Piotr", "Mike", "Ioana", "Alex");
+        List<String> topScores = new ArrayList<>();
+        List<Score> response = server.getTopScores();
+        if(response != null){
+            for(Score score : response){
+                topScores.add(score.toString());
+            }
+        }
+        leaderboard.getItems().setAll(topScores);
     }
 
     /**
