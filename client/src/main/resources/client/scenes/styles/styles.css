@@ -3,23 +3,36 @@
 }
 
 .button{
-    -fx-font-family: "Roboto";
+    -fx-font-family: "Roboto-Light";
     -fx-font-size: 36 ;
+    -fx-background-color: none;
+    -fx-border-radius: 5;
 }
 
 .button:hover{
-    -fx-opacity: 0.5;
-    -fx-cursor: hand;
+     -fx-opacity: 0.57;
+     -fx-cursor: hand;
+ }
+
+.greenButton{
+    -fx-border-color: #38c768;
+    -fx-text-fill: #38c768;
 }
 
-.label{
-    -fx-font-family: "Roboto";
-    -fx-font-size: 100;
+.redButton{
+    -fx-border-color: #e0503d;
+    -fx-text-fill: #e0503d;
+}
+
+.helpButton{
+    -fx-border-color: "white";
+    -fx-text-fill: "white";
 }
 
 .title{
     -fx-font-family: 'Roboto Thin';
     -fx-font-size: 100;
+    -fx-text-fill: linear-gradient(from 25% 25% to 100% 100%, #21a0e8, #38c768);
 }
 
 .leave-btn{
