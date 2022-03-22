@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="background" stylesheets="@/client/scenes/Text_Font.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WaitingRoomScreenCtrl">
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="background" stylesheets="@/client/scenes/styles/Text_Font.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WaitingRoomScreenCtrl">
 
     <children>
       <AnchorPane layoutX="97.0" layoutY="100.0" AnchorPane.leftAnchor="97.0" AnchorPane.topAnchor="100.0">

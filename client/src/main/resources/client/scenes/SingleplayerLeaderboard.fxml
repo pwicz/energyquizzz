@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="global" stylesheets="/client/scenes/SingleplayerLeaderboard.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerLeaderboardCtrl">
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="global" stylesheets="/client/scenes/styles/SingleplayerLeaderboard.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerLeaderboardCtrl">
    <children>
       <ListView fx:id="leaderboard" layoutX="656.0" layoutY="284.0" prefHeight="328.0" prefWidth="495.0" AnchorPane.leftAnchor="508.0" AnchorPane.topAnchor="280.0">
          <styleClass>
