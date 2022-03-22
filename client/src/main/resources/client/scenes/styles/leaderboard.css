@@ -10,6 +10,7 @@
 .inputName{
     -fx-border-color: "white";
     -fx-font-size: 23px;
+    -fx-font-family: "Roboto Light";
     -fx-text-fill: "white";
 }
 

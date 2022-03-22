@@ -1,0 +1,17 @@
+.description{
+    -fx-text-fill: "white";
+    -fx-font-family: "Roboto Light";
+    -fx-font-size: 30;
+}
+
+.waitingBox{
+    -fx-background-color: none;
+    -fx-border-radius: 5px;
+    -fx-border-color: linear-gradient(to left, #1BED62, #21A0E8);
+}
+
+.smallTitle{
+    -fx-text-fill: "#38c768";
+    -fx-font-family: "Roboto-Thin";
+    -fx-font-size: 30;
+}
