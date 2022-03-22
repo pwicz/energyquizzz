@@ -45,19 +45,19 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        var splashScreen = FXML.load(SplashScreenCtrl.class, "client","scenes", "Splash_Screen.fxml");
+        var splashScreen = FXML.load(SplashScreenCtrl.class, "client","scenes", "Splash.fxml");
 
         var singleplayerLeaderboard =
                 FXML.load(SingleplayerLeaderboardCtrl.class, "client","scenes", "SingleplayerLeaderboard.fxml");
         var singleplayerGame = FXML.load(SingleplayerScreenCtrl.class,
-                "client","scenes", "Singleplayer_Game_Screen.fxml");
+                "client","scenes", "SingleplayerGame.fxml");
 
-        var waitingRoom = FXML.load(WaitingRoomScreenCtrl.class, "client","scenes", "Waiting_Room_Screen.fxml");
+        var waitingRoom = FXML.load(WaitingRoomScreenCtrl.class, "client","scenes", "WaitingRoom.fxml");
         var multiplayerGame =
-                FXML.load(MultiplayerScreenCtrl.class, "client","scenes", "Multiplayer_Game_Screen.fxml");
+                FXML.load(MultiplayerScreenCtrl.class, "client","scenes", "MultiplayerGame.fxml");
         var inBetweenScore = FXML.load(InBetweenScoreCtrl.class, "client", "scenes", "InBetweenScores.fxml");
 
-        var leave = FXML.load(LeaveCtrl.class, "client", "scenes", "Leave_screen.fxml");
+        var leave = FXML.load(LeaveCtrl.class, "client", "scenes", "Leave.fxml");
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 
