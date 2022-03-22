@@ -7,7 +7,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="global" stylesheets="/client/scenes/styles/leaderboard.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerLeaderboardCtrl">
+<?import java.net.URL?>
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="global" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerLeaderboardCtrl">
    <children>
       <ListView fx:id="leaderboard" layoutX="656.0" layoutY="284.0" prefHeight="328.0" prefWidth="495.0" AnchorPane.leftAnchor="508.0" AnchorPane.topAnchor="280.0">
          <styleClass>
@@ -32,7 +33,11 @@
             <String fx:value="global" />
          </styleClass>
       </Button>
-      <Text id="Title" boundsType="VISUAL" layoutX="529.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Leaderboard" textAlignment="CENTER" wrappingWidth="525.3685607910156" AnchorPane.leftAnchor="523.0" AnchorPane.topAnchor="141.0">
+      <Text fx:id="title" boundsType="VISUAL" layoutX="529.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Leaderboard" textAlignment="CENTER" wrappingWidth="525.3685607910156" AnchorPane.leftAnchor="523.0" AnchorPane.topAnchor="141.0">
       </Text>
    </children>
+   <stylesheets>
+      <URL value = "@/client/scenes/styles/styles.css"/>
+      <URL value = "@/client/scenes/styles/leaderboard.css"/>
+   </stylesheets>
 </AnchorPane>

@@ -8,42 +8,57 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="background" stylesheets="@/client/scenes/styles/textfont.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WaitingRoomScreenCtrl">
+<?import java.net.URL?>
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="background"
+            stylesheets="@/client/scenes/styles/styles.css" xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WaitingRoomScreenCtrl">
 
-    <children>
-      <AnchorPane layoutX="97.0" layoutY="100.0" AnchorPane.leftAnchor="97.0" AnchorPane.topAnchor="100.0">
-         <children>
-              <Text layoutX="137.0" layoutY="77.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Waiting Room" textAlignment="CENTER" wrappingWidth="694.13671875">
-                  <fill>
-                      <LinearGradient endX="1.0" endY="1.0">
-                          <stops>
-                              <Stop>
-                                  <color>
-                                      <Color red="0.12941177189350128" green="0.6274510025978088" blue="0.9098039269447327" />
-                                  </color>
-                              </Stop>
-                              <Stop offset="1.0">
-                                  <color>
-                                      <Color red="0.21960784494876862" green="0.7803921699523926" blue="0.40784314274787903" />
-                                  </color>
-                              </Stop>
-                          </stops>
-                      </LinearGradient>
-                  </fill>
-              </Text>
-              <Text fill="WHITE" layoutY="174.37890625" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Start the game or wait for other players to join" textAlignment="CENTER" wrappingWidth="968.13671875"> </Text>
-         </children>
-      </AnchorPane>
-        <Button layoutX="45.0" layoutY="985.0" mnemonicParsing="false" onAction="#leave" prefHeight="29.0" prefWidth="196.0" styleClass="leave-btn" text="Leave" textAlignment="CENTER" AnchorPane.bottomAnchor="38.292893409729004" AnchorPane.leftAnchor="45.0"> </Button>
-        <Button layoutX="490.0" layoutY="829.0" mnemonicParsing="false" onAction="#startGame" prefHeight="29.0" prefWidth="183.0" styleClass="start-btn" text="Start" textOverrun="CLIP" AnchorPane.bottomAnchor="181.0" AnchorPane.leftAnchor="490.0"> </Button>
-        <AnchorPane layoutX="1209.0" prefHeight="1039.0" prefWidth="414.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <Line endX="25.792892456054688" endY="1037.43359375" startX="17.0" startY="-14.0" />
-            <Text fill="#38c768" layoutX="84.0" layoutY="65.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sidebarTitle" text="Players waiting (3)" textAlignment="CENTER" wrappingWidth="196.13671875"> </Text>
-            <Text fill="WHITE" layoutX="57.0" layoutY="120.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="playersList" text="#1 Peter" wrappingWidth="196.13671875"> </Text>
-            <Text fill="WHITE" layoutX="56.0" layoutY="153.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="playersList" text="#2 Alex" wrappingWidth="196.13671875"> </Text>
-            <Text fill="WHITE" layoutX="56.0" layoutY="189.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="playersList" text="#3 Javi" wrappingWidth="196.13671875"> </Text>
-         </children>
-        </AnchorPane>
-    </children>
+    <AnchorPane layoutX="97.0" layoutY="100.0" AnchorPane.leftAnchor="97.0" AnchorPane.topAnchor="100.0">
+        <Text layoutX="137.0" layoutY="77.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0"
+              styleClass="title" text="Waiting Room" textAlignment="CENTER" wrappingWidth="694.13671875">
+            <fill>
+                <LinearGradient endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop>
+                            <color>
+                                <Color red="0.12941177189350128" green="0.6274510025978088"
+                                       blue="0.9098039269447327"/>
+                            </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                            <color>
+                                <Color red="0.21960784494876862" green="0.7803921699523926"
+                                       blue="0.40784314274787903"/>
+                            </color>
+                        </Stop>
+                    </stops>
+                </LinearGradient>
+            </fill>
+        </Text>
+        <Text fill="WHITE" layoutY="174.37890625" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0"
+              styleClass="description" text="Start the game or wait for other players to join"
+              textAlignment="CENTER" wrappingWidth="968.13671875"/>
+    </AnchorPane>
+    <Button layoutX="45.0" layoutY="985.0" mnemonicParsing="false" onAction="#leave" prefHeight="29.0" prefWidth="196.0"
+            styleClass="leave-btn" text="Leave" textAlignment="CENTER" AnchorPane.bottomAnchor="38.292893409729004"
+            AnchorPane.leftAnchor="45.0"/>
+    <Button layoutX="490.0" layoutY="829.0" mnemonicParsing="false" onAction="#startGame" prefHeight="29.0"
+            prefWidth="183.0" styleClass="start-btn" text="Start" textOverrun="CLIP" AnchorPane.bottomAnchor="181.0"
+            AnchorPane.leftAnchor="490.0"/>
+    <AnchorPane layoutX="1209.0" prefHeight="1039.0" prefWidth="414.0" AnchorPane.rightAnchor="0.0">
+        <Line endX="25.792892456054688" endY="1037.43359375" startX="17.0" startY="-14.0"/>
+        <Text fill="#38c768" layoutX="84.0" layoutY="65.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0"
+              styleClass="sidebarTitle" text="Players waiting (3)" textAlignment="CENTER"
+              wrappingWidth="196.13671875"/>
+        <Text fill="WHITE" layoutX="57.0" layoutY="120.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0"
+              styleClass="playersList" text="#1 Peter" wrappingWidth="196.13671875"/>
+        <Text fill="WHITE" layoutX="56.0" layoutY="153.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0"
+              styleClass="playersList" text="#2 Alex" wrappingWidth="196.13671875"/>
+        <Text fill="WHITE" layoutX="56.0" layoutY="189.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0"
+              styleClass="playersList" text="#3 Javi" wrappingWidth="196.13671875"/>
+    </AnchorPane>
+    <stylesheets>
+        <URL value="@/client/scenes/styles/styles.css"/>
+        <URL value="@/client/scenes/styles/waitingroom.css"/>
+    </stylesheets>
 </AnchorPane>
