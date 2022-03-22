@@ -143,6 +143,7 @@ public class MainCtrl {
                     multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
                     multiplayerScreenCtrl.updateScore(msg.score);
                     inBetweenScoreCtrl.setScoreTo(msg.score);
+                    inBetweenScoreCtrl.insertLeaderboard(msg.topScores);
                 });
                 System.out.println("[msg] display answer");
 

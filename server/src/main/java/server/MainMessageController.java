@@ -245,11 +245,15 @@ public class MainMessageController {
         Game g = new Game(new ArrayList<>(), UUID.randomUUID().toString());
         g.addPlayer(new Player("Alex", "222"));
         g.addPlayer(new Player("Mike", msg.playerID));
-        g.addPlayer(new Player("awd", "222"));
+        g.addPlayer(new Player("awd", "221"));
         g.addPlayer(new Player("awhd", "200"));
         g.addPlayer(new Player("sdhgsge", "278"));
         g.addPlayer(new Player("awdafg", "256"));
 
+        g.getPlayerWithID("222").setScore(213);
+        g.getPlayerWithID("221").setScore(213);
+        g.getPlayerWithID("200").setScore(2342);
+        g.getPlayerWithID("256").setScore(9);
         games.put(g.getID(), g);
         ServerMessage result = new ServerMessage(ServerMessage.Type.INIT_PLAYER);
         result.gameID = g.getID();
