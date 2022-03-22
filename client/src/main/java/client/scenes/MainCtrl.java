@@ -17,7 +17,6 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import commons.ClientMessage;
 import commons.ServerMessage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -32,11 +31,6 @@ public class MainCtrl {
 
     private Stage primaryStage;
 
-    private QuoteOverviewCtrl overviewCtrl;
-    private Scene overview;
-
-    private AddQuoteCtrl addCtrl;
-    private Scene add;
     private Scene waitingRoom;
 
     private SplashScreenCtrl splashScreenCtrl;
@@ -66,32 +60,29 @@ public class MainCtrl {
         this.server = server;
     }
 
-    public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
-                           Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
+    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splashScreen,
                            Pair<SingleplayerLeaderboardCtrl, Parent> singleplayerLeaderboard,
+                           Pair<SingleplayerScreenCtrl, Parent> singleplayerGame,
+                           Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
                            Pair<MultiplayerScreenCtrl, Parent> multiplayer,
-                           Pair<SplashScreenCtrl, Parent> splashScreen,
                            Pair<InBetweenScoreCtrl, Parent> inBetweenScore,
-                           Pair<LeaveCtrl, Parent> leave,
-                           Pair<SingleplayerScreenCtrl, Parent> singleplayerGame){
+                           Pair<LeaveCtrl, Parent> leave
+                           ){
         this.primaryStage = primaryStage;
 
-        this.overviewCtrl = overview.getKey();
-        this.overview = new Scene(overview.getValue());
-
-        this.addCtrl = add.getKey();
-        this.add = new Scene(add.getValue());
-
-        this.waitingRoom = new Scene(waitingRoom.getValue());
+        this.splashScreenCtrl = splashScreen.getKey();
+        this.splash = new Scene(splashScreen.getValue());
 
         this.singleplayerLeaderboardCtrl = singleplayerLeaderboard.getKey();
         this.singleLeaderboard = new Scene(singleplayerLeaderboard.getValue());
 
+        this.singleplayerScreen = new Scene(singleplayerGame.getValue());
+        this.singleplayerScreenCtrl = singleplayerGame.getKey();
+
+        this.waitingRoom = new Scene(waitingRoom.getValue());
+
         this.multiplayerScreenCtrl = multiplayer.getKey();
         this.multiplayer = new Scene(multiplayer.getValue());
-
-        this.splashScreenCtrl = splashScreen.getKey();
-        this.splash = new Scene(splashScreen.getValue());
 
         this.inBetweenScoreCtrl = inBetweenScore.getKey();
         this.inBetweenScore = new Scene(inBetweenScore.getValue());
@@ -99,17 +90,12 @@ public class MainCtrl {
         this.leave = new Scene(leave.getValue());
         this.leaveCtrl = leave.getKey();
 
-        this.singleplayerScreen = new Scene(singleplayerGame.getValue());
-        this.singleplayerScreenCtrl = singleplayerGame.getKey();
-
-        showOverview();
+        showSplash();
         primaryStage.show();
 
         clientID = "233"; // hardcoded: we need to somehow get it from the server
 
-        server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, m -> {
-            handleServerMessage(m);
-        });
+        server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, this::handleServerMessage);
     }
 
     public void handleServerMessage(ServerMessage msg){
@@ -151,12 +137,6 @@ public class MainCtrl {
         }
     }
 
-    public void showOverview() {
-        primaryStage.setTitle("Quotes: Overview");
-        primaryStage.setScene(overview);
-        overviewCtrl.refresh();
-    }
-
     public void showInbetweenScore() {
         primaryStage.setTitle("Score");
         primaryStage.setScene(inBetweenScore);
@@ -169,15 +149,6 @@ public class MainCtrl {
 
     public void stay(Scene previous){
         primaryStage.setScene(previous);
-    }
-
-    public void showAdd() {
-        // For testing only: send a test message to the server
-        server.send("/app/general", new ClientMessage(ClientMessage.Type.TEST, clientID, "0"));
-        System.out.println("DID sth");
-
-        primaryStage.setTitle("Quotes: Adding Quote");
-        primaryStage.setScene(add);
     }
 
     public void showSplash(){
@@ -217,9 +188,6 @@ public class MainCtrl {
         return leave;
     }
 
-    public Scene getOverview() {
-        return overview;
-    }
 
     public Scene getSingleLeaderboard() {
         return singleLeaderboard;

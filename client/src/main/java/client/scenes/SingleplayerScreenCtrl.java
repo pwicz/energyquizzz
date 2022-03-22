@@ -101,7 +101,7 @@ public class SingleplayerScreenCtrl {
                 mainCtrl.getClientID(), mainCtrl.getGameID());
         server.send("/app/general", msg);
 
-        mainCtrl.showOverview();
+        mainCtrl.showSplash();
     }
 
 
