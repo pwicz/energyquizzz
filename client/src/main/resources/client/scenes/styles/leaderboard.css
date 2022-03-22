@@ -1,57 +1,20 @@
-.global {
-    -fx-background-color: #272727;
+.container {
+    -fx-background-color: none;
     -fx-border-radius: 5px;
-
 }
 
-.start {
-    -fx-border-color: #38C768;
-    -fx-font-size: 25px;
-    -fx-background-color: none;
-    -fx-text-fill: #38C768;
-}
-
-.leave {
-    -fx-border-color: #E0503D;
-    -fx-font-size: 20px;
-    -fx-background-color: none;
-    -fx-text-fill: #E0503D;
-}
-
-.leave:hover {
-    -fx-border-color: #E05; /* Temp color */
-    -fx-text-fill: #E05; /* Temp color*/
-}
-
-.start:hover {
-    -fx-border-color: #38C720; /* Temp color*/
-    -fx-text-fill: #38C720; /* Temp color*/
-}
-
-
-.title {
-    -fx-fill: linear-gradient(to left, #1BED62, #21A0E8);
-    -fx-font-size: 85px;
-    -fx-font-family: "Roboto Light";
-}
-
-.textField {
-    -fx-text-fill: #ffffff;
-    -fx-border-color: #ffffff;
-    -fx-background-color: none;
-    -fx-font-size: 25px;
-}
-
-.list-view {
+.leaderboardBox{
     -fx-border-color: linear-gradient(to left, #1BED62, #21A0E8);
 }
 
+.inputName{
+    -fx-border-color: "white";
+    -fx-font-size: 23px;
+    -fx-text-fill: "white";
+}
 
 .list-cell {
     -fx-background-color: #272727;
     -fx-text-fill: linear-gradient(to left, #1BED62, #21A0E8);
     -fx-font-size: 15px;
 }
-
-
-

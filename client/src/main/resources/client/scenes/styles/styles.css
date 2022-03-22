@@ -4,7 +4,7 @@
 
 .button{
     -fx-font-family: "Roboto-Light";
-    -fx-font-size: 36 ;
+    -fx-font-size: 33 ;
     -fx-background-color: none;
     -fx-border-radius: 5;
 }
@@ -32,7 +32,7 @@
 .title{
     -fx-font-family: 'Roboto Thin';
     -fx-font-size: 100;
-    -fx-text-fill: linear-gradient(from 25% 25% to 100% 100%, #21a0e8, #38c768);
+    -fx-text-fill: linear-gradient(to left, #1BED62, #21A0E8);
 }
 
 .leave-btn{
