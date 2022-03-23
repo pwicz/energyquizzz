@@ -1,7 +1,3 @@
-.global {
-    -fx-background-color: #272727;
-
-}
 .label{
     -fx-text-fill:#f8f8f1;
     -fx-font-size:19.0 px;

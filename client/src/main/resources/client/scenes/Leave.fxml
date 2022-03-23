@@ -9,17 +9,13 @@
 
 <?import java.net.URL?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0"
-            prefWidth="669.0" styleClass="global" stylesheets="@/client/scenes/styles/leave.css"
+            prefWidth="669.0" styleClass="background"
             xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="client.scenes.LeaveCtrl">
    <effect>
       <ColorAdjust/>
    </effect>
 
-   <stylesheets>
-      <URL value="@/client/scenes/styles/styles.css"/>
-      <URL value="@/client/scenes/styles/leaderboard.css"/>
-   </stylesheets>
    <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="-9.0" AnchorPane.leftAnchor="-8.0"
                AnchorPane.rightAnchor="-8.0" AnchorPane.topAnchor="-9.0"/>
    <Label layoutX="201.0" layoutY="33.0" text="Are you sure you want to leave?">

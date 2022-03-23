@@ -45,3 +45,10 @@
     -fx-cursor: hand;
 }
 
+.result-text{
+    -fx-fill: "white";
+    -fx-font-size: 25px;
+    -fx-font-family: "Roboto-Light";
+    visibility: hidden;
+}
+
