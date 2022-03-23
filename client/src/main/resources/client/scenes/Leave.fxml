@@ -1,42 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.ColorAdjust?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import java.net.URL?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0"
-            prefWidth="669.0" styleClass="background"
-            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="client.scenes.LeaveCtrl">
-   <effect>
-      <ColorAdjust/>
-   </effect>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="669.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.LeaveCtrl">
 
-   <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="-9.0" AnchorPane.leftAnchor="-8.0"
-               AnchorPane.rightAnchor="-8.0" AnchorPane.topAnchor="-9.0"/>
-   <Label layoutX="201.0" layoutY="33.0" text="Are you sure you want to leave?">
+   <Label layoutX="206.0" layoutY="34.0" styleClass="description" text="Are you sure you want to leave?" AnchorPane.bottomAnchor="120.0" />
+
+   <Button layoutX="125.0" layoutY="110.0" mnemonicParsing="false" onAction="#stay" prefHeight="26.0" prefWidth="141.0" text="Stay" AnchorPane.bottomAnchor="34.0">
       <styleClass>
-         <String fx:value="label"/>
-      </styleClass>
-   </Label>
-   <Button layoutX="105.0" layoutY="108.0" onAction="#stay" prefHeight="28.0" prefWidth="141.0" text="Stay">
-      <styleClass>
-         <String fx:value="button_stay"/>
+         <String fx:value="button" />
+         <String fx:value="whiteButton" />
+         <String fx:value="smallButton" />
       </styleClass>
    </Button>
-   <Button layoutX="426.0" layoutY="108.0" mnemonicParsing="false" onAction="#leave" prefHeight="28.0" prefWidth="141.0"
-           text="Leave">
+
+   <Button layoutX="420.0" layoutY="72.0" mnemonicParsing="false" onAction="#leave" prefHeight="56.0" prefWidth="141.0" text="Leave" AnchorPane.bottomAnchor="32.0">
       <styleClass>
-         <String fx:value="button_leave"/>
+         <String fx:value="button" />
+         <String fx:value="redButton" />
+         <String fx:value="smallButton" />
       </styleClass>
    </Button>
 
    <stylesheets>
-      <URL value="@/client/scenes/styles/styles.css"/>
-      <URL value="@/client/scenes/styles/leave.css"/>
+      <URL value="@/client/scenes/styles/styles.css" />
+      <URL value="@/client/scenes/styles/leave.css" />
    </stylesheets>
 </AnchorPane>
