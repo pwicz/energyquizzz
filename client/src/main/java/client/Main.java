@@ -27,6 +27,7 @@ import client.scenes.SingleplayerLeaderboardCtrl;
 import client.scenes.SingleplayerScreenCtrl;
 import client.scenes.WaitingRoomScreenCtrl;
 import client.scenes.InBetweenScoreCtrl;
+import client.scenes.InputNameScreenCtrl;
 import com.google.inject.Injector;
 
 import client.scenes.SplashScreenCtrl;
@@ -59,11 +60,13 @@ public class Main extends Application {
         var leave = FXML.load(LeaveCtrl.class, "client", "scenes", "Leave_screen.fxml");
         var singleplayerGame = FXML.load(SingleplayerScreenCtrl.class,
                 "client","scenes", "Singleplayer_Game_Screen.fxml");
-        var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
+        var inputname = FXML.load(InputNameScreenCtrl.class,
+                "client","scenes", "InputNameScreen.fxml");
 
+        var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
         mainCtrl.initialize(primaryStage, overview, add, waitingRoom,
                 singleplayerLeaderboard, multiplayer, splashScreen, inBetweenScore,
-                leave, singleplayerGame);
+                leave, singleplayerGame, inputname);
                 
     }
 }

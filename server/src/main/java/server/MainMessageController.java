@@ -31,6 +31,8 @@ public class MainMessageController {
     private SimpMessagingTemplate simpMessagingTemplate;
     private ActivityController activityController;
     private HashMap<String, Game> games;
+    private Game waitingRoom;
+    private boolean sentToAll = false;
 
     public MainMessageController(SimpMessagingTemplate simpMessagingTemplate, ActivityController activityController) {
         this.simpMessagingTemplate = simpMessagingTemplate;
@@ -63,17 +65,28 @@ public class MainMessageController {
                                 nextQuestion(initMsg.score, games.get(initMsg.gameID)));
                     }
                     break;
-                case INIT_GAME:
-                    result = initGame(msg);
-                    break;
                 case INIT_MULTIPLAYER:
-                    // do something
+                    // if name is already taken
+                    if(waitingRoom != null
+                            && waitingRoom.getPlayers()
+                                .stream()
+                                .filter(players ->
+                                        (players.getName().toLowerCase()).equals(msg.playerName.toLowerCase()))
+                                .collect(Collectors.toList()).size() > 0)
+                        return;
+
+                    result = initMultiGame(msg);
                     break;
+                case START_GAME:
+                    waitingRoom = new Game(new ArrayList<>(), UUID.randomUUID().toString());
+                    games.put(waitingRoom.getID(), waitingRoom);
+                    //no break on purpose
                 case INIT_QUESTION:
                     result = nextMultiQuestion(
                             games.get(msg.gameID).getPlayerWithID(msg.playerID).getScore(), games.get(msg.gameID));
                     result.questionCounter = games.get(msg.gameID).getQuestionCounter();
                     System.out.println("[msg] init question");
+                    sentToAll = true;
                     break;
                 case SUBMIT_ANSWER:
                     updatScore(msg, p, g);
@@ -115,8 +128,14 @@ public class MainMessageController {
 
             if(result == null) return;
 
-            simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
-
+            if(sentToAll){
+                for (Player player: games.get(msg.gameID).getPlayers()) {
+                    simpMessagingTemplate.convertAndSend("/topic/client/" + player.getID(), result);
+                    sentToAll = false;
+                }
+            }else {
+                simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
+            }
         } catch (MessagingException ex) {
             System.out.println("MessagingException on handleClientMessages: " + ex.getMessage());
         }
@@ -241,22 +260,27 @@ public class MainMessageController {
     }
 
     //make game with dummy players for now
-    public ServerMessage initGame(ClientMessage msg) {
-        Game g = new Game(new ArrayList<>(), UUID.randomUUID().toString());
-        g.addPlayer(new Player("Alex", "222"));
-        g.addPlayer(new Player("Mike", msg.playerID));
-        g.addPlayer(new Player("awd", "221"));
-        g.addPlayer(new Player("awhd", "200"));
-        g.addPlayer(new Player("sdhgsge", "278"));
-        g.addPlayer(new Player("awdafg", "256"));
+    public ServerMessage initMultiGame(ClientMessage msg) {
+        if(waitingRoom == null) {
+            waitingRoom = new Game(new ArrayList<>(), UUID.randomUUID().toString());
+            games.put(waitingRoom.getID(), waitingRoom);
+            waitingRoom.setMultiplayer(true);
+        }
+        waitingRoom.addPlayer(new Player(msg.playerName, msg.playerID));
 
-        g.getPlayerWithID("222").setScore(213);
-        g.getPlayerWithID("221").setScore(213);
-        g.getPlayerWithID("200").setScore(2342);
-        g.getPlayerWithID("256").setScore(9);
-        games.put(g.getID(), g);
         ServerMessage result = new ServerMessage(ServerMessage.Type.INIT_PLAYER);
-        result.gameID = g.getID();
+        result.gameID = waitingRoom.getID();
+        result.playersWaiting = new ArrayList<>();
+        int counter = 1;
+        for (Player p : waitingRoom.getPlayers()) {
+            result.playersWaiting.add("#" + counter++ + " "+ p.getName());
+        }
+        for (Player p : waitingRoom.getPlayers()) {
+            ServerMessage temp = new ServerMessage(ServerMessage.Type.EXTRA_PLAYER);
+            temp.playersWaiting = result.playersWaiting;
+            simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), temp);
+        }
+
 
         return result;
     }

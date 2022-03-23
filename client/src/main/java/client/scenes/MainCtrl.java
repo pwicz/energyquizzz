@@ -39,7 +39,9 @@ public class MainCtrl {
 
     private AddQuoteCtrl addCtrl;
     private Scene add;
+
     private Scene waitingRoom;
+    private WaitingRoomScreenCtrl waitingRoomScreenCtrl;
 
     private SplashScreenCtrl splashScreenCtrl;
     private Scene splash;
@@ -59,8 +61,12 @@ public class MainCtrl {
     private Scene singleplayerScreen;
     private SingleplayerScreenCtrl singleplayerScreenCtrl;
 
+    private Scene inputName;
+    private InputNameScreenCtrl inputNameScreenCtrl;
+
     private String clientID = null;
     private String gameID = null;
+    private String name = null;
 
     @Inject
     public MainCtrl(ServerUtils server) {
@@ -74,7 +80,8 @@ public class MainCtrl {
                            Pair<SplashScreenCtrl, Parent> splashScreen,
                            Pair<InBetweenScoreCtrl, Parent> inBetweenScore,
                            Pair<LeaveCtrl, Parent> leave,
-                           Pair<SingleplayerScreenCtrl, Parent> singleplayerGame){
+                           Pair<SingleplayerScreenCtrl, Parent> singleplayerGame,
+                           Pair<InputNameScreenCtrl, Parent> inputname){
         this.primaryStage = primaryStage;
 
         this.overviewCtrl = overview.getKey();
@@ -84,6 +91,7 @@ public class MainCtrl {
         this.add = new Scene(add.getValue());
 
         this.waitingRoom = new Scene(waitingRoom.getValue());
+        this.waitingRoomScreenCtrl = waitingRoom.getKey();
 
         this.singleplayerLeaderboardCtrl = singleplayerLeaderboard.getKey();
         this.singleLeaderboard = new Scene(singleplayerLeaderboard.getValue());
@@ -103,9 +111,11 @@ public class MainCtrl {
         this.singleplayerScreen = new Scene(singleplayerGame.getValue());
         this.singleplayerScreenCtrl = singleplayerGame.getKey();
 
+        this.inputName = new Scene(inputname.getValue());
+        this.inputNameScreenCtrl = inputname.getKey();
+
         showOverview();
         primaryStage.show();
-
 
         clientID = UUID.randomUUID().toString();
         server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, m -> {
@@ -120,6 +130,15 @@ public class MainCtrl {
             case INIT_PLAYER:
                 gameID = msg.gameID;
                 multiplayerScreenCtrl.updateScore(0);
+                runLater(() -> {
+                    showWaitingRoom();
+                });
+                break;
+            case EXTRA_PLAYER:
+                runLater(() -> {
+                    showWaitingRoom();
+                    waitingRoomScreenCtrl.updatePlayerList(msg.playersWaiting);
+                });
                 break;
             case NEW_MULTIPLAYER_GAME:
                 // do something
@@ -245,6 +264,11 @@ public class MainCtrl {
         primaryStage.setScene(waitingRoom);
     }
 
+    public void showinputNameScreen() {
+        primaryStage.setTitle("input Name");
+        primaryStage.setScene(inputName);
+    }
+
     public void showSingleplayerGameScreen(){
         primaryStage.setTitle("Singleplayer");
         primaryStage.setScene(singleplayerScreen);
@@ -277,6 +301,10 @@ public class MainCtrl {
         return waitingRoom;
     }
 
+    public Scene getInputName() {
+        return inputName;
+    }
+
     public String getClientID() {
         return clientID;
     }
@@ -285,4 +313,11 @@ public class MainCtrl {
         return gameID;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
 }
