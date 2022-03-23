@@ -1,14 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="client.scenes.EditActivityCtrl"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.EditActivityCtrl">
 
+    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="149.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="Edit Activity" AnchorPane.bottomAnchor="730.0">
+    </Label>
+
+    <Label contentDisplay="CENTER" layoutX="164.0" layoutY="306.0" prefHeight="49.0" prefWidth="276.0" styleClass="smallTitle" text="Title:" AnchorPane.bottomAnchor="627.0">
+    </Label>
+    <Label contentDisplay="CENTER" layoutX="164.0" layoutY="405.0" prefHeight="49.0" prefWidth="276.0" styleClass="smallTitle" text="Consumption in Wh:" AnchorPane.bottomAnchor="528.0">
+    </Label>
+    <Label contentDisplay="CENTER" layoutX="164.0" layoutY="504.0" prefHeight="49.0" prefWidth="276.0" styleClass="smallTitle" text="Source:" AnchorPane.bottomAnchor="429.0">
+    </Label>
+    <Label contentDisplay="CENTER" layoutX="164.0" layoutY="611.0" prefHeight="49.0" prefWidth="276.0" styleClass="smallTitle" text="Image link:" AnchorPane.bottomAnchor="322.0">
+    </Label>
+
+    <TextField fx:id="titleField" layoutX="477.0" layoutY="311.0" maxHeight="49.0" maxWidth="558.0" prefHeight="49.0" prefWidth="558.0" promptText="Title" styleClass="inputField" AnchorPane.bottomAnchor="627.0">
+    </TextField>
+    <TextField fx:id="consumptionField" layoutX="477.0" layoutY="411.0" maxHeight="49.0" maxWidth="558.0" prefHeight="49.0" prefWidth="558.0" promptText="Consumption" styleClass="inputField" AnchorPane.bottomAnchor="528.0">
+    </TextField>
+    <TextField fx:id="sourceField" layoutX="477.0" layoutY="511.0" maxHeight="49.0" maxWidth="567.0" prefHeight="49.0" prefWidth="558.0" promptText="Source" styleClass="inputField" AnchorPane.bottomAnchor="429.0">
+    </TextField>
+    <TextField fx:id="imageField" layoutX="477.0" layoutY="611.0" maxHeight="49.0" maxWidth="558.0" prefHeight="49.0" prefWidth="558.0" promptText="Image" styleClass="inputField" AnchorPane.bottomAnchor="322.0">
+    </TextField>
+
+    <Button fx:id="save" layoutX="643.0" layoutY="751.0" mnemonicParsing="false" onMouseClicked="#saveActivity" prefHeight="63.0" prefWidth="226.0" text="Save" AnchorPane.bottomAnchor="168.0">
+        <styleClass>
+            <String fx:value="button" />
+            <String fx:value="greenButton" />
+        </styleClass>
+    </Button>
+
+    <Button fx:id="leave" layoutX="48.0" layoutY="925.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="32.0">
+        <styleClass>
+            <String fx:value="button" />
+            <String fx:value="redButton" />
+        </styleClass>
+    </Button>
+
+    <stylesheets>
+        <URL value="@/client/scenes/styles/styles.css" />
+        <URL value="@/client/scenes/styles/editactivity.css" />
+    </stylesheets>
 </AnchorPane>

@@ -50,7 +50,6 @@ public class AdminPanelCtrl {
         }
     }
 
-
     @FXML
     public void setCurrentActivity(MouseEvent mouseEvent){
         String activityText = activityBox.getSelectionModel().getSelectedItem();;
@@ -66,7 +65,9 @@ public class AdminPanelCtrl {
      * Allows editing the currently selected activity
      */
     public void editActivity() {
-
+        if(selected != null){
+            mainCtrl.showEditActivity(selected);
+        }
     }
 
     /**

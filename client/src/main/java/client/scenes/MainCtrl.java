@@ -17,6 +17,7 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import commons.Activity;
 import commons.ServerMessage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -54,6 +55,9 @@ public class MainCtrl {
     private Scene adminPanel;
     private AdminPanelCtrl adminPanelCtrl;
 
+    private Scene editActivity;
+    private EditActivityCtrl editActivityCtrl;
+
     private String clientID = null;
     private String gameID = null;
     private int score;
@@ -65,6 +69,7 @@ public class MainCtrl {
 
     public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splashScreen,
                            Pair<AdminPanelCtrl, Parent> adminPanel,
+                           Pair<EditActivityCtrl, Parent> editActivity,
                            Pair<SingleplayerLeaderboardCtrl, Parent> singleplayerLeaderboard,
                            Pair<SingleplayerScreenCtrl, Parent> singleplayerGame,
                            Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
@@ -79,6 +84,9 @@ public class MainCtrl {
 
         this.adminPanelCtrl = adminPanel.getKey();
         this.adminPanel = new Scene(adminPanel.getValue());
+
+        this.editActivityCtrl = editActivity.getKey();
+        this.editActivity = new Scene(editActivity.getValue());
 
         this.singleplayerLeaderboardCtrl = singleplayerLeaderboard.getKey();
         this.singleLeaderboard = new Scene(singleplayerLeaderboard.getValue());
@@ -189,6 +197,14 @@ public class MainCtrl {
         primaryStage.setScene(adminPanel);
     }
 
+    public void showEditActivity(Activity selected) {
+        if(selected != null){
+            primaryStage.setTitle("EditActivity");
+            primaryStage.setScene(editActivity);
+            editActivityCtrl.fillActivity(selected);
+        }
+    }
+
     public Scene getInBetweenScore() {
         return inBetweenScore;
     }
@@ -203,6 +219,10 @@ public class MainCtrl {
 
     public Scene getAdminPanel() {
         return adminPanel;
+    }
+
+    public Scene getEditActivity() {
+        return editActivity;
     }
 
     public Scene getSingleLeaderboard() {

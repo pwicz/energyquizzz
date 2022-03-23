@@ -2,6 +2,7 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import commons.Activity;
+import javafx.scene.input.MouseEvent;
 
 import javax.inject.Inject;
 
@@ -16,11 +17,14 @@ public class EditActivityCtrl {
         this.mainCtrl = mainCtrl;
     }
 
-    public void initialize(){
-
+    public void fillActivity(Activity activity){
+        System.out.println(activity);
     }
 
-    public void fillActivity(Activity activity){
+    public void saveActivity(MouseEvent actionEvent) {
+    }
 
+    public void leave(){
+        mainCtrl.showLeave(mainCtrl.getEditActivity());
     }
 }

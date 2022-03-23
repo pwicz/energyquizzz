@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import client.scenes.AdminPanelCtrl;
+import client.scenes.EditActivityCtrl;
 import client.scenes.InBetweenScoreCtrl;
 import client.scenes.LeaveCtrl;
 import client.scenes.MainCtrl;
@@ -48,6 +49,7 @@ public class Main extends Application {
         var splashScreen = FXML.load(SplashScreenCtrl.class, "client","scenes", "Splash.fxml");
 
         var adminPanel = FXML.load(AdminPanelCtrl.class, "client","scenes", "AdminPanel.fxml");
+        var editActivity = FXML.load(EditActivityCtrl.class, "client","scenes", "EditActivity.fxml");
 
         var singleplayerLeaderboard =
                 FXML.load(SingleplayerLeaderboardCtrl.class, "client","scenes", "SingleplayerLeaderboard.fxml");
@@ -63,7 +65,7 @@ public class Main extends Application {
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 
-        mainCtrl.initialize(primaryStage, splashScreen, adminPanel, singleplayerLeaderboard, singleplayerGame,
+        mainCtrl.initialize(primaryStage, splashScreen, adminPanel, editActivity, singleplayerLeaderboard, singleplayerGame,
                 waitingRoom, multiplayerGame, inBetweenScore, leave);
     }
 }
