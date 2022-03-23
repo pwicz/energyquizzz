@@ -31,7 +31,7 @@ public class SingleplayerScreenCtrl {
     private HashMap<Rectangle, Long> optionToID;
     private boolean canInteractWithUI;
 
-    Timeline timer;
+    private Timeline timer;
 
     @FXML
     ProgressBar timeBar;
