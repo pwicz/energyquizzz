@@ -212,9 +212,7 @@ public class MainCtrl {
     }
 
     public void showLeave(Scene scene){
-        leaveCtrl.setPrevious(scene);
-       // primaryStage.setScene(leave);
-
+        this.stage = new Stage();
         this.stage.setScene(leave);
         this.stage.initModality(Modality.APPLICATION_MODAL);
         this.stage.showAndWait();
@@ -222,8 +220,6 @@ public class MainCtrl {
 
     public void stay(){
         this.stage.close();
-        //We need to create a new stage in case you want to leave more than once per session.
-        this.stage = new Stage();
     }
 
     public void showAdd() {

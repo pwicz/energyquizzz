@@ -2,13 +2,11 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import javafx.scene.Scene;
 
 public class LeaveCtrl {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
-    private Scene previous;
 
 
     @Inject
@@ -23,13 +21,5 @@ public class LeaveCtrl {
     public void leave(){
         mainCtrl.showSplash();
         mainCtrl.stay();
-    }
-
-    public void setPrevious(Scene previous) {
-        this.previous = previous;
-    }
-
-    public Scene getPrevious() {
-        return previous;
     }
 }
