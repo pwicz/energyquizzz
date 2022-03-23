@@ -5,6 +5,7 @@ import commons.ClientMessage;
 import commons.Game;
 import commons.Player;
 import commons.Question;
+import commons.Score;
 import commons.ServerMessage;
 
 import org.springframework.messaging.MessagingException;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import server.api.ActivityController;
+import server.api.ScoreController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,11 +32,14 @@ public class MainMessageController {
 
     private SimpMessagingTemplate simpMessagingTemplate;
     private ActivityController activityController;
+    private ScoreController scoreController;
     private HashMap<String, Game> games;
 
-    public MainMessageController(SimpMessagingTemplate simpMessagingTemplate, ActivityController activityController) {
+    public MainMessageController(SimpMessagingTemplate simpMessagingTemplate,
+                                 ActivityController activityController, ScoreController scoreController) {
         this.simpMessagingTemplate = simpMessagingTemplate;
         this.activityController = activityController;
+        this.scoreController = scoreController;
 
         games = new HashMap<>();
     }
@@ -238,6 +243,11 @@ public class MainMessageController {
     private void endGame(Game g) {
         g.setHasEnded(true);
         games.remove(g.getID());
+
+        if(!g.isMultiplayer() && g.getPlayers().size() > 0){
+            Player p = g.getPlayers().get(0);
+            scoreController.addScore(new Score(p.getName(), p.getScore()));
+        }
     }
 
     //make game with dummy players for now

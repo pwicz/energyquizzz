@@ -238,6 +238,8 @@ public class MainCtrl {
     public void showSingleLeaderboardScreen(){
         primaryStage.setTitle("Leaderboard");
         primaryStage.setScene(singleLeaderboard);
+
+        singleplayerLeaderboardCtrl.insertLeaderboard();
     }
 
     public void showWaitingRoom() {
