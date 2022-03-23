@@ -40,7 +40,6 @@ public class MultiplayerScreenCtrl {
     public MultiplayerScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
         this.server = server;
-
     }
 
     public void leave(){

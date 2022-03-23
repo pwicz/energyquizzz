@@ -20,16 +20,16 @@ import static com.google.inject.Guice.createInjector;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import client.scenes.AdminPanelCtrl;
+import client.scenes.InBetweenScoreCtrl;
+import client.scenes.LeaveCtrl;
 import client.scenes.MainCtrl;
+import client.scenes.MultiplayerScreenCtrl;
 import client.scenes.SingleplayerLeaderboardCtrl;
 import client.scenes.SingleplayerScreenCtrl;
-import client.scenes.WaitingRoomScreenCtrl;
-import client.scenes.InBetweenScoreCtrl;
-import com.google.inject.Injector;
-
 import client.scenes.SplashScreenCtrl;
-import client.scenes.MultiplayerScreenCtrl;
-import client.scenes.LeaveCtrl;
+import client.scenes.WaitingRoomScreenCtrl;
+import com.google.inject.Injector;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -47,6 +47,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
         var splashScreen = FXML.load(SplashScreenCtrl.class, "client","scenes", "Splash.fxml");
 
+        var adminPanel = FXML.load(AdminPanelCtrl.class, "client","scenes", "AdminPanel.fxml");
+
         var singleplayerLeaderboard =
                 FXML.load(SingleplayerLeaderboardCtrl.class, "client","scenes", "SingleplayerLeaderboard.fxml");
         var singleplayerGame = FXML.load(SingleplayerScreenCtrl.class,
@@ -61,7 +63,7 @@ public class Main extends Application {
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 
-        mainCtrl.initialize(primaryStage, splashScreen, singleplayerLeaderboard, singleplayerGame,
+        mainCtrl.initialize(primaryStage, splashScreen, adminPanel, singleplayerLeaderboard, singleplayerGame,
                 waitingRoom, multiplayerGame, inBetweenScore, leave);
     }
 }
