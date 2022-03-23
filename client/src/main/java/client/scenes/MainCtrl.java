@@ -60,7 +60,6 @@ public class MainCtrl {
 
     private String clientID = null;
     private String gameID = null;
-    private int score;
     private Stage stage = new Stage();
 
     @Inject
