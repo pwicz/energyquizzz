@@ -4,6 +4,7 @@ package client.scenes;
 import com.google.inject.Inject;
 
 import client.utils.ServerUtils;
+import commons.ClientMessage;
 
 
 public class SplashScreenCtrl {
@@ -25,6 +26,9 @@ public class SplashScreenCtrl {
     }
 
     public void showWaitingRoom(){
+        ClientMessage msg= new ClientMessage(ClientMessage.Type.INIT_GAME);
+        msg.playerID = mainCtrl.getClientID();
+        server.send("/app/general", msg);
         mainCtrl.showWaitingRoom();
     }
 

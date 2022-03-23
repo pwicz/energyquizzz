@@ -2,6 +2,7 @@ package client.scenes;
 import com.google.inject.Inject;
 
 import client.utils.ServerUtils;
+import commons.ClientMessage;
 
 public class WaitingRoomScreenCtrl {
     private final ServerUtils server;
@@ -15,8 +16,9 @@ public class WaitingRoomScreenCtrl {
 
     }
 
-    public void startGame(){
-        mainCtrl.showMultiplayerScreen();
+    public void start(){
+        server.send("/app/general",
+                new ClientMessage(ClientMessage.Type.INIT_QUESTION, mainCtrl.getClientID(), mainCtrl.getGameID()));
     }
 
     public void leave(){

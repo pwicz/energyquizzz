@@ -73,9 +73,6 @@ public class QuoteOverviewCtrl implements Initializable {
         mainCtrl.showSplash();
     }
 
-    public void waitingRoom(){
-        mainCtrl.showSplash();
-    }
 
     public void refresh() {
         var quotes = server.getQuotes();

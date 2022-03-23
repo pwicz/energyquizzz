@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
 import javax.inject.Inject;
+import java.util.List;
 
 public class InBetweenScoreCtrl {
     private final ServerUtils server;
@@ -16,7 +17,7 @@ public class InBetweenScoreCtrl {
     Button leave;
 
     @FXML
-    ListView<String> leaderboard;
+    ListView<String> leaderboardSingle;
 
     @FXML
     ListView<String> leaderboardG;
@@ -40,8 +41,9 @@ public class InBetweenScoreCtrl {
 
     }
 
-    public void insertLeaderboard() { //needs to change to import the database leaderboard
-        leaderboard.getItems().addAll("Justin", "Piotr", "Mike", "Ioana", "Alex");
+    public void insertLeaderboard(List<String> players) { //needs to change to import the database leaderboard
+        leaderboardSingle.getItems().clear();
+        leaderboardSingle.getItems().addAll(players);
     }
     public void insertLeaderboardG() { //needs to change to import the database leaderboard
         leaderboardG.getItems().addAll("Random", "Names", "Here");
@@ -50,8 +52,16 @@ public class InBetweenScoreCtrl {
         leaderboardR.getItems().addAll("Blah", "Blah", "Blah");
     }
 
-    public void setQuestionNo(int n){questionNo.setText(n + "/20");}
-    public void setScoreTo(int s){score.setText("Score: " + s);}
+    public void setQuestionNo(int n){
+        if(n != 20)
+            questionNo.setText(n + "/20");
+        else
+            questionNo.setText("20/20\nEnd of the game");
+    }
+
+    public void setScoreTo(int s){
+        score.setText("Score: " + s);
+    }
 
     public void leave(){
         mainCtrl.showLeave(mainCtrl.getInBetweenScore());
