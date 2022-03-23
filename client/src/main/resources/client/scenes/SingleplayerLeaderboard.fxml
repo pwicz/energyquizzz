@@ -16,7 +16,7 @@
    <ListView fx:id="leaderboard" layoutX="509.0" layoutY="284.0" prefHeight="328.0" prefWidth="495.0" AnchorPane.bottomAnchor="370.0">
       <styleClass>
          <String fx:value="container" />
-         <String fx:value="leaderboardBox" />
+         <String fx:value="gradientBox" />
       </styleClass>
    </ListView>
    <TextField fx:id="nameField" layoutX="509.0" layoutY="642.0" maxHeight="49.0" maxWidth="495.0" onAction="#insertName" prefHeight="49.0" prefWidth="495.0" promptText="Enter your name" AnchorPane.bottomAnchor="291.0">

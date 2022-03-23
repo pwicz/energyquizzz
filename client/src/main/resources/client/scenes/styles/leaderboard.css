@@ -3,10 +3,6 @@
     -fx-border-radius: 5px;
 }
 
-.leaderboardBox{
-    -fx-border-color: linear-gradient(to left, #1BED62, #21A0E8);
-}
-
 .inputName{
     -fx-border-color: "white";
     -fx-font-size: 23px;

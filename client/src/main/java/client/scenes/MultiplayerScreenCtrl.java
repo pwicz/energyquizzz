@@ -105,7 +105,6 @@ public class MultiplayerScreenCtrl {
     }
 
     public void lockAnswer(MouseEvent mouseEvent) {
-
         option1.setStyle("-fx-border-color: white");
         option2.setStyle("-fx-border-color: white");
         option3.setStyle("-fx-border-color: white");
