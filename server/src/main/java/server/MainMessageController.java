@@ -183,6 +183,8 @@ public class MainMessageController {
         // save the correct answer in the Game object
 
         forGame.setCorrectAnswerID(max.id);
+        forGame.setQuestionStartTime(System.currentTimeMillis());
+        System.out.println("SETTING TIME: " + System.currentTimeMillis());
 
         result.score = playerScore;
         result.timerFull = 10.0; // 10 seconds
@@ -196,7 +198,8 @@ public class MainMessageController {
         // update player's score
         int scoreForQuestion = 0;
         if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
-            scoreForQuestion = 100 + (int) (100 * msg.time);
+            double answerTime = 10.0 - (System.currentTimeMillis() - g.getQuestionStartTime()) / 1000.0;
+            scoreForQuestion = 100 + (int) (10 * answerTime);
         }
         p.setScore(p.getScore() + scoreForQuestion);
         // send score msg

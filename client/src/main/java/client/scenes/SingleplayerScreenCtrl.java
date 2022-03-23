@@ -164,16 +164,12 @@ public class SingleplayerScreenCtrl {
         if(!canInteractWithUI) return;
         canInteractWithUI = false;
 
-        double time = 0.0;
         if(timer != null){
-            time = (timer.getTotalDuration().toSeconds() - timer.getCurrentTime().toSeconds())
-                    / timer.getTotalDuration().toSeconds();
             timer.stop();
         }
 
         ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
-        msg.time = time;
         msg.chosenActivity = optionToID.get(choice);
         server.send("/app/general", msg);
     }

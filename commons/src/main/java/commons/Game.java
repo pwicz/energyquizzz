@@ -12,6 +12,7 @@ public class Game {
     private long correctAnswerID;
     private int round;
     private boolean hasEnded;
+    private long questionStartTime;
 
     public Game(List<Player> players, String ID) {
         this.players = players;
@@ -92,5 +93,13 @@ public class Game {
 
     public void setQuestionCounter(int questionCounter) {
         this.questionCounter = questionCounter;
+    }
+
+    public long getQuestionStartTime() {
+        return questionStartTime;
+    }
+
+    public void setQuestionStartTime(long questionStartTime) {
+        this.questionStartTime = questionStartTime;
     }
 }
