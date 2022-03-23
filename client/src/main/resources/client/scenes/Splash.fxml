@@ -6,7 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SplashScreenCtrl">
+<AnchorPane stylesheets="@/client/scenes/styles/styles.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SplashScreenCtrl">
 
    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="149.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="ENERGYQUIZZZ" AnchorPane.bottomAnchor="700.0">
    </Label>
@@ -38,10 +38,4 @@
          <String fx:value="helpButton" />
       </styleClass>
    </Button>
-
-
-   <stylesheets>
-      <URL value="@/client/scenes/styles/styles.css" />
-      <URL value="@/client/scenes/styles/splash.css" />
-   </stylesheets>
 </AnchorPane>
