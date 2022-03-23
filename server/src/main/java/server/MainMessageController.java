@@ -108,11 +108,13 @@ public class MainMessageController {
                 case QUIT:
                     playerGameCorrectnessCheck(msg.gameID, msg.playerID);
 
-                    // remove player from the game
                     Game game = games.get(msg.gameID);
-                    game.getPlayers().remove(game.getPlayerWithID(msg.playerID));
+                    if(game.isMultiplayer()){
+                        // remove player from the game
+                        game.getPlayers().remove(game.getPlayerWithID(msg.playerID));
+                    }
                     // end game if there are no more players
-                    if (game.getPlayers().size() == 0) endGame(game);
+                    if (game.getPlayers().size() == 0 || !game.isMultiplayer()) endGame(game);
                     break;
                 default:
                     // unknown message
