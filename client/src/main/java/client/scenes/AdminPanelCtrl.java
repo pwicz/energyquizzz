@@ -50,8 +50,10 @@ public class AdminPanelCtrl {
         }
     }
 
+
+    @FXML
     public void setCurrentActivity(MouseEvent mouseEvent){
-        String activityText = (String) mouseEvent.getSource();
+        String activityText = activityBox.getSelectionModel().getSelectedItem();;
         selected = optionToActivity.get(activityText);
         System.out.println(selected);
     }
