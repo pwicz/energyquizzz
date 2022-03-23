@@ -11,6 +11,8 @@
     </module>
 
     <module name="TreeWalker">
+
+        <module name="SuppressionCommentFilter"/>
         <!--        unused imports-->
         <module name="UnusedImports" />
         <!--        Import with star-->
@@ -41,6 +43,8 @@
         <module name="LocalVariableName">
             <property name="format" value="^[a-z](_?[a-zA-Z0-9]+)*$"/>
         </module>
+
+
     </module>
 
 </module>

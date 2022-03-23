@@ -24,7 +24,6 @@ import jakarta.ws.rs.WebApplicationException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 
 public class AddQuoteCtrl {
@@ -94,16 +93,4 @@ public class AddQuoteCtrl {
         quote.clear();
     }
 
-    public void keyPressed(KeyEvent e) {
-        switch (e.getCode()) {
-        case ENTER:
-            ok();
-            break;
-        case ESCAPE:
-            cancel();
-            break;
-        default:
-            break;
-        }
-    }
 }

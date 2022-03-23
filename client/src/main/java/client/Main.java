@@ -64,5 +64,6 @@ public class Main extends Application {
         mainCtrl.initialize(primaryStage, overview, add, waitingRoom,
                 singleplayerLeaderboard, multiplayer, splashScreen, inBetweenScore,
                 leave, singleplayerGame);
+                
     }
 }
