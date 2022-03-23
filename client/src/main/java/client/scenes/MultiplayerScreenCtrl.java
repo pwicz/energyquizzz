@@ -32,6 +32,7 @@ public class MultiplayerScreenCtrl {
     private final MainCtrl mainCtrl;
     private Rectangle choice;
     private HashMap<Rectangle, Long> optionToID;
+    private boolean canInteractWithUI;
 
     private Timeline timer;
 
@@ -103,6 +104,8 @@ public class MultiplayerScreenCtrl {
 
     //submits answer, stops time,
     public void submitAnswer(){
+        if(!canInteractWithUI) return;
+        canInteractWithUI = false;
 
         double time = 0.0;
         if(timer != null){
@@ -198,18 +201,18 @@ public class MultiplayerScreenCtrl {
     }
 
     public void resetUI(){
-        submitted = false;
-        option1.setStyle("-fx-border-color: white");
-        option2.setStyle("-fx-border-color: white");
-        option3.setStyle("-fx-border-color: white");
+        canInteractWithUI = true;
+
+        option1.setStyle("-fx-stroke: #fff");
+        option2.setStyle("-fx-stroke: #fff");
+        option3.setStyle("-fx-stroke: #fff");
         optionToID = new HashMap<>();
-        picked.setStyle("visibility: invisible");
+        picked.setStyle("visibility: hidden");
 
     }
 
     public void lockAnswer(MouseEvent mouseEvent) {
-        if(submitted)
-            return;
+        if(!canInteractWithUI) return;
 
         option1.setStyle("-fx-border-color: white");
         option2.setStyle("-fx-border-color: white");
