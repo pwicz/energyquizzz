@@ -1,10 +1,12 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import commons.Activity;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 
 import javax.inject.Inject;
+import java.util.List;
 
 public class AdminPanelCtrl {
 
@@ -20,6 +22,10 @@ public class AdminPanelCtrl {
         this.mainCtrl = mainCtrl;
     }
 
+    public void initialize(){
+        displayActivities();
+    }
+
     public void leave(){
         mainCtrl.showLeave(mainCtrl.getAdminPanel());
     }
@@ -28,7 +34,15 @@ public class AdminPanelCtrl {
      * Displays all activities in bank in the listview
      */
     public void displayActivities(){
+        List<Activity> activities = server.getActivities();
+        System.out.println(activities.toString());
+        for(Activity element: activities){
+            activityBox.getItems().add(convertToDisplay(element));
+        }
+    }
 
+    public String convertToDisplay(Activity activity){
+        return "ID: " + activity.id + " - " + activity.title + " - " + activity.consumptionInWh + " Wh";
     }
 
     /**
