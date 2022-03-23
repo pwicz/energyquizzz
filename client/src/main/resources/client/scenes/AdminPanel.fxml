@@ -10,7 +10,7 @@
     <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="149.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="Admin Panel" AnchorPane.bottomAnchor="730.0">
     </Label>
 
-    <ListView fx:id="activityBox" layoutX="390.0" layoutY="284.0" prefHeight="437.0" prefWidth="734.0" AnchorPane.bottomAnchor="261.0">
+    <ListView fx:id="activityBox" onMouseClicked="#setCurrentActivity" layoutX="390.0" layoutY="284.0" prefHeight="437.0" prefWidth="734.0" AnchorPane.bottomAnchor="261.0">
         <styleClass>
             <String fx:value="container" />
             <String fx:value="gradientBox" />

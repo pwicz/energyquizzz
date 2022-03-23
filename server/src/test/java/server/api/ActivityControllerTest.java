@@ -8,10 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ActivityControllerTest {
 
@@ -108,6 +105,24 @@ public class ActivityControllerTest {
         assertEquals("source::link", actual.source);
         assertEquals("image::path", actual.imagePath);
 
+    }
+
+    @Test
+    public void testEditActivity(){
+        Activity q1 = new Activity("Old title", 420, "source1", "image1");
+        Activity q2 = new Activity("New title", 420, "source2", "image2");
+        q1.id = 11L;
+        q2.id = 12L;
+        sut.addActivity(q1);
+        sut.addActivity(q2);
+
+        sut.editActivity(q1.id, q2);
+
+        assertNotEquals(q1.id, q2.id);
+        assertEquals(q1.title, q2.title);
+        assertEquals(q1.consumptionInWh, q2.consumptionInWh);
+        assertEquals(q1.source, q2.source);
+        assertEquals(q1.imagePath, q2.imagePath);
     }
 
     @Test

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import server.database.ActivityRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -88,6 +89,30 @@ public class ActivityController {
 
         Activity saved = repo.save(activity);
         return ResponseEntity.ok(saved);
+    }
+
+    @PostMapping(path = { "", "/edit/{id}"})
+    @Transactional
+    public Activity editActivity(@PathVariable long id, @RequestBody Activity newActivity){
+        // data validation
+        if(newActivity.title == null
+                || newActivity.consumptionInWh <= 0
+                || newActivity.source == null
+                || newActivity.imagePath == null)
+        {
+            throw new IllegalArgumentException();
+        }
+
+        Activity old = repo.findById(id).orElseThrow(
+                () -> new IllegalStateException("Student with ID " + id + " does not exist")
+        );
+
+        old.title = newActivity.title;
+        old.consumptionInWh = newActivity.consumptionInWh;
+        old.source = newActivity.source;
+        old.imagePath = newActivity.imagePath;
+
+        return old;
     }
 
     /**

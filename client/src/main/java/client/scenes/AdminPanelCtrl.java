@@ -3,9 +3,11 @@ package client.scenes;
 import client.utils.ServerUtils;
 import commons.Activity;
 import javafx.fxml.FXML;
+import javafx.scene.control.Cell;
 import javafx.scene.control.ListView;
-
+import javafx.scene.input.MouseEvent;
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
 
 public class AdminPanelCtrl {
@@ -16,10 +18,15 @@ public class AdminPanelCtrl {
     @FXML
     ListView<String> activityBox;
 
+    Activity selected;
+    private HashMap<String, Activity> optionToActivity;
+
     @Inject
     public AdminPanelCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server = server;
         this.mainCtrl = mainCtrl;
+
+        optionToActivity = new HashMap<>();
     }
 
     public void initialize(){
@@ -34,21 +41,30 @@ public class AdminPanelCtrl {
      * Displays all activities in bank in the listview
      */
     public void displayActivities(){
+        optionToActivity = new HashMap<>();
         List<Activity> activities = server.getActivities();
-        System.out.println(activities.toString());
-        for(Activity element: activities){
-            activityBox.getItems().add(convertToDisplay(element));
+
+        for(Activity activity:activities){
+            optionToActivity.put(convertToDisplay(activity), activity);
+            activityBox.getItems().add(convertToDisplay(activity));
         }
     }
 
+    public void setCurrentActivity(MouseEvent mouseEvent){
+        String activityText = (String) mouseEvent.getSource();
+        selected = optionToActivity.get(activityText);
+        System.out.println(selected);
+    }
+
     public String convertToDisplay(Activity activity){
-        return "ID: " + activity.id + " - " + activity.title + " - " + activity.consumptionInWh + " Wh";
+        return "ID: " + activity.id + " - " + activity.title + " - Consumption: " + activity.consumptionInWh + " Wh";
     }
 
     /**
      * Allows editing the currently selected activity
      */
     public void editActivity() {
+
     }
 
     /**
