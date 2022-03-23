@@ -18,10 +18,11 @@ public class LeaveCtrl {
     }
 
     public void stay(){
-        mainCtrl.stay(previous);
+        mainCtrl.stay();
     }
     public void leave(){
         mainCtrl.showSplash();
+        mainCtrl.stay();
     }
 
     public void setPrevious(Scene previous) {

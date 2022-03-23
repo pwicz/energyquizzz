@@ -21,6 +21,7 @@ import commons.ClientMessage;
 import commons.ServerMessage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -60,11 +61,13 @@ public class MainCtrl {
     private String clientID = null;
     private String gameID = null;
     private int score;
+    private Stage stage = new Stage();
 
     @Inject
     public MainCtrl(ServerUtils server) {
         this.server = server;
     }
+
 
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
                            Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
@@ -101,6 +104,8 @@ public class MainCtrl {
 
         this.singleplayerScreen = new Scene(singleplayerGame.getValue());
         this.singleplayerScreenCtrl = singleplayerGame.getKey();
+
+
 
         showOverview();
         primaryStage.show();
@@ -164,11 +169,17 @@ public class MainCtrl {
 
     public void showLeave(Scene scene){
         leaveCtrl.setPrevious(scene);
-        primaryStage.setScene(leave);
+       // primaryStage.setScene(leave);
+
+        this.stage.setScene(leave);
+        this.stage.initModality(Modality.APPLICATION_MODAL);
+        this.stage.showAndWait();
     }
 
-    public void stay(Scene previous){
-        primaryStage.setScene(previous);
+    public void stay(){
+        this.stage.close();
+        //We need to create a new stage in case you want to leave more than once per session.
+        this.stage = new Stage();
     }
 
     public void showAdd() {
