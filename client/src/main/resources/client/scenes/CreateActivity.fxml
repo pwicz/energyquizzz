@@ -5,9 +5,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.EditActivityCtrl">
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.CreateActivityCtrl">
 
-    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="149.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="Edit Activity" AnchorPane.bottomAnchor="730.0">
+    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="149.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="New Activity" AnchorPane.bottomAnchor="730.0">
     </Label>
 
     <Label contentDisplay="CENTER" layoutX="164.0" layoutY="306.0" prefHeight="49.0" prefWidth="276.0" styleClass="smallTitle" text="Title:" AnchorPane.bottomAnchor="627.0">
@@ -28,24 +28,17 @@
 
     <TextField fx:id="titleField" layoutX="477.0" layoutY="311.0" maxHeight="49.0" maxWidth="558.0" prefHeight="49.0" prefWidth="558.0" promptText="Title" styleClass="inputField" AnchorPane.bottomAnchor="627.0">
     </TextField>
-    <TextField fx:id="consumptionField" layoutX="477.0" layoutY="411.0" maxHeight="49.0" maxWidth="558.0" prefHeight="49.0" prefWidth="558.0" promptText="Consumption" styleClass="inputField" AnchorPane.bottomAnchor="528.0">
+    <TextField fx:id="consumptionField" layoutX="477.0" layoutY="411.0" maxHeight="49.0" maxWidth="558.0" prefHeight="49.0" prefWidth="558.0" promptText="Consumption in Wh" styleClass="inputField" AnchorPane.bottomAnchor="528.0">
     </TextField>
-    <TextField fx:id="sourceField" layoutX="477.0" layoutY="511.0" maxHeight="49.0" maxWidth="567.0" prefHeight="49.0" prefWidth="558.0" promptText="Source" styleClass="inputField" AnchorPane.bottomAnchor="429.0">
+    <TextField fx:id="sourceField" layoutX="477.0" layoutY="511.0" maxHeight="49.0" maxWidth="567.0" prefHeight="49.0" prefWidth="558.0" promptText="Source URL" styleClass="inputField" AnchorPane.bottomAnchor="429.0">
     </TextField>
-    <TextField fx:id="imageField" layoutX="477.0" layoutY="611.0" maxHeight="49.0" maxWidth="558.0" prefHeight="49.0" prefWidth="558.0" promptText="Image" styleClass="inputField" AnchorPane.bottomAnchor="322.0">
+    <TextField fx:id="imageField" layoutX="477.0" layoutY="611.0" maxHeight="49.0" maxWidth="558.0" prefHeight="49.0" prefWidth="558.0" promptText="Image URL" styleClass="inputField" AnchorPane.bottomAnchor="322.0">
     </TextField>
 
     <Button fx:id="save" layoutX="643.0" layoutY="751.0" mnemonicParsing="false" onMouseClicked="#saveActivity" prefHeight="63.0" prefWidth="226.0" text="Save" AnchorPane.bottomAnchor="168.0">
         <styleClass>
             <String fx:value="button" />
             <String fx:value="greenButton" />
-        </styleClass>
-    </Button>
-
-    <Button fx:id="remove" layoutX="1274.0" layoutY="874.0" mnemonicParsing="false" onAction="#remove" prefHeight="76.0" prefWidth="206.0" text="Remove" AnchorPane.bottomAnchor="32.0">
-        <styleClass>
-            <String fx:value="button" />
-            <String fx:value="whiteButton" />
         </styleClass>
     </Button>
 

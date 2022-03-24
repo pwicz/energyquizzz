@@ -63,6 +63,14 @@ public class ServerUtils {
                 .get(new GenericType<List<Activity>>() {});
     }
 
+    public void addActivity(@RequestBody Activity newActivity){
+        ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("api/activities/")
+                .request(APPLICATION_JSON)
+                .put(Entity.json(newActivity));
+    }
+
     public void editActivity(@PathVariable long id, @RequestBody Activity newActivity){
         ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER)

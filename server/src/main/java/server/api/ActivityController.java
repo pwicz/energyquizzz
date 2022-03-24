@@ -76,7 +76,7 @@ public class ActivityController {
      * @param activity activity to be added in the database
      * @return an error if the activity was not properly formatted or an activity just added to the database
      */
-    @PostMapping(path = { "", "/"})
+    @PutMapping(path = { "", "/"})
     public ResponseEntity<Activity> addActivity(@RequestBody Activity activity){
         // data validation
 

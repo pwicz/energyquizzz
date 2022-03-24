@@ -29,13 +29,10 @@ public class AdminPanelCtrl {
     public AdminPanelCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server = server;
         this.mainCtrl = mainCtrl;
-
-        optionToActivity = new HashMap<>();
     }
 
     public void initialize(){
         editActivity.setDisable(true);
-        displayActivities();
     }
 
     public void leave(){
@@ -80,6 +77,6 @@ public class AdminPanelCtrl {
      * Allows the user to create a new activity and submit it to the database
      */
     public void createActivity(){
-
+        mainCtrl.showCreateActivity();
     }
 }

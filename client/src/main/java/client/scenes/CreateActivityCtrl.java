@@ -2,25 +2,20 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import commons.Activity;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-
-import javax.inject.Inject;
 import javafx.scene.control.TextField;
-
+import javax.inject.Inject;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 
-public class EditActivityCtrl {
+public class CreateActivityCtrl {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
-
-    private long currentActivityID;
 
     @FXML
     TextField titleField;
@@ -33,13 +28,12 @@ public class EditActivityCtrl {
 
     @FXML
     TextField imageField;
-
     @FXML
     Label errorText;
 
 
     @Inject
-    public EditActivityCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public CreateActivityCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.server = server;
         this.mainCtrl = mainCtrl;
     }
@@ -48,15 +42,11 @@ public class EditActivityCtrl {
         resetErrorText();
     }
 
-    public void fillActivity(Activity activity){
-        currentActivityID = activity.id;
-        titleField.setText(activity.title);
-        consumptionField.setText(activity.consumptionInWh.toString());
-        sourceField.setText(activity.source);
-        imageField.setText(activity.imagePath);
+    public void resetErrorText(){
+        errorText.setVisible(false);
     }
 
-    public void saveActivity(MouseEvent actionEvent) throws MalformedURLException {
+    public void saveActivity() throws MalformedURLException {
         String title = titleField.getText();
         int consumption = Integer.parseInt(consumptionField.getText());
         String source = sourceField.getText();
@@ -80,21 +70,16 @@ public class EditActivityCtrl {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Activity newActivity = new Activity(title, consumption, source, image);
+        server.addActivity(newActivity);
 
-        Activity newActivity = new Activity(title, consumption,
-                source, image);
-
-        server.editActivity(currentActivityID, newActivity);
+        List<Activity> allActivities = server.getActivities();
+        for(Activity act : allActivities){
+            if(act.source.equals(source)){
+                System.out.println("ID: " + act.id + " -> " + act.toString());
+            }
+        }
         mainCtrl.showAdminPanel();
-    }
-
-    public void remove(ActionEvent actionEvent){
-        server.removeActivity(currentActivityID);
-        mainCtrl.showAdminPanel();
-    }
-
-    public void resetErrorText(){
-        errorText.setVisible(false);
     }
 
     public void leave(){

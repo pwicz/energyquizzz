@@ -12,3 +12,7 @@
     -fx-font-family: "Roboto Light";
     -fx-text-fill: "white";
 }
+
+.errorText {
+    -fx-text-fill: #e0503d;
+}
