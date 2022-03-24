@@ -220,6 +220,7 @@ public class MainCtrl {
         primaryStage.setTitle("CreateActivity");
         primaryStage.setScene(createActivity);
         createActivityCtrl.resetErrorText();
+        createActivityCtrl.clearFields();
     }
 
     public Scene getInBetweenScore() {

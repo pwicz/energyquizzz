@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
 
 public class CreateActivityCtrl {
 
@@ -46,6 +45,13 @@ public class CreateActivityCtrl {
         errorText.setVisible(false);
     }
 
+    public void clearFields(){
+        titleField.clear();
+        consumptionField.clear();
+        sourceField.clear();
+        imageField.clear();
+    }
+
     public void saveActivity() throws MalformedURLException {
         String title = titleField.getText();
         int consumption = Integer.parseInt(consumptionField.getText());
@@ -72,13 +78,6 @@ public class CreateActivityCtrl {
         }
         Activity newActivity = new Activity(title, consumption, source, image);
         server.addActivity(newActivity);
-
-        List<Activity> allActivities = server.getActivities();
-        for(Activity act : allActivities){
-            if(act.source.equals(source)){
-                System.out.println("ID: " + act.id + " -> " + act.toString());
-            }
-        }
         mainCtrl.showAdminPanel();
     }
 

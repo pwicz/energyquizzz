@@ -46,6 +46,8 @@ public class AdminPanelCtrl {
         optionToActivity = new HashMap<>();
         List<Activity> activities = server.getActivities();
 
+        activityBox.getItems().clear();
+
         for(Activity activity:activities){
             optionToActivity.put(convertToDisplay(activity), activity);
             activityBox.getItems().add(convertToDisplay(activity));
