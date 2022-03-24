@@ -69,10 +69,9 @@ public class MainMessageController {
                     // if name is already taken
                     if(waitingRoom != null
                             && waitingRoom.getPlayers()
-                                .stream()
-                                .filter(players ->
-                                        (players.getName().toLowerCase()).equals(msg.playerName.toLowerCase()))
-                                .collect(Collectors.toList()).size() > 0)
+                            .stream()
+                            .filter(players ->
+                                    (players.getName()).equalsIgnoreCase(msg.playerName)).count() > 0)
                         return;
 
                     result = initMultiGame(msg);
@@ -121,6 +120,24 @@ public class MainMessageController {
                     game.getPlayers().remove(game.getPlayerWithID(msg.playerID));
                     // end game if there are no more players
                     if (game.getPlayers().size() == 0) endGame(game);
+                    break;
+                case QUIT_WAITING_ROOM:
+                    if(waitingRoom == null) return;
+
+                    // remove player from the waiting room
+                    Player playerInWaitingRoom = waitingRoom.getPlayerWithID(msg.playerID);
+                    waitingRoom.getPlayers().remove(playerInWaitingRoom);
+
+                    // send update message to all other players
+
+                    var listOfWaitingPlayers = getWaitingListOfPlayers(waitingRoom);
+
+                    for (Player pl : waitingRoom.getPlayers()) {
+                        ServerMessage temp = new ServerMessage(ServerMessage.Type.EXTRA_PLAYER);
+                        temp.playersWaiting = listOfWaitingPlayers;
+                        simpMessagingTemplate.convertAndSend("/topic/client/" + pl.getID(), temp);
+                    }
+
                     break;
                 default:
                     // unknown message
@@ -270,17 +287,25 @@ public class MainMessageController {
 
         ServerMessage result = new ServerMessage(ServerMessage.Type.INIT_PLAYER);
         result.gameID = waitingRoom.getID();
-        result.playersWaiting = new ArrayList<>();
-        int counter = 1;
-        for (Player p : waitingRoom.getPlayers()) {
-            result.playersWaiting.add("#" + counter++ + " "+ p.getName());
-        }
+        result.playersWaiting = getWaitingListOfPlayers(waitingRoom);
+
         for (Player p : waitingRoom.getPlayers()) {
             ServerMessage temp = new ServerMessage(ServerMessage.Type.EXTRA_PLAYER);
             temp.playersWaiting = result.playersWaiting;
             simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), temp);
         }
 
+
+        return result;
+    }
+
+    public List<String> getWaitingListOfPlayers(Game game){
+        List<String> result = new ArrayList<>();
+
+        int counter = 1;
+        for (Player p : game.getPlayers()) {
+            result.add("#" + counter++ + " " + p.getName());
+        }
 
         return result;
     }
@@ -296,24 +321,21 @@ public class MainMessageController {
 
     //shows inbetweenscore after 3 sceonds
     public void showLeaderboard(ClientMessage msg) {
-        Thread myThread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        Thread myThread = new Thread(() -> {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-                ServerMessage result = new ServerMessage(ServerMessage.Type.DISPLAY_INBETWEENSCORES);
+            ServerMessage result = new ServerMessage(ServerMessage.Type.DISPLAY_INBETWEENSCORES);
 //                result.topScores = getTopScores(games.get(msg.gameID));
 
-                result.questionCounter = games.get(msg.gameID).getQuestionCounter();
+            result.questionCounter = games.get(msg.gameID).getQuestionCounter();
 
-                simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
-                        result);
-            }
-        };
+            simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
+                    result);
+        });
         myThread.start();
     }
 
@@ -331,25 +353,22 @@ public class MainMessageController {
 
     //show questions again after 6 seconds
     public void showQuestions(ClientMessage msg) {
-        Thread myThread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(6000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (games.get(msg.gameID).getQuestionCounter() < 20)
-                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, nextMultiQuestion(
-                            games.get(msg.gameID).getPlayerWithID(msg.playerID).getScore(), games.get(msg.gameID))
-                    );
-                else {
-                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
-                            new ServerMessage(ServerMessage.Type.END_GAME));
-                    games.get(msg.gameID).setQuestionCounter(0);
-                }
+        Thread myThread = new Thread(() -> {
+            try {
+                Thread.sleep(6000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        };
+            if (games.get(msg.gameID).getQuestionCounter() < 20)
+                simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, nextMultiQuestion(
+                        games.get(msg.gameID).getPlayerWithID(msg.playerID).getScore(), games.get(msg.gameID))
+                );
+            else {
+                simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
+                        new ServerMessage(ServerMessage.Type.END_GAME));
+                games.get(msg.gameID).setQuestionCounter(0);
+            }
+        });
         myThread.start();
     }
 

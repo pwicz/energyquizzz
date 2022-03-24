@@ -15,6 +15,7 @@
  */
 package client.scenes;
 
+import client.utils.BeforeLeave;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.ClientMessage;
@@ -118,9 +119,7 @@ public class MainCtrl {
         primaryStage.show();
 
         clientID = UUID.randomUUID().toString();
-        server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, m -> {
-            handleServerMessage(m);
-        });
+        server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, this::handleServerMessage);
     }
 
     //CHECKSTYLE:OFF
@@ -130,9 +129,7 @@ public class MainCtrl {
             case INIT_PLAYER:
                 gameID = msg.gameID;
                 multiplayerScreenCtrl.updateScore(0);
-                runLater(() -> {
-                    showWaitingRoom();
-                });
+                runLater(this::showWaitingRoom);
                 break;
             case EXTRA_PLAYER:
                 runLater(() -> {
@@ -176,9 +173,7 @@ public class MainCtrl {
                 System.out.println("[msg] show leaderboard ");
                 break;
             case END_GAME:
-                runLater(() -> {
-                    showWaitingRoom();
-                });
+                runLater(this::showWaitingRoom);
                 System.out.println("[msg] end game");
                 break;
             case NEXT_QUESTION:
@@ -227,6 +222,12 @@ public class MainCtrl {
 
     public void showLeave(Scene scene){
         leaveCtrl.setPrevious(scene);
+        primaryStage.setScene(leave);
+    }
+
+    public void showLeave(Scene scene, BeforeLeave beforeLeave){
+        leaveCtrl.setPrevious(scene);
+        leaveCtrl.setBeforeLeave(beforeLeave);
         primaryStage.setScene(leave);
     }
 
