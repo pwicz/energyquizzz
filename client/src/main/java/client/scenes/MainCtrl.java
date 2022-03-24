@@ -128,12 +128,14 @@ public class MainCtrl {
         switch(msg.type){
             case INIT_PLAYER:
                 gameID = msg.gameID;
-                multiplayerScreenCtrl.updateScore(0);
-                runLater(this::showWaitingRoom);
+                runLater(() -> {
+                    multiplayerScreenCtrl.updateScore(0);
+                    showWaitingRoom();
+                });
                 break;
             case EXTRA_PLAYER:
                 runLater(() -> {
-                    showWaitingRoom();
+//                    showWaitingRoom();
                     waitingRoomScreenCtrl.updatePlayerList(msg.playersWaiting);
                 });
                 break;

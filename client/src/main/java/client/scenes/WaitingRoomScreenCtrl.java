@@ -29,11 +29,8 @@ public class WaitingRoomScreenCtrl {
     }
 
     public void leave(){
-        mainCtrl.showLeave(mainCtrl.getWaitingRoom(), () -> {
-            System.out.println("SENDING QUIT_WAITING_ROOM MESSAGE");
-            server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT_WAITING_ROOM,
-                    mainCtrl.getClientID(), mainCtrl.getGameID()));
-        });
+        mainCtrl.showLeave(mainCtrl.getWaitingRoom(), () -> server.send("/app/general",
+                new ClientMessage(ClientMessage.Type.QUIT_WAITING_ROOM, mainCtrl.getClientID(), mainCtrl.getGameID())));
     }
 
     public void updatePlayerList(List<String> names){

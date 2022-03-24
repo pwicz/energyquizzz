@@ -69,12 +69,11 @@ public class MainMessageController {
                     // if name is already taken
                     if(waitingRoom != null
                             && waitingRoom.getPlayers()
-                            .stream()
-                            .filter(players ->
-                                    (players.getName()).equalsIgnoreCase(msg.playerName)).count() > 0)
+                            .stream().anyMatch(players ->
+                                    (players.getName()).equalsIgnoreCase(msg.playerName)))
                         return;
 
-                    result = initMultiGame(msg);
+                    initMultiGame(msg);
                     break;
                 case START_GAME:
                     waitingRoom = new Game(new ArrayList<>(), UUID.randomUUID().toString());
@@ -130,13 +129,9 @@ public class MainMessageController {
 
                     // send update message to all other players
 
-                    var listOfWaitingPlayers = getWaitingListOfPlayers(waitingRoom);
-
-                    for (Player pl : waitingRoom.getPlayers()) {
-                        ServerMessage temp = new ServerMessage(ServerMessage.Type.EXTRA_PLAYER);
-                        temp.playersWaiting = listOfWaitingPlayers;
-                        simpMessagingTemplate.convertAndSend("/topic/client/" + pl.getID(), temp);
-                    }
+                    ServerMessage temp = new ServerMessage(ServerMessage.Type.EXTRA_PLAYER);
+                    temp.playersWaiting = getWaitingListOfPlayers(waitingRoom);
+                    sendMessageToAllPlayers(temp, waitingRoom);
 
                     break;
                 default:
@@ -277,26 +272,24 @@ public class MainMessageController {
     }
 
     //make game with dummy players for now
-    public ServerMessage initMultiGame(ClientMessage msg) {
+    public void initMultiGame(ClientMessage msg) {
         if(waitingRoom == null) {
             waitingRoom = new Game(new ArrayList<>(), UUID.randomUUID().toString());
             games.put(waitingRoom.getID(), waitingRoom);
             waitingRoom.setMultiplayer(true);
         }
-        waitingRoom.addPlayer(new Player(msg.playerName, msg.playerID));
 
+        // add player to waiting room and init game for him
+        waitingRoom.addPlayer(new Player(msg.playerName, msg.playerID));
         ServerMessage result = new ServerMessage(ServerMessage.Type.INIT_PLAYER);
         result.gameID = waitingRoom.getID();
-        result.playersWaiting = getWaitingListOfPlayers(waitingRoom);
+        simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
 
-        for (Player p : waitingRoom.getPlayers()) {
-            ServerMessage temp = new ServerMessage(ServerMessage.Type.EXTRA_PLAYER);
-            temp.playersWaiting = result.playersWaiting;
-            simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), temp);
-        }
+        // update waiting room players list
+        ServerMessage temp = new ServerMessage(ServerMessage.Type.EXTRA_PLAYER);
+        temp.playersWaiting = getWaitingListOfPlayers(waitingRoom);
 
-
-        return result;
+        sendMessageToAllPlayers(temp, waitingRoom);
     }
 
     public List<String> getWaitingListOfPlayers(Game game){
@@ -308,6 +301,12 @@ public class MainMessageController {
         }
 
         return result;
+    }
+
+    public void sendMessageToAllPlayers(ServerMessage msg, Game g){
+        for (Player p : g.getPlayers()) {
+            simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), msg);
+        }
     }
 
     public ServerMessage displayAnswer(Player p, Game g, ClientMessage msg) {
