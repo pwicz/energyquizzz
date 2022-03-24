@@ -25,6 +25,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 import commons.Activity;
 import commons.Score;
+import jakarta.ws.rs.client.Entity;
 import org.glassfish.jersey.client.ClientConfig;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.GenericType;
@@ -67,19 +68,15 @@ public class ServerUtils {
                 .target(SERVER)
                 .path("api/activities/edit/" + id)
                 .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
-                .get(new GenericType<Activity>() {
-                });
+                .put(Entity.json(newActivity));
     }
 
     public void removeActivity(@PathVariable long id){
         ClientBuilder.newClient(new ClientConfig())
                 .target(SERVER)
-                .path("api/activities/")
+                .path("api/activities/" + id)
                 .request(APPLICATION_JSON)
-                .accept(APPLICATION_JSON)
-                .get(new GenericType<Activity>() {
-                });
+                .delete();
     }
 
 

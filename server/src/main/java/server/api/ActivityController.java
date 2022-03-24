@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -97,7 +98,7 @@ public class ActivityController {
      * @param newActivity properties of the new activity
      * @return the newly edited activity
      */
-    @PostMapping(path = { "", "/edit/{id}"})
+    @PutMapping(path = { "", "/edit/{id}"})
     @Transactional
     public Activity editActivity(@PathVariable long id, @RequestBody Activity newActivity){
         // data validation
@@ -110,7 +111,7 @@ public class ActivityController {
         }
 
         Activity old = repo.findById(id).orElseThrow(
-                () -> new IllegalStateException("Student with ID " + id + " does not exist")
+                () -> new IllegalStateException("Activity with ID " + id + " does not exist")
         );
 
         old.title = newActivity.title;
@@ -133,6 +134,9 @@ public class ActivityController {
         if(activityToRemove.isEmpty()) return ResponseEntity.notFound().build();
 
         repo.deleteById(id);
+        if(repo.findById(id).isEmpty()) System.out.println("Successfully deleted activity " + id);
+        else System.out.println("Activity " + id + " was not deleted");
+        System.out.println(repo.findById(id));
         return ResponseEntity.ok(activityToRemove.get());
     }
 }

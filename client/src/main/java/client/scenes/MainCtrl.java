@@ -194,8 +194,8 @@ public class MainCtrl {
 
     public void showAdminPanel() {
         primaryStage.setTitle("AdminPanel");
-        primaryStage.setScene(adminPanel);
         adminPanelCtrl.displayActivities();
+        primaryStage.setScene(adminPanel);
     }
 
     public void showEditActivity(Activity selected) {

@@ -47,11 +47,12 @@ public class EditActivityCtrl {
         Activity newActivity = new Activity(titleField.getText(), Integer.parseInt(consumptionField.getText()),
                 sourceField.getText(), imageField.getText());
 
-        //server.editActivity(currentActivityID, newActivity);
+        server.editActivity(currentActivityID, newActivity);
+        mainCtrl.showAdminPanel();
     }
 
     public void remove(ActionEvent actionEvent){
-        //server.removeActivity(currentActivityID);
+        server.removeActivity(currentActivityID);
         mainCtrl.showAdminPanel();
     }
 
