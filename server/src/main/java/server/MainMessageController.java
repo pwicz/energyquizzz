@@ -87,10 +87,12 @@ public class MainMessageController {
                     sentToAll = true;
                     break;
                 case SUBMIT_ANSWER:
-                    updatScore(msg, p, g);
+                    updateScore(msg, p, g);
                     //make message
                     result = displayAnswer(p, g, msg);
                     //set time between each scene
+
+                    // TODO: only show when everyone answers
                     showLeaderboard(msg);
                     showQuestions(msg);
                     System.out.println("[msg] submit answer");
@@ -165,13 +167,14 @@ public class MainMessageController {
     }
 
 
-    public void updatScore(ClientMessage msg, Player p, Game g) {
+    public void updateScore(ClientMessage msg, Player p, Game g) {
 
-        games.get(msg.gameID).incCounter();
+        g.incCounter();
 
         int scoreForQuestion = 0;
         if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
-            scoreForQuestion = 100 + (int) (100 * msg.time);
+            double answerTime = 10.0 - (System.currentTimeMillis() - g.getQuestionStartTime()) / 1000.0;
+            scoreForQuestion = 100 + (int) (10 * answerTime);
         }
         p.setScore(p.getScore() + scoreForQuestion);
     }
@@ -215,7 +218,6 @@ public class MainMessageController {
 
         forGame.setCorrectAnswerID(max.id);
         forGame.setQuestionStartTime(System.currentTimeMillis());
-        System.out.println("SETTING TIME: " + System.currentTimeMillis());
 
         result.score = playerScore;
         result.timerFull = 10.0; // 10 seconds
@@ -227,12 +229,7 @@ public class MainMessageController {
 
     private void submitSingleplayer(ClientMessage msg, Game g, Player p) {
         // update player's score
-        int scoreForQuestion = 0;
-        if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
-            double answerTime = 10.0 - (System.currentTimeMillis() - g.getQuestionStartTime()) / 1000.0;
-            scoreForQuestion = 100 + (int) (10 * answerTime);
-        }
-        p.setScore(p.getScore() + scoreForQuestion);
+        updateScore(msg, p, g);
         // send score msg
         // send the correct answer id and the picked answer id
         ServerMessage m = new ServerMessage(ServerMessage.Type.RESULT);
@@ -392,6 +389,8 @@ public class MainMessageController {
         // save the correct answer in the Game object
 
         forGame.setCorrectAnswerID(max.id);
+        forGame.setQuestionStartTime(System.currentTimeMillis());
+
         result.score = playerScore;
         result.timerFull = 10.0; // 10 seconds
         result.timerFraction = 1.0;

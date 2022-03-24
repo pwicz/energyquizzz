@@ -107,16 +107,10 @@ public class MultiplayerScreenCtrl {
         if(!canInteractWithUI) return;
         canInteractWithUI = false;
 
-        double time = 0.0;
-        if(timer != null){
-            time = (timer.getTotalDuration().toSeconds() - timer.getCurrentTime().toSeconds())
-                    / timer.getTotalDuration().toSeconds();
-            timer.stop();
-        }
+        timer.stop();
 
         ClientMessage msg = new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
-        msg.time = time;
         msg.chosenActivity = optionToID.get(choice);
         submit.setDisable(true);
         submitted = true;
