@@ -6,7 +6,8 @@ public class ServerMessage {
 
     public enum Type{
         NEW_SINGLEPLAYER_GAME, NEW_MULTIPLAYER_GAME, TEST, NEXT_QUESTION, RESULT, END,
-        LOAD_NEW_QUESTIONS, DISPLAY_ANSWER, DISPLAY_INBETWEENSCORES, END_GAME, INIT_PLAYER
+        LOAD_NEW_QUESTIONS, DISPLAY_ANSWER, DISPLAY_INBETWEENSCORES, END_GAME, INIT_PLAYER,
+        EXTRA_PLAYER
     }
 
     public Type type;
@@ -22,6 +23,7 @@ public class ServerMessage {
     public int round;
 
     public List<String> topScores;
+    public List<String> playersWaiting;
     public long pickedID;
     public long correctID;
     public int questionCounter;
