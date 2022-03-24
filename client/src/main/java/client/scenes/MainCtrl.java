@@ -51,6 +51,9 @@ public class MainCtrl {
     private Scene singleplayerScreen;
     private SingleplayerScreenCtrl singleplayerScreenCtrl;
 
+    private Scene adminPanel;
+    private AdminPanelCtrl adminPanelCtrl;
+
     private String clientID = null;
     private String gameID = null;
     private int score;
@@ -61,6 +64,7 @@ public class MainCtrl {
     }
 
     public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splashScreen,
+                           Pair<AdminPanelCtrl, Parent> adminPanel,
                            Pair<SingleplayerLeaderboardCtrl, Parent> singleplayerLeaderboard,
                            Pair<SingleplayerScreenCtrl, Parent> singleplayerGame,
                            Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
@@ -72,6 +76,9 @@ public class MainCtrl {
 
         this.splashScreenCtrl = splashScreen.getKey();
         this.splash = new Scene(splashScreen.getValue());
+
+        this.adminPanelCtrl = adminPanel.getKey();
+        this.adminPanel = new Scene(adminPanel.getValue());
 
         this.singleplayerLeaderboardCtrl = singleplayerLeaderboard.getKey();
         this.singleLeaderboard = new Scene(singleplayerLeaderboard.getValue());
@@ -176,6 +183,12 @@ public class MainCtrl {
         primaryStage.setTitle("Singleplayer");
         primaryStage.setScene(singleplayerScreen);
     }
+
+    public void showAdminPanel() {
+        primaryStage.setTitle("AdminPanel");
+        primaryStage.setScene(adminPanel);
+    }
+
     public Scene getInBetweenScore() {
         return inBetweenScore;
     }
@@ -188,6 +201,9 @@ public class MainCtrl {
         return leave;
     }
 
+    public Scene getAdminPanel() {
+        return adminPanel;
+    }
 
     public Scene getSingleLeaderboard() {
         return singleLeaderboard;

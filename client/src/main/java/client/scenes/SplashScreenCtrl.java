@@ -5,19 +5,16 @@ import com.google.inject.Inject;
 
 import client.utils.ServerUtils;
 
-
 public class SplashScreenCtrl {
 
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
-
     @Inject
     public SplashScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
         this.server = server;
-
     }
 
     public void leave(){
@@ -32,5 +29,7 @@ public class SplashScreenCtrl {
         mainCtrl.showSingleLeaderboardScreen();
     }
 
-
+    public void showAdminPanel() {
+        mainCtrl.showAdminPanel();
+    }
 }
