@@ -188,7 +188,7 @@ public class MainMessageController {
         g.addPlayer(new Player(msg.playerName, msg.playerID));
         games.put(g.getID(), g);
 
-        // 2. Return a message with the first Question, gameID and an initial score
+        // 2. Return a message with the gameID and an initial score
         ServerMessage result = new ServerMessage(ServerMessage.Type.NEW_SINGLEPLAYER_GAME);
         result.score = 0;
         result.gameID = g.getID();
@@ -221,10 +221,28 @@ public class MainMessageController {
         result.timerFraction = 1.0;
         result.round = forGame.getRound();
 
+        forGame.questionEndAction = new Timer();
+        forGame.questionEndAction.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                // get the only player as it's singleplayer
+                Player p = forGame.getPlayers().get(0);
+
+                ClientMessage dummy = new ClientMessage(ClientMessage.Type.SUBMIT_SINGLEPLAYER);
+                dummy.chosenActivity = -1L;
+                dummy.playerID = p.getID();
+
+                submitSingleplayer(dummy, forGame, p);
+            }
+        }, 10000);
+
         return result;
     }
 
     private void submitSingleplayer(ClientMessage msg, Game g, Player p) {
+        // cancel 10s timeout if player has answered
+        if(msg.chosenActivity != -1L) g.questionEndAction.cancel();
+
         // update player's score
         updateScore(msg, p, g);
         // send score msg
