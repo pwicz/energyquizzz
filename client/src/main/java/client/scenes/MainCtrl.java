@@ -149,9 +149,9 @@ public class MainCtrl {
                 // runLater() must be used to run the following code
                 // on the JavaFX Application Thread
                 runLater(() -> {
-                    showMultiplayerScreen();
                     multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
                     multiplayerScreenCtrl.displayActivities(msg.question.getActivities());
+                    showMultiplayerScreen();
                 });
                 System.out.println("[msg] loadingGame");
                 break;
