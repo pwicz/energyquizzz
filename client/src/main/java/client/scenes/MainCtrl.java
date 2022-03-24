@@ -232,22 +232,24 @@ public class MainCtrl {
 
     public void showLeave(Scene scene){
         this.stage = new Stage();
+        leaveCtrl.setPrevious(scene);
         this.stage.setScene(leave);
         this.stage.initModality(Modality.APPLICATION_MODAL);
         this.stage.showAndWait();
     }
 
 
-    public void stay(){
+    public void stay() {
         this.stage.close();
 
-    public void showLeave(Scene scene, BeforeLeave beforeLeave){
+    }
+    public void showLeaveWaitingroom(Scene scene, BeforeLeave beforeLeave){
         leaveCtrl.setPrevious(scene);
         leaveCtrl.setBeforeLeave(beforeLeave);
         primaryStage.setScene(leave);
     }
 
-    public void stay(Scene previous){
+    public void stayWaitingroom(Scene previous){
         primaryStage.setScene(previous);
     }
 
