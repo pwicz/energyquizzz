@@ -3,7 +3,7 @@ package client.scenes;
 import client.utils.ServerUtils;
 import commons.Activity;
 import javafx.fxml.FXML;
-import javafx.scene.control.Cell;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javax.inject.Inject;
@@ -18,6 +18,10 @@ public class AdminPanelCtrl {
     @FXML
     ListView<String> activityBox;
 
+    @FXML
+    Button editActivity;
+
+
     Activity selected;
     private HashMap<String, Activity> optionToActivity;
 
@@ -30,6 +34,7 @@ public class AdminPanelCtrl {
     }
 
     public void initialize(){
+        editActivity.setDisable(true);
         displayActivities();
     }
 
@@ -54,6 +59,7 @@ public class AdminPanelCtrl {
     public void setCurrentActivity(MouseEvent mouseEvent){
         String activityText = activityBox.getSelectionModel().getSelectedItem();;
         selected = optionToActivity.get(activityText);
+        editActivity.setDisable(false);
         System.out.println(selected);
     }
 

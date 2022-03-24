@@ -20,7 +20,7 @@
     <Button fx:id="editActivity" onAction="#editActivity" alignment="CENTER" contentDisplay="CENTER" layoutX="560.0" layoutY="776.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="136.0" text="Edit" AnchorPane.bottomAnchor="130.0">
         <styleClass>
             <String fx:value="button" />
-            <String fx:value="whiteButton" />
+            <String fx:value="whiteButton"/>
         </styleClass>
     </Button>
 

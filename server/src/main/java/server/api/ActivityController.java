@@ -91,6 +91,12 @@ public class ActivityController {
         return ResponseEntity.ok(saved);
     }
 
+    /**
+     * Edits the activity with a given id and replaces it with the properties of the new activity
+     * @param id id of the activity to edit
+     * @param newActivity properties of the new activity
+     * @return the newly edited activity
+     */
     @PostMapping(path = { "", "/edit/{id}"})
     @Transactional
     public Activity editActivity(@PathVariable long id, @RequestBody Activity newActivity){

@@ -33,6 +33,8 @@ import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
@@ -59,6 +61,27 @@ public class ServerUtils {
                 .accept(APPLICATION_JSON)
                 .get(new GenericType<List<Activity>>() {});
     }
+
+    public void editActivity(@PathVariable long id, @RequestBody Activity newActivity){
+        ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("api/activities/edit/" + id)
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<Activity>() {
+                });
+    }
+
+    public void removeActivity(@PathVariable long id){
+        ClientBuilder.newClient(new ClientConfig())
+                .target(SERVER)
+                .path("api/activities/")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<Activity>() {
+                });
+    }
+
 
     private StompSession session = connect("ws://localhost:8080/websocket");
 
