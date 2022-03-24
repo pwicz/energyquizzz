@@ -46,9 +46,16 @@
     -fx-font-size: 22;
 }
 
-.playersList{
-    -fx-font-size: 20;
-    -fx-font-family: 'Roboto Thin';
+.playerList {
+    -fx-background-color: #272727;
+    -fx-border-color: none;
+    -fx-background-color: #272727;
+}
+
+.list-cell{
+    -fx-background-color: #272727;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
 }
 
 

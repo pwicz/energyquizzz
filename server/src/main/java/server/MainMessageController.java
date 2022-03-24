@@ -31,6 +31,8 @@ public class MainMessageController {
     private SimpMessagingTemplate simpMessagingTemplate;
     private ActivityController activityController;
     private HashMap<String, Game> games;
+    private Game waitingRoom;
+    private boolean sentToAll = false;
 
     public MainMessageController(SimpMessagingTemplate simpMessagingTemplate, ActivityController activityController) {
         this.simpMessagingTemplate = simpMessagingTemplate;
@@ -63,17 +65,26 @@ public class MainMessageController {
                                 nextQuestion(initMsg.score, games.get(initMsg.gameID)));
                     }
                     break;
-                case INIT_GAME:
-                    result = initGame(msg);
-                    break;
                 case INIT_MULTIPLAYER:
-                    // do something
+                    // if name is already taken
+                    if(waitingRoom != null
+                            && waitingRoom.getPlayers()
+                            .stream().anyMatch(players ->
+                                    (players.getName()).equalsIgnoreCase(msg.playerName)))
+                        return;
+
+                    initMultiGame(msg);
                     break;
+                case START_GAME:
+                    waitingRoom = new Game(new ArrayList<>(), UUID.randomUUID().toString());
+                    games.put(waitingRoom.getID(), waitingRoom);
+                    //no break on purpose
                 case INIT_QUESTION:
                     result = nextMultiQuestion(
                             games.get(msg.gameID).getPlayerWithID(msg.playerID).getScore(), games.get(msg.gameID));
                     result.questionCounter = games.get(msg.gameID).getQuestionCounter();
                     System.out.println("[msg] init question");
+                    sentToAll = true;
                     break;
                 case SUBMIT_ANSWER:
                     updatScore(msg, p, g);
@@ -109,14 +120,34 @@ public class MainMessageController {
                     // end game if there are no more players
                     if (game.getPlayers().size() == 0) endGame(game);
                     break;
+                case QUIT_WAITING_ROOM:
+                    if(waitingRoom == null) return;
+
+                    // remove player from the waiting room
+                    Player playerInWaitingRoom = waitingRoom.getPlayerWithID(msg.playerID);
+                    waitingRoom.getPlayers().remove(playerInWaitingRoom);
+
+                    // send update message to all other players
+
+                    ServerMessage temp = new ServerMessage(ServerMessage.Type.EXTRA_PLAYER);
+                    temp.playersWaiting = getWaitingListOfPlayers(waitingRoom);
+                    sendMessageToAllPlayers(temp, waitingRoom);
+
+                    break;
                 default:
                     // unknown message
             }
 
             if(result == null) return;
 
-            simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
-
+            if(sentToAll){
+                for (Player player: games.get(msg.gameID).getPlayers()) {
+                    simpMessagingTemplate.convertAndSend("/topic/client/" + player.getID(), result);
+                    sentToAll = false;
+                }
+            }else {
+                simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
+            }
         } catch (MessagingException ex) {
             System.out.println("MessagingException on handleClientMessages: " + ex.getMessage());
         }
@@ -244,24 +275,41 @@ public class MainMessageController {
     }
 
     //make game with dummy players for now
-    public ServerMessage initGame(ClientMessage msg) {
-        Game g = new Game(new ArrayList<>(), UUID.randomUUID().toString());
-        g.addPlayer(new Player("Alex", "222"));
-        g.addPlayer(new Player("Mike", msg.playerID));
-        g.addPlayer(new Player("awd", "221"));
-        g.addPlayer(new Player("awhd", "200"));
-        g.addPlayer(new Player("sdhgsge", "278"));
-        g.addPlayer(new Player("awdafg", "256"));
+    public void initMultiGame(ClientMessage msg) {
+        if(waitingRoom == null) {
+            waitingRoom = new Game(new ArrayList<>(), UUID.randomUUID().toString());
+            games.put(waitingRoom.getID(), waitingRoom);
+            waitingRoom.setMultiplayer(true);
+        }
 
-        g.getPlayerWithID("222").setScore(213);
-        g.getPlayerWithID("221").setScore(213);
-        g.getPlayerWithID("200").setScore(2342);
-        g.getPlayerWithID("256").setScore(9);
-        games.put(g.getID(), g);
+        // add player to waiting room and init game for him
+        waitingRoom.addPlayer(new Player(msg.playerName, msg.playerID));
         ServerMessage result = new ServerMessage(ServerMessage.Type.INIT_PLAYER);
-        result.gameID = g.getID();
+        result.gameID = waitingRoom.getID();
+        simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
+
+        // update waiting room players list
+        ServerMessage temp = new ServerMessage(ServerMessage.Type.EXTRA_PLAYER);
+        temp.playersWaiting = getWaitingListOfPlayers(waitingRoom);
+
+        sendMessageToAllPlayers(temp, waitingRoom);
+    }
+
+    public List<String> getWaitingListOfPlayers(Game game){
+        List<String> result = new ArrayList<>();
+
+        int counter = 1;
+        for (Player p : game.getPlayers()) {
+            result.add("#" + counter++ + " " + p.getName());
+        }
 
         return result;
+    }
+
+    public void sendMessageToAllPlayers(ServerMessage msg, Game g){
+        for (Player p : g.getPlayers()) {
+            simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), msg);
+        }
     }
 
     public ServerMessage displayAnswer(Player p, Game g, ClientMessage msg) {
@@ -275,24 +323,21 @@ public class MainMessageController {
 
     //shows inbetweenscore after 3 sceonds
     public void showLeaderboard(ClientMessage msg) {
-        Thread myThread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        Thread myThread = new Thread(() -> {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-                ServerMessage result = new ServerMessage(ServerMessage.Type.DISPLAY_INBETWEENSCORES);
+            ServerMessage result = new ServerMessage(ServerMessage.Type.DISPLAY_INBETWEENSCORES);
 //                result.topScores = getTopScores(games.get(msg.gameID));
 
-                result.questionCounter = games.get(msg.gameID).getQuestionCounter();
+            result.questionCounter = games.get(msg.gameID).getQuestionCounter();
 
-                simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
-                        result);
-            }
-        };
+            simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
+                    result);
+        });
         myThread.start();
     }
 
@@ -310,25 +355,22 @@ public class MainMessageController {
 
     //show questions again after 6 seconds
     public void showQuestions(ClientMessage msg) {
-        Thread myThread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(6000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (games.get(msg.gameID).getQuestionCounter() < 20)
-                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, nextMultiQuestion(
-                            games.get(msg.gameID).getPlayerWithID(msg.playerID).getScore(), games.get(msg.gameID))
-                    );
-                else {
-                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
-                            new ServerMessage(ServerMessage.Type.END_GAME));
-                    games.get(msg.gameID).setQuestionCounter(0);
-                }
+        Thread myThread = new Thread(() -> {
+            try {
+                Thread.sleep(6000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        };
+            if (games.get(msg.gameID).getQuestionCounter() < 20)
+                simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, nextMultiQuestion(
+                        games.get(msg.gameID).getPlayerWithID(msg.playerID).getScore(), games.get(msg.gameID))
+                );
+            else {
+                simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
+                        new ServerMessage(ServerMessage.Type.END_GAME));
+                games.get(msg.gameID).setQuestionCounter(0);
+            }
+        });
         myThread.start();
     }
 

@@ -5,11 +5,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="251.0" prefWidth="821.0" styleClass="anchor" stylesheets="@CSSInputNameScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="251.0" prefWidth="821.0" styleClass="anchor" stylesheets="@/client/scenes/CSSInputNameScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.InputNameScreenCtrl">
    <children>
-      <Button layoutX="58.0" layoutY="195.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="140.0" styleClass="join" text="Leave" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="629.0" AnchorPane.topAnchor="195.0" />
-      <Button layoutX="344.0" layoutY="126.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="134.0" style="" styleClass="leave" text="Join" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="344.0" AnchorPane.rightAnchor="343.0" AnchorPane.topAnchor="126.0" />
+      <Button fx:id="leave" layoutX="58.0" layoutY="195.0" mnemonicParsing="false" onAction="#leave" prefHeight="30.0" prefWidth="140.0" styleClass="leave" text="Leave" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="629.0" AnchorPane.topAnchor="195.0" />
+      <Button fx:id="join" layoutX="344.0" layoutY="126.0" mnemonicParsing="false" onAction="#join" prefHeight="30.0" prefWidth="134.0" style="" styleClass="join" text="Join" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="344.0" AnchorPane.rightAnchor="343.0" AnchorPane.topAnchor="126.0" />
       <Label layoutX="198.0" layoutY="32.0" styleClass="message" text="Choose a unique name to join this waiting room" AnchorPane.bottomAnchor="189.0" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="197.66666666666669" AnchorPane.topAnchor="32.0" />
-      <TextField alignment="CENTER" layoutX="277.0" layoutY="77.0" prefHeight="30.0" prefWidth="265.0" promptText="Enter your name" styleClass="textPrompt" AnchorPane.bottomAnchor="144.0" AnchorPane.leftAnchor="276.99999999999994" AnchorPane.rightAnchor="278.6666666666667" AnchorPane.topAnchor="77.0" />
+      <TextField fx:id="textBox" alignment="CENTER" layoutX="277.0" layoutY="77.0" prefHeight="30.0" prefWidth="265.0" promptText="Enter your name" styleClass="textPrompt" AnchorPane.bottomAnchor="144.0" AnchorPane.leftAnchor="276.99999999999994" AnchorPane.rightAnchor="278.6666666666667" AnchorPane.topAnchor="77.0" />
    </children>
 </AnchorPane>
