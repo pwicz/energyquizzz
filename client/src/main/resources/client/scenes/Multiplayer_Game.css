@@ -15,6 +15,7 @@
 .question{
     -fx-text-fill: #38c768;
     -fx-font-size: 45;
+    -fx-alignment: center;
 }
 
 .picked-text{

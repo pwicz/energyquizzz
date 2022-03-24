@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="/client/scenes/Singleplayer_Game.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerGameGuessQuestionCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="/client/scenes/Singleplayer_Game.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerScreenCtrl">
     <children>
         <Rectangle fx:id="activity" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="630.0" layoutY="450.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="630.0" AnchorPane.topAnchor="286.0">
             <styleClass>
@@ -24,7 +24,8 @@
             <styleClass>
                 <String fx:value="option" />
                 <String fx:value="hover-element" />
-            </styleClass></Rectangle>
+            </styleClass>
+        </Rectangle>
         <Button layoutX="200.0" layoutY="887.0" mnemonicParsing="false" onAction="#leave" prefHeight="15.0" prefWidth="150.0" text="Leave" textFill="#e0503d" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="50.0">
             <font>
                 <Font size="20.0" />
@@ -80,18 +81,18 @@
             <String fx:value="hover-element" />
          </styleClass>
       </Rectangle>
-      <Text fx:id="description11" fill="WHITE" layoutX="380.0" layoutY="733.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="temp cost KWH" textAlignment="CENTER" wrappingWidth="249.99999999999977" x="251.0" AnchorPane.bottomAnchor="248.2353515625" AnchorPane.leftAnchor="630.0">
+      <Text fx:id="description4" fill="WHITE" layoutX="380.0" layoutY="733.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="temp cost KWH" textAlignment="CENTER" wrappingWidth="249.0" x="251.0" AnchorPane.bottomAnchor="248.2353515625" AnchorPane.leftAnchor="630.0">
          <font>
             <Font size="15.0" />
          </font>
       </Text>
       <Rectangle fx:id="option3" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="72.0" layoutX="968.0" layoutY="690.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="968.0" AnchorPane.topAnchor="691.0">
-         <styleClass>
+        <styleClass>
             <String fx:value="option" />
             <String fx:value="hover-element" />
-         </styleClass>
-      </Rectangle>
-      <Text fx:id="description3" fill="WHITE" layoutX="996.0" layoutY="723.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="temp cost KWH" textAlignment="CENTER" wrappingWidth="199.99999999999977">
+        </styleClass>
+    </Rectangle>
+      <Text fx:id="description3" fill="WHITE" layoutX="996.0" layoutY="723.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="temp cost KWH" textAlignment="CENTER" wrappingWidth="249.0" AnchorPane.bottomAnchor="248.0" AnchorPane.leftAnchor="968.0">
          <font>
             <Font size="15.0" />
          </font>
