@@ -38,7 +38,10 @@
 
 .bigButton{
     -fx-font-size: 20.0 px;
-    -fx-font-family: "Roboto Thin";
+}
+
+.hugeButton{
+    -fx-font-size: 20.0 px;
 }
 
 .title{
