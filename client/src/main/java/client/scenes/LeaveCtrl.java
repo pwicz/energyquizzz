@@ -21,7 +21,9 @@ public class LeaveCtrl {
         mainCtrl.stay(previous);
     }
     public void leave(){
-        mainCtrl.showSplash();
+        if(previous.equals(mainCtrl.getEditActivity()) || previous.equals(mainCtrl.getCreateActivity())){
+            mainCtrl.showAdminPanel();
+        }else mainCtrl.showSplash();
     }
 
     public void setPrevious(Scene previous) {

@@ -17,6 +17,7 @@ package client.scenes;
 
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import commons.Activity;
 import commons.ServerMessage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -54,6 +55,13 @@ public class MainCtrl {
     private Scene adminPanel;
     private AdminPanelCtrl adminPanelCtrl;
 
+    private Scene editActivity;
+    private EditActivityCtrl editActivityCtrl;
+
+    private Scene createActivity;
+    private CreateActivityCtrl createActivityCtrl;
+
+
     private String clientID = null;
     private String gameID = null;
     private int score;
@@ -65,6 +73,8 @@ public class MainCtrl {
 
     public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splashScreen,
                            Pair<AdminPanelCtrl, Parent> adminPanel,
+                           Pair<EditActivityCtrl, Parent> editActivity,
+                           Pair<CreateActivityCtrl, Parent> createActivity,
                            Pair<SingleplayerLeaderboardCtrl, Parent> singleplayerLeaderboard,
                            Pair<SingleplayerScreenCtrl, Parent> singleplayerGame,
                            Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
@@ -79,6 +89,12 @@ public class MainCtrl {
 
         this.adminPanelCtrl = adminPanel.getKey();
         this.adminPanel = new Scene(adminPanel.getValue());
+
+        this.editActivityCtrl = editActivity.getKey();
+        this.editActivity = new Scene(editActivity.getValue());
+
+        this.createActivityCtrl = createActivity.getKey();
+        this.createActivity = new Scene(createActivity.getValue());
 
         this.singleplayerLeaderboardCtrl = singleplayerLeaderboard.getKey();
         this.singleLeaderboard = new Scene(singleplayerLeaderboard.getValue());
@@ -185,8 +201,26 @@ public class MainCtrl {
     }
 
     public void showAdminPanel() {
+        adminPanelCtrl.initialize();
+        adminPanelCtrl.displayActivities();
         primaryStage.setTitle("AdminPanel");
         primaryStage.setScene(adminPanel);
+    }
+
+    public void showEditActivity(Activity selected) {
+        if(selected != null){
+            primaryStage.setTitle("EditActivity");
+            primaryStage.setScene(editActivity);
+            editActivityCtrl.fillActivity(selected);
+            editActivityCtrl.resetErrorText();
+        }
+    }
+
+    public void showCreateActivity() {
+        primaryStage.setTitle("CreateActivity");
+        primaryStage.setScene(createActivity);
+        createActivityCtrl.resetErrorText();
+        createActivityCtrl.clearFields();
     }
 
     public Scene getInBetweenScore() {
@@ -203,6 +237,14 @@ public class MainCtrl {
 
     public Scene getAdminPanel() {
         return adminPanel;
+    }
+
+    public Scene getEditActivity() {
+        return editActivity;
+    }
+
+    public Scene getCreateActivity() {
+        return createActivity;
     }
 
     public Scene getSingleLeaderboard() {
@@ -223,6 +265,10 @@ public class MainCtrl {
 
     public String getGameID() {
         return gameID;
+    }
+
+    public AdminPanelCtrl getAdminPanelCtrl() {
+        return adminPanelCtrl;
     }
 
 }

@@ -1,0 +1,18 @@
+.smallTitle{
+    -fx-font-size: 26px;
+    -fx-font-family: "Roboto Light";
+    -fx-text-fill: "white";
+}
+
+.inputField {
+    -fx-background-color: none;
+    -fx-border-radius: 5px;
+    -fx-border-color: "white";
+    -fx-font-size: 23px;
+    -fx-font-family: "Roboto Light";
+    -fx-text-fill: "white";
+}
+
+.errorText {
+    -fx-text-fill: #e0503d;
+}
