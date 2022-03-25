@@ -169,7 +169,7 @@ public class MainCtrl {
             case DISPLAY_INBETWEENSCORES:
                 runLater(() -> {
                     multiplayerScreenCtrl.updateTitle(msg.questionCounter);
-                    inBetweenScoreCtrl.setQuestionNo(msg.questionCounter);
+                    inBetweenScoreCtrl.setQuestionNo(msg.questionCounter, msg.totalQuestions);
                     showInbetweenScore();
                 });
                 System.out.println("[msg] show leaderboard ");

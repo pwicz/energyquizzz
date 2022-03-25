@@ -34,6 +34,9 @@ public class MainMessageController {
     private Game waitingRoom;
     private boolean sentToAll = false;
 
+    // game options
+    private final int questionsPerGame = 4;
+
     public MainMessageController(SimpMessagingTemplate simpMessagingTemplate, ActivityController activityController) {
         this.simpMessagingTemplate = simpMessagingTemplate;
         this.activityController = activityController;
@@ -253,7 +256,7 @@ public class MainMessageController {
         m.score = p.getScore();
         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, m);
 
-        if (g.getRound() < 5) {
+        if (g.getRound() < questionsPerGame) {
             // send next question after 3 seconds
             new Timer().schedule(new TimerTask() {
                 @Override
@@ -362,19 +365,37 @@ public class MainMessageController {
                     ServerMessage result = new ServerMessage(ServerMessage.Type.DISPLAY_INBETWEENSCORES);
                     result.topScores = getTopScores(g);
                     result.questionCounter = g.getQuestionCounter();
+                    result.totalQuestions = questionsPerGame;
                     simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
                 }
             }
         }, 3000);
 
-        // then, after another 3 seconds (6 in total), send new question
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println("[msg] sending new questions to all players (end of procedure)");
-                multiplayerSendNewQuestions(g);
-            }
-        }, 6000);
+        // then, after another 3 seconds (6 in total):
+        if(g.getQuestionCounter() < questionsPerGame){
+            // send new question if the game is still on
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    System.out.println("[msg] sending new questions to all players (end of procedure)");
+                    multiplayerSendNewQuestions(g);
+                }
+            }, 6000);
+        }
+        else{
+            // stop the game
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    System.out.println("[msg] ending game");
+                    for(var p : g.getPlayers()){
+                        ServerMessage result = new ServerMessage(ServerMessage.Type.END_GAME);
+                        simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
+                    }
+                }
+            }, 6000);
+        }
+
     }
 
     private void multiplayerSendNewQuestions(Game g){

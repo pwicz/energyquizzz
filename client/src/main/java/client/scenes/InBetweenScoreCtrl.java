@@ -52,11 +52,11 @@ public class InBetweenScoreCtrl {
         leaderboardR.getItems().addAll("Blah", "Blah", "Blah");
     }
 
-    public void setQuestionNo(int n){
-        if(n != 20)
-            questionNo.setText(n + "/20");
+    public void setQuestionNo(int n, int total){
+        if(n != total)
+            questionNo.setText(n + " / " + total);
         else
-            questionNo.setText("20/20\nEnd of the game");
+            questionNo.setText(n + " / " + total + "\nEnd of the game");
     }
 
     public void setScoreTo(int s){
