@@ -54,4 +54,7 @@
     -fx-border-color: linear-gradient(to left, #1BED62, #21A0E8);
 }
 
-
+.helpButton{
+    -fx-border-color: none;
+    -fx-text-fill: "white";
+}
