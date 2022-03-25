@@ -5,7 +5,6 @@
 
 .button{
     -fx-font-family: "Roboto Light";
-    -fx-font-size: 36 ;
     -fx-background-color: none;
     -fx-border-radius: 5;
 }
@@ -35,13 +34,12 @@
     -fx-font-family: "Roboto Thin";
 }
 
-
 .bigButton{
     -fx-font-size: 20.0 px;
 }
 
 .hugeButton{
-    -fx-font-size: 20.0 px;
+    -fx-font-size: 36.0 px;
 }
 
 .title{
