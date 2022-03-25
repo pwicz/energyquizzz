@@ -15,6 +15,7 @@
  */
 package client.scenes;
 
+import client.utils.BeforeLeave;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.ClientMessage;
@@ -23,6 +24,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+
+import java.util.UUID;
 
 import static javafx.application.Platform.runLater;
 
@@ -37,7 +40,9 @@ public class MainCtrl {
 
     private AddQuoteCtrl addCtrl;
     private Scene add;
+
     private Scene waitingRoom;
+    private WaitingRoomScreenCtrl waitingRoomScreenCtrl;
 
     private SplashScreenCtrl splashScreenCtrl;
     private Scene splash;
@@ -57,9 +62,12 @@ public class MainCtrl {
     private Scene singleplayerScreen;
     private SingleplayerScreenCtrl singleplayerScreenCtrl;
 
+    private Scene inputName;
+    private InputNameScreenCtrl inputNameScreenCtrl;
+
     private String clientID = null;
     private String gameID = null;
-    private int score;
+    private String name = null;
 
     @Inject
     public MainCtrl(ServerUtils server) {
@@ -73,7 +81,8 @@ public class MainCtrl {
                            Pair<SplashScreenCtrl, Parent> splashScreen,
                            Pair<InBetweenScoreCtrl, Parent> inBetweenScore,
                            Pair<LeaveCtrl, Parent> leave,
-                           Pair<SingleplayerScreenCtrl, Parent> singleplayerGame){
+                           Pair<SingleplayerScreenCtrl, Parent> singleplayerGame,
+                           Pair<InputNameScreenCtrl, Parent> inputname){
         this.primaryStage = primaryStage;
 
         this.overviewCtrl = overview.getKey();
@@ -83,6 +92,7 @@ public class MainCtrl {
         this.add = new Scene(add.getValue());
 
         this.waitingRoom = new Scene(waitingRoom.getValue());
+        this.waitingRoomScreenCtrl = waitingRoom.getKey();
 
         this.singleplayerLeaderboardCtrl = singleplayerLeaderboard.getKey();
         this.singleLeaderboard = new Scene(singleplayerLeaderboard.getValue());
@@ -102,23 +112,71 @@ public class MainCtrl {
         this.singleplayerScreen = new Scene(singleplayerGame.getValue());
         this.singleplayerScreenCtrl = singleplayerGame.getKey();
 
+        this.inputName = new Scene(inputname.getValue());
+        this.inputNameScreenCtrl = inputname.getKey();
+
         showOverview();
         primaryStage.show();
 
-        clientID = "233"; // hardcoded: we need to somehow get it from the server
-
-        server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, m -> {
-            handleServerMessage(m);
-        });
+        clientID = UUID.randomUUID().toString();
+        server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, this::handleServerMessage);
     }
 
+    //CHECKSTYLE:OFF
     public void handleServerMessage(ServerMessage msg){
+
         switch(msg.type){
+            case INIT_PLAYER:
+                gameID = msg.gameID;
+                runLater(() -> {
+                    multiplayerScreenCtrl.updateScore(0);
+                    showWaitingRoom();
+                });
+                break;
+            case EXTRA_PLAYER:
+                runLater(() -> {
+//                    showWaitingRoom();
+                    waitingRoomScreenCtrl.updatePlayerList(msg.playersWaiting);
+                });
+                break;
             case NEW_MULTIPLAYER_GAME:
                 // do something
                 break;
             case NEW_SINGLEPLAYER_GAME:
                 gameID = msg.gameID;
+                break;
+            case LOAD_NEW_QUESTIONS:
+                // runLater() must be used to run the following code
+                // on the JavaFX Application Thread
+                runLater(() -> {
+                    multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                    multiplayerScreenCtrl.displayActivities(msg.question.getActivities());
+                    showMultiplayerScreen();
+                });
+                System.out.println("[msg] loadingGame");
+                break;
+            case DISPLAY_ANSWER:
+                runLater(() -> {
+                    System.out.println("[update] topScores: " + msg.topScores);
+                    multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
+                    multiplayerScreenCtrl.updateScore(msg.score);
+                    inBetweenScoreCtrl.setScoreTo(msg.score);
+                    inBetweenScoreCtrl.insertLeaderboard(msg.topScores);
+                });
+                System.out.println("[msg] display answer");
+
+                break;
+            case DISPLAY_INBETWEENSCORES:
+                runLater(() -> {
+                    multiplayerScreenCtrl.updateTitle(msg.questionCounter);
+                    inBetweenScoreCtrl.setQuestionNo(msg.questionCounter, msg.totalQuestions);
+                    showInbetweenScore();
+                });
+                System.out.println("[msg] show leaderboard ");
+                break;
+            case END_GAME:
+                runLater(this::showWaitingRoom);
+                System.out.println("[msg] end game");
                 break;
             case NEXT_QUESTION:
                 // runLater() must be used to run the following code
@@ -142,14 +200,16 @@ public class MainCtrl {
                 break;
             case END:
                 runLater(this::showSingleLeaderboardScreen);
+                break;
             case TEST:
                 // for testing purposes only
-                System.out.println("It works! Received a msg!");
+                System.out.println("[test] message received");
                 break;
             default:
                 // invalid msg type
         }
     }
+    //CHECKSTYLE:ON
 
     public void showOverview() {
         primaryStage.setTitle("Quotes: Overview");
@@ -164,6 +224,12 @@ public class MainCtrl {
 
     public void showLeave(Scene scene){
         leaveCtrl.setPrevious(scene);
+        primaryStage.setScene(leave);
+    }
+
+    public void showLeave(Scene scene, BeforeLeave beforeLeave){
+        leaveCtrl.setPrevious(scene);
+        leaveCtrl.setBeforeLeave(beforeLeave);
         primaryStage.setScene(leave);
     }
 
@@ -186,9 +252,9 @@ public class MainCtrl {
     }
 
     public void showMultiplayerScreen(){
-        primaryStage.setTitle("Multiplayer");
+        primaryStage.setTitle("MultiplayerScreen");
         primaryStage.setScene(multiplayer);
-        multiplayerScreenCtrl.decreaseTime();
+
     }
 
     public void showSingleLeaderboardScreen(){
@@ -199,6 +265,11 @@ public class MainCtrl {
     public void showWaitingRoom() {
         primaryStage.setTitle("WaitingRoomScreen");
         primaryStage.setScene(waitingRoom);
+    }
+
+    public void showinputNameScreen() {
+        primaryStage.setTitle("input Name");
+        primaryStage.setScene(inputName);
     }
 
     public void showSingleplayerGameScreen(){
@@ -233,6 +304,14 @@ public class MainCtrl {
         return waitingRoom;
     }
 
+    public Scene getSingleplayerScreen() {
+        return singleplayerScreen;
+    }
+
+    public Scene getInputName() {
+        return inputName;
+    }
+
     public String getClientID() {
         return clientID;
     }
@@ -241,4 +320,11 @@ public class MainCtrl {
         return gameID;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
 }

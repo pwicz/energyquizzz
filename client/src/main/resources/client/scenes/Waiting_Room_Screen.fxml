@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.LinearGradient?>
@@ -35,14 +36,12 @@
          </children>
       </AnchorPane>
         <Button layoutX="45.0" layoutY="985.0" mnemonicParsing="false" onAction="#leave" prefHeight="29.0" prefWidth="196.0" styleClass="leave-btn" text="Leave" textAlignment="CENTER" AnchorPane.bottomAnchor="38.292893409729004" AnchorPane.leftAnchor="45.0"> </Button>
-        <Button layoutX="490.0" layoutY="829.0" mnemonicParsing="false" onAction="#startGame" prefHeight="29.0" prefWidth="183.0" styleClass="start-btn" text="Start" textOverrun="CLIP" AnchorPane.bottomAnchor="181.0" AnchorPane.leftAnchor="490.0"> </Button>
+        <Button layoutX="490.0" layoutY="829.0" mnemonicParsing="false" onAction="#start" prefHeight="29.0" prefWidth="183.0" styleClass="start-btn" text="Start" textOverrun="CLIP" AnchorPane.bottomAnchor="181.0" AnchorPane.leftAnchor="490.0"> </Button>
         <AnchorPane layoutX="1209.0" prefHeight="1039.0" prefWidth="414.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Line endX="25.792892456054688" endY="1037.43359375" startX="17.0" startY="-14.0" />
+            <Line endX="25.792892456054688" endY="1037.43359375" layoutX="-5.0" layoutY="6.0" startX="25.7928466796875" startY="-11.707107543945312" />
             <Text fill="#38c768" layoutX="84.0" layoutY="65.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sidebarTitle" text="Players waiting (3)" textAlignment="CENTER" wrappingWidth="196.13671875"> </Text>
-            <Text fill="WHITE" layoutX="57.0" layoutY="120.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="playersList" text="#1 Peter" wrappingWidth="196.13671875"> </Text>
-            <Text fill="WHITE" layoutX="56.0" layoutY="153.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="playersList" text="#2 Alex" wrappingWidth="196.13671875"> </Text>
-            <Text fill="WHITE" layoutX="56.0" layoutY="189.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="playersList" text="#3 Javi" wrappingWidth="196.13671875"> </Text>
+            <ListView fx:id="playerList" prefHeight="972.0" prefWidth="363.0" styleClass="playerList" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
          </children>
         </AnchorPane>
     </children>

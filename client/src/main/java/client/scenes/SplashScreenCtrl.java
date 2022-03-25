@@ -25,7 +25,8 @@ public class SplashScreenCtrl {
     }
 
     public void showWaitingRoom(){
-        mainCtrl.showWaitingRoom();
+
+        mainCtrl.showinputNameScreen();
     }
 
     public void showSingleplayerScreen() {
