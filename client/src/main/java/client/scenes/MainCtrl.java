@@ -304,6 +304,10 @@ public class MainCtrl {
         return waitingRoom;
     }
 
+    public Scene getSingleplayerScreen() {
+        return singleplayerScreen;
+    }
+
     public Scene getInputName() {
         return inputName;
     }

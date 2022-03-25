@@ -99,9 +99,7 @@ public class SingleplayerScreenCtrl {
         // inform the server about leaving
         ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
-        server.send("/app/general", msg);
-
-        mainCtrl.showOverview();
+        mainCtrl.showLeave(mainCtrl.getSingleplayerScreen(), () -> server.send("/app/general", msg));
     }
 
 
