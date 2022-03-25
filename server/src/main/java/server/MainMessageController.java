@@ -36,12 +36,18 @@ public class MainMessageController {
 
     // game options
     private final int questionsPerGame = 4;
+    private final double timeToAnswer = 10.0;
+    private final int scoreBase = 100;          // points for correct answer
+    private final int scoreBonusPerSecond = 10; // extra points for every second left
 
     public MainMessageController(SimpMessagingTemplate simpMessagingTemplate, ActivityController activityController) {
         this.simpMessagingTemplate = simpMessagingTemplate;
         this.activityController = activityController;
 
         games = new HashMap<>();
+
+        waitingRoom = new Game(new ArrayList<>(), UUID.randomUUID().toString());
+        waitingRoom.setMultiplayer(true);
     }
 
     //CHECKSTYLE:OFF
@@ -49,12 +55,10 @@ public class MainMessageController {
     public void handleClientMessages(ClientMessage msg) {
         ServerMessage result = null;
         try {
-            Game g = null;
-            Player p = null;
-            if(games.get(msg.gameID) != null) {
-                g = games.get(msg.gameID);
-                if (g.getPlayerWithID(msg.playerID) != null)
-                    p = g.getPlayerWithID(msg.playerID);
+            Game game = games.get(msg.gameID);
+            Player player = null;
+            if(game != null) {
+                player = game.getPlayerWithID(msg.playerID);
             }
 
             switch (msg.type) {
@@ -66,7 +70,7 @@ public class MainMessageController {
                         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, initMsg);
                         // then send a first question
                         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
-                                nextQuestion(initMsg.score, games.get(initMsg.gameID)));
+                                singleplayerSendNewQuestion(initMsg.score, games.get(initMsg.gameID)));
                     }
                     break;
                 case INIT_MULTIPLAYER:
@@ -77,24 +81,27 @@ public class MainMessageController {
                                     (players.getName()).equalsIgnoreCase(msg.playerName)))
                         return;
 
-                    initMultiGame(msg);
+                    joinWaitingRoom(msg);
                     break;
-                case START_GAME:
-                    waitingRoom = new Game(new ArrayList<>(), UUID.randomUUID().toString());
+                case START_MULTIPLAYER:
+                    game = waitingRoom;
+
                     games.put(waitingRoom.getID(), waitingRoom);
-                    //no break on purpose
-                case INIT_QUESTION:
+                    waitingRoom = new Game(new ArrayList<>(), UUID.randomUUID().toString());
+
                     System.out.println("[msg] init question");
-                    multiplayerSendNewQuestions(g);
+                    multiplayerSendNewQuestions(game);
                     break;
                 case SUBMIT_ANSWER:
-                    updateScore(msg, p, g);
+                    if (game == null || player == null) return;
+
+                    processAnswer(msg, player, game);
 
                     System.out.println("[msg] submit answer");
-                    if(g.getPlayersAnswered() == g.getPlayers().size()){
+                    if(game.getPlayersAnswered() == game.getPlayers().size()){
                         // all players have answered
-                        g.questionEndAction.cancel();
-                        multiplayerShowAnswersProcedure(g);
+                        game.questionEndAction.cancel();
+                        multiplayerShowAnswersProcedure(game);
                         System.out.println("[msg] all players submitted!");
                     }
                     break;
@@ -102,22 +109,21 @@ public class MainMessageController {
                     // for testing purposes
                     result = new ServerMessage(ServerMessage.Type.TEST);
                     System.out.println("[test] message received");
+                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
                     break;
                 case SUBMIT_SINGLEPLAYER:
-                    if (msg.gameID == null || msg.playerID == null) return;
+                    if (game == null || player == null) return;
                     // check if specified game and player exist
-                    if (g == null) return;
-                    if (p == null || p.hasAnswered()) return;
+                    if (player.hasAnswered()) return;
 
-                    p.setHasAnswered(true);
-                    submitSingleplayer(msg, g, p);
+                    player.setHasAnswered(true);
+                    submitSingleplayer(msg, game, player);
                     break;
                 case QUIT:
-                    playerGameCorrectnessCheck(msg.gameID, msg.playerID);
+                    if (game == null || player == null) return;
 
                     // remove player from the game
-                    Game game = games.get(msg.gameID);
-                    game.getPlayers().remove(game.getPlayerWithID(msg.playerID));
+                    game.getPlayers().remove(player);
                     // end game if there are no more players
                     if (game.getPlayers().size() == 0) endGame(game);
                     break;
@@ -129,7 +135,6 @@ public class MainMessageController {
                     waitingRoom.getPlayers().remove(playerInWaitingRoom);
 
                     // send update message to all other players
-
                     ServerMessage temp = new ServerMessage(ServerMessage.Type.EXTRA_PLAYER);
                     temp.playersWaiting = getWaitingListOfPlayers(waitingRoom);
                     sendMessageToAllPlayers(temp, waitingRoom);
@@ -138,41 +143,19 @@ public class MainMessageController {
                 default:
                     // unknown message
             }
-
-            if(result == null) return;
-
-            if(sentToAll){
-                for (Player player: games.get(msg.gameID).getPlayers()) {
-                    simpMessagingTemplate.convertAndSend("/topic/client/" + player.getID(), result);
-                    sentToAll = false;
-                }
-            }else {
-                simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
-            }
         } catch (MessagingException ex) {
             System.out.println("MessagingException on handleClientMessages: " + ex.getMessage());
         }
     }
     //CHECKSTYLE:ON
-    
-    private boolean playerGameCorrectnessCheck(String gameID, String playerID) {
-        if (gameID == null || playerID == null) return false;
 
-        // check if specified game and player exist
-
-        if (!games.containsKey(gameID)) return false;
-        Player p = games.get(gameID).getPlayerWithID(playerID);
-        return p != null && !p.hasAnswered();
-    }
-
-
-    public void updateScore(ClientMessage msg, Player p, Game g) {
+    public void processAnswer(ClientMessage msg, Player p, Game g) {
         g.setPlayersAnswered(g.getPlayersAnswered() + 1);
 
         int scoreForQuestion = 0;
         if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
-            double answerTime = 10.0 - (System.currentTimeMillis() - g.getQuestionStartTime()) / 1000.0;
-            scoreForQuestion = 100 + (int) (10 * answerTime);
+            double answerTime = timeToAnswer - (System.currentTimeMillis() - g.getQuestionStartTime()) / 1000.0;
+            scoreForQuestion = scoreBase + (int) (scoreBonusPerSecond * answerTime);
         }
         p.setScore(p.getScore() + scoreForQuestion);
         p.setHasAnswered(true);
@@ -199,7 +182,7 @@ public class MainMessageController {
         return result;
     }
 
-    private ServerMessage nextQuestion(int playerScore, Game forGame) {
+    private ServerMessage singleplayerSendNewQuestion(int playerScore, Game forGame) {
         ServerMessage result = new ServerMessage(ServerMessage.Type.NEXT_QUESTION);
         // TODO: Question class should be generated by a proper method
         List<Activity> selectedActivities =
@@ -220,7 +203,7 @@ public class MainMessageController {
         forGame.setQuestionStartTime(System.currentTimeMillis());
 
         result.score = playerScore;
-        result.timerFull = 10.0; // 10 seconds
+        result.timerFull = timeToAnswer; // 10 seconds
         result.timerFraction = 1.0;
         result.round = forGame.getRound();
 
@@ -247,7 +230,7 @@ public class MainMessageController {
         if(msg.chosenActivity != -1L) g.questionEndAction.cancel();
 
         // update player's score
-        updateScore(msg, p, g);
+        processAnswer(msg, p, g);
         // send score msg
         // send the correct answer id and the picked answer id
         ServerMessage m = new ServerMessage(ServerMessage.Type.RESULT);
@@ -265,7 +248,7 @@ public class MainMessageController {
 
                     g.setRound(g.getRound() + 1);
                     simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
-                            nextQuestion(p.getScore(), g));
+                            singleplayerSendNewQuestion(p.getScore(), g));
                     p.setHasAnswered(false);
                 }
             }, 3000);
@@ -289,14 +272,7 @@ public class MainMessageController {
         games.remove(g.getID());
     }
 
-    //make game with dummy players for now
-    public void initMultiGame(ClientMessage msg) {
-        if(waitingRoom == null) {
-            waitingRoom = new Game(new ArrayList<>(), UUID.randomUUID().toString());
-            games.put(waitingRoom.getID(), waitingRoom);
-            waitingRoom.setMultiplayer(true);
-        }
-
+    public void joinWaitingRoom(ClientMessage msg) {
         // add player to waiting room and init game for him
         waitingRoom.addPlayer(new Player(msg.playerName, msg.playerID));
         ServerMessage result = new ServerMessage(ServerMessage.Type.INIT_PLAYER);
@@ -426,7 +402,7 @@ public class MainMessageController {
             }
         }, 10000);
 
-        result.timerFull = 10.0; // 10 seconds
+        result.timerFull = timeToAnswer; // 10 seconds
         result.timerFraction = 1.0;
 
         for(var p : g.getPlayers()){
