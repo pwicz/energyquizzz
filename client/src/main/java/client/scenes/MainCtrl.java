@@ -162,6 +162,8 @@ public class MainCtrl {
                     multiplayerScreenCtrl.updateScore(msg.score);
                     inBetweenScoreCtrl.setScoreTo(msg.score);
                     inBetweenScoreCtrl.insertLeaderboard(msg.topScores);
+                    inBetweenScoreCtrl.insertLeaderboardG(msg.correctlyAnswered);
+                    inBetweenScoreCtrl.insertLeaderboardR(msg.incorrectlyAnswered);
                 });
                 System.out.println("[msg] display answer");
 
@@ -170,6 +172,7 @@ public class MainCtrl {
                 runLater(() -> {
                     multiplayerScreenCtrl.updateTitle(msg.questionCounter);
                     inBetweenScoreCtrl.setQuestionNo(msg.questionCounter);
+                    //set correct answer colors
                     showInbetweenScore();
                 });
                 System.out.println("[msg] show leaderboard ");

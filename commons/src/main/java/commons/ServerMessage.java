@@ -21,6 +21,8 @@ public class ServerMessage {
     public Long correctAnswerID;
     public Long pickedAnswerID;
     public int round;
+    public List<String> correctlyAnswered;
+    public List<String> incorrectlyAnswered;
 
     public List<String> topScores;
     public List<String> playersWaiting;
