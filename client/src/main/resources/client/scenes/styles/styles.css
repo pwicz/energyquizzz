@@ -35,6 +35,12 @@
     -fx-font-family: "Roboto Thin";
 }
 
+
+.bigButton{
+    -fx-font-size: 20.0 px;
+    -fx-font-family: "Roboto Thin";
+}
+
 .title{
     -fx-font-family: 'Roboto Thin';
     -fx-font-size: 100;
