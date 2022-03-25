@@ -5,6 +5,7 @@ import commons.ClientMessage;
 import commons.Game;
 import commons.Player;
 import commons.Question;
+import commons.Score;
 import commons.ServerMessage;
 
 import org.springframework.messaging.MessagingException;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import server.api.ActivityController;
+import server.api.ScoreController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,13 +32,16 @@ public class MainMessageController {
 
     private SimpMessagingTemplate simpMessagingTemplate;
     private ActivityController activityController;
+    private ScoreController scoreController;
     private HashMap<String, Game> games;
     private Game waitingRoom;
     private boolean sentToAll = false;
 
-    public MainMessageController(SimpMessagingTemplate simpMessagingTemplate, ActivityController activityController) {
+    public MainMessageController(SimpMessagingTemplate simpMessagingTemplate,
+                                 ActivityController activityController, ScoreController scoreController) {
         this.simpMessagingTemplate = simpMessagingTemplate;
         this.activityController = activityController;
+        this.scoreController = scoreController;
 
         games = new HashMap<>();
     }
@@ -114,11 +119,13 @@ public class MainMessageController {
                 case QUIT:
                     playerGameCorrectnessCheck(msg.gameID, msg.playerID);
 
-                    // remove player from the game
                     Game game = games.get(msg.gameID);
-                    game.getPlayers().remove(game.getPlayerWithID(msg.playerID));
+                    if(game.isMultiplayer()){
+                        // remove player from the game
+                        game.getPlayers().remove(game.getPlayerWithID(msg.playerID));
+                    }
                     // end game if there are no more players
-                    if (game.getPlayers().size() == 0) endGame(game);
+                    if (game.getPlayers().size() == 0 || !game.isMultiplayer()) endGame(game);
                     break;
                 case QUIT_WAITING_ROOM:
                     if(waitingRoom == null) return;
@@ -269,6 +276,11 @@ public class MainMessageController {
     private void endGame(Game g) {
         g.setHasEnded(true);
         games.remove(g.getID());
+
+        if(!g.isMultiplayer() && g.getPlayers().size() > 0){
+            Player p = g.getPlayers().get(0);
+            scoreController.addScore(new Score(p.getName(), p.getScore()));
+        }
     }
 
     //make game with dummy players for now
