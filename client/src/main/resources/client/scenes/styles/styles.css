@@ -5,13 +5,12 @@
 
 .button{
     -fx-font-family: "Roboto Light";
-    -fx-font-size: 36 ;
     -fx-background-color: none;
     -fx-border-radius: 5;
 }
 
 .button:hover{
-     -fx-opacity: 0.57;
+     -fx-opacity: 0.70;
      -fx-cursor: hand;
  }
 
@@ -35,6 +34,14 @@
     -fx-font-family: "Roboto Thin";
 }
 
+.bigButton{
+    -fx-font-size: 20.0 px;
+}
+
+.hugeButton{
+    -fx-font-size: 36.0 px;
+}
+
 .title{
     -fx-font-family: 'Roboto Thin';
     -fx-font-size: 100;
@@ -47,4 +54,7 @@
     -fx-border-color: linear-gradient(to left, #1BED62, #21A0E8);
 }
 
-
+.helpButton{
+    -fx-border-color: none;
+    -fx-text-fill: "white";
+}

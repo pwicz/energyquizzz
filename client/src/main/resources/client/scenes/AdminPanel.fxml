@@ -10,7 +10,7 @@
     <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="149.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="Admin Panel" AnchorPane.bottomAnchor="730.0">
     </Label>
 
-    <ListView fx:id="activityBox" onMouseClicked="#setCurrentActivity" layoutX="390.0" layoutY="284.0" prefHeight="437.0" prefWidth="734.0" AnchorPane.bottomAnchor="261.0">
+    <ListView fx:id="activityBox" layoutX="390.0" layoutY="284.0" prefHeight="437.0" prefWidth="734.0" AnchorPane.bottomAnchor="261.0">
         <styleClass>
             <String fx:value="container" />
             <String fx:value="gradientBox" />
@@ -20,7 +20,8 @@
     <Button fx:id="editActivity" onAction="#editActivity" alignment="CENTER" contentDisplay="CENTER" layoutX="560.0" layoutY="776.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="136.0" text="Edit" AnchorPane.bottomAnchor="130.0">
         <styleClass>
             <String fx:value="button" />
-            <String fx:value="whiteButton"/>
+            <String fx:value="whiteButton" />
+            <String fx:value="bigButton" />
         </styleClass>
     </Button>
 
