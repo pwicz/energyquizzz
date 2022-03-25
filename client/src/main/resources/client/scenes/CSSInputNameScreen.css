@@ -24,4 +24,9 @@
 .anchor{
     -fx-background-color: #272727;
 }
+.failedConnection{
+    -fx-text-fill: #e0503d;
+    -fx-font-family: "Roboto";
+    -fx-font-size: 17.0 px;
+}
 

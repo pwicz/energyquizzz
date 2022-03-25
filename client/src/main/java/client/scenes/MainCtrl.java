@@ -330,6 +330,11 @@ public class MainCtrl {
     public void setName(String name){
         this.name = name;
     }
+
+    /**
+     * Sets the server name.
+     * @param server
+     */
     public void setServer(String server){
         this.serverName = server;
         this.server.setServer(server);

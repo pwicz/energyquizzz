@@ -109,6 +109,10 @@ public class ServerUtils {
                 .post(Entity.entity(quote, APPLICATION_JSON), Quote.class);
     }
 
+    /**
+     * Creates the url for working with websockets
+     * @return returns the url for websockets
+     */
     private String getWebsocketServerName() {
         String websocketServerName= server.replaceAll("http", "ws");
         return websocketServerName + "websocket";

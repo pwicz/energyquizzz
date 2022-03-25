@@ -5,6 +5,7 @@ import client.utils.ServerUtils;
 import commons.ClientMessage;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 
 public class InputNameScreenCtrl {
@@ -17,6 +18,8 @@ public class InputNameScreenCtrl {
     @FXML
     TextField serverBox;
 
+    @FXML
+    Text connectionFailed;
 
     @Inject
     public InputNameScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
@@ -42,9 +45,10 @@ public class InputNameScreenCtrl {
         msg.serverName = serverBox.getText();
         mainCtrl.setServer(msg.serverName);
         server.setServer(msg.serverName);
-        server.send("/app/general", msg);}
+        server.send("/app/general", msg);
+        }
         catch (Exception e){
-            //TODO: show exception on screen
+            connectionFailed.setVisible(true);
         }
     }
 
