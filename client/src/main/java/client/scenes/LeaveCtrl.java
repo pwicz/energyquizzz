@@ -25,10 +25,15 @@ public class LeaveCtrl {
     }
 
     public void leave(){
-        if(beforeLeave != null)
+        if(beforeLeave != null) {
             beforeLeave.soSomething();
-
-        mainCtrl.showSplash();
+            mainCtrl.showSplash();
+        }
+        if(previous.equals(mainCtrl.getSplash())) {
+            mainCtrl.getPrimaryStage().close();
+        }else {
+            mainCtrl.showSplash();
+        }
         mainCtrl.stay();
     }
 

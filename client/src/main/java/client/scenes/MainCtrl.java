@@ -244,9 +244,8 @@ public class MainCtrl {
 
     }
     public void showLeaveWaitingroom(Scene scene, BeforeLeave beforeLeave){
-        leaveCtrl.setPrevious(scene);
         leaveCtrl.setBeforeLeave(beforeLeave);
-        primaryStage.setScene(leave);
+        showLeave(scene);
     }
 
     public void stayWaitingroom(Scene previous){
@@ -334,6 +333,10 @@ public class MainCtrl {
 
     public String getName() {
         return name;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 
     public void setName(String name){
