@@ -35,7 +35,16 @@ public class EditActivityCtrl {
     TextField imageField;
 
     @FXML
-    Label errorText;
+    Label titleErrorText;
+
+    @FXML
+    Label consumptionErrorText;
+
+    @FXML
+    Label sourceErrorText;
+
+    @FXML
+    Label imageErrorText;
 
 
     @Inject
@@ -58,16 +67,36 @@ public class EditActivityCtrl {
 
     public void saveActivity(MouseEvent actionEvent) throws MalformedURLException {
         String title = titleField.getText();
-        int consumption = Integer.parseInt(consumptionField.getText());
+        int consumption;
         String source = sourceField.getText();
         String image = imageField.getText();
 
-        if(title == null
-                || consumption <= 0
-                || source == null
-                || image == null)
-        {
-            throw new IllegalArgumentException("The data provided for the activity is invalid");
+        if(title == null || title.length() == 0){
+            titleErrorText.setVisible(true);
+        }else{
+            titleErrorText.setVisible(false);
+        }
+        if(source == null || source.length() == 0){
+            sourceErrorText.setVisible(true);
+        }else{
+            sourceErrorText.setVisible(false);
+        }
+        if(image == null || image.length() == 0){
+            imageErrorText.setVisible(true);
+        }else{
+            imageErrorText.setVisible(false);
+        }
+
+        try {
+            consumption = Integer.parseInt(consumptionField.getText());
+            if(consumption > 0){
+                consumptionErrorText.setVisible(false);
+            }else{
+                consumptionErrorText.setVisible(true);
+            }
+        } catch (final NumberFormatException e) {
+            consumptionErrorText.setVisible(true);
+            throw new IllegalArgumentException("Invalid number");
         }
 
         try {
@@ -75,10 +104,17 @@ public class EditActivityCtrl {
             URLConnection srcConn = sourceUrl.openConnection();
             srcConn.connect();
         } catch (MalformedURLException e) {
-            errorText.setVisible(true);
+            sourceErrorText.setVisible(true);
             throw new MalformedURLException("The URL provided is not valid");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        if(title == null || title.length() == 0
+                || consumption <= 0
+                || source == null || source.length() == 0
+                || image == null  || image.length() == 0){
+            throw new IllegalArgumentException("The data provided is invalid");
         }
 
         Activity newActivity = new Activity(title, consumption,
@@ -94,7 +130,10 @@ public class EditActivityCtrl {
     }
 
     public void resetErrorText(){
-        errorText.setVisible(false);
+        titleErrorText.setVisible(false);
+        consumptionErrorText.setVisible(false);
+        sourceErrorText.setVisible(false);
+        imageErrorText.setVisible(false);
     }
 
     public void leave(){

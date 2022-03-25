@@ -19,7 +19,28 @@
     <Label contentDisplay="CENTER" layoutX="164.0" layoutY="611.0" prefHeight="49.0" prefWidth="276.0" styleClass="smallTitle" text="Image link:" AnchorPane.bottomAnchor="322.0">
     </Label>
 
-    <Label fx:id="errorText" contentDisplay="CENTER" layoutX="1074.0" layoutY="504.0" prefHeight="49.0" prefWidth="418.0" text="This URL is invalid" AnchorPane.bottomAnchor="429.0">
+    <Label fx:id="titleErrorText" contentDisplay="CENTER" layoutX="1076.0" layoutY="306.0" prefHeight="49.0" prefWidth="418.0" text="Please enter a title" AnchorPane.bottomAnchor="627.0">
+        <styleClass>
+            <String fx:value="smallTitle" />
+            <String fx:value="errorText" />
+        </styleClass>
+    </Label>
+
+    <Label fx:id="consumptionErrorText" contentDisplay="CENTER" layoutX="1076.0" layoutY="405.0" prefHeight="49.0" prefWidth="418.0" text="Please enter a valid number" AnchorPane.bottomAnchor="528.0">
+        <styleClass>
+            <String fx:value="smallTitle" />
+            <String fx:value="errorText" />
+        </styleClass>
+    </Label>
+
+    <Label fx:id="sourceErrorText" contentDisplay="CENTER" layoutX="1076.0" layoutY="504.0" prefHeight="49.0" prefWidth="418.0" text="This URL is invalid" AnchorPane.bottomAnchor="429.0">
+        <styleClass>
+            <String fx:value="smallTitle" />
+            <String fx:value="errorText" />
+        </styleClass>
+    </Label>
+
+    <Label fx:id="imageErrorText" contentDisplay="CENTER" layoutX="1076.0" layoutY="611.0" prefHeight="49.0" prefWidth="418.0" text="This image is invalid" AnchorPane.bottomAnchor="322.0">
         <styleClass>
             <String fx:value="smallTitle" />
             <String fx:value="errorText" />
