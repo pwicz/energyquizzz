@@ -111,7 +111,6 @@ public class EditActivityCtrl {
         } catch (MalformedURLException e) {
             canBeSaved = false;
             sourceErrorText.setVisible(true);
-            throw new MalformedURLException("The URL provided is not valid");
         } catch (IOException e) {
             canBeSaved = false;
             e.printStackTrace();
