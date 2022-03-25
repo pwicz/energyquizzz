@@ -11,6 +11,6 @@
       <Button fx:id="join" layoutX="343.0" layoutY="165.0" mnemonicParsing="false" onAction="#join" prefHeight="30.0" prefWidth="134.0" style="" styleClass="join" text="Join" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="343.0" AnchorPane.rightAnchor="344.0" AnchorPane.topAnchor="165.0" />
       <Label layoutX="198.0" layoutY="32.0" styleClass="message" text="Choose a unique name to join this waiting room" AnchorPane.bottomAnchor="189.0" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="197.66666666666669" AnchorPane.topAnchor="32.0" />
       <TextField fx:id="textBox" alignment="CENTER" layoutX="277.0" layoutY="77.0" prefHeight="30.0" prefWidth="265.0" promptText="Enter your name" styleClass="textPrompt" AnchorPane.bottomAnchor="144.0" AnchorPane.leftAnchor="276.99999999999994" AnchorPane.rightAnchor="278.6666666666667" AnchorPane.topAnchor="77.0" />
-      <TextField alignment="CENTER" layoutX="278.0" layoutY="121.0" prefHeight="30.0" prefWidth="265.0" promptText="Enter Server " styleClass="textPrompt" />
+      <TextField fx:id="serverBox" alignment="CENTER" layoutX="278.0" layoutY="121.0" prefHeight="30.0" prefWidth="265.0" promptText="Enter Server " styleClass="textPrompt" />
    </children>
 </AnchorPane>

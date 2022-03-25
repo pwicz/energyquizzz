@@ -14,6 +14,9 @@ public class InputNameScreenCtrl {
     @FXML
     TextField textBox;
 
+    @FXML
+    TextField serverBox;
+
 
     @Inject
     public InputNameScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
@@ -26,6 +29,8 @@ public class InputNameScreenCtrl {
 
         if(textBox.getText().equals(""))
             return;
+        if(serverBox.getText().equals(""))
+            return;
         ClientMessage msg= new ClientMessage(ClientMessage.Type.INIT_MULTIPLAYER);
 
         msg.playerID = mainCtrl.getClientID();
@@ -33,7 +38,14 @@ public class InputNameScreenCtrl {
         msg.playerName = textBox.getText();
         mainCtrl.setName(msg.playerName);
 
-        server.send("/app/general", msg);
+        try{
+        msg.serverName = serverBox.getText();
+        mainCtrl.setServer(msg.serverName);
+        server.setServer(msg.serverName);
+        server.send("/app/general", msg);}
+        catch (Exception e){
+            //TODO: show exception on screen
+        }
     }
 
     public void leave(){

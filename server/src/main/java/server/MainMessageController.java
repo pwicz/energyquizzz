@@ -279,6 +279,7 @@ public class MainMessageController {
         result.gameID = waitingRoom.getID();
         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
 
+
         // update waiting room players list
         ServerMessage temp = new ServerMessage(ServerMessage.Type.EXTRA_PLAYER);
         temp.playersWaiting = getWaitingListOfPlayers(waitingRoom);

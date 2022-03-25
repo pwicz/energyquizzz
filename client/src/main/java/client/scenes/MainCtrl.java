@@ -32,6 +32,7 @@ import static javafx.application.Platform.runLater;
 public class MainCtrl {
 
     private final ServerUtils server;
+    private String serverName;
 
     private Stage primaryStage;
 
@@ -83,6 +84,8 @@ public class MainCtrl {
                            Pair<LeaveCtrl, Parent> leave,
                            Pair<SingleplayerScreenCtrl, Parent> singleplayerGame,
                            Pair<InputNameScreenCtrl, Parent> inputname){
+
+
         this.primaryStage = primaryStage;
 
         this.overviewCtrl = overview.getKey();
@@ -326,5 +329,9 @@ public class MainCtrl {
 
     public void setName(String name){
         this.name = name;
+    }
+    public void setServer(String server){
+        this.serverName = server;
+        this.server.setServer(server);
     }
 }

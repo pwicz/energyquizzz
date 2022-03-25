@@ -13,6 +13,7 @@ public class ClientMessage {
     public long chosenActivity;
     // add more fields as we start exchanging messages
     public String playerName;
+    public String serverName;
     
     public ClientMessage() {
     }

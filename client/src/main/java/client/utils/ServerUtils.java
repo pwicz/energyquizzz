@@ -46,7 +46,19 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 public class ServerUtils {
 
-    private static final String SERVER = "http://localhost:8080/";
+    //private static final String SERVER = "http://localhost:8080/";
+    private String server = "http://localhost:8080/";
+    //TODO: change this once other pages' initialize is changed
+
+    private StompSession session = connect(getWebsocketServerName());
+    //TODO: change this once other pages' initialize is changed
+
+    public void setServer(String server){
+        this.server = server;
+        session = connect(getWebsocketServerName());
+    }
+
+
 
     public void getQuotesTheHardWay() throws IOException {
         var url = new URL("http://localhost:8080/api/quotes");
@@ -60,7 +72,7 @@ public class ServerUtils {
 
     public List<Quote> getQuotes() {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/quotes") //
+                .target(server).path("api/quotes") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<List<Quote>>() {});
@@ -69,7 +81,7 @@ public class ServerUtils {
 
     public List<Score> getTopScores(){
         List<Score> scores = ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/scores/")
+                .target(server).path("api/scores/")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .get(new GenericType<List<Score>>() {});
@@ -83,7 +95,7 @@ public class ServerUtils {
 
     public List<Activity> getActivites() {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/activities") //
+                .target(server).path("api/activities") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .get(new GenericType<List<Activity>>() {});
@@ -91,13 +103,21 @@ public class ServerUtils {
 
     public Quote addQuote(Quote quote) {
         return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/quotes") //
+                .target(server).path("api/quotes") //
                 .request(APPLICATION_JSON) //
                 .accept(APPLICATION_JSON) //
                 .post(Entity.entity(quote, APPLICATION_JSON), Quote.class);
     }
 
-    private StompSession session = connect("ws://localhost:8080/websocket");
+    private String getWebsocketServerName() {
+        String websocketServerName= server.replaceAll("http", "ws");
+        return websocketServerName + "websocket";
+    }
+
+
+
+    //private StompSession session = connect("ws://localhost:8080/websocket");
+
 
     private StompSession connect(String url){
         var client = new StandardWebSocketClient();
