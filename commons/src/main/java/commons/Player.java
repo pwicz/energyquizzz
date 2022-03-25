@@ -5,7 +5,7 @@ public class Player {
     private boolean hasAnswered;
     private String name;
     private String ID;
-    private int score;
+    private int score = 0;
 
     public Player(String name, String ID) {
         this.name = name;

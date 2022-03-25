@@ -97,11 +97,13 @@ public class SingleplayerScreenCtrl {
 
     public void leave(){
         // inform the server about leaving
+        mainCtrl.showLeave(mainCtrl.getSingleplayerScreen());
+    }
+
+    public void whenLeaving() {
         ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
         server.send("/app/general", msg);
-
-        mainCtrl.showSplash();
     }
 
 
@@ -138,6 +140,7 @@ public class SingleplayerScreenCtrl {
 
             titles.get(i).setText(Integer.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
+
             images.get(i).setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
         }
     }

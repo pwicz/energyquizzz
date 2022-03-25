@@ -20,18 +20,18 @@ import static com.google.inject.Guice.createInjector;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import client.scenes.AdminPanelCtrl;
-import client.scenes.CreateActivityCtrl;
-import client.scenes.EditActivityCtrl;
-import client.scenes.InBetweenScoreCtrl;
-import client.scenes.LeaveCtrl;
+import client.scenes.AddQuoteCtrl;
 import client.scenes.MainCtrl;
-import client.scenes.MultiplayerScreenCtrl;
+import client.scenes.QuoteOverviewCtrl;
 import client.scenes.SingleplayerLeaderboardCtrl;
 import client.scenes.SingleplayerScreenCtrl;
-import client.scenes.SplashScreenCtrl;
 import client.scenes.WaitingRoomScreenCtrl;
+import client.scenes.InBetweenScoreCtrl;
 import com.google.inject.Injector;
+
+import client.scenes.SplashScreenCtrl;
+import client.scenes.MultiplayerScreenCtrl;
+import client.scenes.LeaveCtrl;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -57,6 +57,10 @@ public class Main extends Application {
         var singleplayerLeaderboard =
                 FXML.load(SingleplayerLeaderboardCtrl.class, "client","scenes", "SingleplayerLeaderboard.fxml");
         var singleplayerGame = FXML.load(SingleplayerScreenCtrl.class,
+                "client","scenes", "Singleplayer_Game_Screen.fxml");
+        var inputname = FXML.load(InputNameScreenCtrl.class,
+                "client","scenes", "InputNameScreen.fxml");
+
                 "client","scenes", "SingleplayerGame.fxml");
 
         var waitingRoom = FXML.load(WaitingRoomScreenCtrl.class, "client","scenes", "WaitingRoom.fxml");
@@ -70,5 +74,6 @@ public class Main extends Application {
 
         mainCtrl.initialize(primaryStage, splashScreen, adminPanel, editActivity, createActivity,
                 singleplayerLeaderboard, singleplayerGame, waitingRoom, multiplayerGame, inBetweenScore, leave);
+
     }
 }
