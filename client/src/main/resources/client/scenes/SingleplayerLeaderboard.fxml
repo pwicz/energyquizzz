@@ -25,16 +25,20 @@
          <String fx:value="inputName" />
       </styleClass>
    </TextField>
+
    <Button fx:id="start" layoutX="643.0" layoutY="751.0" mnemonicParsing="false" onAction="#insertLeaderboard" onMouseClicked="#start" prefHeight="63.0" prefWidth="226.0" text="Start" AnchorPane.bottomAnchor="168.0">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="greenButton" />
+         <String fx:value="hugeButton" />
       </styleClass>
    </Button>
-   <Button fx:id="leave" layoutX="48.0" layoutY="925.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="32.0">
+
+   <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="32.0">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="redButton" />
+         <String fx:value="bigButton" />
       </styleClass>
    </Button>
 
