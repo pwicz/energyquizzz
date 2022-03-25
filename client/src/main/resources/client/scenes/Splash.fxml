@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" stylesheets="@/client/scenes/styles/styles.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SplashScreenCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" stylesheets="@/client/scenes/styles/styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SplashScreenCtrl">
 
    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="149.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="ENERGYQUIZZZ" AnchorPane.bottomAnchor="700.0">
    </Label>
 
-   <Button layoutX="597.0" layoutY="407.0" mnemonicParsing="false" onAction="#showSingleplayerScreen" prefHeight="78.0" prefWidth="321.0" text="Singleplayer" AnchorPane.bottomAnchor="497.0">
+   <Button layoutX="596.0" layoutY="400.0" mnemonicParsing="false" onAction="#showSingleplayerScreen" prefHeight="78.0" prefWidth="321.0" text="Singleplayer" AnchorPane.bottomAnchor="504.0">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="greenButton" />
       </styleClass>
    </Button>
 
-   <Button layoutX="596.0" layoutY="528.0" mnemonicParsing="false" onAction="#showWaitingRoom" prefHeight="78.0" prefWidth="321.0" text="Multiplayer" AnchorPane.bottomAnchor="376.0">
+   <Button layoutX="596.0" layoutY="549.0" mnemonicParsing="false" onAction="#showWaitingRoom" prefHeight="78.0" prefWidth="321.0" text="Multiplayer" AnchorPane.bottomAnchor="355.0">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="greenButton" />
@@ -30,14 +31,14 @@
       </styleClass>
    </Button>
 
-   <Button fx:id="admin" onAction="#showAdminPanel" alignment="CENTER" contentDisplay="CENTER" layoutX="630.0" layoutY="874.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="256.0" text="Admin Panel" AnchorPane.bottomAnchor="32.0">
+   <Button fx:id="admin" alignment="CENTER" contentDisplay="CENTER" layoutX="630.0" layoutY="874.0" mnemonicParsing="false" onAction="#showAdminPanel" prefHeight="76.0" prefWidth="256.0" text="Admin Panel" AnchorPane.bottomAnchor="32.0">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="whiteButton" />
       </styleClass>
    </Button>
 
-   <Button fx:id="help"  alignment="CENTER" contentDisplay="CENTER" layoutX="1339.0" layoutY="871.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="136.0" text="Help" AnchorPane.bottomAnchor="32.0">
+   <Button fx:id="help" alignment="CENTER" contentDisplay="CENTER" layoutX="1339.0" layoutY="871.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="136.0" text="Help" AnchorPane.bottomAnchor="32.0">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="whiteButton" />

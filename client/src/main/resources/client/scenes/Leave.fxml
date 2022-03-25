@@ -17,7 +17,7 @@
       </styleClass>
    </Button>
 
-   <Button layoutX="420.0" layoutY="72.0" mnemonicParsing="false" onAction="#leave" prefHeight="56.0" prefWidth="141.0" text="Leave" AnchorPane.bottomAnchor="32.0">
+   <Button layoutX="420.0" layoutY="72.0" mnemonicParsing="false" onAction="#leave" prefHeight="38.0" prefWidth="141.0" text="Leave" AnchorPane.bottomAnchor="32.0">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="redButton" />
