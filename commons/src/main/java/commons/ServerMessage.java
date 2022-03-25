@@ -1,8 +1,13 @@
 package commons;
 
+import java.util.List;
+
 public class ServerMessage {
+
     public enum Type{
-        NEW_SINGLEPLAYER_GAME, NEW_MULTIPLAYER_GAME, TEST, NEXT_QUESTION, RESULT, END
+        NEW_SINGLEPLAYER_GAME, NEW_MULTIPLAYER_GAME, TEST, NEXT_QUESTION, RESULT, END,
+        LOAD_NEW_QUESTIONS, DISPLAY_ANSWER, DISPLAY_INBETWEENSCORES, END_GAME, INIT_PLAYER,
+        EXTRA_PLAYER
     }
 
     public Type type;
@@ -17,6 +22,11 @@ public class ServerMessage {
     public Long pickedAnswerID;
     public int round;
 
+    public List<String> topScores;
+    public List<String> playersWaiting;
+    public long pickedID;
+    public long correctID;
+    public int questionCounter;
     public ServerMessage() {
     }
 

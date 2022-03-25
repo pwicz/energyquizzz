@@ -1,5 +1,6 @@
 package client.scenes;
 
+import client.utils.BeforeLeave;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.scene.Scene;
@@ -8,8 +9,9 @@ public class LeaveCtrl {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
-    private Scene previous;
 
+    private Scene previous;
+    private BeforeLeave beforeLeave;
 
     @Inject
     public LeaveCtrl(ServerUtils server, MainCtrl mainCtrl) {
@@ -20,14 +22,28 @@ public class LeaveCtrl {
     public void stay(){
         mainCtrl.stay(previous);
     }
+
     public void leave(){
-        if(previous.equals(mainCtrl.getEditActivity()) || previous.equals(mainCtrl.getCreateActivity())){
-            mainCtrl.showAdminPanel();
-        }else mainCtrl.showSplash();
+        if(beforeLeave != null) {
+            beforeLeave.soSomething();
+            mainCtrl.showSplash();
+        }
+        if(previous.equals(mainCtrl.getSplash())) {
+            mainCtrl.getPrimaryStage().close();
+            mainCtrl.stay(previous);
+        }else if(previous.equals(mainCtrl.getSingleplayerScreen())){
+            mainCtrl.leaveSingleplayer();
+        }
+        mainCtrl.showSplash();
+        mainCtrl.stay();
     }
 
     public void setPrevious(Scene previous) {
         this.previous = previous;
+    }
+
+    public void setBeforeLeave(BeforeLeave beforeLeave) {
+        this.beforeLeave = beforeLeave;
     }
 
     public Scene getPrevious() {

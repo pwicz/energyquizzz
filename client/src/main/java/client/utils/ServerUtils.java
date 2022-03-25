@@ -23,10 +23,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
+
 import commons.Activity;
 import commons.Score;
 import jakarta.ws.rs.client.Entity;
 import org.glassfish.jersey.client.ClientConfig;
+
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.GenericType;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;

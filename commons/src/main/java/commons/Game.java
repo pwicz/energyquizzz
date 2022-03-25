@@ -8,7 +8,8 @@ public class Game {
     private List<Player> players;
     private String ID;
     private boolean isMultiplayer;
-    private Long correctAnswerID;
+    private int questionCounter = 0;
+    private long correctAnswerID;
     private int round;
     private boolean hasEnded;
 
@@ -18,6 +19,7 @@ public class Game {
 
         this.round = 1;
     }
+
 
     public void addPlayer(Player p){
         players.add(p);
@@ -77,5 +79,18 @@ public class Game {
 
     public void setHasEnded(boolean hasEnded) {
         this.hasEnded = hasEnded;
+    }
+
+    public int getQuestionCounter() {
+        return questionCounter;
+    }
+
+    public int incCounter() {
+        this.questionCounter = questionCounter + 1;
+        return  questionCounter;
+    }
+
+    public void setQuestionCounter(int questionCounter) {
+        this.questionCounter = questionCounter;
     }
 }

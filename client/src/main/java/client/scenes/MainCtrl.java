@@ -15,6 +15,7 @@
  */
 package client.scenes;
 
+import client.utils.BeforeLeave;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Activity;
@@ -23,6 +24,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+
+import java.util.UUID;
 
 import static javafx.application.Platform.runLater;
 
@@ -33,6 +36,7 @@ public class MainCtrl {
     private Stage primaryStage;
 
     private Scene waitingRoom;
+    private WaitingRoomScreenCtrl waitingRoomScreenCtrl;
 
     private SplashScreenCtrl splashScreenCtrl;
     private Scene splash;
@@ -61,10 +65,16 @@ public class MainCtrl {
     private Scene createActivity;
     private CreateActivityCtrl createActivityCtrl;
 
+    private Scene inputName;
+    private InputNameScreenCtrl inputNameScreenCtrl;
 
     private String clientID = null;
     private String gameID = null;
-    private int score;
+
+    private Stage stage = new Stage();
+
+    private String name = null;
+
 
     @Inject
     public MainCtrl(ServerUtils server) {
@@ -80,8 +90,9 @@ public class MainCtrl {
                            Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
                            Pair<MultiplayerScreenCtrl, Parent> multiplayer,
                            Pair<InBetweenScoreCtrl, Parent> inBetweenScore,
-                           Pair<LeaveCtrl, Parent> leave
-                           ){
+                           Pair<LeaveCtrl, Parent> leave,
+                           Pair<InputNameScreenCtrl, Parent> inputName
+                            ){
         this.primaryStage = primaryStage;
 
         this.splashScreenCtrl = splashScreen.getKey();
@@ -95,6 +106,8 @@ public class MainCtrl {
 
         this.createActivityCtrl = createActivity.getKey();
         this.createActivity = new Scene(createActivity.getValue());
+        this.waitingRoom = new Scene(waitingRoom.getValue());
+        this.waitingRoomScreenCtrl = waitingRoom.getKey();
 
         this.singleplayerLeaderboardCtrl = singleplayerLeaderboard.getKey();
         this.singleLeaderboard = new Scene(singleplayerLeaderboard.getValue());
@@ -102,13 +115,17 @@ public class MainCtrl {
         this.singleplayerScreen = new Scene(singleplayerGame.getValue());
         this.singleplayerScreenCtrl = singleplayerGame.getKey();
 
-        this.waitingRoom = new Scene(waitingRoom.getValue());
-
         this.multiplayerScreenCtrl = multiplayer.getKey();
         this.multiplayer = new Scene(multiplayer.getValue());
 
+        this.splashScreenCtrl = splashScreen.getKey();
+        this.splash = new Scene(splashScreen.getValue());
+
         this.inBetweenScoreCtrl = inBetweenScore.getKey();
         this.inBetweenScore = new Scene(inBetweenScore.getValue());
+
+        this.inputName = new Scene(inputName.getValue());
+        this.inputNameScreenCtrl = inputName.getKey();
 
         this.leave = new Scene(leave.getValue());
         this.leaveCtrl = leave.getKey();
@@ -116,18 +133,65 @@ public class MainCtrl {
         showSplash();
         primaryStage.show();
 
-        clientID = "233"; // hardcoded: we need to somehow get it from the server
-
+        clientID = UUID.randomUUID().toString();
         server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, this::handleServerMessage);
     }
 
+    //CHECKSTYLE:OFF
     public void handleServerMessage(ServerMessage msg){
+
         switch(msg.type){
+            case INIT_PLAYER:
+                gameID = msg.gameID;
+                runLater(() -> {
+                    multiplayerScreenCtrl.updateScore(0);
+                    showWaitingRoom();
+                });
+                break;
+            case EXTRA_PLAYER:
+                runLater(() -> {
+//                    showWaitingRoom();
+                    waitingRoomScreenCtrl.updatePlayerList(msg.playersWaiting);
+                });
+                break;
             case NEW_MULTIPLAYER_GAME:
                 // do something
                 break;
             case NEW_SINGLEPLAYER_GAME:
                 gameID = msg.gameID;
+                break;
+            case LOAD_NEW_QUESTIONS:
+                // runLater() must be used to run the following code
+                // on the JavaFX Application Thread
+                runLater(() -> {
+                    showMultiplayerScreen();
+                    multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                    multiplayerScreenCtrl.displayActivities(msg.question.getActivities());
+                });
+                System.out.println("[msg] loadingGame");
+                break;
+            case DISPLAY_ANSWER:
+                runLater(() -> {
+                    System.out.println("[update] topScores: " + msg.topScores);
+                    multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
+                    multiplayerScreenCtrl.updateScore(msg.score);
+                    inBetweenScoreCtrl.setScoreTo(msg.score);
+                    inBetweenScoreCtrl.insertLeaderboard(msg.topScores);
+                });
+                System.out.println("[msg] display answer");
+
+                break;
+            case DISPLAY_INBETWEENSCORES:
+                runLater(() -> {
+                    multiplayerScreenCtrl.updateTitle(msg.questionCounter);
+                    inBetweenScoreCtrl.setQuestionNo(msg.questionCounter);
+                    showInbetweenScore();
+                });
+                System.out.println("[msg] show leaderboard ");
+                break;
+            case END_GAME:
+                runLater(this::showWaitingRoom);
+                System.out.println("[msg] end game");
                 break;
             case NEXT_QUESTION:
                 // runLater() must be used to run the following code
@@ -160,6 +224,18 @@ public class MainCtrl {
         }
     }
 
+    public void leaveSingleplayer() {
+        singleplayerScreenCtrl.whenLeaving();
+    }
+
+    public void stay() {
+        this.stage.close();}
+
+    public void showLeaveWaitingroom(Scene scene, BeforeLeave beforeLeave){
+        leaveCtrl.setBeforeLeave(beforeLeave);
+        showLeave(scene);
+    }
+
     public void showInbetweenScore() {
         primaryStage.setTitle("Score");
         primaryStage.setScene(inBetweenScore);
@@ -182,7 +258,6 @@ public class MainCtrl {
     public void showMultiplayerScreen(){
         primaryStage.setTitle("Multiplayer");
         primaryStage.setScene(multiplayer);
-        multiplayerScreenCtrl.decreaseTime();
     }
 
     public void showSingleLeaderboardScreen(){
@@ -193,6 +268,11 @@ public class MainCtrl {
     public void showWaitingRoom() {
         primaryStage.setTitle("WaitingRoomScreen");
         primaryStage.setScene(waitingRoom);
+    }
+
+    public void showinputNameScreen() {
+        primaryStage.setTitle("input Name");
+        primaryStage.setScene(inputName);
     }
 
     public void showSingleplayerGameScreen(){
@@ -235,18 +315,6 @@ public class MainCtrl {
         return leave;
     }
 
-    public Scene getAdminPanel() {
-        return adminPanel;
-    }
-
-    public Scene getEditActivity() {
-        return editActivity;
-    }
-
-    public Scene getCreateActivity() {
-        return createActivity;
-    }
-
     public Scene getSingleLeaderboard() {
         return singleLeaderboard;
     }
@@ -257,6 +325,14 @@ public class MainCtrl {
 
     public Scene getWaitingRoom() {
         return waitingRoom;
+    }
+
+    public Scene getInputName() {
+        return inputName;
+    }
+
+    public Scene getSingleplayerScreen() {
+        return singleplayerScreen;
     }
 
     public String getClientID() {
@@ -271,4 +347,23 @@ public class MainCtrl {
         return adminPanelCtrl;
     }
 
+    public Scene getAdminPanel(){
+        return adminPanel;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public Scene getEditActivity() {
+        return editActivity;
+    }
+
+    public Scene getCreateActivity() {
+        return createActivity;
+    }
 }

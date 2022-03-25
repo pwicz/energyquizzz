@@ -24,6 +24,7 @@ import client.scenes.AdminPanelCtrl;
 import client.scenes.CreateActivityCtrl;
 import client.scenes.EditActivityCtrl;
 import client.scenes.InBetweenScoreCtrl;
+import client.scenes.InputNameScreenCtrl;
 import client.scenes.LeaveCtrl;
 import client.scenes.MainCtrl;
 import client.scenes.MultiplayerScreenCtrl;
@@ -58,6 +59,8 @@ public class Main extends Application {
                 FXML.load(SingleplayerLeaderboardCtrl.class, "client","scenes", "SingleplayerLeaderboard.fxml");
         var singleplayerGame = FXML.load(SingleplayerScreenCtrl.class,
                 "client","scenes", "SingleplayerGame.fxml");
+        var inputName = FXML.load(InputNameScreenCtrl.class,
+                "client","scenes", "InputNameScreen.fxml");
 
         var waitingRoom = FXML.load(WaitingRoomScreenCtrl.class, "client","scenes", "WaitingRoom.fxml");
         var multiplayerGame =
@@ -69,6 +72,8 @@ public class Main extends Application {
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 
         mainCtrl.initialize(primaryStage, splashScreen, adminPanel, editActivity, createActivity,
-                singleplayerLeaderboard, singleplayerGame, waitingRoom, multiplayerGame, inBetweenScore, leave);
+                singleplayerLeaderboard, singleplayerGame, waitingRoom, multiplayerGame,
+                inBetweenScore, leave, inputName);
+
     }
 }
