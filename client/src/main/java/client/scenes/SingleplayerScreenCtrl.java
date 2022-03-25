@@ -159,12 +159,14 @@ public class SingleplayerScreenCtrl {
     }
 
     public void submitAnswer(){
-        if(!canInteractWithUI) return;
+        if(!canInteractWithUI || choice == null) return;
         canInteractWithUI = false;
 
         if(timer != null){
             timer.stop();
         }
+
+        submit.setDisable(true);
 
         ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
@@ -221,5 +223,6 @@ public class SingleplayerScreenCtrl {
         option3.setStyle("-fx-stroke: #fff");
 
         result.setStyle("visibility: hidden");
+        choice = null;
     }
 }

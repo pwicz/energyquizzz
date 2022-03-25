@@ -87,9 +87,6 @@ public class MultiplayerScreenCtrl {
     @FXML
     Label headTitle;
 
-
-    boolean submitted = false;
-
     @Inject
     public MultiplayerScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
@@ -107,16 +104,18 @@ public class MultiplayerScreenCtrl {
 
     //submits answer, stops time,
     public void submitAnswer(){
-        if(!canInteractWithUI) return;
+        if(!canInteractWithUI || choice == null) return;
         canInteractWithUI = false;
 
         timer.stop();
 
+        submit.setDisable(true);
+
         ClientMessage msg = new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
         msg.chosenActivity = optionToID.get(choice);
-        submit.setDisable(true);
-        submitted = true;
+
+
         server.send("/app/general", msg);
     }
 
@@ -204,6 +203,7 @@ public class MultiplayerScreenCtrl {
         option2.setStyle("-fx-stroke: #fff");
         option3.setStyle("-fx-stroke: #fff");
         optionToID = new HashMap<>();
+        choice = null;
         picked.setStyle("visibility: hidden");
 
     }
@@ -233,9 +233,6 @@ public class MultiplayerScreenCtrl {
 
 
     public void enterAnswer(KeyEvent keyEvent) {
-        if(choice == null){
-            return;
-        }
         if(keyEvent.getCode().equals(KeyCode.L)){ //later should replace L with ENTER
             submitAnswer();
         }
