@@ -99,7 +99,10 @@ public class MultiplayerScreenCtrl {
     }
 
     public void leave(){
-        mainCtrl.showLeave(mainCtrl.getMultiplayer());
+        // inform the server about leaving
+        ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
+                mainCtrl.getClientID(), mainCtrl.getGameID());
+        mainCtrl.showLeave(mainCtrl.getMultiplayer(), () -> server.send("/app/general", msg));
     }
 
     //submits answer, stops time,
