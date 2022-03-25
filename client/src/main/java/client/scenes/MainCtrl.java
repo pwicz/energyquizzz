@@ -248,6 +248,11 @@ public class MainCtrl {
         showLeave(scene);
     }
 
+    public void leaveSingleplayer() {
+        singleplayerScreenCtrl.whenLeaving();
+    }
+
+
     public void stayWaitingroom(Scene previous){
         primaryStage.setScene(previous);
     }
@@ -321,6 +326,10 @@ public class MainCtrl {
 
     public Scene getInputName() {
         return inputName;
+    }
+
+    public Scene getSingleplayerScreen() {
+        return singleplayerScreen;
     }
 
     public String getClientID() {

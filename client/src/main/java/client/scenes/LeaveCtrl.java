@@ -31,9 +31,11 @@ public class LeaveCtrl {
         }
         if(previous.equals(mainCtrl.getSplash())) {
             mainCtrl.getPrimaryStage().close();
-        }else {
-            mainCtrl.showSplash();
+            mainCtrl.stay();
+        }else if(previous.equals(mainCtrl.getSingleplayerScreen())){
+            mainCtrl.leaveSingleplayer();
         }
+        mainCtrl.showSplash();
         mainCtrl.stay();
     }
 
