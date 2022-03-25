@@ -17,30 +17,32 @@
         </styleClass>
     </ListView>
 
-    <Button fx:id="editActivity" onAction="#editActivity" alignment="CENTER" contentDisplay="CENTER" layoutX="560.0" layoutY="776.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="136.0" text="Edit" AnchorPane.bottomAnchor="130.0">
+    <Button fx:id="editActivity" onAction="#editActivity" alignment="CENTER" contentDisplay="CENTER" layoutX="560.0" layoutY="776.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Edit" AnchorPane.bottomAnchor="130.0">
         <styleClass>
             <String fx:value="button" />
             <String fx:value="whiteButton" />
+            <String fx:value="bigButton" />
         </styleClass>
     </Button>
 
-    <Button fx:id="createActivity" onAction="#createActivity" layoutX="817.0" layoutY="776.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="136.0" text="Add" AnchorPane.bottomAnchor="130.0">
+    <Button fx:id="createActivity" onAction="#createActivity" layoutX="817.0" layoutY="776.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Add" AnchorPane.bottomAnchor="130.0">
         <styleClass>
             <String fx:value="button" />
             <String fx:value="greenButton" />
+            <String fx:value="bigButton" />
         </styleClass>
     </Button>
 
-    <Button fx:id="leave" layoutX="48.0" layoutY="925.0" mnemonicParsing="false" onAction="#leave" prefHeight="15.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="32.0">
+    <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="32.0">
         <styleClass>
             <String fx:value="button" />
             <String fx:value="redButton" />
+            <String fx:value="bigButton" />
         </styleClass>
     </Button>
 
     <stylesheets>
         <URL value="@/client/scenes/styles/styles.css" />
-        <URL value="@/client/scenes/styles/adminPanel.css" />
         <URL value="@/client/scenes/styles/leaderboard.css" />
     </stylesheets>
 </AnchorPane>
