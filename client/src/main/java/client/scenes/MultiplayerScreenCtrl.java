@@ -67,13 +67,13 @@ public class MultiplayerScreenCtrl {
     Label title3;
 
     @FXML
-    Text description1;
+    Label description1;
 
     @FXML
-    Text description2;
+    Label description2;
 
     @FXML
-    Text description3;
+    Label description3;
 
     @FXML
     Label score;
@@ -193,7 +193,7 @@ public class MultiplayerScreenCtrl {
 
         List<Rectangle> options = List.of(option1, option2, option3);
         List<Label> titles = List.of(title1, title2, title3);
-        List<Text> descriptions = List.of(description1, description2, description3);
+        List<Label> descriptions = List.of(description1, description2, description3);
         List<ImageView> images = List.of(image1, image2, image3);
 
         for(int i = 0; i < activities.size() && i < 3; ++i){

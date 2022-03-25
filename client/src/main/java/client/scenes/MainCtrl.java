@@ -18,11 +18,10 @@ package client.scenes;
 import client.utils.BeforeLeave;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import commons.ClientMessage;
+import commons.Activity;
 import commons.ServerMessage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -35,12 +34,6 @@ public class MainCtrl {
     private final ServerUtils server;
 
     private Stage primaryStage;
-
-    private QuoteOverviewCtrl overviewCtrl;
-    private Scene overview;
-
-    private AddQuoteCtrl addCtrl;
-    private Scene add;
 
     private Scene waitingRoom;
     private WaitingRoomScreenCtrl waitingRoomScreenCtrl;
@@ -71,7 +64,6 @@ public class MainCtrl {
 
     private Scene createActivity;
     private CreateActivityCtrl createActivityCtrl;
-
 
     private Scene inputName;
     private InputNameScreenCtrl inputNameScreenCtrl;
@@ -132,8 +124,8 @@ public class MainCtrl {
         this.inBetweenScoreCtrl = inBetweenScore.getKey();
         this.inBetweenScore = new Scene(inBetweenScore.getValue());
 
-        this.inputName = new Scene(inputname.getValue());
-        this.inputNameScreenCtrl = inputname.getKey();
+        this.inputName = new Scene(inputName.getValue());
+        this.inputNameScreenCtrl = inputName.getKey();
 
         this.leave = new Scene(leave.getValue());
         this.leaveCtrl = leave.getKey();
@@ -232,10 +224,16 @@ public class MainCtrl {
         }
     }
 
-    public void showOverview() {
-        primaryStage.setTitle("Quotes: Overview");
-        primaryStage.setScene(overview);
-        overviewCtrl.refresh();
+    public void leaveSingleplayer() {
+        singleplayerScreenCtrl.whenLeaving();
+    }
+
+    public void stay() {
+        this.stage.close();}
+
+    public void showLeaveWaitingroom(Scene scene, BeforeLeave beforeLeave){
+        leaveCtrl.setBeforeLeave(beforeLeave);
+        showLeave(scene);
     }
 
     public void showInbetweenScore() {
@@ -252,15 +250,6 @@ public class MainCtrl {
         primaryStage.setScene(previous);
     }
 
-    public void showAdd() {
-        // For testing only: send a test message to the server
-        server.send("/app/general", new ClientMessage(ClientMessage.Type.TEST, clientID, "0"));
-        System.out.println("DID sth");
-
-        primaryStage.setTitle("Quotes: Adding Quote");
-        primaryStage.setScene(add);
-    }
-
     public void showSplash(){
         primaryStage.setTitle("SplashScreen");
         primaryStage.setScene(splash);
@@ -269,7 +258,6 @@ public class MainCtrl {
     public void showMultiplayerScreen(){
         primaryStage.setTitle("Multiplayer");
         primaryStage.setScene(multiplayer);
-        multiplayerScreenCtrl.decreaseTime();
     }
 
     public void showSingleLeaderboardScreen(){
@@ -327,10 +315,6 @@ public class MainCtrl {
         return leave;
     }
 
-    public Scene getOverview() {
-        return overview;
-    }
-
     public Scene getSingleLeaderboard() {
         return singleLeaderboard;
     }
@@ -363,8 +347,8 @@ public class MainCtrl {
         return adminPanelCtrl;
     }
 
-    public String getName() {
-        return name;
+    public Scene getAdminPanel(){
+        return adminPanel;
     }
 
     public Stage getPrimaryStage() {
@@ -373,5 +357,13 @@ public class MainCtrl {
 
     public void setName(String name){
         this.name = name;
+    }
+
+    public Scene getEditActivity() {
+        return editActivity;
+    }
+
+    public Scene getCreateActivity() {
+        return createActivity;
     }
 }

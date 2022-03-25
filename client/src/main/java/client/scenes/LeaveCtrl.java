@@ -1,5 +1,6 @@
 package client.scenes;
 
+import client.utils.BeforeLeave;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import javafx.scene.Scene;
@@ -11,7 +12,6 @@ public class LeaveCtrl {
 
     private Scene previous;
     private BeforeLeave beforeLeave;
-
 
     @Inject
     public LeaveCtrl(ServerUtils server, MainCtrl mainCtrl) {
@@ -30,7 +30,7 @@ public class LeaveCtrl {
         }
         if(previous.equals(mainCtrl.getSplash())) {
             mainCtrl.getPrimaryStage().close();
-            mainCtrl.stay();
+            mainCtrl.stay(previous);
         }else if(previous.equals(mainCtrl.getSingleplayerScreen())){
             mainCtrl.leaveSingleplayer();
         }
