@@ -22,4 +22,8 @@ public class WaitingRoomScreenCtrl {
     public void leave(){
         mainCtrl.showLeave(mainCtrl.getWaitingRoom());
     }
+
+    public void start() {
+
+    }
 }

@@ -21,7 +21,6 @@ public class AdminPanelCtrl {
     @FXML
     Button editActivity;
 
-
     Activity selected;
     private HashMap<String, Activity> optionToActivity;
 
