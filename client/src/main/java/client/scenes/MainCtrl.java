@@ -22,6 +22,7 @@ import commons.ClientMessage;
 import commons.ServerMessage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -67,12 +68,17 @@ public class MainCtrl {
 
     private String clientID = null;
     private String gameID = null;
+
+    private Stage stage = new Stage();
+
     private String name = null;
+
 
     @Inject
     public MainCtrl(ServerUtils server) {
         this.server = server;
     }
+
 
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
                            Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
@@ -112,8 +118,10 @@ public class MainCtrl {
         this.singleplayerScreen = new Scene(singleplayerGame.getValue());
         this.singleplayerScreenCtrl = singleplayerGame.getKey();
 
+
         this.inputName = new Scene(inputname.getValue());
         this.inputNameScreenCtrl = inputname.getKey();
+
 
         showOverview();
         primaryStage.show();
@@ -223,17 +231,29 @@ public class MainCtrl {
     }
 
     public void showLeave(Scene scene){
+        this.stage = new Stage();
         leaveCtrl.setPrevious(scene);
-        primaryStage.setScene(leave);
+        this.stage.setScene(leave);
+        this.stage.initModality(Modality.APPLICATION_MODAL);
+        this.stage.showAndWait();
     }
 
-    public void showLeave(Scene scene, BeforeLeave beforeLeave){
-        leaveCtrl.setPrevious(scene);
+
+    public void stay() {
+        this.stage.close();
+
+    }
+    public void showLeaveWaitingroom(Scene scene, BeforeLeave beforeLeave){
         leaveCtrl.setBeforeLeave(beforeLeave);
-        primaryStage.setScene(leave);
+        showLeave(scene);
     }
 
-    public void stay(Scene previous){
+    public void leaveSingleplayer() {
+        singleplayerScreenCtrl.whenLeaving();
+    }
+
+
+    public void stayWaitingroom(Scene previous){
         primaryStage.setScene(previous);
     }
 
@@ -310,6 +330,10 @@ public class MainCtrl {
         return inputName;
     }
 
+    public Scene getSingleplayerScreen() {
+        return singleplayerScreen;
+    }
+
     public String getClientID() {
         return clientID;
     }
@@ -320,6 +344,10 @@ public class MainCtrl {
 
     public String getName() {
         return name;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 
     public void setName(String name){
