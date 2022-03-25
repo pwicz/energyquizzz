@@ -9,12 +9,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
 
-    <Label alignment="CENTER" layoutX="325.0" layoutY="73.0" prefHeight="80.0" prefWidth="869.0" styleClass="question" text="Question 5: Which activity consumes most energy?" AnchorPane.bottomAnchor="829.0">
+    <Label fx:id="headTitle" alignment="CENTER" layoutX="213.0" layoutY="72.0" prefHeight="80.0" prefWidth="1092.0" styleClass="question" text="Question 5: Which activity consumes most energy?" AnchorPane.bottomAnchor="830.0">
     </Label>
 
     <ProgressBar fx:id="timeBar" layoutX="237.0" layoutY="207.0" prefHeight="40.0" prefWidth="1038.0" progress="0.0" styleClass="timeBar" AnchorPane.bottomAnchor="735.0" />
 
-    <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="369.0" layoutX="293.0" layoutY="393.0" onMouseClicked="#lockAnswer" strokeType="INSIDE" width="251.0" AnchorPane.bottomAnchor="220.0">
+    <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="369.0" layoutX="293.0" layoutY="393.0" onMouseClicked="#lockAnswer" strokeType="INSIDE" width="251.0" AnchorPane.bottomAnchor="218.0">
         <styleClass>
             <String fx:value="option" />
             <String fx:value="hover-element" />
@@ -33,28 +33,28 @@
         </styleClass>
     </Rectangle>
 
-    <Label alignment="CENTER" layoutX="323.0" layoutY="634.0" prefHeight="30.0" prefWidth="191.0" styleClass="questionTitle" text="Gaming" AnchorPane.bottomAnchor="318.0">
+    <Label fx:id="title1" alignment="CENTER" layoutX="323.0" layoutY="634.0" prefHeight="30.0" prefWidth="191.0" styleClass="questionTitle" text="Gaming" AnchorPane.bottomAnchor="318.0">
     </Label>
-    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="656.0" layoutY="634.0" prefHeight="30.0" prefWidth="195.0" styleClass="questionTitle" text="Charging a car" textAlignment="CENTER" AnchorPane.bottomAnchor="318.0">
+    <Label fx:id="title2" alignment="CENTER" contentDisplay="CENTER" layoutX="656.0" layoutY="634.0" prefHeight="30.0" prefWidth="195.0" styleClass="questionTitle" text="Charging a car" textAlignment="CENTER" AnchorPane.bottomAnchor="318.0">
     </Label>
-    <Label alignment="CENTER" layoutX="987.0" layoutY="634.0" prefHeight="30.0" prefWidth="200.0" styleClass="questionTitle" text="Gaming">
+    <Label fx:id="title3" alignment="CENTER" layoutX="987.0" layoutY="634.0" prefHeight="30.0" prefWidth="200.0" styleClass="questionTitle" text="Gaming" AnchorPane.bottomAnchor="318.0">
     </Label>
 
-    <Label layoutX="306.0" layoutY="681.0" prefHeight="60.0" prefWidth="226.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER">
+    <Label fx:id="description1" layoutX="306.0" layoutY="671.0" prefHeight="80.0" prefWidth="226.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="231.0">
     </Label>
     <Label />
-    <Label alignment="CENTER" layoutX="643.0" layoutY="681.0" prefHeight="60.0" prefWidth="226.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER">
+    <Label fx:id="description2" alignment="CENTER" layoutX="641.0" layoutY="664.0" prefHeight="80.0" prefWidth="226.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="231.0">
     </Label>
-    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="974.0" layoutY="681.0" prefHeight="60.0" prefWidth="226.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER">
+    <Label fx:id="description3" alignment="CENTER" contentDisplay="CENTER" layoutX="974.0" layoutY="681.0" prefHeight="80.0" prefWidth="226.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="231.0">
     </Label>
 
-    <ImageView fx:id="image1" fitHeight="200.0" fitWidth="200.0" layoutX="319.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="366.0">
+    <ImageView fx:id="image1" fitHeight="200.0" fitWidth="200.0" layoutX="319.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="374.0">
         <Image url="@/client/scenes/images/tempShit.png" />
     </ImageView>
-    <ImageView fx:id="image2" fitHeight="200.0" fitWidth="200.0" layoutX="659.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures">
+    <ImageView fx:id="image2" fitHeight="200.0" fitWidth="200.0" layoutX="659.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="374.0">
         <Image url="@/client/scenes/images/tempShit.png" />
     </ImageView>
-    <ImageView fx:id="image3" fitHeight="200.0" fitWidth="200.0" layoutX="994.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures">
+    <ImageView fx:id="image3" fitHeight="200.0" fitWidth="200.0" layoutX="994.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="374.0">
         <Image url="@/client/scenes/images/tempShit.png" />
     </ImageView>
 
