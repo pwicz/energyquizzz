@@ -67,21 +67,25 @@ public class EditActivityCtrl {
 
     public void saveActivity(MouseEvent actionEvent) throws MalformedURLException {
         String title = titleField.getText();
-        int consumption;
+        int consumption = 0;
         String source = sourceField.getText();
         String image = imageField.getText();
+        boolean canBeSaved = true;
 
         if(title == null || title.length() == 0){
+            canBeSaved = false;
             titleErrorText.setVisible(true);
         }else{
             titleErrorText.setVisible(false);
         }
         if(source == null || source.length() == 0){
+            canBeSaved = false;
             sourceErrorText.setVisible(true);
         }else{
             sourceErrorText.setVisible(false);
         }
         if(image == null || image.length() == 0){
+            canBeSaved = false;
             imageErrorText.setVisible(true);
         }else{
             imageErrorText.setVisible(false);
@@ -92,11 +96,12 @@ public class EditActivityCtrl {
             if(consumption > 0){
                 consumptionErrorText.setVisible(false);
             }else{
+                canBeSaved = false;
                 consumptionErrorText.setVisible(true);
             }
         } catch (final NumberFormatException e) {
+            canBeSaved = false;
             consumptionErrorText.setVisible(true);
-            throw new IllegalArgumentException("Invalid number");
         }
 
         try {
@@ -104,24 +109,21 @@ public class EditActivityCtrl {
             URLConnection srcConn = sourceUrl.openConnection();
             srcConn.connect();
         } catch (MalformedURLException e) {
+            canBeSaved = false;
             sourceErrorText.setVisible(true);
             throw new MalformedURLException("The URL provided is not valid");
         } catch (IOException e) {
+            canBeSaved = false;
             e.printStackTrace();
         }
 
-        if(title == null || title.length() == 0
-                || consumption <= 0
-                || source == null || source.length() == 0
-                || image == null  || image.length() == 0){
-            throw new IllegalArgumentException("The data provided is invalid");
+        if(canBeSaved){
+            Activity newActivity = new Activity(title, consumption,
+                    source, image);
+
+            server.editActivity(currentActivityID, newActivity);
+            mainCtrl.showAdminPanel();
         }
-
-        Activity newActivity = new Activity(title, consumption,
-                source, image);
-
-        server.editActivity(currentActivityID, newActivity);
-        mainCtrl.showAdminPanel();
     }
 
     public void remove(ActionEvent actionEvent){
