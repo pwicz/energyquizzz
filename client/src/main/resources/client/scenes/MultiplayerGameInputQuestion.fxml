@@ -15,6 +15,7 @@
 
 
 <?import java.lang.String?>
+<?import javafx.scene.text.Text?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@/client/scenes/MultiplayerInputQuestion.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
    <children>
       <Button layoutX="200.0" layoutY="887.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="150.0" text="Leave" textFill="#e0503d" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="50.0">
@@ -73,6 +74,11 @@
             <Font size="45.0" />
          </font>
       </Label>
+       <Text fx:id="description" fill="WHITE" layoutX="576.0" layoutY="418.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Play computer games for 5 hours." textAlignment="CENTER" wrappingWidth="334.6666259765623">
+           <font>
+               <Font size="23.0" />
+           </font>
+       </Text>
       <ProgressBar fx:id="timeBar" layoutX="237.0" layoutY="207.0" prefHeight="40.0" prefWidth="1038.0" progress="0.0" styleClass="timeBar"  AnchorPane.leftAnchor="237.0" AnchorPane.rightAnchor="237.0" AnchorPane.topAnchor="207.0" />
        <Label fx:id="score" layoutX="688.0" layoutY="847.0" styleClass="score" text="Score: 120" textFill="#38c768" AnchorPane.leftAnchor="688.0" AnchorPane.rightAnchor="687.0" AnchorPane.topAnchor="931.0">
            <font>
