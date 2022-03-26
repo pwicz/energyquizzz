@@ -33,19 +33,9 @@ public class WaitingRoomScreenCtrl {
                 new ClientMessage(ClientMessage.Type.QUIT_WAITING_ROOM, mainCtrl.getClientID(), mainCtrl.getGameID())));
     }
 
-<<<<<<< client/src/main/java/client/scenes/WaitingRoomScreenCtrl.java
-    public void start() {
-
-    }
-=======
     public void updatePlayerList(List<String> names){
         playerList.getItems().clear();
         playerList.getItems().addAll(names);
     }
 
-    public void start(){
-        
-    }
-
->>>>>>> client/src/main/java/client/scenes/WaitingRoomScreenCtrl.java
 }

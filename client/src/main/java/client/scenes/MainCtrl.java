@@ -106,6 +106,7 @@ public class MainCtrl {
 
         this.createActivityCtrl = createActivity.getKey();
         this.createActivity = new Scene(createActivity.getValue());
+
         this.waitingRoom = new Scene(waitingRoom.getValue());
         this.waitingRoomScreenCtrl = waitingRoom.getKey();
 
@@ -117,9 +118,6 @@ public class MainCtrl {
 
         this.multiplayerScreenCtrl = multiplayer.getKey();
         this.multiplayer = new Scene(multiplayer.getValue());
-
-        this.splashScreenCtrl = splashScreen.getKey();
-        this.splash = new Scene(splashScreen.getValue());
 
         this.inBetweenScoreCtrl = inBetweenScore.getKey();
         this.inBetweenScore = new Scene(inBetweenScore.getValue());

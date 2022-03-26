@@ -10,14 +10,14 @@
     <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="149.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="Admin Panel" AnchorPane.bottomAnchor="730.0">
     </Label>
 
-    <ListView fx:id="activityBox" layoutX="390.0" layoutY="284.0" prefHeight="437.0" prefWidth="734.0" AnchorPane.bottomAnchor="261.0">
+    <ListView fx:id="activityBox" layoutX="390.0" layoutY="284.0" onMouseClicked="#setCurrentActivity" prefHeight="437.0" prefWidth="734.0" AnchorPane.bottomAnchor="261.0">
         <styleClass>
             <String fx:value="container" />
             <String fx:value="gradientBox" />
         </styleClass>
     </ListView>
 
-    <Button fx:id="editActivity" onAction="#editActivity" alignment="CENTER" contentDisplay="CENTER" layoutX="560.0" layoutY="776.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="136.0" text="Edit" AnchorPane.bottomAnchor="130.0">
+    <Button fx:id="editActivity" alignment="CENTER" contentDisplay="CENTER" layoutX="560.0" layoutY="776.0" mnemonicParsing="false" onAction="#editActivity" prefHeight="50.0" prefWidth="136.0" text="Edit" AnchorPane.bottomAnchor="130.0">
         <styleClass>
             <String fx:value="button" />
             <String fx:value="whiteButton" />
@@ -25,10 +25,11 @@
         </styleClass>
     </Button>
 
-    <Button fx:id="createActivity" onAction="#createActivity" layoutX="817.0" layoutY="776.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="136.0" text="Add" AnchorPane.bottomAnchor="130.0">
+    <Button fx:id="createActivity" layoutX="817.0" layoutY="776.0" mnemonicParsing="false" onAction="#createActivity" prefHeight="50.0" prefWidth="136.0" text="Add" AnchorPane.bottomAnchor="130.0">
         <styleClass>
             <String fx:value="button" />
             <String fx:value="greenButton" />
+            <String fx:value="bigButton" />
         </styleClass>
     </Button>
 
@@ -36,6 +37,7 @@
         <styleClass>
             <String fx:value="button" />
             <String fx:value="redButton" />
+            <String fx:value="bigButton" />
         </styleClass>
     </Button>
 

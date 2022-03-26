@@ -60,6 +60,7 @@
         <styleClass>
             <String fx:value="button" />
             <String fx:value="greenButton" />
+            <String fx:value="bigButton" />
         </styleClass>
     </Button>
 
@@ -67,6 +68,7 @@
         <styleClass>
             <String fx:value="button" />
             <String fx:value="redButton" />
+            <String fx:value="bigButton" />
         </styleClass>
     </Button>
 
