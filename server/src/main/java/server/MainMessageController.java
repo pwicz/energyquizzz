@@ -269,6 +269,7 @@ public class MainMessageController {
 
     private void endGame(Game g) {
         g.setHasEnded(true);
+
         games.remove(g.getID());
     }
 
@@ -364,10 +365,19 @@ public class MainMessageController {
                 @Override
                 public void run() {
                     System.out.println("[msg] ending game");
+
+                    sendMessageToAllPlayers(new ServerMessage(ServerMessage.Type.END_GAME), g);
+
                     for(var p : g.getPlayers()){
-                        ServerMessage result = new ServerMessage(ServerMessage.Type.END_GAME);
-                        simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
+                        p.setScore(0);
+                        waitingRoom.addPlayer(p);
                     }
+
+                    ServerMessage temp = new ServerMessage(ServerMessage.Type.EXTRA_PLAYER);
+                    temp.playersWaiting = getWaitingListOfPlayers(waitingRoom);
+
+                    sendMessageToAllPlayers(temp, waitingRoom);
+
                 }
             }, 6000);
         }
