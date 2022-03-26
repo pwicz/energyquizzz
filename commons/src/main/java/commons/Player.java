@@ -6,6 +6,7 @@ public class Player {
     private String name;
     private String ID;
     private int score = 0;
+    private boolean answerStatus = false;
 
     public Player(String name, String ID) {
         this.name = name;
@@ -42,5 +43,12 @@ public class Player {
 
     public void setHasAnswered(boolean hasAnswered) {
         this.hasAnswered = hasAnswered;
+    }
+
+    public void setAnswerStatus(boolean status){
+        answerStatus = status;
+    }
+    public boolean getAnswerStatus(){
+        return answerStatus;
     }
 }
