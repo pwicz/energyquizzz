@@ -80,25 +80,25 @@
         <Image url="@/client/scenes/images/hourglass.png"/>
     </ImageView>
 
-    <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="72.0" layoutX="293.0" layoutY="690.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="293.0" AnchorPane.topAnchor="690.0">
+    <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="72.0" layoutX="293.0" layoutY="690.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="293.0" AnchorPane.topAnchor="690.0">
         <styleClass>
             <String fx:value="option" />
             <String fx:value="hover-element" />
         </styleClass>
     </Rectangle>
-    <Rectangle fx:id="option2" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="72.0" layoutX="623.0" layoutY="691.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="630.0" AnchorPane.topAnchor="691.0">
+    <Rectangle fx:id="option2" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="72.0" layoutX="623.0" layoutY="691.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="630.0" AnchorPane.topAnchor="691.0">
         <styleClass>
             <String fx:value="option" />
             <String fx:value="hover-element" />
         </styleClass>
     </Rectangle>
-    <Rectangle fx:id="option3" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="72.0" layoutX="968.0" layoutY="690.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="968.0" AnchorPane.topAnchor="691.0">
+    <Rectangle fx:id="option3" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="72.0" layoutX="968.0" layoutY="690.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="968.0" AnchorPane.topAnchor="691.0">
         <styleClass>
             <String fx:value="option" />
             <String fx:value="hover-element" />
         </styleClass>
     </Rectangle>
-    <Rectangle fx:id="activity" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="631.0" layoutY="284.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.bottomAnchor="329.0">
+    <Rectangle fx:id="activity" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="369.0" layoutX="631.0" layoutY="284.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.bottomAnchor="329.0">
         <styleClass>
             <String fx:value="option" />
             <String fx:value="hover-element" />

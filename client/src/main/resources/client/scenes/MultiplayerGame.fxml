@@ -14,25 +14,6 @@
 
     <ProgressBar fx:id="timeBar" layoutX="237.0" layoutY="207.0" prefHeight="40.0" prefWidth="1038.0" progress="0.0" styleClass="timeBar" AnchorPane.bottomAnchor="735.0" />
 
-    <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="369.0" layoutX="293.0" layoutY="393.0" onMouseClicked="#lockAnswer" strokeType="INSIDE" width="251.0" AnchorPane.bottomAnchor="218.0">
-        <styleClass>
-            <String fx:value="option" />
-            <String fx:value="hover-element" />
-        </styleClass>
-    </Rectangle>
-    <Rectangle fx:id="option2" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="369.0" layoutX="628.0" layoutY="395.0" onMouseClicked="#lockAnswer" strokeType="INSIDE" width="251.0" AnchorPane.bottomAnchor="218.0">
-        <styleClass>
-            <String fx:value="option" />
-            <String fx:value="hover-element" />
-        </styleClass>
-    </Rectangle>
-    <Rectangle fx:id="option3" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="369.0" layoutX="961.0" layoutY="395.0" onMouseClicked="#lockAnswer" strokeType="INSIDE" width="251.0" AnchorPane.bottomAnchor="218.0">
-        <styleClass>
-            <String fx:value="option" />
-            <String fx:value="hover-element" />
-        </styleClass>
-    </Rectangle>
-
     <Label fx:id="title1" alignment="CENTER" layoutX="323.0" layoutY="634.0" prefHeight="30.0" prefWidth="191.0" styleClass="questionTitle" text="Gaming" AnchorPane.bottomAnchor="318.0">
     </Label>
     <Label fx:id="title2" alignment="CENTER" contentDisplay="CENTER" layoutX="656.0" layoutY="634.0" prefHeight="30.0" prefWidth="195.0" styleClass="questionTitle" text="Charging a car" textAlignment="CENTER" AnchorPane.bottomAnchor="318.0">
@@ -114,6 +95,25 @@
             <String fx:value="bigButton" />
         </styleClass>
     </Button>
+
+    <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="369.0" layoutX="293.0" layoutY="393.0" onMouseClicked="#lockAnswer" strokeType="INSIDE" width="251.0" AnchorPane.bottomAnchor="218.0">
+        <styleClass>
+            <String fx:value="option" />
+            <String fx:value="hover-element" />
+        </styleClass>
+    </Rectangle>
+    <Rectangle fx:id="option2" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="369.0" layoutX="628.0" layoutY="395.0" onMouseClicked="#lockAnswer" strokeType="INSIDE" width="251.0" AnchorPane.bottomAnchor="218.0">
+        <styleClass>
+            <String fx:value="option" />
+            <String fx:value="hover-element" />
+        </styleClass>
+    </Rectangle>
+    <Rectangle fx:id="option3" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="369.0" layoutX="961.0" layoutY="395.0" onMouseClicked="#lockAnswer" strokeType="INSIDE" width="251.0" AnchorPane.bottomAnchor="218.0">
+        <styleClass>
+            <String fx:value="option" />
+            <String fx:value="hover-element" />
+        </styleClass>
+    </Rectangle>
 
     <stylesheets>
         <URL value="@/client/scenes/styles/styles.css" />
