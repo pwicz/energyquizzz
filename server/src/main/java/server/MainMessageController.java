@@ -373,6 +373,8 @@ public class MainMessageController {
                         waitingRoom.addPlayer(p);
                     }
 
+                    games.remove(g.getID());
+
                     ServerMessage temp = new ServerMessage(ServerMessage.Type.EXTRA_PLAYER);
                     temp.playersWaiting = getWaitingListOfPlayers(waitingRoom);
 
