@@ -118,9 +118,6 @@ public class MainCtrl {
         this.multiplayerScreenCtrl = multiplayer.getKey();
         this.multiplayer = new Scene(multiplayer.getValue());
 
-        this.splashScreenCtrl = splashScreen.getKey();
-        this.splash = new Scene(splashScreen.getValue());
-
         this.inBetweenScoreCtrl = inBetweenScore.getKey();
         this.inBetweenScore = new Scene(inBetweenScore.getValue());
 

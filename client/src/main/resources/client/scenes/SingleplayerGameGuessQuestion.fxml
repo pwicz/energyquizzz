@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="/client/scenes/Singleplayer_Game.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerScreenCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="/client/scenes/styles/game.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerScreenCtrl">
     <children>
         <Rectangle fx:id="activity" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="369.0" layoutX="630.0" layoutY="450.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.leftAnchor="630.0" AnchorPane.topAnchor="286.0">
             <styleClass>
@@ -52,16 +52,16 @@
             </font>
         </Label>
         <Text layoutX="431.0" layoutY="535.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="28.373046875" />
-        <Text fx:id="description2" fill="WHITE" layoutX="656.0" layoutY="594.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" wrappingWidth="199.99999999999977">
+        <Label fx:id="description2" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" >
             <font>
                 <Font size="15.0" />
             </font>
-        </Text>
-        <Text fx:id="description1" fill="WHITE" layoutX="295.0" layoutY="730.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="temp cost KWH" textAlignment="CENTER" wrappingWidth="249.0" AnchorPane.bottomAnchor="248.2353515625" AnchorPane.leftAnchor="295.0" AnchorPane.topAnchor="713.8134765625">
+        </Label>
+        <Label fx:id="description1" styleClass="description" text="temp cost KWH" textAlignment="CENTER" AnchorPane.bottomAnchor="248.2353515625" AnchorPane.leftAnchor="295.0" AnchorPane.topAnchor="713.8134765625">
             <font>
                 <Font size="15.0" />
             </font>
-        </Text>
+        </Label>
         <Button fx:id="submit" disable="true" layoutX="1312.0" layoutY="700.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="15.0" prefWidth="150.0" styleClass="submit-btn" text="submit" textFill="#38c768">
             <font>
                 <Font size="20.0" />
@@ -92,11 +92,11 @@
             <String fx:value="hover-element" />
         </styleClass>
     </Rectangle>
-      <Text fx:id="description3" fill="WHITE" layoutX="996.0" layoutY="723.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="temp cost KWH" textAlignment="CENTER" wrappingWidth="249.0" AnchorPane.bottomAnchor="248.0" AnchorPane.leftAnchor="968.0">
+      <Label fx:id="description3" styleClass="description" text="temp cost KWH" textAlignment="CENTER" AnchorPane.bottomAnchor="248.0" AnchorPane.leftAnchor="968.0">
          <font>
             <Font size="15.0" />
          </font>
-      </Text>
+      </Label>
 
     </children>
 </AnchorPane>
