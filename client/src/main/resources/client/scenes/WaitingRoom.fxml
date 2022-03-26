@@ -16,10 +16,10 @@
     <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="325.0" prefHeight="25.0" prefWidth="734.0" styleClass="smallTitle" text="Players waiting:" AnchorPane.bottomAnchor="612.0">
     </Label>
 
-    <ListView fx:id="waitingList" layoutX="510.0" layoutY="401.0" prefHeight="328.0" prefWidth="495.0" styleClass="waitingBox" AnchorPane.bottomAnchor="253.0">
+    <ListView fx:id="waitingList" layoutX="510.0" layoutY="401.0" prefHeight="335.0" prefWidth="495.0" styleClass="waitingBox" AnchorPane.bottomAnchor="246.0">
     </ListView>
 
-    <Button fx:id="start" layoutX="643.0" layoutY="751.0" mnemonicParsing="false" onAction="#start" prefHeight="63.0" prefWidth="226.0" text="Start" AnchorPane.bottomAnchor="168.0">
+    <Button fx:id="start" layoutX="643.0" layoutY="772.0" mnemonicParsing="false" onMouseClicked="#start" prefHeight="63.0" prefWidth="226.0" text="Start" AnchorPane.bottomAnchor="134.0">
         <styleClass>
             <String fx:value="button" />
             <String fx:value="greenButton" />

@@ -179,8 +179,10 @@ public class MainMessageController {
         int scoreForQuestion = 0;
         if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
             scoreForQuestion = 100 + (int) (100 * msg.time);
+            p.setAnswerStatus(true);
         }
         p.setScore(p.getScore() + scoreForQuestion);
+
     }
 
     private ServerMessage initSingleplayerGame(ClientMessage msg) {
@@ -327,6 +329,9 @@ public class MainMessageController {
         result.score = p.getScore();
         result.pickedID = msg.chosenActivity;
         result.correctID = g.getCorrectAnswerID();
+        result.correctlyAnswered = correctAnswer(g);
+        result.incorrectlyAnswered = incorrectAnswer(g);
+
         return result;
     }
 
@@ -362,6 +367,38 @@ public class MainMessageController {
         return topScores;
     }
 
+    /**
+     * It returns the names of the people who answered correctly as a list of strings.
+     * @param game the current game
+     * @return a list of the names of people who answered correctly
+     */
+    public List<String> correctAnswer(Game game){
+        List<Player> playerList = game.getPlayers().stream()
+                .filter(p -> p.getAnswerStatus() == true)
+                .collect(Collectors.toList());
+        List<String> correctAnswers = new ArrayList<>();
+        for (Player p : playerList) {
+            correctAnswers.add(p.getName());
+        }
+        return correctAnswers;
+    }
+
+    /**
+     * It returns the names of the people who answered incorrectly as a list of strings.
+     * @param game the current game
+     * @return a list of the names of people who answered incorrectly
+     */
+    public List<String> incorrectAnswer(Game game){
+        List<Player> playerList = game.getPlayers().stream()
+                .filter(p -> p.getAnswerStatus() == false)
+                .collect(Collectors.toList());
+        List<String> incorrectAnswers = new ArrayList<>();
+        for (Player p : playerList) {
+          incorrectAnswers.add(p.getName());
+        }
+        return incorrectAnswers;
+    }
+
     //show questions again after 6 seconds
     public void showQuestions(ClientMessage msg) {
         Thread myThread = new Thread(() -> {
@@ -370,6 +407,11 @@ public class MainMessageController {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            for(Player p: games.get(msg.gameID).getPlayers()){
+                p.setAnswerStatus(false);
+            }
+
             if (games.get(msg.gameID).getQuestionCounter() < 20)
                 simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, nextMultiQuestion(
                         games.get(msg.gameID).getPlayerWithID(msg.playerID).getScore(), games.get(msg.gameID))
