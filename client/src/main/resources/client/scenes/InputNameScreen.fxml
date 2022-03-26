@@ -1,15 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="251.0" prefWidth="821.0" styleClass="anchor" stylesheets="@/client/scenes/styles/inputname.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.InputNameScreenCtrl">
-   <children>
-      <Button fx:id="leave" layoutX="58.0" layoutY="195.0" mnemonicParsing="false" onAction="#leave" prefHeight="30.0" prefWidth="140.0" styleClass="leave" text="Leave" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="629.0" AnchorPane.topAnchor="195.0" />
-      <Button fx:id="join" layoutX="344.0" layoutY="126.0" mnemonicParsing="false" onAction="#join" prefHeight="30.0" prefWidth="134.0" style="" styleClass="join" text="Join" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="344.0" AnchorPane.rightAnchor="343.0" AnchorPane.topAnchor="126.0" />
-      <Label layoutX="198.0" layoutY="32.0" styleClass="message" text="Choose a unique name to join this waiting room" AnchorPane.bottomAnchor="189.0" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="197.66666666666669" AnchorPane.topAnchor="32.0" />
-      <TextField fx:id="textBox" alignment="CENTER" layoutX="277.0" layoutY="77.0" prefHeight="30.0" prefWidth="265.0" promptText="Enter your name" styleClass="textPrompt" AnchorPane.bottomAnchor="144.0" AnchorPane.leftAnchor="276.99999999999994" AnchorPane.rightAnchor="278.6666666666667" AnchorPane.topAnchor="77.0" />
-   </children>
+<AnchorPane prefHeight="251.0" prefWidth="821.0" styleClass="background" stylesheets="@/client/scenes/styles/inputname.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.InputNameScreenCtrl">
+
+   <Label layoutX="201.0" layoutY="48.0" styleClass="message" text="Choose a unique name to join this waiting room" AnchorPane.bottomAnchor="175.0" />
+   <TextField fx:id="textBox" alignment="CENTER" layoutX="278.0" layoutY="99.0" prefHeight="30.0" prefWidth="265.0" promptText="Enter your name" styleClass="textPrompt" AnchorPane.bottomAnchor="122.0" />
+
+   <Button fx:id="join" layoutX="344.0" layoutY="159.0" mnemonicParsing="false" onAction="#join" prefHeight="30.0" prefWidth="134.0" text="Join" AnchorPane.bottomAnchor="54.0">
+      <styleClass>
+         <String fx:value="button" />
+         <String fx:value="greenButton" />
+         <String fx:value="smallButton" />
+      </styleClass>
+   </Button>
+
+   <Button layoutX="28.0" layoutY="189.0" mnemonicParsing="false" onAction="#leave" prefHeight="26.0" prefWidth="141.0" text="Leave" AnchorPane.bottomAnchor="24.0">
+      <styleClass>
+         <String fx:value="button" />
+         <String fx:value="redButton" />
+         <String fx:value="smallButton" />
+      </styleClass>
+   </Button>
+
+   <stylesheets>
+      <URL value="@/client/scenes/styles/styles.css" />
+      <URL value="@/client/scenes/styles/leave.css" />
+   </stylesheets>
+
 </AnchorPane>
