@@ -3,13 +3,12 @@ package client.scenes;
 import client.utils.BeforeLeave;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import javafx.scene.Scene;
 
 public class LeaveCtrl {
 
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
-    private Scene previous;
+
     private BeforeLeave beforeLeave;
 
     @Inject
@@ -19,25 +18,18 @@ public class LeaveCtrl {
     }
 
     public void stay(){
-        mainCtrl.stay(previous);
+        mainCtrl.closePopup();
     }
 
     public void leave(){
         if(beforeLeave != null)
             beforeLeave.soSomething();
 
+        mainCtrl.closePopup();
         mainCtrl.showSplash();
-    }
-
-    public void setPrevious(Scene previous) {
-        this.previous = previous;
     }
 
     public void setBeforeLeave(BeforeLeave beforeLeave) {
         this.beforeLeave = beforeLeave;
-    }
-
-    public Scene getPrevious() {
-        return previous;
     }
 }

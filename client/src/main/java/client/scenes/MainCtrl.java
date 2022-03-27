@@ -22,6 +22,7 @@ import commons.ClientMessage;
 import commons.ServerMessage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -67,12 +68,17 @@ public class MainCtrl {
 
     private String clientID = null;
     private String gameID = null;
+
+    private Stage stage = new Stage();
+
     private String name = null;
+
 
     @Inject
     public MainCtrl(ServerUtils server) {
         this.server = server;
     }
+
 
     public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
                            Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
@@ -112,8 +118,10 @@ public class MainCtrl {
         this.singleplayerScreen = new Scene(singleplayerGame.getValue());
         this.singleplayerScreenCtrl = singleplayerGame.getKey();
 
+
         this.inputName = new Scene(inputname.getValue());
         this.inputNameScreenCtrl = inputname.getKey();
+
 
         showOverview();
         primaryStage.show();
@@ -162,6 +170,8 @@ public class MainCtrl {
                     multiplayerScreenCtrl.updateScore(msg.score);
                     inBetweenScoreCtrl.setScoreTo(msg.score);
                     inBetweenScoreCtrl.insertLeaderboard(msg.topScores);
+                    inBetweenScoreCtrl.insertLeaderboardG(msg.correctlyAnswered);
+                    inBetweenScoreCtrl.insertLeaderboardR(msg.incorrectlyAnswered);
                 });
                 System.out.println("[msg] display answer");
 
@@ -223,17 +233,31 @@ public class MainCtrl {
     }
 
     public void showLeave(Scene scene){
-        leaveCtrl.setPrevious(scene);
-        primaryStage.setScene(leave);
+        this.stage = new Stage();
+        this.stage.setScene(leave);
+        this.stage.initModality(Modality.APPLICATION_MODAL);
+        this.stage.showAndWait();
     }
 
     public void showLeave(Scene scene, BeforeLeave beforeLeave){
-        leaveCtrl.setPrevious(scene);
+        this.stage = new Stage();
         leaveCtrl.setBeforeLeave(beforeLeave);
-        primaryStage.setScene(leave);
+
+        this.stage.setScene(leave);
+        this.stage.initModality(Modality.APPLICATION_MODAL);
+        this.stage.showAndWait();
     }
 
-    public void stay(Scene previous){
+    public void closePopup() {
+        this.stage.close();
+    }
+
+    public void showLeaveWaitingroom(Scene scene, BeforeLeave beforeLeave){
+        leaveCtrl.setBeforeLeave(beforeLeave);
+        showLeave(scene);
+    }
+
+    public void stayWaitingroom(Scene previous){
         primaryStage.setScene(previous);
     }
 
@@ -260,6 +284,8 @@ public class MainCtrl {
     public void showSingleLeaderboardScreen(){
         primaryStage.setTitle("Leaderboard");
         primaryStage.setScene(singleLeaderboard);
+
+        singleplayerLeaderboardCtrl.insertLeaderboard();
     }
 
     public void showWaitingRoom() {
@@ -322,6 +348,10 @@ public class MainCtrl {
 
     public String getName() {
         return name;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 
     public void setName(String name){

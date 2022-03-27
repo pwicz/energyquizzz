@@ -1,73 +1,19 @@
 @font-face {
     font-family: 'Roboto';
-    src: url('Roboto-Thin.ttf');
+    /*src: url('Roboto-Thin.ttf');*/
 }
 
 .root{
     -fx-background-color: #272727;
 }
-
 .text{
     -fx-font-family: "Roboto";
     -fx-content-display: center;
 }
-
 .question{
     -fx-text-fill: #38c768;
     -fx-font-size: 45;
-    -fx-alignment: center;
 }
-
-.picked-text{
-    -fx-text-fill: white;
-    -fx-font-size: 25px;
-    -fx-content-display: none;
-}
-
-.description{
-    -fx-font-family: Roboto;
-}
-
-.option{
-    -fx-stroke: white;
-    -fx-background-color: none;
-    -fx-border-radius: 5;
-}
-
-.questionTitle, #leave{
-    -fx-font-size: 20;
-}
-
-.emoji-box{
-    -fx-background-color: none;
-    -fx-stroke: linear-gradient(to right,#38c768, #21A0E8);
-}
-
-.joker-box{
-    -fx-background-color: none;
-    -fx-stroke: linear-gradient(to left,#38c768, #21A0E8);
-}
-
-.option:hover{
-    -fx-stroke: linear-gradient(#38c768, #21A0E8);
-}
-
-.hover-element{
-    -fx-cursor: hand;
-}
-
-
-
-.timeBar{
-    -fx-accent: #21A0E8;
-    -fx-border-color: #38c768;
-    -fx-border-radius: 5;
-}
-
-.progress-bar .track {
-    -fx-background-color: #272727;
-}
-
 .leave-btn{
     -fx-font-family: "Roboto";
     -fx-font-size: 20;
@@ -76,7 +22,6 @@
     -fx-border-color: #e0503d;
     -fx-border-radius: 5px;
 }
-
 .submit-btn{
     -fx-font-family: "Roboto";
     -fx-font-size: 20;
@@ -85,8 +30,35 @@
     -fx-border-color: #38c768;
     -fx-border-radius: 5px;
 }
+.emoji-box{
+    -fx-background-color: none;
+    -fx-stroke: linear-gradient(to right,#38c768, #21A0E8);
+}
+.joker-box{
+    -fx-background-color: none;
+    -fx-stroke: linear-gradient(to left,#38c768, #21A0E8);
+}
+.option:hover{
+    -fx-stroke: linear-gradient(#38c768, #21A0E8);
+}
 
+.hover-element{
+    -fx-cursor: hand;
+}
+.timeBar{
+    -fx-accent: #21A0E8;
+    -fx-border-color: #38c768;
+    -fx-border-radius: 5;
+}
 .score{
     -fx-font-size: 30;
     -fx-text-fill:  #38c768;
+}
+.progress-bar .track {
+    -fx-background-color: #272727;
+}
+.textPrompt {
+    -fx-background-color: none;
+    -fx-border-radius: 5;
+    -fx-border-color: #ffffff;
 }

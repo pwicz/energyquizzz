@@ -41,15 +41,18 @@ public class InBetweenScoreCtrl {
 
     }
 
-    public void insertLeaderboard(List<String> players) { //needs to change to import the database leaderboard
+    public void insertLeaderboard(List<String> players)  { //needs to change to import the database leaderboard
         leaderboardSingle.getItems().clear();
         leaderboardSingle.getItems().addAll(players);
+
     }
-    public void insertLeaderboardG() { //needs to change to import the database leaderboard
-        leaderboardG.getItems().addAll("Random", "Names", "Here");
+    public void insertLeaderboardG(List<String> players) { //needs to change to import the database leaderboard
+        leaderboardG.getItems().clear();
+        leaderboardG.getItems().addAll(players);
     }
-    public void insertLeaderboardR() { //needs to change to import the database leaderboard
-        leaderboardR.getItems().addAll("Blah", "Blah", "Blah");
+    public void insertLeaderboardR(List<String> players) { //needs to change to import the database leaderboard
+        leaderboardR.getItems().clear();
+        leaderboardR.getItems().addAll(players);
     }
 
     public void setQuestionNo(int n, int total){
