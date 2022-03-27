@@ -58,8 +58,6 @@ public class ServerUtils {
         session = connect(getWebsocketServerName());
     }
 
-
-
     public void getQuotesTheHardWay() throws IOException {
         var url = new URL("http://localhost:8080/api/quotes");
         var is = url.openConnection().getInputStream();

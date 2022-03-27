@@ -5,6 +5,7 @@ import commons.ClientMessage;
 import commons.Game;
 import commons.Player;
 import commons.Question;
+import commons.Score;
 import commons.ServerMessage;
 
 import org.springframework.messaging.MessagingException;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import server.api.ActivityController;
+import server.api.ScoreController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +32,7 @@ public class MainMessageController {
 
     private SimpMessagingTemplate simpMessagingTemplate;
     private ActivityController activityController;
+    private ScoreController scoreController;
     private HashMap<String, Game> games;
     private Game waitingRoom;
     private boolean sentToAll = false;
@@ -40,9 +43,11 @@ public class MainMessageController {
     private final int scoreBase = 100;          // points for correct answer
     private final int scoreBonusPerSecond = 10; // extra points for every second left
 
-    public MainMessageController(SimpMessagingTemplate simpMessagingTemplate, ActivityController activityController) {
+    public MainMessageController(SimpMessagingTemplate simpMessagingTemplate,
+                                 ActivityController activityController, ScoreController scoreController) {
         this.simpMessagingTemplate = simpMessagingTemplate;
         this.activityController = activityController;
+        this.scoreController = scoreController;
 
         games = new HashMap<>();
 
@@ -161,6 +166,7 @@ public class MainMessageController {
         if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
             double answerTime = timeToAnswer - (System.currentTimeMillis() - g.getQuestionStartTime()) / 1000.0;
             scoreForQuestion = scoreBase + (int) (scoreBonusPerSecond * answerTime);
+            p.setAnswerStatus(true);
         }
         p.setScore(p.getScore() + scoreForQuestion);
         p.setHasAnswered(true);
@@ -275,6 +281,11 @@ public class MainMessageController {
     private void endGame(Game g) {
         g.setHasEnded(true);
         games.remove(g.getID());
+
+        if(!g.isMultiplayer() && g.getPlayers().size() > 0){
+            Player p = g.getPlayers().get(0);
+            scoreController.addScore(new Score(p.getName(), p.getScore()));
+        }
     }
 
     public void joinWaitingRoom(ClientMessage msg) {
@@ -315,6 +326,9 @@ public class MainMessageController {
         result.score = p.getScore();
         result.pickedID = p.getAnswer();
         result.correctID = g.getCorrectAnswerID();
+        result.correctlyAnswered = correctAnswer(g);
+        result.incorrectlyAnswered = incorrectAnswer(g);
+
         return result;
     }
 
@@ -330,6 +344,38 @@ public class MainMessageController {
         return topScores;
     }
 
+    /**
+     * It returns the names of the people who answered correctly as a list of strings.
+     * @param game the current game
+     * @return a list of the names of people who answered correctly
+     */
+    public List<String> correctAnswer(Game game){
+        List<Player> playerList = game.getPlayers().stream()
+                .filter(p -> p.getAnswerStatus() == true)
+                .collect(Collectors.toList());
+        List<String> correctAnswers = new ArrayList<>();
+        for (Player p : playerList) {
+            correctAnswers.add(p.getName());
+        }
+        return correctAnswers;
+    }
+
+    /**
+     * It returns the names of the people who answered incorrectly as a list of strings.
+     * @param game the current game
+     * @return a list of the names of people who answered incorrectly
+     */
+    public List<String> incorrectAnswer(Game game){
+        List<Player> playerList = game.getPlayers().stream()
+                .filter(p -> p.getAnswerStatus() == false)
+                .collect(Collectors.toList());
+        List<String> incorrectAnswers = new ArrayList<>();
+        for (Player p : playerList) {
+          incorrectAnswers.add(p.getName());
+        }
+        return incorrectAnswers;
+    }
+
     private void multiplayerShowAnswersProcedure(Game g){
         // first reveal answers
         System.out.println("[msg] revealing answers to all players");
@@ -337,6 +383,8 @@ public class MainMessageController {
             if(!p.hasAnswered()) p.setAnswer(-1L); // set incorrect ID so that 'you chose text' is not shown
             simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), displayAnswer(p, g));
         }
+
+        if(g.hasEnded()) return;
 
         // then, after 3 seconds, render the in-between-scores
         new Timer().schedule(new TimerTask() {
@@ -350,6 +398,7 @@ public class MainMessageController {
                     result.totalQuestions = questionsPerGame;
                     simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
                 }
+
             }
         }, 3000);
 
@@ -413,6 +462,7 @@ public class MainMessageController {
 
         for(var p : g.getPlayers()){
             p.setHasAnswered(false);
+            p.setAnswerStatus(false);
             result.score = p.getScore();
             simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
         }

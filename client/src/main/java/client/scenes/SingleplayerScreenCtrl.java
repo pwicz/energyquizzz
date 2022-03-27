@@ -102,7 +102,6 @@ public class SingleplayerScreenCtrl {
         mainCtrl.showLeave(mainCtrl.getSingleplayerScreen(), () -> server.send("/app/general", msg));
     }
 
-
     public void lockAnswer(MouseEvent mouseEvent) {
         if(!canInteractWithUI) return;
 
