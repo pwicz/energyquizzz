@@ -1,6 +1,5 @@
 package client.scenes;
 
-import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Activity;
 import commons.ClientMessage;
@@ -25,7 +24,6 @@ import java.util.Objects;
 
 public class SingleplayerScreenCtrl {
 
-    private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private Rectangle choice;
     private HashMap<Rectangle, Long> optionToID;
@@ -88,9 +86,8 @@ public class SingleplayerScreenCtrl {
     Text result;
 
     @Inject
-    public SingleplayerScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public SingleplayerScreenCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
-        this.server = server;
 
         optionToID = new HashMap<>();
     }
@@ -99,9 +96,8 @@ public class SingleplayerScreenCtrl {
         // inform the server about leaving
         ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
-        mainCtrl.showLeave(mainCtrl.getSingleplayerScreen(), () -> server.send("/app/general", msg));
+        mainCtrl.showLeave(mainCtrl.getSingleplayerScreen(), () -> mainCtrl.getServer().send("/app/general", msg));
     }
-
 
     public void lockAnswer(MouseEvent mouseEvent) {
         if(!canInteractWithUI) return;
@@ -171,7 +167,7 @@ public class SingleplayerScreenCtrl {
         ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
         msg.chosenActivity = optionToID.get(choice);
-        server.send("/app/general", msg);
+        mainCtrl.getServer().send("/app/general", msg);
     }
 
     public void showAnswer(Long correctID, Long pickedID){

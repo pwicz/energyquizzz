@@ -50,15 +50,16 @@ public class ServerUtils {
     private String server = "http://localhost:8080/";
     //TODO: change this once other pages' initialize is changed
 
-    private StompSession session = connect(getWebsocketServerName());
+    private StompSession session;
     //TODO: change this once other pages' initialize is changed
 
     public void setServer(String server){
         this.server = server;
-        session = connect(getWebsocketServerName());
     }
 
-
+    public ServerUtils() {
+        System.out.println("CONSTRUCTED");
+    }
 
     public void getQuotesTheHardWay() throws IOException {
         var url = new URL("http://localhost:8080/api/quotes");
@@ -78,7 +79,6 @@ public class ServerUtils {
                 .get(new GenericType<List<Quote>>() {});
     }
 
-
     public List<Score> getTopScores(){
         List<Score> scores = ClientBuilder.newClient(new ClientConfig())
                 .target(server).path("api/scores/")
@@ -90,8 +90,6 @@ public class ServerUtils {
         Collections.reverse(scores);
         return scores;
     }
-
-
 
     public List<Activity> getActivites() {
         return ClientBuilder.newClient(new ClientConfig()) //
@@ -109,6 +107,14 @@ public class ServerUtils {
                 .post(Entity.entity(quote, APPLICATION_JSON), Quote.class);
     }
 
+    public String getClientID(){
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(server).path("api/util/getPlayerID")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(String.class);
+    }
+
     /**
      * Creates the url for working with websockets
      * @return returns the url for websockets
@@ -117,11 +123,6 @@ public class ServerUtils {
         String websocketServerName= server.replaceAll("http", "ws");
         return websocketServerName + "websocket";
     }
-
-
-
-    //private StompSession session = connect("ws://localhost:8080/websocket");
-
 
     private StompSession connect(String url){
         var client = new StandardWebSocketClient();
@@ -160,4 +161,19 @@ public class ServerUtils {
     }
 
     public void send(String dest, Object o){ session.send(dest, o); }
+
+    public boolean reconnect(){
+        if(session != null && session.isConnected()) session.disconnect();
+
+        try{
+            session = connect(getWebsocketServerName());
+        }
+        catch(Exception e){
+            System.out.println("Exception on WebSocket connect(): " + e.getMessage());
+            session = null;
+            return false;
+        }
+
+        return session.isConnected();
+    }
 }

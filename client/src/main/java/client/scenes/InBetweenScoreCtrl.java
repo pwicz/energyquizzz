@@ -1,6 +1,6 @@
 package client.scenes;
 
-import client.utils.ServerUtils;
+import commons.ClientMessage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import java.util.List;
 
 public class InBetweenScoreCtrl {
-    private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
     @FXML
@@ -32,24 +31,26 @@ public class InBetweenScoreCtrl {
     Label score;
 
     @Inject
-    public InBetweenScoreCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public InBetweenScoreCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
-        this.server = server;
     }
 
     public void initialize() {
 
     }
 
-    public void insertLeaderboard(List<String> players) { //needs to change to import the database leaderboard
+    public void insertLeaderboard(List<String> players)  { //needs to change to import the database leaderboard
         leaderboardSingle.getItems().clear();
         leaderboardSingle.getItems().addAll(players);
+
     }
-    public void insertLeaderboardG() { //needs to change to import the database leaderboard
-        leaderboardG.getItems().addAll("Random", "Names", "Here");
+    public void insertLeaderboardG(List<String> players) { //needs to change to import the database leaderboard
+        leaderboardG.getItems().clear();
+        leaderboardG.getItems().addAll(players);
     }
-    public void insertLeaderboardR() { //needs to change to import the database leaderboard
-        leaderboardR.getItems().addAll("Blah", "Blah", "Blah");
+    public void insertLeaderboardR(List<String> players) { //needs to change to import the database leaderboard
+        leaderboardR.getItems().clear();
+        leaderboardR.getItems().addAll(players);
     }
 
     public void setQuestionNo(int n, int total){
@@ -64,7 +65,9 @@ public class InBetweenScoreCtrl {
     }
 
     public void leave(){
-        mainCtrl.showLeave(mainCtrl.getInBetweenScore());
+        ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
+                mainCtrl.getClientID(), mainCtrl.getGameID());
+        mainCtrl.showLeave(mainCtrl.getMultiplayer(), () -> mainCtrl.getServer().send("/app/general", msg));
     }
 
 }

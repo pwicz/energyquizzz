@@ -7,6 +7,7 @@ public class Player {
     private String ID;
     private int score = 0;
     private long answer;
+    private boolean answerStatus = false;
 
     public Player(String name, String ID) {
         this.name = name;
@@ -55,5 +56,13 @@ public class Player {
 
     public void setAnswer(long answer) {
         this.answer = answer;
+    }
+
+    public void setAnswerStatus(boolean status){
+        answerStatus = status;
+    }
+
+    public boolean getAnswerStatus(){
+        return answerStatus;
     }
 }
