@@ -33,7 +33,6 @@ import static javafx.application.Platform.runLater;
 public class MainCtrl {
 
     private final ServerUtils server;
-    private String serverName;
 
     private Stage primaryStage;
 
@@ -363,15 +362,13 @@ public class MainCtrl {
 
     /**
      * Sets the server name.
-     * @param server
+     * @param serverName server name
      */
-    public void setServerName(String server){
-        this.serverName = server;
-        this.server.setServer(server);
+    public void setServerName(String serverName){
+        this.server.setServer(serverName);
     }
 
     public boolean connectToServer(String url){
-        this.serverName = url;
         this.server.setServer(url);
 
         // try to get new clientID
