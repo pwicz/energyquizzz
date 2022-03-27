@@ -22,23 +22,15 @@ public class LeaveCtrl {
     }
 
     public void leave(){
-        if(beforeLeave != null)
+        if(beforeLeave != null){
             beforeLeave.soSomething();
             mainCtrl.showSplash();
         }
-        if(previous.equals(mainCtrl.getSplash())) {
-            mainCtrl.getPrimaryStage().close();
-            mainCtrl.stay(previous);
-        }else if(previous.equals(mainCtrl.getSingleplayerScreen())){
-            mainCtrl.leaveSingleplayer();
-        }
-        mainCtrl.showSplash();
-        mainCtrl.stay();
-    }
 
         mainCtrl.closePopup();
         mainCtrl.showSplash();
     }
+
 
     public void setBeforeLeave(BeforeLeave beforeLeave) {
         this.beforeLeave = beforeLeave;

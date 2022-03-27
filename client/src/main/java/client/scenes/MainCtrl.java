@@ -22,6 +22,7 @@ import commons.Activity;
 import commons.ServerMessage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -221,12 +222,6 @@ public class MainCtrl {
             default:
                 // invalid msg type
         }
-    }
-
-    public void showOverview() {
-        primaryStage.setTitle("Quotes: Overview");
-        primaryStage.setScene(overview);
-        overviewCtrl.refresh();
     }
 
     public void showInbetweenScore() {
