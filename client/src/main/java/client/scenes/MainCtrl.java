@@ -121,16 +121,17 @@ public class MainCtrl {
         this.singleplayerScreen = new Scene(singleplayerGame.getValue());
         this.singleplayerScreenCtrl = singleplayerGame.getKey();
 
-
         this.inputName = new Scene(inputname.getValue());
         this.inputNameScreenCtrl = inputname.getKey();
 
+        clientID = UUID.randomUUID().toString();
+        if(!connectToServer("http://localhost:8080/")){
+            System.out.println("COULDN'T CONNECT!");
+            return;
+        }
 
         showOverview();
         primaryStage.show();
-
-        clientID = UUID.randomUUID().toString();
-        server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, this::handleServerMessage);
     }
 
     //CHECKSTYLE:OFF
@@ -364,8 +365,33 @@ public class MainCtrl {
      * Sets the server name.
      * @param server
      */
-    public void setServer(String server){
+    public void setServerName(String server){
         this.serverName = server;
         this.server.setServer(server);
+    }
+
+    public boolean connectToServer(String url){
+        this.serverName = url;
+        this.server.setServer(url);
+
+        // try to get new clientID
+        try{
+            this.clientID = server.getClientID();
+        }
+        catch(Exception e){
+            System.out.println("SERVER FAILED with exception " + e.getMessage());
+            return false;
+        }
+
+        // try to connect with websockets
+        if(!server.reconnect()) return false;
+
+        // all works: register for websocket messages
+        server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, this::handleServerMessage);
+        return true;
+    }
+
+    public ServerUtils getServer() {
+        return server;
     }
 }

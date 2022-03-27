@@ -1,7 +1,6 @@
 package client.scenes;
 import com.google.inject.Inject;
 
-import client.utils.ServerUtils;
 import commons.ClientMessage;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -9,7 +8,6 @@ import javafx.scene.text.Text;
 
 
 public class InputNameScreenCtrl {
-    private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
     @FXML
@@ -22,10 +20,8 @@ public class InputNameScreenCtrl {
     Text connectionFailed;
 
     @Inject
-    public InputNameScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public InputNameScreenCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
-        this.server = server;
-
     }
 
     public void join(){
@@ -43,9 +39,9 @@ public class InputNameScreenCtrl {
 
         try{
         msg.serverName = serverBox.getText();
-        mainCtrl.setServer(msg.serverName);
-        server.setServer(msg.serverName);
-        server.send("/app/general", msg);
+        mainCtrl.setServerName(msg.serverName);
+        mainCtrl.getServer().setServer(msg.serverName);
+        mainCtrl.getServer().send("/app/general", msg);
         }
         catch (Exception e){
             connectionFailed.setVisible(true);

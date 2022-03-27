@@ -20,7 +20,6 @@ import java.util.ResourceBundle;
 
 import com.google.inject.Inject;
 
-import client.utils.ServerUtils;
 import commons.Quote;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -32,7 +31,6 @@ import javafx.scene.control.TableView;
 
 public class QuoteOverviewCtrl implements Initializable {
 
-    private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
     private ObservableList<Quote> data;
@@ -47,8 +45,7 @@ public class QuoteOverviewCtrl implements Initializable {
     private TableColumn<Quote, String> colQuote;
 
     @Inject
-    public QuoteOverviewCtrl(ServerUtils server, MainCtrl mainCtrl) {
-        this.server = server;
+    public QuoteOverviewCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
     }
 
@@ -59,10 +56,10 @@ public class QuoteOverviewCtrl implements Initializable {
         colQuote.setCellValueFactory(q -> new SimpleStringProperty(q.getValue().quote));
 
         // wait for messages at /topic/quotes
-        server.registerForMessage("/topic/quotes", Quote.class, q -> {
-            // add received quote
-            data.add(q);
-        });
+//        server.registerForMessage("/topic/quotes", Quote.class, q -> {
+//            // add received quote
+//            data.add(q);
+//        });
     }
 
     public void addQuote() {
@@ -75,7 +72,7 @@ public class QuoteOverviewCtrl implements Initializable {
 
 
     public void refresh() {
-        var quotes = server.getQuotes();
+        var quotes = mainCtrl.getServer().getQuotes();
         data = FXCollections.observableList(quotes);
         table.setItems(data);
     }

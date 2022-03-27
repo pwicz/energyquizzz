@@ -1,6 +1,5 @@
 package client.scenes;
 
-import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Activity;
 import commons.ClientMessage;
@@ -28,7 +27,6 @@ import java.util.Objects;
 
 public class MultiplayerScreenCtrl {
 
-    private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private Rectangle choice;
     private HashMap<Rectangle, Long> optionToID;
@@ -88,18 +86,16 @@ public class MultiplayerScreenCtrl {
     Label headTitle;
 
     @Inject
-    public MultiplayerScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public MultiplayerScreenCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
-        this.server = server;
         optionToID = new HashMap<>();
-
     }
 
     public void leave(){
         // inform the server about leaving
         ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
-        mainCtrl.showLeave(mainCtrl.getMultiplayer(), () -> server.send("/app/general", msg));
+        mainCtrl.showLeave(mainCtrl.getMultiplayer(), () -> mainCtrl.getServer().send("/app/general", msg));
     }
 
     //submits answer, stops time,
@@ -116,7 +112,7 @@ public class MultiplayerScreenCtrl {
         msg.chosenActivity = optionToID.get(choice);
 
 
-        server.send("/app/general", msg);
+        mainCtrl.getServer().send("/app/general", msg);
     }
 
     public void showAnswer(Long correctID, Long pickedID) {
