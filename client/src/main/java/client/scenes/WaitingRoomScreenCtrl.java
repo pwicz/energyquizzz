@@ -37,4 +37,5 @@ public class WaitingRoomScreenCtrl {
         playerList.getItems().clear();
         playerList.getItems().addAll(names);
     }
+
 }

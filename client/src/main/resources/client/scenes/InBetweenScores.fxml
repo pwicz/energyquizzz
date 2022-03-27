@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.control.ListView?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import java.lang.String?>
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" stylesheets="@/client/scenes/styles/InBetweenScores.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.InBetweenScoreCtrl">
-    <Label layoutY="68.0" prefHeight="118.0" prefWidth="1513.0" styleClass="screen-header" text="SCORE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="68.0" />
-    <Label fx:id="score" layoutX="674.0" layoutY="921.0" prefHeight="51.0" prefWidth="845.0" styleClass="bottom-score" text="Score: 120" AnchorPane.bottomAnchor="20.799999999999955" />
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.InBetweenScoreCtrl">
 
-   <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" styleClass="leave-btn" text="LEAVE" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="33.0" />
+   <Label alignment="CENTER" layoutY="103.0" prefHeight="131.0" prefWidth="1513.0" styleClass="title" text="Score" AnchorPane.bottomAnchor="748.0" />
 
-    <Label layoutX="660.0" layoutY="642.0" styleClass="question-label" text="Question" />
-    <Label fx:id="questionNo" layoutX="716.0" layoutY="719.0" styleClass="question-number" text="7/20" />
+   <Label alignment="CENTER" layoutX="95.0" layoutY="267.0" prefHeight="17.0" prefWidth="304.0" styleClass="wrong-right-text" text="Picked the wrong answer:" AnchorPane.bottomAnchor="698.0" />
+   <Label alignment="CENTER" layoutX="1138.0" layoutY="267.0" prefHeight="17.0" prefWidth="304.0" styleClass="wrong-right-text" text="Picked the correct answer:" AnchorPane.bottomAnchor="698.0" />
 
-   <Label layoutX="95.0" layoutY="200.0" styleClass="picked-wrong" text="Picked the wrong answer:" />
-   <Label layoutX="1138.0" layoutY="200.0" styleClass="picked-correct" text="Picked the correct answer:" />
+   <ListView fx:id="leaderboardSingle" layoutX="508.0" layoutY="301.0" prefHeight="328.0" prefWidth="495.0" styleClass="gradientBox" AnchorPane.bottomAnchor="353.0" />
+   <ListView fx:id="leaderboardR" layoutX="95.0" layoutY="301.0" prefHeight="328.0" prefWidth="304.0" styleClass="redBox" AnchorPane.bottomAnchor="353.0" />
+   <ListView fx:id="leaderboardG" layoutX="1138.0" layoutY="301.0" prefHeight="328.0" prefWidth="304.0" styleClass="greenBox" AnchorPane.bottomAnchor="353.0" />
 
-   <ListView fx:id="leaderboardSingle" layoutX="508.0" layoutY="243.0" prefHeight="326.0" prefWidth="495.0">
+   <Label layoutX="661.0" layoutY="649.0" styleClass="question-label" text="Question" AnchorPane.bottomAnchor="265.0" />
+   <Label fx:id="questionNo" alignment="CENTER" layoutX="681.0" layoutY="733.0" prefHeight="49.0" prefWidth="150.0" styleClass="question-number" text="7/20" AnchorPane.bottomAnchor="200.0" />
+   <Label fx:id="endOfGame" visible="false" alignment="CENTER" layoutX="586.0" layoutY="810.0" prefHeight="49.0" prefWidth="342.0" styleClass="question-number" AnchorPane.bottomAnchor="123.0" />
+
+   <Label fx:id="score" alignment="CENTER" layoutX="554.0" layoutY="910.0" prefHeight="40.0" prefWidth="405.0" styleClass="bottom-score" text="Score: 1200" textAlignment="CENTER" AnchorPane.bottomAnchor="32.0">
+   </Label>
+
+   <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="32.0">
       <styleClass>
-         <String fx:value="leaderboard" />
-         <String fx:value="list-cell" />
-      </styleClass></ListView>
-   <ListView fx:id="leaderboardG" layoutX="1138.0" layoutY="234.0" prefHeight="291.0" prefWidth="304.0">
-      <styleClass>
-         <String fx:value="leaderboardG" />
-         <String fx:value="list-cell" />
-      </styleClass></ListView>
-   <ListView fx:id="leaderboardR" layoutX="95.0" layoutY="244.0" prefHeight="291.0" prefWidth="304.0">
-      <styleClass>
-         <String fx:value="leaderboardR" />
-         <String fx:value="list-cell" />
-      </styleClass></ListView>
+         <String fx:value="button" />
+         <String fx:value="redButton" />
+         <String fx:value="bigButton" />
+      </styleClass>
+   </Button>
+
+   <stylesheets>
+      <URL value="@/client/scenes/styles/styles.css" />
+      <URL value="@/client/scenes/styles/inbetweenscores.css" />
+   </stylesheets>
 </AnchorPane>

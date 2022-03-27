@@ -20,6 +20,7 @@ public class Activity {
             strategy = GenerationType.SEQUENCE,
             generator = "question_sequence"
     )
+
     public long id;
 
     public String title;
