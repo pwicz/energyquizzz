@@ -2,16 +2,23 @@ package commons;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Game {
 
     private List<Player> players;
+    private int playersAnswered = 0;
     private String ID;
     private boolean isMultiplayer;
     private int questionCounter = 0;
     private long correctAnswerID;
     private int round;
     private boolean hasEnded;
+    private long questionStartTime;
+    private TimerTask endOfQuestionTask;
+
+    public Timer questionEndAction;
 
     public Game(List<Player> players, String ID) {
         this.players = players;
@@ -85,12 +92,28 @@ public class Game {
         return questionCounter;
     }
 
-    public int incCounter() {
+    public int incQuestionCounter() {
         this.questionCounter = questionCounter + 1;
-        return  questionCounter;
+        return questionCounter;
     }
 
     public void setQuestionCounter(int questionCounter) {
         this.questionCounter = questionCounter;
+    }
+
+    public long getQuestionStartTime() {
+        return questionStartTime;
+    }
+
+    public void setQuestionStartTime(long questionStartTime) {
+        this.questionStartTime = questionStartTime;
+    }
+
+    public int getPlayersAnswered() {
+        return playersAnswered;
+    }
+
+    public void setPlayersAnswered(int playersAnswered) {
+        this.playersAnswered = playersAnswered;
     }
 }

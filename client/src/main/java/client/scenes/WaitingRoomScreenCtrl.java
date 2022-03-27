@@ -25,7 +25,7 @@ public class WaitingRoomScreenCtrl {
 
     public void start(){
         server.send("/app/general",
-                new ClientMessage(ClientMessage.Type.START_GAME, mainCtrl.getClientID(), mainCtrl.getGameID()));
+                new ClientMessage(ClientMessage.Type.START_MULTIPLAYER, mainCtrl.getClientID(), mainCtrl.getGameID()));
     }
 
     public void leave(){

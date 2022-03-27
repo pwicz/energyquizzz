@@ -157,9 +157,9 @@ public class MainCtrl {
                 // runLater() must be used to run the following code
                 // on the JavaFX Application Thread
                 runLater(() -> {
-                    showMultiplayerScreen();
                     multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
                     multiplayerScreenCtrl.displayActivities(msg.question.getActivities());
+                    showMultiplayerScreen();
                 });
                 System.out.println("[msg] loadingGame");
                 break;
@@ -179,8 +179,7 @@ public class MainCtrl {
             case DISPLAY_INBETWEENSCORES:
                 runLater(() -> {
                     multiplayerScreenCtrl.updateTitle(msg.questionCounter);
-                    inBetweenScoreCtrl.setQuestionNo(msg.questionCounter);
-                    //set correct answer colors
+                    inBetweenScoreCtrl.setQuestionNo(msg.questionCounter, msg.totalQuestions);
                     showInbetweenScore();
                 });
                 System.out.println("[msg] show leaderboard ");
@@ -235,26 +234,28 @@ public class MainCtrl {
 
     public void showLeave(Scene scene){
         this.stage = new Stage();
-        leaveCtrl.setPrevious(scene);
         this.stage.setScene(leave);
         this.stage.initModality(Modality.APPLICATION_MODAL);
         this.stage.showAndWait();
     }
 
+    public void showLeave(Scene scene, BeforeLeave beforeLeave){
+        this.stage = new Stage();
+        leaveCtrl.setBeforeLeave(beforeLeave);
 
-    public void stay() {
-        this.stage.close();
-
+        this.stage.setScene(leave);
+        this.stage.initModality(Modality.APPLICATION_MODAL);
+        this.stage.showAndWait();
     }
+
+    public void closePopup() {
+        this.stage.close();
+    }
+
     public void showLeaveWaitingroom(Scene scene, BeforeLeave beforeLeave){
         leaveCtrl.setBeforeLeave(beforeLeave);
         showLeave(scene);
     }
-
-    public void leaveSingleplayer() {
-        singleplayerScreenCtrl.whenLeaving();
-    }
-
 
     public void stayWaitingroom(Scene previous){
         primaryStage.setScene(previous);
@@ -329,12 +330,12 @@ public class MainCtrl {
         return waitingRoom;
     }
 
-    public Scene getInputName() {
-        return inputName;
-    }
-
     public Scene getSingleplayerScreen() {
         return singleplayerScreen;
+    }
+
+    public Scene getInputName() {
+        return inputName;
     }
 
     public String getClientID() {
