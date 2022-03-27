@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import client.scenes.AddQuoteCtrl;
+import client.scenes.InputServerScreenCtrl;
 import client.scenes.MainCtrl;
 import client.scenes.QuoteOverviewCtrl;
 import client.scenes.SingleplayerLeaderboardCtrl;
@@ -62,11 +63,12 @@ public class Main extends Application {
                 "client","scenes", "Singleplayer_Game_Screen.fxml");
         var inputname = FXML.load(InputNameScreenCtrl.class,
                 "client","scenes", "InputNameScreen.fxml");
+        var inputServer = FXML.load(InputServerScreenCtrl.class, "client","scenes", "SpecifyServerScreen.fxml");
 
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
         mainCtrl.initialize(primaryStage, overview, add, waitingRoom,
                 singleplayerLeaderboard, multiplayer, splashScreen, inBetweenScore,
-                leave, singleplayerGame, inputname);
+                leave, singleplayerGame, inputname, inputServer);
                 
     }
 }

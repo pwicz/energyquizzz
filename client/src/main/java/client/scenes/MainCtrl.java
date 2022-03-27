@@ -66,6 +66,9 @@ public class MainCtrl {
     private Scene inputName;
     private InputNameScreenCtrl inputNameScreenCtrl;
 
+    private Scene inputServer;
+    private InputServerScreenCtrl inputServerScreenCtrl;
+
     private String clientID = null;
     private String gameID = null;
 
@@ -88,7 +91,8 @@ public class MainCtrl {
                            Pair<InBetweenScoreCtrl, Parent> inBetweenScore,
                            Pair<LeaveCtrl, Parent> leave,
                            Pair<SingleplayerScreenCtrl, Parent> singleplayerGame,
-                           Pair<InputNameScreenCtrl, Parent> inputname){
+                           Pair<InputNameScreenCtrl, Parent> inputname,
+                           Pair<InputServerScreenCtrl, Parent> inputServer){
 
 
         this.primaryStage = primaryStage;
@@ -122,6 +126,9 @@ public class MainCtrl {
 
         this.inputName = new Scene(inputname.getValue());
         this.inputNameScreenCtrl = inputname.getKey();
+
+        this.inputServer = new Scene(inputServer.getValue());
+        this.inputServerScreenCtrl = inputServer.getKey();
 
         clientID = UUID.randomUUID().toString();
         if(!connectToServer("http://localhost:8080/")){
@@ -247,6 +254,14 @@ public class MainCtrl {
         leaveCtrl.setBeforeLeave(beforeLeave);
 
         this.stage.setScene(leave);
+        this.stage.initModality(Modality.APPLICATION_MODAL);
+        this.stage.showAndWait();
+    }
+
+    public void showInputServer(){
+        this.stage = new Stage();
+
+        this.stage.setScene(inputServer);
         this.stage.initModality(Modality.APPLICATION_MODAL);
         this.stage.showAndWait();
     }
