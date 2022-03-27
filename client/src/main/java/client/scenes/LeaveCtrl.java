@@ -3,7 +3,6 @@ package client.scenes;
 import client.utils.BeforeLeave;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import javafx.scene.Scene;
 
 public class LeaveCtrl {
 
