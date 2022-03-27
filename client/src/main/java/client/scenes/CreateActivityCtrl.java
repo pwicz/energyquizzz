@@ -6,11 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javax.inject.Inject;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-
 public class CreateActivityCtrl {
 
     private final ServerUtils server;
@@ -106,15 +104,13 @@ public class CreateActivityCtrl {
         }
 
         try {
+            assert source != null;
             URL sourceUrl = new URL(source);
             URLConnection srcConn = sourceUrl.openConnection();
             srcConn.connect();
-        } catch (MalformedURLException e) {
+        } catch (Exception e) {
             canBeSaved = false;
             sourceErrorText.setVisible(true);
-        } catch (IOException e) {
-            canBeSaved = false;
-            e.printStackTrace();
         }
 
         if(canBeSaved){

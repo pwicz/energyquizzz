@@ -107,6 +107,7 @@ public class MainCtrl {
 
         this.createActivityCtrl = createActivity.getKey();
         this.createActivity = new Scene(createActivity.getValue());
+
         this.waitingRoom = new Scene(waitingRoom.getValue());
         this.waitingRoomScreenCtrl = waitingRoom.getKey();
 
