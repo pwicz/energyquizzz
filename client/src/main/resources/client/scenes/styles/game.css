@@ -33,6 +33,7 @@
     -fx-font-family: "Roboto-Thin";
     -fx-font-size: 15;
     -fx-text-fill: "white";
+    -fx-wrap-text: true;
 }
 
 .score{
