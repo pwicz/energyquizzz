@@ -140,6 +140,11 @@ public class MainMessageController {
                     sendMessageToAllPlayers(temp, waitingRoom);
 
                     break;
+                case PING:
+                    if(msg.playerID == null) return;
+                    var pingResponse = new ServerMessage(ServerMessage.Type.PING);
+                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, pingResponse);
+                    break;
                 default:
                     // unknown message
             }
