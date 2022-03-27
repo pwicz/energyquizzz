@@ -22,6 +22,7 @@ import commons.Activity;
 import commons.ServerMessage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -162,9 +163,9 @@ public class MainCtrl {
                 // runLater() must be used to run the following code
                 // on the JavaFX Application Thread
                 runLater(() -> {
-                    showMultiplayerScreen();
                     multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
                     multiplayerScreenCtrl.displayActivities(msg.question.getActivities());
+                    showMultiplayerScreen();
                 });
                 System.out.println("[msg] loadingGame");
                 break;
@@ -184,8 +185,7 @@ public class MainCtrl {
             case DISPLAY_INBETWEENSCORES:
                 runLater(() -> {
                     multiplayerScreenCtrl.updateTitle(msg.questionCounter);
-                    inBetweenScoreCtrl.setQuestionNo(msg.questionCounter);
-                    //set correct answer colors
+                    inBetweenScoreCtrl.setQuestionNo(msg.questionCounter, msg.totalQuestions);
                     showInbetweenScore();
                 });
                 System.out.println("[msg] show leaderboard ");
@@ -225,26 +225,38 @@ public class MainCtrl {
         }
     }
 
-    public void leaveSingleplayer() {
-        singleplayerScreenCtrl.whenLeaving();
-    }
-
-    public void stay() {
-        this.stage.close();}
-
-    public void showLeaveWaitingroom(Scene scene, BeforeLeave beforeLeave){
-        leaveCtrl.setBeforeLeave(beforeLeave);
-        showLeave(scene);
-    }
-
     public void showInbetweenScore() {
         primaryStage.setTitle("Score");
         primaryStage.setScene(inBetweenScore);
     }
 
     public void showLeave(Scene scene){
-        leaveCtrl.setPrevious(scene);
-        primaryStage.setScene(leave);
+        this.stage = new Stage();
+        this.stage.setScene(leave);
+        this.stage.initModality(Modality.APPLICATION_MODAL);
+        this.stage.showAndWait();
+    }
+
+    public void showLeave(Scene scene, BeforeLeave beforeLeave){
+        this.stage = new Stage();
+        leaveCtrl.setBeforeLeave(beforeLeave);
+
+        this.stage.setScene(leave);
+        this.stage.initModality(Modality.APPLICATION_MODAL);
+        this.stage.showAndWait();
+    }
+
+    public void closePopup() {
+        this.stage.close();
+    }
+
+    public void showLeaveWaitingroom(Scene scene, BeforeLeave beforeLeave){
+        leaveCtrl.setBeforeLeave(beforeLeave);
+        showLeave(scene);
+    }
+
+    public void stayWaitingroom(Scene previous){
+        primaryStage.setScene(previous);
     }
 
     public void stay(Scene previous){
@@ -264,6 +276,8 @@ public class MainCtrl {
     public void showSingleLeaderboardScreen(){
         primaryStage.setTitle("Leaderboard");
         primaryStage.setScene(singleLeaderboard);
+
+        singleplayerLeaderboardCtrl.insertLeaderboard();
     }
 
     public void showWaitingRoom() {
@@ -328,12 +342,12 @@ public class MainCtrl {
         return waitingRoom;
     }
 
-    public Scene getInputName() {
-        return inputName;
-    }
-
     public Scene getSingleplayerScreen() {
         return singleplayerScreen;
+    }
+
+    public Scene getInputName() {
+        return inputName;
     }
 
     public String getClientID() {

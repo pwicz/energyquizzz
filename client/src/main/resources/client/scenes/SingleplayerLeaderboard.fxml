@@ -26,7 +26,7 @@
       </styleClass>
    </TextField>
 
-   <Button fx:id="start" layoutX="643.0" layoutY="751.0" onAction="#insertLeaderboard" mnemonicParsing="false"  onMouseClicked="#start" prefHeight="63.0" prefWidth="226.0" text="Start" AnchorPane.bottomAnchor="168.0">
+   <Button fx:id="start" layoutX="643.0" layoutY="751.0" mnemonicParsing="false" onMouseClicked="#start" prefHeight="63.0" prefWidth="226.0" text="Start" AnchorPane.bottomAnchor="168.0">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="greenButton" />

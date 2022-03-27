@@ -4,8 +4,9 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Activity;
 import commons.ClientMessage;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -18,6 +19,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,9 +31,10 @@ public class MultiplayerScreenCtrl {
     private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private Rectangle choice;
-    private Thread timerThread;
-    private double timerProgress;
     private HashMap<Rectangle, Long> optionToID;
+    private boolean canInteractWithUI;
+
+    private Timeline timer;
 
     @FXML
     ProgressBar timeBar;
@@ -84,9 +87,6 @@ public class MultiplayerScreenCtrl {
     @FXML
     Label headTitle;
 
-
-    boolean submitted = false;
-
     @Inject
     public MultiplayerScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
@@ -96,20 +96,26 @@ public class MultiplayerScreenCtrl {
     }
 
     public void leave(){
-        mainCtrl.showLeave(mainCtrl.getMultiplayer());
+        // inform the server about leaving
+        ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
+                mainCtrl.getClientID(), mainCtrl.getGameID());
+        mainCtrl.showLeave(mainCtrl.getMultiplayer(), () -> server.send("/app/general", msg));
     }
 
     //submits answer, stops time,
     public void submitAnswer(){
-        timerThread.interrupt();
-        double time = timerProgress;
+        if(!canInteractWithUI || choice == null) return;
+        canInteractWithUI = false;
+
+        timer.stop();
+
+        submit.setDisable(true);
 
         ClientMessage msg = new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
-        msg.time = time;
         msg.chosenActivity = optionToID.get(choice);
-        submit.setDisable(true);
-        submitted = true;
+
+
         server.send("/app/general", msg);
     }
 
@@ -157,33 +163,14 @@ public class MultiplayerScreenCtrl {
      * @param totalTime time that the full timer corresponds to
      */
     public void setTimer(double fractionLeft, double totalTime){
-        timerProgress = fractionLeft;
-
         // by default, our timer is 10.0s long
         if(totalTime <= 0.0) totalTime = 10.0;
-        final double decreaseBy = 0.001 * 10.0 / totalTime;
 
-        if(timerThread != null) timerThread.interrupt();
-        Task task = new Task<Void>() {
-            @Override
-            public Void call() throws Exception {
-                while (timerProgress>=0.00) {
-                    Platform.runLater(() -> {
-                        timeBar.setProgress(timerProgress);
-                        timerProgress -= decreaseBy;
-                        if(timerProgress <= 0){
-                            timeBar.setProgress(0);
-                        }
-                    });
-                    Thread.sleep(10);
-                }
-
-                return null;
-            }
-        };
-
-        timerThread = new Thread(task);
-        timerThread.start();
+        timer = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(timeBar.progressProperty(), fractionLeft)),
+                new KeyFrame(Duration.seconds(totalTime), new KeyValue(timeBar.progressProperty(), 0.0))
+        );
+        timer.play();
     }
 
     public void displayActivities(List<Activity> activities){
@@ -210,18 +197,19 @@ public class MultiplayerScreenCtrl {
     }
 
     public void resetUI(){
-        submitted = false;
-        option1.setStyle("-fx-border-color: white");
-        option2.setStyle("-fx-border-color: white");
-        option3.setStyle("-fx-border-color: white");
+        canInteractWithUI = true;
+
+        option1.setStyle("-fx-stroke: #fff");
+        option2.setStyle("-fx-stroke: #fff");
+        option3.setStyle("-fx-stroke: #fff");
         optionToID = new HashMap<>();
-        picked.setStyle("visibility: invisible");
+        choice = null;
+        picked.setStyle("visibility: hidden");
 
     }
 
     public void lockAnswer(MouseEvent mouseEvent) {
-        if(submitted)
-            return;
+        if(!canInteractWithUI) return;
 
         option1.setStyle("-fx-border-color: white");
         option2.setStyle("-fx-border-color: white");
@@ -245,9 +233,6 @@ public class MultiplayerScreenCtrl {
 
 
     public void enterAnswer(KeyEvent keyEvent) {
-        if(choice == null){
-            return;
-        }
         if(keyEvent.getCode().equals(KeyCode.L)){ //later should replace L with ENTER
             submitAnswer();
         }
