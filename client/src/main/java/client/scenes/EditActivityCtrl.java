@@ -8,12 +8,15 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 import javax.inject.Inject;
+import javax.net.ssl.SSLHandshakeException;
+
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 
 public class EditActivityCtrl {
 
@@ -105,10 +108,11 @@ public class EditActivityCtrl {
         }
 
         try {
+            assert source != null;
             URL sourceUrl = new URL(source);
             URLConnection srcConn = sourceUrl.openConnection();
             srcConn.connect();
-        } catch (MalformedURLException e) {
+        } catch (MalformedURLException | UnknownHostException | SSLHandshakeException e) {
             canBeSaved = false;
             sourceErrorText.setVisible(true);
         } catch (IOException e) {
