@@ -68,6 +68,7 @@ public class QuoteOverviewCtrl implements Initializable {
 
     public void splash(){
         mainCtrl.showSplash();
+        mainCtrl.showInputServer();
     }
 
 
