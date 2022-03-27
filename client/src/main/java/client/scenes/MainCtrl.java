@@ -20,6 +20,7 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.ClientMessage;
 import commons.ServerMessage;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -140,6 +141,7 @@ public class MainCtrl {
                     multiplayerScreenCtrl.updateScore(0);
                     showWaitingRoom();
                 });
+
                 break;
             case EXTRA_PLAYER:
                 runLater(() -> {
@@ -152,6 +154,11 @@ public class MainCtrl {
                 break;
             case NEW_SINGLEPLAYER_GAME:
                 gameID = msg.gameID;
+                primaryStage.setOnCloseRequest(e -> {
+                    server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID));
+                    Platform.exit();
+                    System.exit(0);
+                });
                 break;
             case LOAD_NEW_QUESTIONS:
                 // runLater() must be used to run the following code
@@ -273,6 +280,10 @@ public class MainCtrl {
     public void showSplash(){
         primaryStage.setTitle("SplashScreen");
         primaryStage.setScene(splash);
+        primaryStage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
     }
 
     public void showMultiplayerScreen(){
@@ -291,6 +302,16 @@ public class MainCtrl {
     public void showWaitingRoom() {
         primaryStage.setTitle("WaitingRoomScreen");
         primaryStage.setScene(waitingRoom);
+        primaryStage.setOnCloseRequest(e -> {
+            if(primaryStage.getScene().equals(waitingRoom)) {
+                server.send("/app/general",
+                        new ClientMessage(ClientMessage.Type.QUIT_WAITING_ROOM, getClientID(), getGameID()));
+            }else{
+                server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID));
+            }
+            Platform.exit();
+            System.exit(0);
+        });
     }
 
     public void showinputNameScreen() {
@@ -357,4 +378,5 @@ public class MainCtrl {
     public void setName(String name){
         this.name = name;
     }
+
 }
