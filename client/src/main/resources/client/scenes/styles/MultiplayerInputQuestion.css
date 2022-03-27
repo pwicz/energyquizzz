@@ -1,0 +1,11 @@
+.text{
+    -fx-font-family: "Roboto";
+    -fx-content-display: center;
+}
+
+.textPrompt {
+    -fx-background-color: none;
+    -fx-border-radius: 5;
+    -fx-border-color: #ffffff;
+    -fx-text-fill: "white";
+}

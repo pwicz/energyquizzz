@@ -22,12 +22,15 @@ public class LeaveCtrl {
     }
 
     public void leave(){
-        if(beforeLeave != null)
+        if(beforeLeave != null){
             beforeLeave.soSomething();
+            mainCtrl.showSplash();
+        }
 
         mainCtrl.closePopup();
         mainCtrl.showSplash();
     }
+
 
     public void setBeforeLeave(BeforeLeave beforeLeave) {
         this.beforeLeave = beforeLeave;
