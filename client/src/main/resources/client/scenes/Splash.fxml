@@ -54,7 +54,7 @@
          <String fx:value="hugeButton" />
       </styleClass>
    </Button>
-   <Text fx:id="message" layoutX="-1.0" layoutY="677.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="message" text="Message" wrappingWidth="1513.8034825325012">
+   <Text fx:id="message" layoutX="-1.0" layoutY="677.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="message-splash" text="Message" wrappingWidth="1513.8034825325012">
       <font>
          <Font name="Lato Regular" size="25.0" />
       </font>

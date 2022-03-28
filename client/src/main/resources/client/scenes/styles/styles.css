@@ -59,7 +59,7 @@
     -fx-text-fill: "white";
 }
 
-.message{
+.message-splash{
     -fx-text-alignment: center;
     -fx-fill: #fff;
     -fx-font-size: 25;
