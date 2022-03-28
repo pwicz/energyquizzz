@@ -1,6 +1,5 @@
 package client.scenes;
 
-import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Activity;
 import commons.ClientMessage;
@@ -25,13 +24,12 @@ import java.util.Objects;
 
 public class SingleplayerScreenCtrl {
 
-    private final ServerUtils server;
     private final MainCtrl mainCtrl;
     private Rectangle choice;
     private HashMap<Rectangle, Long> optionToID;
     private boolean canInteractWithUI;
 
-    Timeline timer;
+    private Timeline timer;
 
     @FXML
     ProgressBar timeBar;
@@ -55,13 +53,13 @@ public class SingleplayerScreenCtrl {
     ImageView image3;
 
     @FXML
-    Text description1;
+    Label description1;
 
     @FXML
-    Text description2;
+    Label description2;
 
     @FXML
-    Text description3;
+    Label description3;
 
     @FXML
     Label title1;
@@ -88,9 +86,8 @@ public class SingleplayerScreenCtrl {
     Text result;
 
     @Inject
-    public SingleplayerScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public SingleplayerScreenCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
-        this.server = server;
 
         optionToID = new HashMap<>();
     }
@@ -99,11 +96,9 @@ public class SingleplayerScreenCtrl {
         // inform the server about leaving
         ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
-        server.send("/app/general", msg);
 
-        mainCtrl.showOverview();
+        mainCtrl.showLeave(mainCtrl.getSingleplayerScreen(), () -> mainCtrl.getServer().send("/app/general", msg));
     }
-
 
     public void lockAnswer(MouseEvent mouseEvent) {
         if(!canInteractWithUI) return;
@@ -126,7 +121,7 @@ public class SingleplayerScreenCtrl {
         // for convenience
         List<Rectangle> options = List.of(option1, option2, option3);
         List<Label> titles = List.of(title1, title2, title3);
-        List<Text> descriptions = List.of(description1, description2, description3);
+        List<Label> descriptions = List.of(description1, description2, description3);
         List<ImageView> images = List.of(image1, image2, image3);
 
         for(int i = 0; i < activities.size() && i < 3; ++i){
@@ -161,21 +156,19 @@ public class SingleplayerScreenCtrl {
     }
 
     public void submitAnswer(){
-        if(!canInteractWithUI) return;
+        if(!canInteractWithUI || choice == null) return;
         canInteractWithUI = false;
 
-        double time = 0.0;
         if(timer != null){
-            time = (timer.getTotalDuration().toSeconds() - timer.getCurrentTime().toSeconds())
-                    / timer.getTotalDuration().toSeconds();
             timer.stop();
         }
 
+        submit.setDisable(true);
+
         ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
-        msg.time = time;
         msg.chosenActivity = optionToID.get(choice);
-        server.send("/app/general", msg);
+        mainCtrl.getServer().send("/app/general", msg);
     }
 
     public void showAnswer(Long correctID, Long pickedID){
@@ -227,5 +220,6 @@ public class SingleplayerScreenCtrl {
         option3.setStyle("-fx-stroke: #fff");
 
         result.setStyle("visibility: hidden");
+        choice = null;
     }
 }

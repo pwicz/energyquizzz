@@ -15,12 +15,16 @@
  */
 package client.scenes;
 
+import client.utils.BeforeLeave;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
+import commons.Activity;
 import commons.ClientMessage;
 import commons.ServerMessage;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -32,12 +36,8 @@ public class MainCtrl {
 
     private Stage primaryStage;
 
-    private QuoteOverviewCtrl overviewCtrl;
-    private Scene overview;
-
-    private AddQuoteCtrl addCtrl;
-    private Scene add;
     private Scene waitingRoom;
+    private WaitingRoomScreenCtrl waitingRoomScreenCtrl;
 
     private SplashScreenCtrl splashScreenCtrl;
     private Scene splash;
@@ -57,68 +57,154 @@ public class MainCtrl {
     private Scene singleplayerScreen;
     private SingleplayerScreenCtrl singleplayerScreenCtrl;
 
+    private Scene adminPanel;
+    private AdminPanelCtrl adminPanelCtrl;
+
+    private Scene editActivity;
+    private EditActivityCtrl editActivityCtrl;
+
+    private Scene createActivity;
+    private CreateActivityCtrl createActivityCtrl;
+
+    private Scene inputName;
+    private InputNameScreenCtrl inputNameScreenCtrl;
+
+    private Scene inputServer;
+    private InputServerScreenCtrl inputServerScreenCtrl;
+
     private String clientID = null;
     private String gameID = null;
-    private int score;
+
+    private Stage stage = new Stage();
+
+    private String name = null;
+
 
     @Inject
     public MainCtrl(ServerUtils server) {
         this.server = server;
     }
 
-    public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
-                           Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
+    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splashScreen,
+                           Pair<AdminPanelCtrl, Parent> adminPanel,
+                           Pair<EditActivityCtrl, Parent> editActivity,
+                           Pair<CreateActivityCtrl, Parent> createActivity,
                            Pair<SingleplayerLeaderboardCtrl, Parent> singleplayerLeaderboard,
+                           Pair<SingleplayerScreenCtrl, Parent> singleplayerGame,
+                           Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
                            Pair<MultiplayerScreenCtrl, Parent> multiplayer,
-                           Pair<SplashScreenCtrl, Parent> splashScreen,
                            Pair<InBetweenScoreCtrl, Parent> inBetweenScore,
                            Pair<LeaveCtrl, Parent> leave,
-                           Pair<SingleplayerScreenCtrl, Parent> singleplayerGame){
+                           Pair<InputNameScreenCtrl, Parent> inputName,
+                           Pair<InputServerScreenCtrl, Parent> inputServer){
         this.primaryStage = primaryStage;
-
-        this.overviewCtrl = overview.getKey();
-        this.overview = new Scene(overview.getValue());
-
-        this.addCtrl = add.getKey();
-        this.add = new Scene(add.getValue());
-
-        this.waitingRoom = new Scene(waitingRoom.getValue());
-
-        this.singleplayerLeaderboardCtrl = singleplayerLeaderboard.getKey();
-        this.singleLeaderboard = new Scene(singleplayerLeaderboard.getValue());
-
-        this.multiplayerScreenCtrl = multiplayer.getKey();
-        this.multiplayer = new Scene(multiplayer.getValue());
 
         this.splashScreenCtrl = splashScreen.getKey();
         this.splash = new Scene(splashScreen.getValue());
 
-        this.inBetweenScoreCtrl = inBetweenScore.getKey();
-        this.inBetweenScore = new Scene(inBetweenScore.getValue());
+        this.adminPanelCtrl = adminPanel.getKey();
+        this.adminPanel = new Scene(adminPanel.getValue());
 
-        this.leave = new Scene(leave.getValue());
-        this.leaveCtrl = leave.getKey();
+        this.editActivityCtrl = editActivity.getKey();
+        this.editActivity = new Scene(editActivity.getValue());
+
+        this.createActivityCtrl = createActivity.getKey();
+        this.createActivity = new Scene(createActivity.getValue());
+
+        this.waitingRoom = new Scene(waitingRoom.getValue());
+        this.waitingRoomScreenCtrl = waitingRoom.getKey();
+
+        this.singleplayerLeaderboardCtrl = singleplayerLeaderboard.getKey();
+        this.singleLeaderboard = new Scene(singleplayerLeaderboard.getValue());
 
         this.singleplayerScreen = new Scene(singleplayerGame.getValue());
         this.singleplayerScreenCtrl = singleplayerGame.getKey();
 
-        showOverview();
+        this.multiplayerScreenCtrl = multiplayer.getKey();
+        this.multiplayer = new Scene(multiplayer.getValue());
+
+        this.inBetweenScoreCtrl = inBetweenScore.getKey();
+        this.inBetweenScore = new Scene(inBetweenScore.getValue());
+
+        this.inputName = new Scene(inputName.getValue());
+        this.inputNameScreenCtrl = inputName.getKey();
+
+        this.leave = new Scene(leave.getValue());
+        this.leaveCtrl = leave.getKey();
+
+        this.inputServer = new Scene(inputServer.getValue());
+        this.inputServerScreenCtrl = inputServer.getKey();
+
+
+        showSplash();
         primaryStage.show();
-
-        clientID = "233"; // hardcoded: we need to somehow get it from the server
-
-        server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, m -> {
-            handleServerMessage(m);
-        });
+        inputServerScreenCtrl.hideLeaveButton();
+        showInputServer();
     }
 
+    //CHECKSTYLE:OFF
     public void handleServerMessage(ServerMessage msg){
+
         switch(msg.type){
+            case INIT_PLAYER:
+                gameID = msg.gameID;
+                runLater(() -> {
+                    multiplayerScreenCtrl.updateScore(0);
+                    showWaitingRoom();
+                });
+
+                break;
+            case EXTRA_PLAYER:
+                runLater(() -> {
+//                    showWaitingRoom();
+                    waitingRoomScreenCtrl.updatePlayerList(msg.playersWaiting);
+                });
+                break;
             case NEW_MULTIPLAYER_GAME:
                 // do something
                 break;
             case NEW_SINGLEPLAYER_GAME:
                 gameID = msg.gameID;
+                primaryStage.setOnCloseRequest(e -> {
+                    server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID));
+                    Platform.exit();
+                    System.exit(0);
+                });
+                break;
+            case LOAD_NEW_QUESTIONS:
+                // runLater() must be used to run the following code
+                // on the JavaFX Application Thread
+                runLater(() -> {
+                    multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                    multiplayerScreenCtrl.displayActivities(msg.question.getActivities());
+                    showMultiplayerScreen();
+                });
+                System.out.println("[msg] loadingGame");
+                break;
+            case DISPLAY_ANSWER:
+                runLater(() -> {
+                    System.out.println("[update] topScores: " + msg.topScores);
+                    multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
+                    multiplayerScreenCtrl.updateScore(msg.score);
+                    inBetweenScoreCtrl.setScoreTo(msg.score);
+                    inBetweenScoreCtrl.insertLeaderboard(msg.topScores);
+                    inBetweenScoreCtrl.insertLeaderboardG(msg.correctlyAnswered);
+                    inBetweenScoreCtrl.insertLeaderboardR(msg.incorrectlyAnswered);
+                });
+                System.out.println("[msg] display answer");
+
+                break;
+            case DISPLAY_INBETWEENSCORES:
+                runLater(() -> {
+                    multiplayerScreenCtrl.updateTitle(msg.questionCounter);
+                    inBetweenScoreCtrl.setQuestionNo(msg.questionCounter, msg.totalQuestions);
+                    showInbetweenScore();
+                });
+                System.out.println("[msg] show leaderboard ");
+                break;
+            case END_GAME:
+                runLater(this::showWaitingRoom);
+                System.out.println("[msg] end game");
                 break;
             case NEXT_QUESTION:
                 // runLater() must be used to run the following code
@@ -151,60 +237,141 @@ public class MainCtrl {
         }
     }
 
-    public void showOverview() {
-        primaryStage.setTitle("Quotes: Overview");
-        primaryStage.setScene(overview);
-        overviewCtrl.refresh();
-    }
-
     public void showInbetweenScore() {
         primaryStage.setTitle("Score");
         primaryStage.setScene(inBetweenScore);
     }
 
     public void showLeave(Scene scene){
-        leaveCtrl.setPrevious(scene);
-        primaryStage.setScene(leave);
+        this.stage = new Stage();
+        this.stage.setScene(leave);
+        this.stage.initModality(Modality.APPLICATION_MODAL);
+        this.stage.showAndWait();
+    }
+
+    public void showLeave(Scene scene, BeforeLeave beforeLeave){
+        this.stage = new Stage();
+        leaveCtrl.setBeforeLeave(beforeLeave);
+
+        this.stage.setScene(leave);
+        this.stage.initModality(Modality.APPLICATION_MODAL);
+        this.stage.showAndWait();
+    }
+
+    public void showInputServer(){
+        inputServerScreenCtrl.render(server.isConnected());
+
+        this.stage = new Stage();
+
+        this.stage.setScene(inputServer);
+        this.stage.initModality(Modality.APPLICATION_MODAL);
+        this.stage.showAndWait();
+
+        splashScreenCtrl.render();
+    }
+
+    public void closePopup() {
+        this.stage.close();
+    }
+
+    public void showLeaveWaitingroom(Scene scene, BeforeLeave beforeLeave){
+        leaveCtrl.setBeforeLeave(beforeLeave);
+        showLeave(scene);
+    }
+
+    public void stayWaitingroom(Scene previous){
+        primaryStage.setScene(previous);
     }
 
     public void stay(Scene previous){
         primaryStage.setScene(previous);
     }
 
-    public void showAdd() {
-        // For testing only: send a test message to the server
-        server.send("/app/general", new ClientMessage(ClientMessage.Type.TEST, clientID, "0"));
-        System.out.println("DID sth");
-
-        primaryStage.setTitle("Quotes: Adding Quote");
-        primaryStage.setScene(add);
-    }
-
     public void showSplash(){
+        splashScreenCtrl.render();
         primaryStage.setTitle("SplashScreen");
         primaryStage.setScene(splash);
+        primaryStage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
     }
 
     public void showMultiplayerScreen(){
         primaryStage.setTitle("Multiplayer");
         primaryStage.setScene(multiplayer);
-        multiplayerScreenCtrl.decreaseTime();
     }
 
     public void showSingleLeaderboardScreen(){
+        if(!server.isConnected()){
+            showInputServer();
+            return;
+        }
+
         primaryStage.setTitle("Leaderboard");
         primaryStage.setScene(singleLeaderboard);
+
+        singleplayerLeaderboardCtrl.insertLeaderboard();
     }
 
     public void showWaitingRoom() {
         primaryStage.setTitle("WaitingRoomScreen");
         primaryStage.setScene(waitingRoom);
+        primaryStage.setOnCloseRequest(e -> {
+            if(primaryStage.getScene().equals(waitingRoom)) {
+                server.send("/app/general",
+                        new ClientMessage(ClientMessage.Type.QUIT_WAITING_ROOM, getClientID(), getGameID()));
+            }else{
+                server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID));
+            }
+            Platform.exit();
+            System.exit(0);
+        });
+    }
+
+    public void showinputNameScreen() {
+        if(!server.isConnected()){
+            showInputServer();
+            return;
+        }
+
+        primaryStage.setTitle("input Name");
+        primaryStage.setScene(inputName);
     }
 
     public void showSingleplayerGameScreen(){
         primaryStage.setTitle("Singleplayer");
         primaryStage.setScene(singleplayerScreen);
     }
+
+    public void showAdminPanel() {
+        if(!server.isConnected()){
+            showInputServer();
+            return;
+        }
+
+        adminPanelCtrl.initialize();
+        adminPanelCtrl.displayActivities();
+        primaryStage.setTitle("AdminPanel");
+        primaryStage.setScene(adminPanel);
+    }
+
+    public void showEditActivity(Activity selected) {
+        if(selected != null){
+            primaryStage.setTitle("EditActivity");
+            primaryStage.setScene(editActivity);
+            editActivityCtrl.fillActivity(selected);
+            editActivityCtrl.resetErrorText();
+        }
+    }
+
+    public void showCreateActivity() {
+        primaryStage.setTitle("CreateActivity");
+        primaryStage.setScene(createActivity);
+        createActivityCtrl.resetErrorText();
+        createActivityCtrl.clearFields();
+    }
+
     public Scene getInBetweenScore() {
         return inBetweenScore;
     }
@@ -215,10 +382,6 @@ public class MainCtrl {
 
     public Scene getLeave() {
         return leave;
-    }
-
-    public Scene getOverview() {
-        return overview;
     }
 
     public Scene getSingleLeaderboard() {
@@ -233,6 +396,14 @@ public class MainCtrl {
         return waitingRoom;
     }
 
+    public Scene getSingleplayerScreen() {
+        return singleplayerScreen;
+    }
+
+    public Scene getInputName() {
+        return inputName;
+    }
+
     public String getClientID() {
         return clientID;
     }
@@ -241,4 +412,67 @@ public class MainCtrl {
         return gameID;
     }
 
+    public AdminPanelCtrl getAdminPanelCtrl() {
+        return adminPanelCtrl;
+    }
+
+    public Scene getAdminPanel(){
+        return adminPanel;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    /**
+     * Sets the server name.
+     * @param serverName server name
+     */
+    public void setServerName(String serverName){
+        this.server.setServerURL(serverName);
+    }
+
+    public boolean connectToServer(String url){
+        this.server.setServerURL(url);
+
+        // try to get new clientID
+        try{
+            this.clientID = server.getClientID();
+        }
+        catch(Exception e){
+            System.out.println("SERVER FAILED with exception " + e.getMessage());
+            return false;
+        }
+
+        // try to connect with websockets
+        if(!server.reconnect()) return false;
+
+        // all works: register for websocket messages
+        server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, this::handleServerMessage);
+        return true;
+    }
+
+    public ServerUtils getServer() {
+        return server;
+    }
+
+    /**
+     * check connection to server
+     * @return boolean value true if the connection exists, false if it doesn't
+     */
+    public boolean checkServerConnection(){
+        return server.isConnected();
+    }
+
+    public Scene getEditActivity() {
+        return editActivity;
+    }
+
+    public Scene getCreateActivity() {
+        return createActivity;
+    }
 }

@@ -1,22 +1,25 @@
 package client.scenes;
 
-import client.utils.ServerUtils;
+import commons.ClientMessage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
 import javax.inject.Inject;
+import java.util.List;
 
 public class InBetweenScoreCtrl {
-    private final ServerUtils server;
     private final MainCtrl mainCtrl;
+
+    @FXML
+    Label endOfGame;
 
     @FXML
     Button leave;
 
     @FXML
-    ListView<String> leaderboard;
+    ListView<String> leaderboardSingle;
 
     @FXML
     ListView<String> leaderboardG;
@@ -31,30 +34,47 @@ public class InBetweenScoreCtrl {
     Label score;
 
     @Inject
-    public InBetweenScoreCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public InBetweenScoreCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
-        this.server = server;
     }
 
     public void initialize() {
-
+        endOfGame.setVisible(false);
     }
 
-    public void insertLeaderboard() { //needs to change to import the database leaderboard
-        leaderboard.getItems().addAll("Justin", "Piotr", "Mike", "Ioana", "Alex");
+    public void insertLeaderboard(List<String> players)  { //needs to change to import the database leaderboard
+        leaderboardSingle.getItems().clear();
+        leaderboardSingle.getItems().addAll(players);
+
     }
-    public void insertLeaderboardG() { //needs to change to import the database leaderboard
-        leaderboardG.getItems().addAll("Random", "Names", "Here");
+    public void insertLeaderboardG(List<String> players) { //needs to change to import the database leaderboard
+        leaderboardG.getItems().clear();
+        leaderboardG.getItems().addAll(players);
     }
-    public void insertLeaderboardR() { //needs to change to import the database leaderboard
-        leaderboardR.getItems().addAll("Blah", "Blah", "Blah");
+    public void insertLeaderboardR(List<String> players) { //needs to change to import the database leaderboard
+        leaderboardR.getItems().clear();
+        leaderboardR.getItems().addAll(players);
     }
 
-    public void setQuestionNo(int n){questionNo.setText(n + "/20");}
-    public void setScoreTo(int s){score.setText("Score: " + s);}
+    public void setQuestionNo(int n, int total){
+        if(n != total){
+            questionNo.setText(n + " / " + total);
+            endOfGame.setVisible(false);
+        } else {
+            questionNo.setText(n + " / " + total);
+            endOfGame.setVisible(true);
+            endOfGame.setText("End of game");
+        }
+    }
+
+    public void setScoreTo(int s){
+        score.setText("Score: " + s);
+    }
 
     public void leave(){
-        mainCtrl.showLeave(mainCtrl.getInBetweenScore());
+        ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
+                mainCtrl.getClientID(), mainCtrl.getGameID());
+        mainCtrl.showLeave(mainCtrl.getMultiplayer(), () -> mainCtrl.getServer().send("/app/general", msg));
     }
 
 }

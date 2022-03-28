@@ -5,7 +5,9 @@ public class Player {
     private boolean hasAnswered;
     private String name;
     private String ID;
-    private int score;
+    private int score = 0;
+    private long answer;
+    private boolean answerStatus = false;
 
     public Player(String name, String ID) {
         this.name = name;
@@ -43,4 +45,25 @@ public class Player {
     public void setHasAnswered(boolean hasAnswered) {
         this.hasAnswered = hasAnswered;
     }
+
+    public boolean isHasAnswered() {
+        return hasAnswered;
+    }
+
+    public long getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(long answer) {
+        this.answer = answer;
+    }
+
+    public void setAnswerStatus(boolean status){
+        answerStatus = status;
+    }
+
+    public boolean getAnswerStatus(){
+        return answerStatus;
+    }
+
 }

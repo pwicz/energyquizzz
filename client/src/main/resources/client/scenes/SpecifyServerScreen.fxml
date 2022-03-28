@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="251.0" prefWidth="821.0" styleClass="global" stylesheets="@/client/scenes/styles/SpecifyServerScreen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.InputServerScreenCtrl">
+    <effect>
+        <ColorAdjust />
+    </effect>
+    <Label layoutX="316.0" layoutY="45.0" styleClass="label" text="Specify a server" />
+    <TextField fx:id="serverBox" alignment="CENTER" layoutX="253.0" layoutY="105.0" prefHeight="42.0" prefWidth="319.0" promptText="Enter server name " styleClass="textPrompt" />
+   <Button layoutX="343.0" layoutY="165.0" mnemonicParsing="false" onAction="#join" prefHeight="30.0" prefWidth="134.0" styleClass="join" text="Join" />
+   <Button fx:id="leave" layoutX="40.0" layoutY="199.0" mnemonicParsing="false" onAction="#leave" prefHeight="30.0" prefWidth="140.0" styleClass="leave" text="Leave" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="647.0" AnchorPane.topAnchor="199.0" />
+    <Text fx:id="connectionFailed" layoutX="310.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="failedConnection" text="Failed to connect to the server" />
+</AnchorPane>

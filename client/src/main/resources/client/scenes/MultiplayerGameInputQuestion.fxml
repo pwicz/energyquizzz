@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
+
+    <Label fx:id="emojiHolder" layoutX="1296.0" layoutY="430.0" prefHeight="299.0" prefWidth="121.0" styleClass="gradientBox" AnchorPane.bottomAnchor="253.0">
+    </Label>
+    <Label fx:id="jokerHolder" layoutX="63.0" layoutY="430.0" prefHeight="299.0" prefWidth="121.0" styleClass="gradientBox" AnchorPane.bottomAnchor="253.0">
+    </Label>
+
+    <Label alignment="CENTER" layoutX="256.0" layoutY="98.0" styleClass="question" text="Question 1: How much energy does it take to..?" AnchorPane.leftAnchor="256.0" AnchorPane.rightAnchor="249.0" AnchorPane.topAnchor="98.0">
+    </Label>
+
+    <Text fx:id="description" fill="WHITE" layoutX="576.0" layoutY="418.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text="Play computer games for 5 hours." textAlignment="CENTER" wrappingWidth="334.6666259765623">
+    </Text>
+    <ProgressBar fx:id="timeBar" layoutX="237.0" layoutY="207.0" prefHeight="40.0" prefWidth="1038.0" progress="0.0" styleClass="timeBar" AnchorPane.leftAnchor="237.0" AnchorPane.rightAnchor="237.0" AnchorPane.topAnchor="207.0" />
+
+    <ImageView fitHeight="86.0" fitWidth="86.0" layoutX="1314.0" layoutY="448.0" pickOnBounds="true" preserveRatio="true">
+        <styleClass>
+            <String fx:value="emoji" />
+            <String fx:value="hover-element" />
+        </styleClass>
+        <Image url="@/client/scenes/images/tempShit.png" />
+    </ImageView>
+    <ImageView fitHeight="77.0" fitWidth="75.0" layoutX="1318.0" layoutY="630.0" pickOnBounds="true" preserveRatio="true">
+        <styleClass>
+            <String fx:value="emoji" />
+            <String fx:value="hover-element" />
+        </styleClass>
+        <Image url="@/client/scenes/images/tempShit.png" />
+    </ImageView>
+    <ImageView fitHeight="75.0" fitWidth="75.0" layoutX="1322.0" layoutY="541.0" pickOnBounds="true" preserveRatio="true">
+        <styleClass>
+            <String fx:value="emoji" />
+            <String fx:value="hover-element" />
+        </styleClass>
+        <Image url="@/client/scenes/images/tempShit.png" />
+    </ImageView>
+    <ImageView fitHeight="84.0" fitWidth="87.0" layoutX="80.0" layoutY="444.0" pickOnBounds="true" preserveRatio="true">
+        <styleClass>
+            <String fx:value="jokers" />
+            <String fx:value="hover-element" />
+        </styleClass>
+        <Image url="@/client/scenes/images/2x.png" />
+    </ImageView>
+    <ImageView fitHeight="86.0" fitWidth="89.0" layoutX="81.0" layoutY="537.0" pickOnBounds="true" preserveRatio="true">
+        <styleClass>
+            <String fx:value="jokers" />
+            <String fx:value="hover-element" />
+        </styleClass>
+        <Image url="@/client/scenes/images/2x.png" />
+    </ImageView>
+    <ImageView fitHeight="80.0" fitWidth="81.0" layoutX="87.0" layoutY="633.0" pickOnBounds="true" preserveRatio="true">
+        <styleClass>
+            <String fx:value="jokers" />
+            <String fx:value="hover-element" />
+        </styleClass>
+        <Image url="@/client/scenes/images/2x.png" />
+    </ImageView>
+
+    <TextField alignment="CENTER" layoutX="357.0" layoutY="540.0" prefHeight="69.0" prefWidth="807.0" promptText="Enter your answer" styleClass="textPrompt" />
+
+    <Label fx:id="score" alignment="CENTER" layoutX="554.0" layoutY="910.0" prefHeight="40.0" prefWidth="405.0" styleClass="score" text="Score: 1200" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="32.0">
+    </Label>
+
+    <Button fx:id="submit" disable="true" layoutX="1318.0" layoutY="910.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="40.0" prefWidth="150.0" text="Submit" AnchorPane.bottomAnchor="32.0">
+        <styleClass>
+            <String fx:value="button" />
+            <String fx:value="greenButton" />
+            <String fx:value="bigButton" />
+        </styleClass>
+    </Button>
+
+    <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="32.0">
+        <styleClass>
+            <String fx:value="button" />
+            <String fx:value="redButton" />
+            <String fx:value="bigButton" />
+        </styleClass>
+    </Button>
+
+    <stylesheets>
+        <URL value="@/client/scenes/styles/styles.css" />
+        <URL value="@/client/scenes/styles/MultiplayerInputQuestion.css" />
+    </stylesheets>
+</AnchorPane>

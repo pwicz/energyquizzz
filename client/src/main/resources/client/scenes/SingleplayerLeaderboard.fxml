@@ -1,38 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="global" stylesheets="/client/scenes/SingleplayerLeaderboard.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerLeaderboardCtrl">
-   <children>
-      <ListView fx:id="leaderboard" layoutX="656.0" layoutY="284.0" prefHeight="328.0" prefWidth="495.0" AnchorPane.leftAnchor="508.0" AnchorPane.topAnchor="280.0">
-         <styleClass>
-            <String fx:value="global" />
-            <String fx:value="list-view" />
-         </styleClass></ListView>
-      <TextField fx:id="nameField" layoutX="682.0" layoutY="699.0" maxHeight="49.0" maxWidth="495.0" onAction="#insertName" prefHeight="49.0" prefWidth="495.0" promptText="  Enter your name" AnchorPane.leftAnchor="508.0" AnchorPane.topAnchor="654.0">
-         <styleClass>
-            <String fx:value="textField" />
-            <String fx:value="global" />
-         </styleClass>
-      </TextField>
-      <Button fx:id="start" layoutX="730.0" layoutY="760.0" mnemonicParsing="false" onAction="#insertLeaderboard" onMouseClicked="#start" prefHeight="63.0" prefWidth="226.0" text="START" AnchorPane.leftAnchor="643.0" AnchorPane.topAnchor="750.0">
-         <styleClass>
-            <String fx:value="start" />
-            <String fx:value="global" />
-         </styleClass>
-      </Button>
-      <Button fx:id="leave" layoutX="119.0" layoutY="849.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="LEAVE" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="910.0">
-         <styleClass>
-            <String fx:value="leave" />
-            <String fx:value="global" />
-         </styleClass>
-      </Button>
-      <Text id="Title" boundsType="VISUAL" layoutX="529.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Leaderboard" textAlignment="CENTER" wrappingWidth="525.3685607910156" AnchorPane.leftAnchor="523.0" AnchorPane.topAnchor="141.0">
-      </Text>
-   </children>
+<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerLeaderboardCtrl">
+
+   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="149.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="Leaderboard" AnchorPane.bottomAnchor="730.0">
+   </Label>
+
+   <ListView fx:id="leaderboard" layoutX="509.0" layoutY="284.0" prefHeight="328.0" prefWidth="495.0" AnchorPane.bottomAnchor="370.0">
+      <styleClass>
+         <String fx:value="container" />
+         <String fx:value="gradientBox" />
+      </styleClass>
+   </ListView>
+   <TextField fx:id="nameField" layoutX="509.0" layoutY="642.0" maxHeight="49.0" maxWidth="495.0" onAction="#insertName" prefHeight="49.0" prefWidth="495.0" promptText="Enter your name" AnchorPane.bottomAnchor="291.0">
+      <styleClass>
+         <String fx:value="container" />
+         <String fx:value="inputName" />
+      </styleClass>
+   </TextField>
+
+   <Button fx:id="start" layoutX="643.0" layoutY="751.0" mnemonicParsing="false" onMouseClicked="#start" prefHeight="63.0" prefWidth="226.0" text="Start" AnchorPane.bottomAnchor="168.0">
+      <styleClass>
+         <String fx:value="button" />
+         <String fx:value="greenButton" />
+         <String fx:value="hugeButton" />
+      </styleClass>
+   </Button>
+
+   <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="32.0">
+      <styleClass>
+         <String fx:value="button" />
+         <String fx:value="redButton" />
+         <String fx:value="bigButton" />
+      </styleClass>
+   </Button>
+
+   <stylesheets>
+      <URL value="@/client/scenes/styles/styles.css" />
+      <URL value="@/client/scenes/styles/leaderboard.css" />
+   </stylesheets>
 </AnchorPane>

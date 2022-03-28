@@ -17,58 +17,60 @@ package client.utils;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.net.URL;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
+import commons.Activity;
 import commons.Score;
+import jakarta.ws.rs.client.Entity;
 import org.glassfish.jersey.client.ClientConfig;
 
-import commons.Quote;
 import jakarta.ws.rs.client.ClientBuilder;
-import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 public class ServerUtils {
 
-    private static final String SERVER = "http://localhost:8080/";
+    //private static final String SERVER = "http://localhost:8080/";
+//    private String server = "http://localhost:8080/";
+    private String server = null;
+    //TODO: change this once other pages' initialize is changed
+    //TODO: make it so that it gets connected to the server specified by the player
 
-    public void getQuotesTheHardWay() throws IOException {
-        var url = new URL("http://localhost:8080/api/quotes");
-        var is = url.openConnection().getInputStream();
-        var br = new BufferedReader(new InputStreamReader(is));
-        String line;
-        while ((line = br.readLine()) != null) {
-            System.out.println(line);
-        }
+    private StompSession session;
+    //TODO: change this once other pages' initialize is changed
+
+    public void setServerURL(String server){
+        this.server = server;
     }
 
-    public List<Quote> getQuotes() {
-        return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/quotes") //
-                .request(APPLICATION_JSON) //
-                .accept(APPLICATION_JSON) //
-                .get(new GenericType<List<Quote>>() {});
+    public String getServerURL(){ return this.server; }
+
+    public boolean isConnected(){
+        if(server == null || session == null) return false;
+
+        return session.isConnected();
     }
 
+    public ServerUtils() {
+        System.out.println("CONSTRUCTED");
+    }
 
     public List<Score> getTopScores(){
         List<Score> scores = ClientBuilder.newClient(new ClientConfig())
-                .target(SERVER).path("api/scores/")
+                .target(server).path("api/scores/")
                 .request(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
                 .get(new GenericType<List<Score>>() {});
@@ -78,17 +80,54 @@ public class ServerUtils {
         return scores;
     }
 
-
-
-    public Quote addQuote(Quote quote) {
-        return ClientBuilder.newClient(new ClientConfig()) //
-                .target(SERVER).path("api/quotes") //
-                .request(APPLICATION_JSON) //
-                .accept(APPLICATION_JSON) //
-                .post(Entity.entity(quote, APPLICATION_JSON), Quote.class);
+    public String getClientID(){
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(server).path("api/util/getPlayerID")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(String.class);
     }
 
-    private StompSession session = connect("ws://localhost:8080/websocket");
+    /**
+     * Creates the url for working with websockets
+     * @return returns the url for websockets
+     */
+    private String getWebsocketServerName() {
+        String websocketServerName= server.replaceAll("http", "ws");
+        return websocketServerName + "websocket";
+    }
+
+    public List<Activity> getActivities(){
+        return ClientBuilder.newClient(new ClientConfig())
+                .target(server).path("api/activities/")
+                .request(APPLICATION_JSON)
+                .accept(APPLICATION_JSON)
+                .get(new GenericType<List<Activity>>() {});
+    }
+
+    public void addActivity(@RequestBody Activity newActivity){
+        ClientBuilder.newClient(new ClientConfig())
+                .target(server)
+                .path("api/activities/")
+                .request(APPLICATION_JSON)
+                .put(Entity.json(newActivity));
+    }
+
+    public void editActivity(@PathVariable long id, @RequestBody Activity newActivity){
+        ClientBuilder.newClient(new ClientConfig())
+                .target(server)
+                .path("api/activities/edit/" + id)
+                .request(APPLICATION_JSON)
+                .put(Entity.json(newActivity));
+    }
+
+    public void removeActivity(@PathVariable long id){
+        ClientBuilder.newClient(new ClientConfig())
+                .target(server)
+                .path("api/activities/" + id)
+                .request(APPLICATION_JSON)
+                .delete();
+    }
 
     private StompSession connect(String url){
         var client = new StandardWebSocketClient();
@@ -127,4 +166,19 @@ public class ServerUtils {
     }
 
     public void send(String dest, Object o){ session.send(dest, o); }
+
+    public boolean reconnect(){
+        if(session != null && session.isConnected()) session.disconnect();
+
+        try{
+            session = connect(getWebsocketServerName());
+        }
+        catch(Exception e){
+            System.out.println("Exception on WebSocket connect(): " + e.getMessage());
+            session = null;
+            return false;
+        }
+
+        return session.isConnected();
+    }
 }

@@ -1,0 +1,17 @@
+.container {
+    -fx-background-color: none;
+    -fx-border-radius: 5px;
+}
+
+.inputName{
+    -fx-border-color: "white";
+    -fx-font-size: 23px;
+    -fx-font-family: "Roboto Light";
+    -fx-text-fill: "white";
+}
+
+.list-cell {
+    -fx-background-color: #272727;
+    -fx-text-fill: linear-gradient(to left, #1BED62, #21A0E8);
+    -fx-font-size: 15px;
+}
