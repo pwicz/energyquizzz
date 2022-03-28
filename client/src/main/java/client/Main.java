@@ -20,6 +20,7 @@ import static com.google.inject.Guice.createInjector;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import client.scenes.InputServerScreenCtrl;
 import client.scenes.AdminPanelCtrl;
 import client.scenes.CreateActivityCtrl;
 import client.scenes.EditActivityCtrl;
@@ -61,6 +62,7 @@ public class Main extends Application {
                 "client","scenes", "SingleplayerGame.fxml");
         var inputName = FXML.load(InputNameScreenCtrl.class,
                 "client","scenes", "InputNameScreen.fxml");
+        var inputServer = FXML.load(InputServerScreenCtrl.class, "client","scenes", "SpecifyServerScreen.fxml");
 
         var waitingRoom = FXML.load(WaitingRoomScreenCtrl.class, "client","scenes", "WaitingRoom.fxml");
         var multiplayerGame =
@@ -73,7 +75,7 @@ public class Main extends Application {
 
         mainCtrl.initialize(primaryStage, splashScreen, adminPanel, editActivity, createActivity,
                 singleplayerLeaderboard, singleplayerGame, waitingRoom, multiplayerGame,
-                inBetweenScore, leave, inputName);
+                inBetweenScore, leave, inputName, inputServer);
 
     }
 }

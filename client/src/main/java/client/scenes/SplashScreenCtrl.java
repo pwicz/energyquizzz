@@ -2,19 +2,19 @@ package client.scenes;
 
 
 import com.google.inject.Inject;
-
-import client.utils.ServerUtils;
+import javafx.fxml.FXML;
+import javafx.scene.text.Text;
 
 public class SplashScreenCtrl {
 
-
-    private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
+    @FXML
+    Text message;
+
     @Inject
-    public SplashScreenCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public SplashScreenCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
-        this.server = server;
     }
 
     public void leave(){
@@ -22,7 +22,6 @@ public class SplashScreenCtrl {
     }
 
     public void showWaitingRoom(){
-
         mainCtrl.showinputNameScreen();
     }
 
@@ -30,7 +29,26 @@ public class SplashScreenCtrl {
         mainCtrl.showSingleLeaderboardScreen();
     }
 
+    public void showConnectionStatus(){
+
+        if(mainCtrl.checkServerConnection()){
+            // TODO: message.setStyle() for some reason doesn't work
+            message.setText("Connected to " + mainCtrl.getServer().getServerURL());
+            message.setStyle("-fx-fill: #38c768;");
+        }
+        else{
+            message.setText("Not connected to a server");
+            message.setStyle("-fx-fill: #e0503d;");
+        }
+
+        message.setStyle("visibility: visible;");
+    }
+    
     public void showAdminPanel() {
         mainCtrl.showAdminPanel();
+    }
+
+    public void render(){
+        showConnectionStatus();
     }
 }

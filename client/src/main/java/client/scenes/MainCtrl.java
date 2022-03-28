@@ -28,8 +28,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
-import java.util.UUID;
-
 import static javafx.application.Platform.runLater;
 
 public class MainCtrl {
@@ -71,6 +69,9 @@ public class MainCtrl {
     private Scene inputName;
     private InputNameScreenCtrl inputNameScreenCtrl;
 
+    private Scene inputServer;
+    private InputServerScreenCtrl inputServerScreenCtrl;
+
     private String clientID = null;
     private String gameID = null;
 
@@ -94,8 +95,8 @@ public class MainCtrl {
                            Pair<MultiplayerScreenCtrl, Parent> multiplayer,
                            Pair<InBetweenScoreCtrl, Parent> inBetweenScore,
                            Pair<LeaveCtrl, Parent> leave,
-                           Pair<InputNameScreenCtrl, Parent> inputName
-                            ){
+                           Pair<InputNameScreenCtrl, Parent> inputName,
+                           Pair<InputServerScreenCtrl, Parent> inputServer){
         this.primaryStage = primaryStage;
 
         this.splashScreenCtrl = splashScreen.getKey();
@@ -131,11 +132,14 @@ public class MainCtrl {
         this.leave = new Scene(leave.getValue());
         this.leaveCtrl = leave.getKey();
 
+        this.inputServer = new Scene(inputServer.getValue());
+        this.inputServerScreenCtrl = inputServer.getKey();
+
+
         showSplash();
         primaryStage.show();
-
-        clientID = UUID.randomUUID().toString();
-        server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, this::handleServerMessage);
+        inputServerScreenCtrl.hideLeaveButton();
+        showInputServer();
     }
 
     //CHECKSTYLE:OFF
@@ -254,6 +258,18 @@ public class MainCtrl {
         this.stage.showAndWait();
     }
 
+    public void showInputServer(){
+        inputServerScreenCtrl.render(server.isConnected());
+
+        this.stage = new Stage();
+
+        this.stage.setScene(inputServer);
+        this.stage.initModality(Modality.APPLICATION_MODAL);
+        this.stage.showAndWait();
+
+        splashScreenCtrl.render();
+    }
+
     public void closePopup() {
         this.stage.close();
     }
@@ -272,6 +288,7 @@ public class MainCtrl {
     }
 
     public void showSplash(){
+        splashScreenCtrl.render();
         primaryStage.setTitle("SplashScreen");
         primaryStage.setScene(splash);
         primaryStage.setOnCloseRequest(e -> {
@@ -286,6 +303,11 @@ public class MainCtrl {
     }
 
     public void showSingleLeaderboardScreen(){
+        if(!server.isConnected()){
+            showInputServer();
+            return;
+        }
+
         primaryStage.setTitle("Leaderboard");
         primaryStage.setScene(singleLeaderboard);
 
@@ -308,6 +330,11 @@ public class MainCtrl {
     }
 
     public void showinputNameScreen() {
+        if(!server.isConnected()){
+            showInputServer();
+            return;
+        }
+
         primaryStage.setTitle("input Name");
         primaryStage.setScene(inputName);
     }
@@ -318,6 +345,11 @@ public class MainCtrl {
     }
 
     public void showAdminPanel() {
+        if(!server.isConnected()){
+            showInputServer();
+            return;
+        }
+
         adminPanelCtrl.initialize();
         adminPanelCtrl.displayActivities();
         primaryStage.setTitle("AdminPanel");
@@ -394,6 +426,46 @@ public class MainCtrl {
 
     public void setName(String name){
         this.name = name;
+    }
+
+    /**
+     * Sets the server name.
+     * @param serverName server name
+     */
+    public void setServerName(String serverName){
+        this.server.setServerURL(serverName);
+    }
+
+    public boolean connectToServer(String url){
+        this.server.setServerURL(url);
+
+        // try to get new clientID
+        try{
+            this.clientID = server.getClientID();
+        }
+        catch(Exception e){
+            System.out.println("SERVER FAILED with exception " + e.getMessage());
+            return false;
+        }
+
+        // try to connect with websockets
+        if(!server.reconnect()) return false;
+
+        // all works: register for websocket messages
+        server.registerForMessage("/topic/client/" + clientID, ServerMessage.class, this::handleServerMessage);
+        return true;
+    }
+
+    public ServerUtils getServer() {
+        return server;
+    }
+
+    /**
+     * check connection to server
+     * @return boolean value true if the connection exists, false if it doesn't
+     */
+    public boolean checkServerConnection(){
+        return server.isConnected();
     }
 
     public Scene getEditActivity() {

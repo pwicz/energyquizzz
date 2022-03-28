@@ -1,6 +1,6 @@
 package client.scenes;
 
-import client.utils.ServerUtils;
+import commons.ClientMessage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import java.util.List;
 
 public class InBetweenScoreCtrl {
-    private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
     @FXML
@@ -35,9 +34,8 @@ public class InBetweenScoreCtrl {
     Label score;
 
     @Inject
-    public InBetweenScoreCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public InBetweenScoreCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
-        this.server = server;
     }
 
     public void initialize() {
@@ -74,7 +72,9 @@ public class InBetweenScoreCtrl {
     }
 
     public void leave(){
-        mainCtrl.showLeave(mainCtrl.getInBetweenScore());
+        ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
+                mainCtrl.getClientID(), mainCtrl.getGameID());
+        mainCtrl.showLeave(mainCtrl.getMultiplayer(), () -> mainCtrl.getServer().send("/app/general", msg));
     }
 
 }

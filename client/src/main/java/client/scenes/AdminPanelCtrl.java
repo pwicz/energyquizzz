@@ -1,6 +1,5 @@
 package client.scenes;
 
-import client.utils.ServerUtils;
 import commons.Activity;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,7 +11,6 @@ import java.util.List;
 
 public class AdminPanelCtrl {
 
-    private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
     @FXML
@@ -25,8 +23,7 @@ public class AdminPanelCtrl {
     private HashMap<String, Activity> optionToActivity;
 
     @Inject
-    public AdminPanelCtrl(ServerUtils server, MainCtrl mainCtrl) {
-        this.server = server;
+    public AdminPanelCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
     }
 
@@ -43,7 +40,7 @@ public class AdminPanelCtrl {
      */
     public void displayActivities(){
         optionToActivity = new HashMap<>();
-        List<Activity> activities = server.getActivities();
+        List<Activity> activities = mainCtrl.getServer().getActivities();
 
         activityBox.getItems().clear();
 

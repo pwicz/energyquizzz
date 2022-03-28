@@ -1,0 +1,38 @@
+.global {
+    -fx-background-color: #272727;
+
+}
+.label{
+    -fx-text-fill:#f8f8f1;
+    -fx-font-size: 28;
+    -fx-font-family: "Roboto Thin";
+}
+.leave{
+    -fx-background-color: none;
+    -fx-border-color: #E0503D;
+    -fx-border-radius: 5;
+    -fx-text-fill: #e0503d;
+    -fx-font-family: "Roboto Thin";
+}
+
+.join {
+    -fx-border-color: #38c768;
+    -fx-background-color: none;
+    -fx-text-fill: #38c768;
+    -fx-border-radius: 5;
+    -fx-font-family: "Roboto Thin";
+}
+
+.textPrompt {
+    -fx-background-color: none;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 5;
+    -fx-text-fill: #FFFFFF;
+}
+
+.failedConnection{
+    -fx-fill: #e0503d;
+    -fx-font-family: "Roboto Thin";
+    -fx-font-size: 15.0 px;
+    visibility: hidden;
+}

@@ -1,6 +1,5 @@
 package client.scenes;
 
-import client.utils.ServerUtils;
 import commons.ClientMessage;
 import commons.Score;
 import javafx.fxml.FXML;
@@ -16,7 +15,6 @@ import java.util.List;
  */
 public class SingleplayerLeaderboardCtrl {
 
-    private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
     @FXML
@@ -47,9 +45,8 @@ public class SingleplayerLeaderboardCtrl {
      * @param mainCtrl the main ctrl
      */
     @Inject
-    public SingleplayerLeaderboardCtrl(ServerUtils server, MainCtrl mainCtrl) {
+    public SingleplayerLeaderboardCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
-        this.server = server;
     }
 
     /**
@@ -74,7 +71,7 @@ public class SingleplayerLeaderboardCtrl {
                 mainCtrl.getClientID(), null);
         msg.playerName = playerName;
         // 3. Send the message to the proper endpoint
-        server.send("/app/general", msg);
+        mainCtrl.getServer().send("/app/general", msg);
     }
 
     /**
@@ -91,7 +88,7 @@ public class SingleplayerLeaderboardCtrl {
      */
     public void insertLeaderboard() { //needs to change to import the database leaderboard
         List<String> topScores = new ArrayList<>();
-        List<Score> response = server.getTopScores();
+        List<Score> response = mainCtrl.getServer().getTopScores();
         if(response != null){
             for(Score score : response){
                 topScores.add(score.toString());

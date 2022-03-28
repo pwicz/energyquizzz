@@ -1,6 +1,5 @@
 package client.scenes;
 
-import client.utils.ServerUtils;
 import commons.Activity;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +16,6 @@ import java.net.URLConnection;
 
 public class EditActivityCtrl {
 
-    private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
     private long currentActivityID;
@@ -48,8 +46,7 @@ public class EditActivityCtrl {
 
 
     @Inject
-    public EditActivityCtrl(ServerUtils server, MainCtrl mainCtrl) {
-        this.server = server;
+    public EditActivityCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
     }
 
@@ -118,13 +115,13 @@ public class EditActivityCtrl {
             Activity newActivity = new Activity(title, consumption,
                     source, image);
 
-            server.editActivity(currentActivityID, newActivity);
+            mainCtrl.getServer().editActivity(currentActivityID, newActivity);
             mainCtrl.showAdminPanel();
         }
     }
 
     public void remove(ActionEvent actionEvent){
-        server.removeActivity(currentActivityID);
+        mainCtrl.getServer().removeActivity(currentActivityID);
         mainCtrl.showAdminPanel();
     }
 

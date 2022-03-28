@@ -79,6 +79,10 @@ public class MainMessageController {
                     }
                     break;
                 case INIT_MULTIPLAYER:
+
+                    if(msg.serverName == null){
+                        //show server screen
+                    }
                     // if name is already taken
                     if(waitingRoom != null
                             && waitingRoom.getPlayers()
@@ -145,6 +149,11 @@ public class MainMessageController {
                     sendMessageToAllPlayers(temp, waitingRoom);
 
                     break;
+                case PING:
+                    if(msg.playerID == null) return;
+                    var pingResponse = new ServerMessage(ServerMessage.Type.PING);
+                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, pingResponse);
+                    break;
                 default:
                     // unknown message
             }
@@ -167,7 +176,6 @@ public class MainMessageController {
             p.setHasAnswered(true);
             p.setAnswer(msg.chosenActivity);
         }
-
 
         private ServerMessage initSingleplayerGame(ClientMessage msg) {
         // 0. Check if player name is correct
@@ -290,6 +298,7 @@ public class MainMessageController {
         ServerMessage result = new ServerMessage(ServerMessage.Type.INIT_PLAYER);
         result.gameID = waitingRoom.getID();
         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
+
 
         // update waiting room players list
         ServerMessage temp = new ServerMessage(ServerMessage.Type.EXTRA_PLAYER);
@@ -456,6 +465,7 @@ public class MainMessageController {
 
         for(var p : g.getPlayers()){
             p.setHasAnswered(false);
+            p.setAnswerStatus(false);
             result.score = p.getScore();
             simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
         }
