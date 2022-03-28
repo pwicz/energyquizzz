@@ -175,6 +175,7 @@ public class MainCtrl {
                 System.out.println("[msg] show leaderboard ");
                 break;
             case END_GAME:
+                gameID = msg.gameID;
                 runLater(this::showWaitingRoom);
                 System.out.println("[msg] end game");
                 break;

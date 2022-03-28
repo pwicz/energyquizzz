@@ -366,7 +366,9 @@ public class MainMessageController {
                 public void run() {
                     System.out.println("[msg] ending game");
 
-                    sendMessageToAllPlayers(new ServerMessage(ServerMessage.Type.END_GAME), g);
+                    ServerMessage msg = new ServerMessage(ServerMessage.Type.END_GAME);
+                    msg.gameID = waitingRoom.getID();
+                    sendMessageToAllPlayers(msg, g);
 
                     for(var p : g.getPlayers()){
                         p.setScore(0);
