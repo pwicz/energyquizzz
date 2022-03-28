@@ -58,3 +58,10 @@
     -fx-border-color: none;
     -fx-text-fill: "white";
 }
+
+.message{
+    -fx-text-alignment: center;
+    -fx-fill: #fff;
+    -fx-font-size: 25;
+    visibility: hidden;
+}

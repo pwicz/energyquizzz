@@ -44,19 +44,24 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 public class ServerUtils {
 
     //private static final String SERVER = "http://localhost:8080/";
-    private String server = "http://localhost:8080/";
+//    private String server = "http://localhost:8080/";
+    private String server = null;
     //TODO: change this once other pages' initialize is changed
     //TODO: make it so that it gets connected to the server specified by the player
 
     private StompSession session;
     //TODO: change this once other pages' initialize is changed
 
-    public void setServer(String server){
+    public void setServerURL(String server){
         this.server = server;
     }
 
-    public boolean checkServerConnection(){
-        return this.server == null;
+    public String getServerURL(){ return this.server; }
+
+    public boolean isConnected(){
+        if(server == null || session == null) return false;
+
+        return session.isConnected();
     }
 
     public ServerUtils() {

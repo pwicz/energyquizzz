@@ -10,10 +10,7 @@ public class SplashScreenCtrl {
     private final MainCtrl mainCtrl;
 
     @FXML
-    Text noConnection;
-
-    @FXML
-    Text connected;
+    Text message;
 
     @Inject
     public SplashScreenCtrl(MainCtrl mainCtrl) {
@@ -25,7 +22,6 @@ public class SplashScreenCtrl {
     }
 
     public void showWaitingRoom(){
-
         mainCtrl.showinputNameScreen();
     }
 
@@ -34,15 +30,25 @@ public class SplashScreenCtrl {
     }
 
     public void showConnectionStatus(){
+
         if(mainCtrl.checkServerConnection()){
-            connected.setVisible(true);
+            // TODO: message.setStyle() for some reason doesn't work
+            message.setText("Connected to " + mainCtrl.getServer().getServerURL());
+            message.setStyle("-fx-fill: #38c768;");
         }
-        if(!mainCtrl.checkServerConnection()){
-            noConnection.setVisible(true);
+        else{
+            message.setText("Not connected to a server");
+            message.setStyle("-fx-fill: #e0503d;");
         }
+
+        message.setStyle("visibility: visible;");
     }
     
     public void showAdminPanel() {
         mainCtrl.showAdminPanel();
+    }
+
+    public void render(){
+        showConnectionStatus();
     }
 }

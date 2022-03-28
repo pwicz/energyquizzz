@@ -23,6 +23,11 @@ public class InputServerScreenCtrl {
         this.mainCtrl = mainCtrl;
     }
 
+    public void render(boolean isClientConnected){
+        serverBox.setText("http://localhost:8080/");
+        if(!isClientConnected) hideLeaveButton();
+    }
+
     public void join(){
 
         String url = serverBox.getText();
@@ -42,10 +47,9 @@ public class InputServerScreenCtrl {
     public void leave(){
         connectionFailed.setVisible(true);
         mainCtrl.closePopup();
-
     }
 
     public void hideLeaveButton(){
-        leave.setVisible(false);
+        leave.setStyle("visibility: hidden");
     }
 }

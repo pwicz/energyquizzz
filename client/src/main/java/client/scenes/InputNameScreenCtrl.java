@@ -22,7 +22,6 @@ public class InputNameScreenCtrl {
     }
 
     public void join(){
-
         if(textBox.getText().equals("")) return;
 
         ClientMessage msg = new ClientMessage(ClientMessage.Type.INIT_MULTIPLAYER);

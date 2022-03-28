@@ -136,6 +136,7 @@ public class MainCtrl {
 
         showSplash();
         primaryStage.show();
+        inputServerScreenCtrl.hideLeaveButton();
         showInputServer();
     }
 
@@ -250,12 +251,17 @@ public class MainCtrl {
     }
 
     public void showInputServer(){
+        inputServerScreenCtrl.render(server.isConnected());
+
         this.stage = new Stage();
 
         this.stage.setScene(inputServer);
         this.stage.initModality(Modality.APPLICATION_MODAL);
         this.stage.showAndWait();
+
+        splashScreenCtrl.render();
     }
+
     public void closePopup() {
         this.stage.close();
     }
@@ -274,6 +280,7 @@ public class MainCtrl {
     }
 
     public void showSplash(){
+        splashScreenCtrl.render();
         primaryStage.setTitle("SplashScreen");
         primaryStage.setScene(splash);
     }
@@ -284,6 +291,11 @@ public class MainCtrl {
     }
 
     public void showSingleLeaderboardScreen(){
+        if(!server.isConnected()){
+            showInputServer();
+            return;
+        }
+
         primaryStage.setTitle("Leaderboard");
         primaryStage.setScene(singleLeaderboard);
 
@@ -296,6 +308,11 @@ public class MainCtrl {
     }
 
     public void showinputNameScreen() {
+        if(!server.isConnected()){
+            showInputServer();
+            return;
+        }
+
         primaryStage.setTitle("input Name");
         primaryStage.setScene(inputName);
     }
@@ -306,6 +323,11 @@ public class MainCtrl {
     }
 
     public void showAdminPanel() {
+        if(!server.isConnected()){
+            showInputServer();
+            return;
+        }
+
         adminPanelCtrl.initialize();
         adminPanelCtrl.displayActivities();
         primaryStage.setTitle("AdminPanel");
@@ -389,11 +411,11 @@ public class MainCtrl {
      * @param serverName server name
      */
     public void setServerName(String serverName){
-        this.server.setServer(serverName);
+        this.server.setServerURL(serverName);
     }
 
     public boolean connectToServer(String url){
-        this.server.setServer(url);
+        this.server.setServerURL(url);
 
         // try to get new clientID
         try{
@@ -421,18 +443,8 @@ public class MainCtrl {
      * @return boolean value true if the connection exists, false if it doesn't
      */
     public boolean checkServerConnection(){
-        return server.checkServerConnection();
+        return server.isConnected();
     }
-
-    /**
-     * Show connection message on splash screen
-     */
-    public void connectionMessage(){
-        splashScreenCtrl.showConnectionStatus();
-    }
-     public void hideLeave(){
-        inputServerScreenCtrl.hideLeaveButton();
-     }
 
     public Scene getEditActivity() {
         return editActivity;
