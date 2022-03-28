@@ -131,10 +131,11 @@ public class MainCtrl {
         this.inputServerScreenCtrl = inputServer.getKey();
 
         clientID = UUID.randomUUID().toString();
-        if(!connectToServer("http://localhost:8080/")){
+        /*if(!connectToServer("http://localhost:8080/")){
             System.out.println("COULDN'T CONNECT!");
             return;
-        }
+        }*/
+
 
         showOverview();
         primaryStage.show();
@@ -406,4 +407,22 @@ public class MainCtrl {
     public ServerUtils getServer() {
         return server;
     }
+
+    /**
+     * check connection to server
+     * @return boolean value true if the connection exists, false if it doesn't
+     */
+    public boolean checkServerConnection(){
+        return server.checkServerConnection();
+    }
+
+    /**
+     * Show connection message on splash screen
+     */
+    public void connectionMessage(){
+        splashScreenCtrl.showConnectionStatus();
+    }
+     public void hideLeave(){
+        inputServerScreenCtrl.hideLeaveButton();
+     }
 }

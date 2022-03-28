@@ -49,12 +49,17 @@ public class ServerUtils {
     //private static final String SERVER = "http://localhost:8080/";
     private String server = "http://localhost:8080/";
     //TODO: change this once other pages' initialize is changed
+    //TODO: make it so that it gets connected to the server specified by the player
 
     private StompSession session;
     //TODO: change this once other pages' initialize is changed
 
     public void setServer(String server){
         this.server = server;
+    }
+
+    public boolean checkServerConnection(){
+        return this.server == null;
     }
 
     public ServerUtils() {

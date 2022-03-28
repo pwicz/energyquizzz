@@ -2,6 +2,7 @@ package client.scenes;
 
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
@@ -14,6 +15,9 @@ public class InputServerScreenCtrl {
     @FXML
     Text connectionFailed;
 
+    @FXML
+    Button leave;
+
     @Inject
     public InputServerScreenCtrl(MainCtrl mainCtrl){
         this.mainCtrl = mainCtrl;
@@ -23,12 +27,12 @@ public class InputServerScreenCtrl {
 
         String url = serverBox.getText();
         if(url == null || url.isEmpty()){
-            // render error
+            connectionFailed.setVisible(true);
             return;
         }
 
         if(!mainCtrl.connectToServer(url)){
-            // render error
+            connectionFailed.setVisible(true);
             return;
         }
 
@@ -36,8 +40,12 @@ public class InputServerScreenCtrl {
     }
 
     public void leave(){
-
+        connectionFailed.setVisible(true);
         mainCtrl.closePopup();
 
+    }
+
+    public void hideLeaveButton(){
+        leave.setVisible(false);
     }
 }

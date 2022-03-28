@@ -7,6 +7,7 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" style="-fx-background-color: #272727;" stylesheets="@/client/scenes/Text_Font.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SplashScreenCtrl">
    <children>
@@ -51,5 +52,15 @@
             </LinearGradient>
          </textFill>
       </Label>
+      <Text fx:id="noConnection" layoutX="650.0" layoutY="668.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No connection" visible="false">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Text>
+      <Text fx:id="connected" layoutX="697.0" layoutY="681.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Connected" visible="false">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

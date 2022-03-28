@@ -79,6 +79,10 @@ public class MainMessageController {
                     }
                     break;
                 case INIT_MULTIPLAYER:
+
+                    if(msg.serverName == null){
+                        //show server screen
+                    }
                     // if name is already taken
                     if(waitingRoom != null
                             && waitingRoom.getPlayers()
