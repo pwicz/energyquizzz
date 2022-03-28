@@ -374,12 +374,10 @@ public class MainMessageController {
                         p.setScore(0);
                         waitingRoom.addPlayer(p);
                     }
-
                     games.remove(g.getID());
 
                     ServerMessage temp = new ServerMessage(ServerMessage.Type.EXTRA_PLAYER);
                     temp.playersWaiting = getWaitingListOfPlayers(waitingRoom);
-
                     sendMessageToAllPlayers(temp, waitingRoom);
 
                 }
