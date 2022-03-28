@@ -1,6 +1,5 @@
 package client.scenes;
 
-import client.utils.ServerUtils;
 import commons.Activity;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -11,7 +10,6 @@ import java.net.URL;
 import java.net.URLConnection;
 public class CreateActivityCtrl {
 
-    private final ServerUtils server;
     private final MainCtrl mainCtrl;
 
     @FXML
@@ -41,8 +39,7 @@ public class CreateActivityCtrl {
 
 
     @Inject
-    public CreateActivityCtrl(ServerUtils server, MainCtrl mainCtrl) {
-        this.server = server;
+    public CreateActivityCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
     }
 
@@ -115,7 +112,7 @@ public class CreateActivityCtrl {
 
         if(canBeSaved){
             Activity newActivity = new Activity(title, consumption, source, image);
-            server.addActivity(newActivity);
+            mainCtrl.getServer().addActivity(newActivity);
             mainCtrl.showAdminPanel();
         }
     }

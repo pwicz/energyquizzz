@@ -133,8 +133,10 @@ public class MainCtrl {
         this.inputServer = new Scene(inputServer.getValue());
         this.inputServerScreenCtrl = inputServer.getKey();
 
+
         showSplash();
         primaryStage.show();
+        showInputServer();
     }
 
     //CHECKSTYLE:OFF
