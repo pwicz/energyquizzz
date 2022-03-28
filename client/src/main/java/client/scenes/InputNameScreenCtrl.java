@@ -14,9 +14,6 @@ public class InputNameScreenCtrl {
     TextField textBox;
 
     @FXML
-    TextField serverBox;
-
-    @FXML
     Text connectionFailed;
 
     @Inject
@@ -26,26 +23,16 @@ public class InputNameScreenCtrl {
 
     public void join(){
 
-        if(textBox.getText().equals(""))
-            return;
-        if(serverBox.getText().equals(""))
-            return;
-        ClientMessage msg= new ClientMessage(ClientMessage.Type.INIT_MULTIPLAYER);
+        if(textBox.getText().equals("")) return;
+
+        ClientMessage msg = new ClientMessage(ClientMessage.Type.INIT_MULTIPLAYER);
 
         msg.playerID = mainCtrl.getClientID();
         //place holder for when we implement waiting room
         msg.playerName = textBox.getText();
         mainCtrl.setName(msg.playerName);
 
-        try{
-        msg.serverName = serverBox.getText();
-        mainCtrl.setServerName(msg.serverName);
-        mainCtrl.getServer().setServer(msg.serverName);
         mainCtrl.getServer().send("/app/general", msg);
-        }
-        catch (Exception e){
-            connectionFailed.setVisible(true);
-        }
     }
 
     public void leave(){
