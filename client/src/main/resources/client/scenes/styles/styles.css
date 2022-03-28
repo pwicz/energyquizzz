@@ -1,0 +1,60 @@
+.background{
+    -fx-background-color: #272727;
+    -fx-font-family: "Roboto";
+}
+
+.button{
+    -fx-font-family: "Roboto Light";
+    -fx-background-color: none;
+    -fx-border-radius: 5;
+}
+
+.button:hover{
+     -fx-opacity: 0.70;
+     -fx-cursor: hand;
+ }
+
+.greenButton{
+    -fx-border-color: #38c768;
+    -fx-text-fill: #38c768;
+}
+
+.redButton{
+    -fx-border-color: #e0503d;
+    -fx-text-fill: #e0503d;
+}
+
+.whiteButton{
+    -fx-border-color: "white";
+    -fx-text-fill: "white";
+}
+
+.smallButton{
+    -fx-font-size: 17.0 px;
+    -fx-font-family: "Roboto Thin";
+}
+
+.bigButton{
+    -fx-font-size: 20.0 px;
+}
+
+.hugeButton{
+    -fx-font-size: 36.0 px;
+}
+
+.title{
+    -fx-font-family: 'Roboto Thin';
+    -fx-font-size: 100;
+    -fx-text-fill: linear-gradient(to left, #1BED62, #21A0E8);
+}
+
+.gradientBox{
+    -fx-background-color: none;
+    -fx-border-radius: 5px;
+    -fx-border-color: linear-gradient(to left, #1BED62, #21A0E8);
+}
+
+.helpButton{
+    -fx-border-color: none;
+    -fx-text-fill: "white";
+}

@@ -41,5 +41,8 @@ public class SplashScreenCtrl {
             noConnection.setVisible(true);
         }
     }
-
+    
+    public void showAdminPanel() {
+        mainCtrl.showAdminPanel();
+    }
 }

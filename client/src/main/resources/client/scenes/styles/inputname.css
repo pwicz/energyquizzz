@@ -1,0 +1,13 @@
+.message{
+    -fx-text-fill: WHITE;
+    -fx-font-size: 20.0 px;
+    -fx-font-family: "Roboto Light";
+}
+
+.textPrompt{
+    -fx-background-color: none;
+    -fx-border-color: #FFFFFF;
+    -fx-border-radius: 5;
+    -fx-text-fill: "white";
+}
+

@@ -1,0 +1,55 @@
+.question{
+    -fx-text-fill: #38c768;
+    -fx-font-size: 43;
+}
+
+.timeBar{
+    -fx-accent: #21A0E8;
+    -fx-border-color: #38c768;
+    -fx-border-radius: 5;
+}
+
+.progress-bar .track {
+    -fx-background-color: #272727;
+}
+
+.option{
+    -fx-stroke: white;
+    -fx-background-color: none;
+    -fx-fill: TRANSPARENT;
+    -fx-border-radius: 5;
+}
+
+.option:hover{
+    -fx-stroke: linear-gradient(#38c768, #21A0E8);
+}
+
+.questionTitle{
+    -fx-font-size: 20;
+    -fx-text-fill: "white";
+}
+
+.description{
+    -fx-font-family: "Roboto-Thin";
+    -fx-font-size: 15;
+    -fx-text-fill: "white";
+    -fx-wrap-text: true;
+}
+
+.score{
+    -fx-font-size: 35;
+    -fx-text-fill:  #38c768;
+    -fx-font-family: "Roboto-Light";
+}
+
+.hover-element{
+    -fx-cursor: hand;
+}
+
+.result-text{
+    -fx-fill: "white";
+    -fx-font-size: 25px;
+    -fx-font-family: "Roboto-Light";
+    visibility: hidden;
+}
+

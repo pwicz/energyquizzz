@@ -163,21 +163,21 @@ public class MainMessageController {
     }
     //CHECKSTYLE:ON
 
-    public void processAnswer(ClientMessage msg, Player p, Game g) {
-        g.setPlayersAnswered(g.getPlayersAnswered() + 1);
+        public void processAnswer(ClientMessage msg, Player p, Game g) {
+            g.setPlayersAnswered(g.getPlayersAnswered() + 1);
 
-        int scoreForQuestion = 0;
-        if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
-            double answerTime = timeToAnswer - (System.currentTimeMillis() - g.getQuestionStartTime()) / 1000.0;
-            scoreForQuestion = scoreBase + (int) (scoreBonusPerSecond * answerTime);
-            p.setAnswerStatus(true);
+            int scoreForQuestion = 0;
+            if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
+                double answerTime = timeToAnswer - (System.currentTimeMillis() - g.getQuestionStartTime()) / 1000.0;
+                scoreForQuestion = scoreBase + (int) (scoreBonusPerSecond * answerTime);
+                p.setAnswerStatus(true);
+            }
+            p.setScore(p.getScore() + scoreForQuestion);
+            p.setHasAnswered(true);
+            p.setAnswer(msg.chosenActivity);
         }
-        p.setScore(p.getScore() + scoreForQuestion);
-        p.setHasAnswered(true);
-        p.setAnswer(msg.chosenActivity);
-    }
 
-    private ServerMessage initSingleplayerGame(ClientMessage msg) {
+        private ServerMessage initSingleplayerGame(ClientMessage msg) {
         // 0. Check if player name is correct
         if (msg.playerName == null || msg.playerName.isEmpty()) {
             // TODO: send error message
@@ -375,7 +375,7 @@ public class MainMessageController {
                 .collect(Collectors.toList());
         List<String> incorrectAnswers = new ArrayList<>();
         for (Player p : playerList) {
-          incorrectAnswers.add(p.getName());
+            incorrectAnswers.add(p.getName());
         }
         return incorrectAnswers;
     }
@@ -430,7 +430,6 @@ public class MainMessageController {
                 }
             }, 6000);
         }
-
     }
 
     private void multiplayerSendNewQuestions(Game g){

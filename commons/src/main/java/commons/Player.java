@@ -65,4 +65,5 @@ public class Player {
     public boolean getAnswerStatus(){
         return answerStatus;
     }
+
 }

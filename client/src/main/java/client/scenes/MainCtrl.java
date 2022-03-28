@@ -18,15 +18,13 @@ package client.scenes;
 import client.utils.BeforeLeave;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
-import commons.ClientMessage;
+import commons.Activity;
 import commons.ServerMessage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-
-import java.util.UUID;
 
 import static javafx.application.Platform.runLater;
 
@@ -35,12 +33,6 @@ public class MainCtrl {
     private final ServerUtils server;
 
     private Stage primaryStage;
-
-    private QuoteOverviewCtrl overviewCtrl;
-    private Scene overview;
-
-    private AddQuoteCtrl addCtrl;
-    private Scene add;
 
     private Scene waitingRoom;
     private WaitingRoomScreenCtrl waitingRoomScreenCtrl;
@@ -63,6 +55,15 @@ public class MainCtrl {
     private Scene singleplayerScreen;
     private SingleplayerScreenCtrl singleplayerScreenCtrl;
 
+    private Scene adminPanel;
+    private AdminPanelCtrl adminPanelCtrl;
+
+    private Scene editActivity;
+    private EditActivityCtrl editActivityCtrl;
+
+    private Scene createActivity;
+    private CreateActivityCtrl createActivityCtrl;
+
     private Scene inputName;
     private InputNameScreenCtrl inputNameScreenCtrl;
 
@@ -82,26 +83,31 @@ public class MainCtrl {
         this.server = server;
     }
 
-
-    public void initialize(Stage primaryStage, Pair<QuoteOverviewCtrl, Parent> overview,
-                           Pair<AddQuoteCtrl, Parent> add, Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
+    public void initialize(Stage primaryStage, Pair<SplashScreenCtrl, Parent> splashScreen,
+                           Pair<AdminPanelCtrl, Parent> adminPanel,
+                           Pair<EditActivityCtrl, Parent> editActivity,
+                           Pair<CreateActivityCtrl, Parent> createActivity,
                            Pair<SingleplayerLeaderboardCtrl, Parent> singleplayerLeaderboard,
+                           Pair<SingleplayerScreenCtrl, Parent> singleplayerGame,
+                           Pair<WaitingRoomScreenCtrl, Parent> waitingRoom,
                            Pair<MultiplayerScreenCtrl, Parent> multiplayer,
-                           Pair<SplashScreenCtrl, Parent> splashScreen,
                            Pair<InBetweenScoreCtrl, Parent> inBetweenScore,
                            Pair<LeaveCtrl, Parent> leave,
-                           Pair<SingleplayerScreenCtrl, Parent> singleplayerGame,
-                           Pair<InputNameScreenCtrl, Parent> inputname,
+                           Pair<InputNameScreenCtrl, Parent> inputName,
                            Pair<InputServerScreenCtrl, Parent> inputServer){
-
-
         this.primaryStage = primaryStage;
 
-        this.overviewCtrl = overview.getKey();
-        this.overview = new Scene(overview.getValue());
+        this.splashScreenCtrl = splashScreen.getKey();
+        this.splash = new Scene(splashScreen.getValue());
 
-        this.addCtrl = add.getKey();
-        this.add = new Scene(add.getValue());
+        this.adminPanelCtrl = adminPanel.getKey();
+        this.adminPanel = new Scene(adminPanel.getValue());
+
+        this.editActivityCtrl = editActivity.getKey();
+        this.editActivity = new Scene(editActivity.getValue());
+
+        this.createActivityCtrl = createActivity.getKey();
+        this.createActivity = new Scene(createActivity.getValue());
 
         this.waitingRoom = new Scene(waitingRoom.getValue());
         this.waitingRoomScreenCtrl = waitingRoom.getKey();
@@ -109,35 +115,25 @@ public class MainCtrl {
         this.singleplayerLeaderboardCtrl = singleplayerLeaderboard.getKey();
         this.singleLeaderboard = new Scene(singleplayerLeaderboard.getValue());
 
+        this.singleplayerScreen = new Scene(singleplayerGame.getValue());
+        this.singleplayerScreenCtrl = singleplayerGame.getKey();
+
         this.multiplayerScreenCtrl = multiplayer.getKey();
         this.multiplayer = new Scene(multiplayer.getValue());
-
-        this.splashScreenCtrl = splashScreen.getKey();
-        this.splash = new Scene(splashScreen.getValue());
 
         this.inBetweenScoreCtrl = inBetweenScore.getKey();
         this.inBetweenScore = new Scene(inBetweenScore.getValue());
 
+        this.inputName = new Scene(inputName.getValue());
+        this.inputNameScreenCtrl = inputName.getKey();
+
         this.leave = new Scene(leave.getValue());
         this.leaveCtrl = leave.getKey();
-
-        this.singleplayerScreen = new Scene(singleplayerGame.getValue());
-        this.singleplayerScreenCtrl = singleplayerGame.getKey();
-
-        this.inputName = new Scene(inputname.getValue());
-        this.inputNameScreenCtrl = inputname.getKey();
 
         this.inputServer = new Scene(inputServer.getValue());
         this.inputServerScreenCtrl = inputServer.getKey();
 
-        clientID = UUID.randomUUID().toString();
-        /*if(!connectToServer("http://localhost:8080/")){
-            System.out.println("COULDN'T CONNECT!");
-            return;
-        }*/
-
-
-        showOverview();
+        showSplash();
         primaryStage.show();
     }
 
@@ -221,21 +217,13 @@ public class MainCtrl {
                 break;
             case END:
                 runLater(this::showSingleLeaderboardScreen);
-                break;
             case TEST:
                 // for testing purposes only
-                System.out.println("[test] message received");
+                System.out.println("It works! Received a msg!");
                 break;
             default:
                 // invalid msg type
         }
-    }
-    //CHECKSTYLE:ON
-
-    public void showOverview() {
-        primaryStage.setTitle("Quotes: Overview");
-        primaryStage.setScene(overview);
-        overviewCtrl.refresh();
     }
 
     public void showInbetweenScore() {
@@ -266,8 +254,7 @@ public class MainCtrl {
         this.stage.initModality(Modality.APPLICATION_MODAL);
         this.stage.showAndWait();
     }
-
-    public void closePopup(){
+    public void closePopup() {
         this.stage.close();
     }
 
@@ -280,13 +267,8 @@ public class MainCtrl {
         primaryStage.setScene(previous);
     }
 
-    public void showAdd() {
-        // For testing only: send a test message to the server
-        server.send("/app/general", new ClientMessage(ClientMessage.Type.TEST, clientID, "0"));
-        System.out.println("DID sth");
-
-        primaryStage.setTitle("Quotes: Adding Quote");
-        primaryStage.setScene(add);
+    public void stay(Scene previous){
+        primaryStage.setScene(previous);
     }
 
     public void showSplash(){
@@ -295,7 +277,7 @@ public class MainCtrl {
     }
 
     public void showMultiplayerScreen(){
-        primaryStage.setTitle("MultiplayerScreen");
+        primaryStage.setTitle("Multiplayer");
         primaryStage.setScene(multiplayer);
     }
 
@@ -320,6 +302,30 @@ public class MainCtrl {
         primaryStage.setTitle("Singleplayer");
         primaryStage.setScene(singleplayerScreen);
     }
+
+    public void showAdminPanel() {
+        adminPanelCtrl.initialize();
+        adminPanelCtrl.displayActivities();
+        primaryStage.setTitle("AdminPanel");
+        primaryStage.setScene(adminPanel);
+    }
+
+    public void showEditActivity(Activity selected) {
+        if(selected != null){
+            primaryStage.setTitle("EditActivity");
+            primaryStage.setScene(editActivity);
+            editActivityCtrl.fillActivity(selected);
+            editActivityCtrl.resetErrorText();
+        }
+    }
+
+    public void showCreateActivity() {
+        primaryStage.setTitle("CreateActivity");
+        primaryStage.setScene(createActivity);
+        createActivityCtrl.resetErrorText();
+        createActivityCtrl.clearFields();
+    }
+
     public Scene getInBetweenScore() {
         return inBetweenScore;
     }
@@ -330,10 +336,6 @@ public class MainCtrl {
 
     public Scene getLeave() {
         return leave;
-    }
-
-    public Scene getOverview() {
-        return overview;
     }
 
     public Scene getSingleLeaderboard() {
@@ -364,8 +366,12 @@ public class MainCtrl {
         return gameID;
     }
 
-    public String getName() {
-        return name;
+    public AdminPanelCtrl getAdminPanelCtrl() {
+        return adminPanelCtrl;
+    }
+
+    public Scene getAdminPanel(){
+        return adminPanel;
     }
 
     public Stage getPrimaryStage() {
@@ -425,4 +431,12 @@ public class MainCtrl {
      public void hideLeave(){
         inputServerScreenCtrl.hideLeaveButton();
      }
+
+    public Scene getEditActivity() {
+        return editActivity;
+    }
+
+    public Scene getCreateActivity() {
+        return createActivity;
+    }
 }

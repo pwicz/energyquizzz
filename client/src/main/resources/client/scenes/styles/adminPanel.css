@@ -1,0 +1,12 @@
+.list-cell{
+    -fx-font-family: "Roboto Light";
+}
+
+.list-cell:hover{
+    -fx-cursor: hand;
+}
+
+.list-cell:selected{
+    -fx-text-fill: "white";
+}
+

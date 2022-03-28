@@ -13,6 +13,9 @@ public class InBetweenScoreCtrl {
     private final MainCtrl mainCtrl;
 
     @FXML
+    Label endOfGame;
+
+    @FXML
     Button leave;
 
     @FXML
@@ -36,7 +39,7 @@ public class InBetweenScoreCtrl {
     }
 
     public void initialize() {
-
+        endOfGame.setVisible(false);
     }
 
     public void insertLeaderboard(List<String> players)  { //needs to change to import the database leaderboard
@@ -54,10 +57,14 @@ public class InBetweenScoreCtrl {
     }
 
     public void setQuestionNo(int n, int total){
-        if(n != total)
+        if(n != total){
             questionNo.setText(n + " / " + total);
-        else
-            questionNo.setText(n + " / " + total + "\nEnd of the game");
+            endOfGame.setVisible(false);
+        } else {
+            questionNo.setText(n + " / " + total);
+            endOfGame.setVisible(true);
+            endOfGame.setText("End of game");
+        }
     }
 
     public void setScoreTo(int s){
