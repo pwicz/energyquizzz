@@ -19,6 +19,7 @@ import client.utils.BeforeLeave;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Activity;
+import commons.ClientMessage;
 import commons.ServerMessage;
 import javafx.application.Platform;
 import javafx.scene.Parent;
