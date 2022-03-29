@@ -2,7 +2,6 @@ package client.scenes;
 
 import client.utils.OnLeaveAction;
 import com.google.inject.Inject;
-import javafx.scene.Scene;
 
 public class LeaveCtrl {
 
@@ -10,7 +9,6 @@ public class LeaveCtrl {
 
     private OnLeaveAction beforeLeave;
     private OnLeaveAction afterLeave;
-    private Scene target;
 
     @Inject
     public LeaveCtrl(MainCtrl mainCtrl) {
@@ -33,10 +31,6 @@ public class LeaveCtrl {
         }
         else
             afterLeave.doSomething();
-    }
-
-    public void setTarget(Scene target) {
-        this.target = target;
     }
 
     public void setBeforeLeave(OnLeaveAction beforeLeave) {
