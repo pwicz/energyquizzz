@@ -1,13 +1,16 @@
 package client.scenes;
 
-import client.utils.BeforeLeave;
+import client.utils.OnLeaveAction;
 import com.google.inject.Inject;
+import javafx.scene.Scene;
 
 public class LeaveCtrl {
 
     private final MainCtrl mainCtrl;
 
-    private BeforeLeave beforeLeave;
+    private OnLeaveAction beforeLeave;
+    private OnLeaveAction afterLeave;
+    private Scene target;
 
     @Inject
     public LeaveCtrl(MainCtrl mainCtrl) {
@@ -20,13 +23,27 @@ public class LeaveCtrl {
 
     public void leave(){
         if(beforeLeave != null)
-            beforeLeave.soSomething();
+            beforeLeave.doSomething();
 
         mainCtrl.closePopup();
-        mainCtrl.showSplash();
+
+        if(afterLeave == null){
+            // close the application
+            mainCtrl.getPrimaryStage().close();
+        }
+        else
+            afterLeave.doSomething();
     }
 
-    public void setBeforeLeave(BeforeLeave beforeLeave) {
+    public void setTarget(Scene target) {
+        this.target = target;
+    }
+
+    public void setBeforeLeave(OnLeaveAction beforeLeave) {
         this.beforeLeave = beforeLeave;
+    }
+
+    public void setAfterLeave(OnLeaveAction afterLeave) {
+        this.afterLeave = afterLeave;
     }
 }

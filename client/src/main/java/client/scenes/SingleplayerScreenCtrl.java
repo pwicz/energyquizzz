@@ -97,7 +97,7 @@ public class SingleplayerScreenCtrl {
         ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
 
-        mainCtrl.showLeave(mainCtrl.getSingleplayerScreen(), () -> mainCtrl.getServer().send("/app/general", msg));
+        mainCtrl.showLeave(mainCtrl::showSingleLeaderboardScreen, () -> mainCtrl.getServer().send("/app/general", msg));
     }
 
     public void lockAnswer(MouseEvent mouseEvent) {
