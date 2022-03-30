@@ -232,6 +232,10 @@ public class MainCtrl {
                 // for testing purposes only
                 System.out.println("It works! Received a msg!");
                 break;
+            case SHOW_EMOJI:
+                runLater(() -> {
+                    multiplayerScreenCtrl.showEmoji(msg.imgName, msg.namePLayerEmoji);
+                });
             default:
                 // invalid msg type
         }

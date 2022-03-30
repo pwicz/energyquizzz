@@ -154,6 +154,12 @@ public class MainMessageController {
                     var pingResponse = new ServerMessage(ServerMessage.Type.PING);
                     simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, pingResponse);
                     break;
+                case SHOW_EMOJI:
+                    ServerMessage serverMessage = new ServerMessage(ServerMessage.Type.SHOW_EMOJI);
+                    serverMessage.imgName = msg.imgName;
+                    serverMessage.namePLayerEmoji = games.get(msg.gameID).getPlayerWithID(msg.playerID).getName();
+                    sendMessageToAllPlayers(serverMessage, games.get(msg.gameID));
+                    break;
                 default:
                     // unknown message
             }

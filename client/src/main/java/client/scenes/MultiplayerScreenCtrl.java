@@ -17,13 +17,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+
 import java.io.File;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -150,9 +149,24 @@ public class MultiplayerScreenCtrl {
     }
 
     //shows an emoji
-    public void showEmoji(MouseEvent event){
-        System.out.println(event.getSource());
+    public void sendEmoji(){
+        String[] dir = ((ImageView) emojiHolder.getItems().get(1)).getImage().getUrl().split("/");
+        System.out.println(dir[dir.length - 1]);
+
+        ClientMessage msg = new ClientMessage(ClientMessage.Type.SHOW_EMOJI,
+                mainCtrl.getClientID(), mainCtrl.getGameID());
+        msg.imgName = dir[dir.length - 1];
+
+        mainCtrl.getServer().send("/app/general", msg);
     }
+
+    public void showEmoji(String imgName, String name){
+        File f = new File("client/src/main/resources/client/scenes/emojiimages" + imgName);
+        ImageView img = new ImageView(f.toURI().toString());
+        System.out.println(imgName);
+        System.out.println(name);
+    }
+
 
     //removes oneanswer
     public void cutAnswer(MouseEvent event){
@@ -242,6 +256,9 @@ public class MultiplayerScreenCtrl {
 
 
     public void enterAnswer(KeyEvent keyEvent) {
+        if(keyEvent.getCode().equals(KeyCode.P)){ //later should replace L with ENTER
+            sendEmoji();
+        }
         if(keyEvent.getCode().equals(KeyCode.L)){ //later should replace L with ENTER
             submitAnswer();
         }
