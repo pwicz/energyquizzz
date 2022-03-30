@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 public class ActivityTest {
     private static final String TITLE = "Taking a hot shower for 6 minutes";
-    private static final int CONSUMPTIONINWH = 4000;
+    private static final long CONSUMPTIONINWH = 4000;
     private static final String SOURCE = "https://somelink.com";
     private static final String IMAGEPATH = "https://source.com";
 
