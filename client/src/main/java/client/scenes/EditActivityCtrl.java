@@ -133,6 +133,6 @@ public class EditActivityCtrl {
     }
 
     public void leave(){
-        mainCtrl.showLeave(mainCtrl.getEditActivity());
+        mainCtrl.showLeave(mainCtrl::showAdminPanel);
     }
 }

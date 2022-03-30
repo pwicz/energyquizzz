@@ -118,7 +118,7 @@ public class CreateActivityCtrl {
     }
 
     public void leave(){
-        mainCtrl.showLeave(mainCtrl.getCreateActivity());
+        mainCtrl.showLeave(mainCtrl::showAdminPanel);
     }
 
 }

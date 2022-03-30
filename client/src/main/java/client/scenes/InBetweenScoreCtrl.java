@@ -74,7 +74,7 @@ public class InBetweenScoreCtrl {
     public void leave(){
         ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
-        mainCtrl.showLeave(mainCtrl.getMultiplayer(), () -> mainCtrl.getServer().send("/app/general", msg));
+        mainCtrl.showLeave(mainCtrl::showSplash, () -> mainCtrl.getServer().send("/app/general", msg));
     }
 
 }

@@ -18,7 +18,8 @@ public class SplashScreenCtrl {
     }
 
     public void leave(){
-        mainCtrl.showLeave(mainCtrl.getSplash());
+        // set afterLeave to null to exit the application
+        mainCtrl.showLeave(null);
     }
 
     public void showWaitingRoom(){
