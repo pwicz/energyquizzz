@@ -10,19 +10,25 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+
+import static javafx.application.Platform.runLater;
 
 
 public class MultiplayerScreenCtrl {
@@ -33,6 +39,7 @@ public class MultiplayerScreenCtrl {
     private boolean canInteractWithUI;
 
     private Timeline timer;
+
 
     @FXML
     ProgressBar timeBar;
@@ -85,10 +92,16 @@ public class MultiplayerScreenCtrl {
     @FXML
     Label headTitle;
 
+    @FXML
+    ListView emojiHolder;
+
     @Inject
     public MultiplayerScreenCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
         optionToID = new HashMap<>();
+        runLater(() -> {
+           initilizeEmojis();
+        });
     }
 
     public void leave(){
@@ -233,4 +246,18 @@ public class MultiplayerScreenCtrl {
             submitAnswer();
         }
     }
+
+    public void initilizeEmojis(){
+        File folder = new File("client/src/main/resources/client/scenes/emojiimages");
+        File[] listOfFiles = folder.listFiles();
+        for (File f: listOfFiles) {
+            if (f.isFile()) {
+                ImageView img = new ImageView(f.toURI().toString());
+                img.setFitHeight(80);
+                img.setFitWidth(90);
+                emojiHolder.getItems().add(img);
+            }
+        }
+    }
+
 }

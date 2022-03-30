@@ -52,7 +52,7 @@ public class AdminPanelCtrl {
 
     @FXML
     public void setCurrentActivity(MouseEvent mouseEvent){
-        String activityText = activityBox.getSelectionModel().getSelectedItem();;
+        String activityText = activityBox.getSelectionModel().getSelectedItem();
         selected = optionToActivity.get(activityText);
         editActivity.setDisable(false);
         System.out.println(selected);
