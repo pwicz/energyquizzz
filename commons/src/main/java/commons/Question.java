@@ -7,6 +7,7 @@ public class Question {
     public List<Activity> activities;
     public Type type;
     public String title;
+    public List<Integer> options;
 
     public enum Type{
         COMPARE,
@@ -22,9 +23,32 @@ public class Question {
     public Question(List<Activity> activities, Type type) {
         this.activities = activities;
         this.type = type;
+        this.title = getTitleFromType(type);
 
-        // predefined titles for each type:
-        if(type == Type.COMPARE) this.title = "Which activity consumes most energy?";
+        if(type == Type.HOW_MANY_TIMES){
+            title += activities.get(0).title + " with the energy it takes to do this activity?";
+        }
+    }
+
+    /**
+     * Constructor for guessing & how many times type questions
+     * @param activities activity selected
+     * @param type question type (Guess)
+     * @param options three values (only one correct)
+     */
+    public Question(List<Activity> activities, Type type, List<Integer> options) {
+        this.activities = activities;
+        this.type = type;
+        this.title = getTitleFromType(type);
+        this.options = options;
+    }
+
+    public String getTitleFromType(Type type){
+        if(type == Type.COMPARE) return "Which activity consumes most energy?";
+        else if(type == Type.GUESS) return "How much electricity does this activity cost?";
+        else if(type == Type.HOW_MANY_TIMES) return "How many times can you ";
+        else if(type == Type.ESTIMATION) return "How much energy does it take to...?";
+        return null;
     }
 
     public void addActivity(Activity a){
@@ -45,6 +69,14 @@ public class Question {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public List<Integer> getOptions(){
+        return this.options;
+    }
+
+    public void setOptions(List<Integer> options){
+        this.options = options;
     }
 
     @Override
