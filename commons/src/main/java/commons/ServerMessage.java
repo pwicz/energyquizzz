@@ -31,6 +31,8 @@ public class ServerMessage {
     public long correctID;
     public int questionCounter;
     public int totalQuestions;
+    public String playerName;
+
     public ServerMessage() {
     }
 

@@ -295,8 +295,11 @@ public class MainMessageController {
     public void joinWaitingRoom(ClientMessage msg) {
         // add player to waiting room and init game for him
         waitingRoom.addPlayer(new Player(msg.playerName, msg.playerID));
+
+
         ServerMessage result = new ServerMessage(ServerMessage.Type.INIT_PLAYER);
         result.gameID = waitingRoom.getID();
+        result.playerName = msg.playerName;
         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
 
 
@@ -326,7 +329,7 @@ public class MainMessageController {
 
     public ServerMessage displayAnswer(Player p, Game g) {
         ServerMessage result = new ServerMessage(ServerMessage.Type.DISPLAY_ANSWER);
-        result.topScores = getTopScores(g);
+        result.topScores = getTop5Scores(g);
         result.score = p.getScore();
         result.pickedID = p.getAnswer();
         result.correctID = g.getCorrectAnswerID();
@@ -336,10 +339,21 @@ public class MainMessageController {
         return result;
     }
 
-    public List<String> getTopScores(Game game) {
+    public List<String> getTop5Scores(Game game) {
         List<Player> playerList = game.getPlayers().stream()
                 .sorted(Comparator.comparing(Player::getScore).thenComparing(Player::getID).reversed())
                 .limit(5)
+                .collect(Collectors.toList());
+        List<String> topScores = new ArrayList<>();
+        for (Player p : playerList) {
+            topScores.add(p.getName() + ":" + p.getScore());
+        }
+        return topScores;
+    }
+
+    public List<String> getTopScores(Game game) {
+        List<Player> playerList = game.getPlayers().stream()
+                .sorted(Comparator.comparing(Player::getScore).thenComparing(Player::getID).reversed())
                 .collect(Collectors.toList());
         List<String> topScores = new ArrayList<>();
         for (Player p : playerList) {
@@ -397,7 +411,7 @@ public class MainMessageController {
                 for(var p : g.getPlayers()){
                     System.out.println("[msg] revealing in-between-scores to all players");
                     ServerMessage result = new ServerMessage(ServerMessage.Type.DISPLAY_INBETWEENSCORES);
-                    result.topScores = getTopScores(g);
+                    result.topScores = getTop5Scores(g);
                     result.questionCounter = g.getQuestionCounter();
                     result.totalQuestions = questionsPerGame;
                     simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
@@ -425,6 +439,7 @@ public class MainMessageController {
                     System.out.println("[msg] ending game");
                     for(var p : g.getPlayers()){
                         ServerMessage result = new ServerMessage(ServerMessage.Type.END_GAME);
+                        result.topScores = getTopScores(g);
                         simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
                     }
                 }

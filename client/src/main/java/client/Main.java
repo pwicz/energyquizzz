@@ -20,12 +20,13 @@ import static com.google.inject.Guice.createInjector;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import client.scenes.InputServerScreenCtrl;
 import client.scenes.AdminPanelCtrl;
 import client.scenes.CreateActivityCtrl;
 import client.scenes.EditActivityCtrl;
+import client.scenes.EndGameScreenCtrl;
 import client.scenes.InBetweenScoreCtrl;
 import client.scenes.InputNameScreenCtrl;
+import client.scenes.InputServerScreenCtrl;
 import client.scenes.LeaveCtrl;
 import client.scenes.MainCtrl;
 import client.scenes.MultiplayerScreenCtrl;
@@ -70,12 +71,12 @@ public class Main extends Application {
         var inBetweenScore = FXML.load(InBetweenScoreCtrl.class, "client", "scenes", "InBetweenScores.fxml");
 
         var leave = FXML.load(LeaveCtrl.class, "client", "scenes", "Leave.fxml");
-
+        var end = FXML.load(EndGameScreenCtrl.class, "client", "scenes", "EndGameScreen.fxml");
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 
         mainCtrl.initialize(primaryStage, splashScreen, adminPanel, editActivity, createActivity,
                 singleplayerLeaderboard, singleplayerGame, waitingRoom, multiplayerGame,
-                inBetweenScore, leave, inputName, inputServer);
+                inBetweenScore, leave, inputName, inputServer, end);
 
     }
 }

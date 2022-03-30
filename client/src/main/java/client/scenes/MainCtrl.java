@@ -72,6 +72,9 @@ public class MainCtrl {
     private Scene inputServer;
     private InputServerScreenCtrl inputServerScreenCtrl;
 
+    private Scene endScreen;
+    private EndGameScreenCtrl endGameScreenCtrl;
+
     private String clientID = null;
     private String gameID = null;
 
@@ -96,7 +99,8 @@ public class MainCtrl {
                            Pair<InBetweenScoreCtrl, Parent> inBetweenScore,
                            Pair<LeaveCtrl, Parent> leave,
                            Pair<InputNameScreenCtrl, Parent> inputName,
-                           Pair<InputServerScreenCtrl, Parent> inputServer){
+                           Pair<InputServerScreenCtrl, Parent> inputServer,
+                           Pair<EndGameScreenCtrl, Parent> end){
         this.primaryStage = primaryStage;
 
         this.splashScreenCtrl = splashScreen.getKey();
@@ -132,9 +136,11 @@ public class MainCtrl {
         this.leave = new Scene(leave.getValue());
         this.leaveCtrl = leave.getKey();
 
+        this.endScreen = new Scene(end.getValue());
+        this.endGameScreenCtrl = end.getKey();
+
         this.inputServer = new Scene(inputServer.getValue());
         this.inputServerScreenCtrl = inputServer.getKey();
-
 
         showSplash();
         primaryStage.show();
@@ -148,6 +154,7 @@ public class MainCtrl {
         switch(msg.type){
             case INIT_PLAYER:
                 gameID = msg.gameID;
+                name = msg.playerName;
                 runLater(() -> {
                     multiplayerScreenCtrl.updateScore(0);
                     showWaitingRoom();
@@ -203,7 +210,10 @@ public class MainCtrl {
                 System.out.println("[msg] show leaderboard ");
                 break;
             case END_GAME:
-                runLater(this::showWaitingRoom);
+                runLater(() -> {
+                    endGameScreenCtrl.insertLeaderboard(msg.topScores);
+                    showEndScreen();
+                });
                 System.out.println("[msg] end game");
                 break;
             case NEXT_QUESTION:
@@ -294,6 +304,11 @@ public class MainCtrl {
     public void showMultiplayerScreen(){
         primaryStage.setTitle("Multiplayer");
         primaryStage.setScene(multiplayer);
+    }
+
+    public void showEndScreen(){
+        primaryStage.setTitle("End");
+        primaryStage.setScene(endScreen);
     }
 
     public void showSingleLeaderboardScreen(){
@@ -468,5 +483,9 @@ public class MainCtrl {
 
     public Scene getCreateActivity() {
         return createActivity;
+    }
+
+    public String getName() {
+        return name;
     }
 }
