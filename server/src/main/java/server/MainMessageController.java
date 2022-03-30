@@ -212,14 +212,20 @@ public class MainMessageController {
                         activityController.getRandom().getBody());
             return new Question(selectedActivities, Question.Type.COMPARE);
         } else if(randomType == 1){   //Type = Guess
-            List<Activity> selectedActivity=  List.of(
+            List<Activity> selectedActivity =  List.of(
                     Objects.requireNonNull(activityController.getRandom().getBody()));
             List<Integer> options = new ArrayList<>();
             int correct = selectedActivity.get(0).consumptionInWh;
+            int randomAnswer01 = rand.nextInt(2 * correct);
+            int randomAnswer02 = rand.nextInt(2 * correct);
+            boolean different = false;
+            while(!different){
+                randomAnswer02 = rand.nextInt(2 * correct);
+                if(randomAnswer01 != randomAnswer02) different = true;
+            }
             options.add(correct);
-            int randomAnswer01 = rand.nextInt(Math.abs(correct - correct/2), 2 * correct);
-            int randomAnswer02 = rand.nextInt(Math.abs(correct - correct/2), 2 * correct);
-            options.add(randomAnswer01, randomAnswer02);
+            options.add(randomAnswer01);
+            options.add(randomAnswer02);
             Collections.shuffle(options);
             return new Question(selectedActivity, Question.Type.GUESS, options);
         } else if(randomType == 2){    //Type = How many times
@@ -235,19 +241,20 @@ public class MainMessageController {
             }
             List<Integer> options = new ArrayList<>();
             int correct = selectedActivities.get(1).consumptionInWh / selectedActivities.get(0).consumptionInWh;
-            int randomAnswer01 = rand.nextInt(Math.abs(correct - correct/2), 2 * correct);
-            int randomAnswer02 = rand.nextInt(Math.abs(correct - correct/2), 2 * correct);
+            int randomAnswer01 = rand.nextInt(2 * correct);
+            int randomAnswer02 = rand.nextInt(2 * correct);
             boolean different = false;
             while(!different){
-                randomAnswer02 = rand.nextInt(Math.abs(correct - correct/2), 2 * correct);
+                randomAnswer02 = rand.nextInt(2 * correct);
                 if(randomAnswer01 != randomAnswer02) different = true;
             }
             options.add(correct);
             options.add(randomAnswer01);
             options.add(randomAnswer02);
+            Collections.shuffle(options);
             return new Question(selectedActivities, Question.Type.HOW_MANY_TIMES, options);
         } else if(randomType == 3){    //Type = Estimation
-            List<Activity> selectedActivity=  List.of(
+            List<Activity> selectedActivity = List.of(
                     Objects.requireNonNull(activityController.getRandom().getBody()));
             return new Question(selectedActivity, Question.Type.ESTIMATION);
         }
