@@ -109,15 +109,15 @@
     <Label fx:id="score" layoutX="686.0" layoutY="911.0" styleClass="score" text="Score: 120" AnchorPane.bottomAnchor="32.0">
     </Label>
 
-    <Button fx:id="submit" disable="true" layoutX="1312.0" layoutY="865.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="76.0" prefWidth="168.0" styleClass="submit-btn" text="Submit" AnchorPane.bottomAnchor="32.0">
+    <Button fx:id="submit" disable="true" layoutX="1312.0" layoutY="910.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="40.0" prefWidth="150.0" text="Submit" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0">
         <styleClass>
             <String fx:value="button" />
             <String fx:value="greenButton" />
-            <String fx:value="hugeButton" />
+            <String fx:value="bigButton" />
         </styleClass>
     </Button>
 
-    <Button layoutX="34.0" layoutY="908.0" mnemonicParsing="false" onAction="#leave" prefHeight="15.0" prefWidth="150.0" text="Leave" textFill="#e0503d" AnchorPane.bottomAnchor="32.0">
+    <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0">
         <styleClass>
             <String fx:value="button" />
             <String fx:value="redButton" />

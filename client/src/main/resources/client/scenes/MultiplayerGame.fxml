@@ -83,7 +83,7 @@
     <Label fx:id="score" alignment="CENTER" layoutX="554.0" layoutY="910.0" prefHeight="40.0" prefWidth="405.0" styleClass="score" text="Score: 1200" textAlignment="CENTER" AnchorPane.bottomAnchor="32.0">
     </Label>
 
-    <Button fx:id="submit" disable="true" layoutX="1312.0" layoutY="910.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="40.0" prefWidth="150.0" text="Submit" AnchorPane.bottomAnchor="32.0">
+    <Button fx:id="submit" disable="true" layoutX="1312.0" layoutY="910.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="40.0" prefWidth="150.0" text="Submit" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0">
         <styleClass>
             <String fx:value="button" />
             <String fx:value="greenButton" />
@@ -91,7 +91,7 @@
         </styleClass>
     </Button>
 
-    <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="32.0">
+    <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0">
         <styleClass>
             <String fx:value="button" />
             <String fx:value="redButton" />
