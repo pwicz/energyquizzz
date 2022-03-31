@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.InBetweenScoreCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"  prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.InBetweenScoreCtrl">
 
    <Label alignment="CENTER" layoutY="103.0" prefHeight="131.0" prefWidth="1513.0" styleClass="title" text="Score" AnchorPane.bottomAnchor="748.0" />
 
