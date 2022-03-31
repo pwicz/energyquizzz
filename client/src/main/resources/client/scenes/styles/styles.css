@@ -1,6 +1,8 @@
 .background{
     -fx-background-color: #272727;
     -fx-font-family: "Roboto";
+    -fx-pref-height: 700;
+    -fx-pref-width: 1077;
 }
 
 .button{
