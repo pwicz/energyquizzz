@@ -72,6 +72,9 @@ public class MainCtrl {
     private Scene inputServer;
     private InputServerScreenCtrl inputServerScreenCtrl;
 
+    private Scene help;
+    private HelpCtrl helpCtrl;
+
     private String clientID = null;
     private String gameID = null;
 
@@ -96,7 +99,8 @@ public class MainCtrl {
                            Pair<InBetweenScoreCtrl, Parent> inBetweenScore,
                            Pair<LeaveCtrl, Parent> leave,
                            Pair<InputNameScreenCtrl, Parent> inputName,
-                           Pair<InputServerScreenCtrl, Parent> inputServer){
+                           Pair<InputServerScreenCtrl, Parent> inputServer,
+                           Pair<HelpCtrl, Parent> help){
         this.primaryStage = primaryStage;
 
         this.splashScreenCtrl = splashScreen.getKey();
@@ -134,6 +138,9 @@ public class MainCtrl {
 
         this.inputServer = new Scene(inputServer.getValue());
         this.inputServerScreenCtrl = inputServer.getKey();
+
+        this.help = new Scene(help.getValue());
+        this.helpCtrl = help.getKey();
 
 
         showSplash();
@@ -354,6 +361,14 @@ public class MainCtrl {
         adminPanelCtrl.displayActivities();
         primaryStage.setTitle("AdminPanel");
         primaryStage.setScene(adminPanel);
+    }
+
+    public void showHelp() {
+        this.stage = new Stage();
+
+        this.stage.setScene(help);
+        this.stage.initModality(Modality.APPLICATION_MODAL);
+        this.stage.showAndWait();
     }
 
     public void showEditActivity(Activity selected) {

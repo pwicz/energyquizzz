@@ -48,6 +48,10 @@ public class SplashScreenCtrl {
         mainCtrl.showAdminPanel();
     }
 
+    public void showHelp() {
+        mainCtrl.showHelp();
+    }
+
     public void render(){
         showConnectionStatus();
     }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="582.0" prefWidth="669.0" styleClass="background" stylesheets="@/client/scenes/styles/styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.HelpCtrl">
+
+    <Button fx:id="leave" layoutX="50.0" layoutY="510.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="32.0">
+        <styleClass>
+            <String fx:value="button" />
+            <String fx:value="redButton" />
+            <String fx:value="bigButton" />
+        </styleClass>
+    </Button>
+   <TextArea layoutX="69.0" layoutY="125.0" prefHeight="323.0" prefWidth="536.0" />
+   <Label layoutX="71.0" layoutY="55.0" prefHeight="17.0" prefWidth="536.0" styleClass="description" text="How to play" />
+
+
+</AnchorPane>
