@@ -8,20 +8,17 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerScreenCtrl">
 
-    <Label alignment="CENTER" layoutX="202.0" layoutY="96.0" prefHeight="53.0" prefWidth="1108.0" styleClass="question"
-           text="Question 1: How much energy does it take to..?"
-           AnchorPane.leftAnchor="202.0" AnchorPane.rightAnchor="202.0" AnchorPane.topAnchor="96.0">
+    <Label alignment="CENTER" layoutX="202.0" layoutY="96.0" prefHeight="53.0" prefWidth="1108.0" styleClass="question" text="Question 1: How much energy does it take to..?" AnchorPane.leftAnchor="-15.5" AnchorPane.topAnchor="50.0">
     </Label>
-    <Text fx:id="description" fill="WHITE" layoutX="576.0" layoutY="418.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description"
-          text="Play computer games for 5 hours." textAlignment="CENTER" wrappingWidth="334.6666259765623">
+    <ProgressBar fx:id="timeBar" layoutX="138.5" layoutY="120.0" prefHeight="40.0" prefWidth="800.0" progress="0.0" styleClass="timeBar"/>
+
+    <Text fx:id="description" layoutX="576.0" layoutY="418.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="questionTitle"
+          text="Play computer games for 5 hours." textAlignment="CENTER" wrappingWidth="400" AnchorPane.topAnchor="300" AnchorPane.leftAnchor="338.5">
     </Text>
-    <ProgressBar fx:id="timeBar" layoutX="237.0" layoutY="207.0" prefHeight="40.0" prefWidth="1038.0" progress="0.0" styleClass="timeBar"
-                 AnchorPane.leftAnchor="237.0" AnchorPane.rightAnchor="237.0" AnchorPane.topAnchor="207.0" />
 
-    <TextField alignment="CENTER" layoutX="357.0" layoutY="540.0" prefHeight="69.0" prefWidth="807.0" promptText="Enter your answer" styleClass="textPrompt" />
+    <TextField alignment="CENTER" layoutX="357.0" layoutY="540.0" prefHeight="69.0" prefWidth="600.0" promptText="Enter your answer" styleClass="textPrompt" AnchorPane.topAnchor="400" AnchorPane.leftAnchor="238.5"/>
 
-    <Label fx:id="score" alignment="CENTER" layoutX="554.0" layoutY="910.0" prefHeight="40.0" prefWidth="405.0" styleClass="score" text="Score: 1200"
-           textAlignment="CENTER" AnchorPane.bottomAnchor="32.0">
+    <Label fx:id="score" alignment="CENTER" layoutX="554.0" layoutY="910.0" prefHeight="40.0" prefWidth="405.0" styleClass="score" text="Score: 1200" textAlignment="CENTER" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="336.0">
     </Label>
 
     <Button fx:id="submit" disable="true" layoutX="1312.0" layoutY="910.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="40.0" prefWidth="150.0" text="Submit" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0">
