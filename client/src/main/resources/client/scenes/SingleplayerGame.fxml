@@ -41,7 +41,7 @@
     </ImageView>
 
     <Text fx:id="picked" layoutX="367.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text="You picked this one" AnchorPane.topAnchor="165.0"/>
-    <Text fx:id="result" layoutX="698.0" layoutY="235.0" wrappingWidth="200" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text=" " AnchorPane.topAnchor="120.0" AnchorPane.leftAnchor="438.5"/>
+    <Text fx:id="result" layoutX="698.0" layoutY="235.0" wrappingWidth="300" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text=" " AnchorPane.topAnchor="120.0" AnchorPane.leftAnchor="488.5"/>
 
     <Label fx:id="score" alignment="CENTER" layoutX="554.0" layoutY="910.0" prefHeight="40.0" prefWidth="405.0" styleClass="score" text="Score: 1200" textAlignment="CENTER" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="336.0">
     </Label>

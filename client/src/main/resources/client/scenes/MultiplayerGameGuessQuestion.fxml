@@ -38,7 +38,7 @@
 
 
     <Text fx:id="picked" layoutX="367.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text="You picked this one" AnchorPane.leftAnchor="560.5"/>
-    <Text fx:id="result" layoutX="698.0" layoutY="235.0" wrappingWidth="200" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text=" " AnchorPane.topAnchor="120.0" AnchorPane.leftAnchor="438.5"/>
+    <Text fx:id="result" layoutX="698.0" layoutY="235.0" wrappingWidth="300" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text=" " AnchorPane.topAnchor="120.0" AnchorPane.leftAnchor="488.5"/>
 
     <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="72.0" layoutX="560.5" layoutY="250.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0">
         <styleClass>

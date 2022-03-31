@@ -41,7 +41,7 @@
     </ImageView>
 
     <Text fx:id="picked" layoutX="367.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text="You picked this one" AnchorPane.topAnchor="165.0"/>
-    <Text fx:id="result" layoutX="698.0" layoutY="235.0" wrappingWidth="200" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text=" " AnchorPane.topAnchor="120.0" AnchorPane.leftAnchor="438.5"/>
+    <Text fx:id="result" layoutX="698.0" layoutY="235.0" wrappingWidth="300" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text=" " AnchorPane.topAnchor="120.0" AnchorPane.leftAnchor="488.5"/>
 
     <Label fx:id="emojiHolder" layoutX="1296.0" layoutY="430.0" prefHeight="300.0" prefWidth="100.0" styleClass="gradientBox" AnchorPane.topAnchor="234.5" AnchorPane.rightAnchor="30">
     </Label>
