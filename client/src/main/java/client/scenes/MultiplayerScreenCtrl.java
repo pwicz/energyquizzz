@@ -3,11 +3,10 @@ package client.scenes;
 import com.google.inject.Inject;
 import commons.Activity;
 import commons.ClientMessage;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -23,7 +22,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.nio.file.Paths;
+//import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -95,12 +94,16 @@ public class MultiplayerScreenCtrl {
     @FXML
     ListView emojiHolder;
 
+    @FXML
+    AnchorPane anchorPane;
+
+
     @Inject
     public MultiplayerScreenCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
         optionToID = new HashMap<>();
         runLater(() -> {
-           initilizeEmojis();
+            initilizeEmojis();
         });
     }
 
@@ -185,7 +188,7 @@ public class MultiplayerScreenCtrl {
     public void displayActivities(List<Activity> activities){
         // for convenience
 
-       resetUI();
+        resetUI();
 
         List<Rectangle> options = List.of(option1, option2, option3);
         List<Label> titles = List.of(title1, title2, title3);
@@ -197,7 +200,7 @@ public class MultiplayerScreenCtrl {
 
             if(a == null) continue;
             optionToID.put(options.get(i), a.id);
-            
+
             titles.get(i).setText(Integer.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
 
@@ -260,4 +263,35 @@ public class MultiplayerScreenCtrl {
         }
     }
 
+
+    public void animateEmoji(MouseEvent mouseEvent){
+        ImageView imageView = (ImageView) mouseEvent.getSource();
+        ImageView imageView1 = new ImageView(imageView.getImage());
+        //make new image
+        imageView1.setFitWidth(imageView.getFitWidth());
+        imageView1.setFitHeight(imageView.getFitHeight());
+        imageView1.setY(anchorPane.getHeight()- 80);
+        imageView1.setX((anchorPane.getWidth()- 90) * Math.random());
+        //animation y coords
+        TranslateTransition transition = new TranslateTransition();
+        transition.setDuration(Duration.seconds(3));
+        transition.setToY(-600);
+        transition.setNode(imageView1);
+        transition.setOnFinished(event -> removeImage(transition.getNode()));
+        //animation fade
+        FadeTransition ft = new FadeTransition();
+        ft.setFromValue(1.0);
+        ft.setToValue(0);
+        ft.setDuration(Duration.seconds(3));
+        ft.setNode(imageView1);
+        //start transitions
+        transition.play();
+        ft.play();
+
+        anchorPane.getChildren().add(imageView1);
+
+    }
+    public void removeImage(Node node){
+        anchorPane.getChildren().remove(node);
+    }
 }
