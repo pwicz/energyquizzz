@@ -154,6 +154,32 @@ public class MainMessageController {
                     var pingResponse = new ServerMessage(ServerMessage.Type.PING);
                     simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, pingResponse);
                     break;
+                case USE_JOKER:
+                    if (game == null || player == null) return;
+
+                    if(msg.joker == ClientMessage.Joker.CUT_ANSWER){
+
+                    }
+
+                    switch(msg.joker){
+                        case CUT_ANSWER:
+                            if(game.getCurrentQuestion().type == Question.Type.GUESS) break;
+
+                            // send back the id of one of the incorrect answers
+                            break;
+                        case SPLIT_TIME:
+                            // remake timers
+                            break;
+                        case DOUBLE_POINTS:
+                            // set the double score modifier
+                            player.setScoreModifier(player.getScoreModifier() * 2);
+                            break;
+                        default:
+                            // invalid joker
+                    }
+
+                    // send used joker information to other players
+                    break;
                 default:
                     // unknown message
             }
@@ -170,6 +196,7 @@ public class MainMessageController {
             if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
                 double answerTime = timeToAnswer - (System.currentTimeMillis() - g.getQuestionStartTime()) / 1000.0;
                 scoreForQuestion = scoreBase + (int) (scoreBonusPerSecond * answerTime);
+                scoreForQuestion *= p.getScoreModifier();
                 p.setAnswerStatus(true);
             }
             p.setScore(p.getScore() + scoreForQuestion);

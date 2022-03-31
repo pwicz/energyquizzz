@@ -6,6 +6,7 @@ public class Player {
     private String name;
     private String ID;
     private int score = 0;
+    private int scoreModifier = 1;
     private long answer;
     private boolean answerStatus = false;
 
@@ -65,5 +66,9 @@ public class Player {
     public boolean getAnswerStatus(){
         return answerStatus;
     }
+
+    public void setScoreModifier(int modifier){ this.scoreModifier = modifier; }
+
+    public int getScoreModifier(){ return scoreModifier; }
 
 }

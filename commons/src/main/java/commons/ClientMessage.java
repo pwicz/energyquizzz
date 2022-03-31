@@ -3,7 +3,7 @@ package commons;
 public class ClientMessage {
     public enum Type{
         INIT_SINGLEPLAYER, INIT_MULTIPLAYER, TEST, SUBMIT_SINGLEPLAYER, QUIT,
-        SUBMIT_ANSWER, START_MULTIPLAYER, QUIT_WAITING_ROOM, PING
+        SUBMIT_ANSWER, START_MULTIPLAYER, QUIT_WAITING_ROOM, PING, USE_JOKER;
     }
 
     public Type type;
@@ -14,6 +14,12 @@ public class ClientMessage {
     // add more fields as we start exchanging messages
     public String playerName;
     public String serverName;
+
+    public enum Joker{
+        CUT_ANSWER, SPLIT_TIME, DOUBLE_POINTS
+    }
+
+    public Joker joker;
     
     public ClientMessage() {
     }
