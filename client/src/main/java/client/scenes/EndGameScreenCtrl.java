@@ -1,6 +1,5 @@
 package client.scenes;
 
-import commons.ClientMessage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -43,9 +42,11 @@ public class EndGameScreenCtrl {
     }
 
     public void leave(){
-        ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
-                mainCtrl.getClientID(), mainCtrl.getGameID());
-        mainCtrl.showLeave(mainCtrl::showSplash, () -> mainCtrl.getServer().send("/app/general", msg));
+        mainCtrl.showSplash();
+    }
+
+    public void showWaitingRoom(){
+        mainCtrl.showinputNameScreen();
     }
 
 }

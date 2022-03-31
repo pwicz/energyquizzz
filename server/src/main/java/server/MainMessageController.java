@@ -442,6 +442,7 @@ public class MainMessageController {
                         result.topScores = getTopScores(g);
                         simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
                     }
+                    games.remove(g.getID());
                 }
             }, 6000);
         }

@@ -212,7 +212,12 @@ public class MainCtrl {
             case END_GAME:
                 runLater(() -> {
                     endGameScreenCtrl.insertLeaderboard(msg.topScores);
+                    multiplayerScreenCtrl.updateTitle(0);
                     showEndScreen();
+                });
+                primaryStage.setOnCloseRequest(e -> {
+                    Platform.exit();
+                    System.exit(0);
                 });
                 System.out.println("[msg] end game");
                 break;
