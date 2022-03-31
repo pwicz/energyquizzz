@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.CreateActivityCtrl">
 
-    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="149.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="New Activity" AnchorPane.topAnchor="50.0" AnchorPane.leftAnchor="200">
+    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="149.0" prefHeight="133.0" prefWidth="800.0" styleClass="title" text="New Activity" AnchorPane.topAnchor="50.0" AnchorPane.leftAnchor="138.5">
     </Label>
 
     <Label contentDisplay="CENTER" layoutX="164.0" layoutY="306.0" prefHeight="49.0" prefWidth="276.0" styleClass="smallTitle" text="Title:" AnchorPane.topAnchor="200.0" AnchorPane.leftAnchor="25">
