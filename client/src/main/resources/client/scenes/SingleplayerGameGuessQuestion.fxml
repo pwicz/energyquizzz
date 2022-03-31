@@ -15,17 +15,17 @@
 
     <ProgressBar fx:id="timeBar" layoutX="138.5" layoutY="120.0" prefHeight="40.0" prefWidth="800.0" progress="0.0" styleClass="timeBar"/>
 
-    <Rectangle fx:id="activity" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="369.0"  width="251.0" layoutX="265.5" layoutY="200.0" strokeType="INSIDE">
+    <Rectangle fx:id="activity" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="369.0"  width="251.0" layoutX="275.5" layoutY="200.0" strokeType="INSIDE">
         <styleClass>
             <String fx:value="option" />
         </styleClass>
     </Rectangle>
-    <ImageView fx:id="image" fitHeight="200.0" fitWidth="200.0" layoutX="657.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="291">
+    <ImageView fx:id="image" fitHeight="200.0" fitWidth="200.0" layoutX="657.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="301">
         <Image url="@/client/scenes/images/tempShit.png" />
     </ImageView>
-    <Label fx:id="title" alignment="CENTER" layoutX="692.0" layoutY="537.0" prefWidth="200" styleClass="questionTitle" text="Charging a car" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="295">
+    <Label fx:id="title" alignment="CENTER" layoutX="692.0" layoutY="537.0" prefWidth="200" styleClass="questionTitle" text="Charging a car" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="301">
     </Label>
-    <Label fx:id="description" alignment="CENTER" layoutX="643.0" layoutY="573.0" prefHeight="72.0" prefWidth="228.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="285">
+    <Label fx:id="description" alignment="CENTER" layoutX="643.0" layoutY="573.0" prefHeight="72.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="301">
     </Label>
 
 

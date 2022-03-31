@@ -15,28 +15,27 @@
 
     <ProgressBar fx:id="timeBar" layoutX="138.5" layoutY="120.0" prefHeight="40.0" prefWidth="800.0" progress="0.0" styleClass="timeBar"/>
 
-    <Label fx:id="title1" alignment="CENTER" layoutX="323.0" layoutY="634.0" prefHeight="30.0" prefWidth="191.0" styleClass="questionTitle" text="Gaming" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="180">
+    <Label fx:id="title1" alignment="CENTER" layoutX="323.0" layoutY="634.0" prefHeight="30.0" prefWidth="200.0" styleClass="questionTitle" text="Gaming" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="175.5">
     </Label>
-    <Label fx:id="title2" alignment="CENTER" contentDisplay="CENTER" layoutX="656.0" layoutY="634.0" prefHeight="30.0" prefWidth="195.0" styleClass="questionTitle" text="Charging a car" textAlignment="CENTER" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="441">
+    <Label fx:id="title2" alignment="CENTER" layoutX="656.0" layoutY="634.0" prefHeight="30.0" prefWidth="200.0" styleClass="questionTitle" text="Charging a car" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="438.5">
     </Label>
-    <Label fx:id="title3" alignment="CENTER" layoutX="987.0" layoutY="634.0" prefHeight="30.0" prefWidth="200.0" styleClass="questionTitle" text="Gaming" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="701.5">
-    </Label>
-
-    <Label fx:id="description1" alignment="CENTER" contentDisplay="CENTER" layoutX="306.0" layoutY="681.0" prefHeight="80.0" prefWidth="226.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="173.5">
-    </Label>
-    <Label />
-    <Label fx:id="description2" alignment="CENTER" layoutX="641.0" layoutY="678.0" prefHeight="80.0" prefWidth="226.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="436.5">
-    </Label>
-    <Label fx:id="description3" alignment="CENTER" contentDisplay="CENTER" layoutX="974.0" layoutY="674.0" prefHeight="80.0" prefWidth="226.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="699.5">
+    <Label fx:id="title3" alignment="CENTER" layoutX="987.0" layoutY="634.0" prefHeight="30.0" prefWidth="200.0" styleClass="questionTitle" text="Gaming" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="701.5">
     </Label>
 
-    <ImageView fx:id="image1" fitHeight="200.0" fitWidth="200.0" layoutX="319.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="175.5">
+    <Label fx:id="description1" alignment="CENTER" layoutX="306.0" layoutY="681.0" prefHeight="80.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="175.5">
+    </Label>
+    <Label fx:id="description2" alignment="CENTER" layoutX="641.0" layoutY="678.0" prefHeight="80.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="438.5">
+    </Label>
+    <Label fx:id="description3" alignment="CENTER" layoutX="974.0" layoutY="674.0" prefHeight="80.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="701.5">
+    </Label>
+
+    <ImageView fx:id="image1" fitHeight="200.0" fitWidth="200.0" layoutX="319.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="280.0" AnchorPane.leftAnchor="175.5">
         <Image url="@/client/scenes/images/tempShit.png" />
     </ImageView>
-    <ImageView fx:id="image2" fitHeight="200.0" fitWidth="200.0" layoutX="659.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="438.5">
+    <ImageView fx:id="image2" fitHeight="200.0" fitWidth="200.0" layoutX="659.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="280.0" AnchorPane.leftAnchor="438.5">
         <Image url="@/client/scenes/images/tempShit.png" />
     </ImageView>
-    <ImageView fx:id="image3" fitHeight="200.0" fitWidth="200.0" layoutX="994.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="701.5">
+    <ImageView fx:id="image3" fitHeight="200.0" fitWidth="200.0" layoutX="994.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="280.0" AnchorPane.leftAnchor="701.5">
         <Image url="@/client/scenes/images/tempShit.png" />
     </ImageView>
 
