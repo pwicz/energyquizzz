@@ -21,12 +21,16 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -170,28 +174,42 @@ public class MultiplayerScreenCtrl {
     public void showEmoji(String imgName, String name){
         File f = new File("client/src/main/resources/client/scenes/emojiimages/" + imgName);
         ImageView imageView1 = new ImageView(f.toURI().toString());
+        Text playerName = new Text(name);
+
         //make new image
         imageView1.setFitWidth(50);
         imageView1.setFitHeight(50);
         imageView1.setY(anchorPane.getHeight()- 80);
         imageView1.setX((anchorPane.getWidth()- 90) * Math.random());
-        //animation y coords
-        TranslateTransition transition = new TranslateTransition();
-        transition.setDuration(Duration.seconds(1));
-        transition.setToY(-200);
-        transition.setNode(imageView1);
-        transition.setOnFinished(event -> removeImage(transition.getNode()));
-        //animation fade
-        FadeTransition ft = new FadeTransition();
-        ft.setFromValue(1.0);
-        ft.setToValue(0);
-        ft.setDuration(Duration.seconds(10));
-        ft.setNode(imageView1);
-        //start transitions
-        transition.play();
-        ft.play();
 
-        anchorPane.getChildren().add(imageView1);
+        playerName.setX(imageView1.getX() + 25 - name.chars().count()*3);
+        playerName.setTextAlignment(TextAlignment.CENTER);
+        playerName.setY(imageView1.getY()+ 65);
+        playerName.setFill(Color.WHITE);
+        //animation y coords
+        List<Node> transitions = new ArrayList<>(Arrays.asList(imageView1,playerName));
+        for (int i = 0; i < transitions.size(); i++) {
+            TranslateTransition transition = new TranslateTransition();
+            transition.setDuration(Duration.seconds(1));
+            transition.setToY(-200);
+            transition.setNode(transitions.get(i));
+            transition.setOnFinished(event -> removeImage(transition.getNode()));
+            //animation fade
+            FadeTransition ft = new FadeTransition();
+            ft.setFromValue(1.0);
+            ft.setToValue(0);
+            ft.setDuration(Duration.seconds(10));
+            ft.setNode(transitions.get(i));
+            //start transitions
+            transition.play();
+            ft.play();
+
+            anchorPane.getChildren().add(transitions.get(i));
+        }
+
+
+       // anchorPane.getChildren().add(imageView1);
+       // anchorPane.getChildren().add(playerName);
     }
 
     private void removeImage(Node node) {
