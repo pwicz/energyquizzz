@@ -1,0 +1,11 @@
+.smallTitle{
+    -fx-text-fill: "#38c768";
+    -fx-font-family: "Roboto-Thin";
+    -fx-font-size: 30;
+}
+
+.description{
+    -fx-fill: "white";
+    -fx-font-family: "Roboto-Thin";
+    -fx-font-size: 20;
+}
