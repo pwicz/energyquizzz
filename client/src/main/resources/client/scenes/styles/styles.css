@@ -51,7 +51,7 @@
 
 .title{
     -fx-font-family: 'Roboto Thin';
-    -fx-font-size: 100;
+    -fx-font-size: 80;
     -fx-text-fill: linear-gradient(to left, #1BED62, #21A0E8);
 }
 
