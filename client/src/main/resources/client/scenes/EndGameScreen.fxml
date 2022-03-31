@@ -22,7 +22,7 @@
       </styleClass>
    </Button>
    <ListView fx:id="leaderboardSingle" layoutX="415.0" layoutY="234.0" prefHeight="445.0" prefWidth="683.0" styleClass="gradientBox" />
-   <Label fx:id="yourScore" alignment="CENTER" contentDisplay="CENTER" layoutX="420.0" layoutY="694.0" prefHeight="53.0" prefWidth="666.0" styleClass="your-score" textAlignment="CENTER" textFill="WHITE" />
+   <Label fx:id="yourScore" alignment="CENTER" contentDisplay="CENTER" layoutX="415.0" layoutY="718.0" prefHeight="53.0" prefWidth="667.0" styleClass="your-score" textAlignment="CENTER" textFill="WHITE" />
    <stylesheets>
       <URL value="@/client/scenes/styles/styles.css" />
       <URL value="@/client/scenes/styles/EndScreen.css" />
