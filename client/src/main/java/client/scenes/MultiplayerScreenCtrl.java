@@ -3,11 +3,14 @@ package client.scenes;
 import com.google.inject.Inject;
 import commons.Activity;
 import commons.ClientMessage;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -17,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -94,6 +98,9 @@ public class MultiplayerScreenCtrl {
     @FXML
     ListView emojiHolder;
 
+    @FXML
+    AnchorPane anchorPane;
+
     @Inject
     public MultiplayerScreenCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
@@ -150,7 +157,7 @@ public class MultiplayerScreenCtrl {
 
     //shows an emoji
     public void sendEmoji(){
-        String[] dir = ((ImageView) emojiHolder.getItems().get(1)).getImage().getUrl().split("/");
+        String[] dir = ((ImageView) emojiHolder.getSelectionModel().getSelectedItem()).getImage().getUrl().split("/");
         System.out.println(dir[dir.length - 1]);
 
         ClientMessage msg = new ClientMessage(ClientMessage.Type.SHOW_EMOJI,
@@ -161,10 +168,34 @@ public class MultiplayerScreenCtrl {
     }
 
     public void showEmoji(String imgName, String name){
-        File f = new File("client/src/main/resources/client/scenes/emojiimages" + imgName);
-        ImageView img = new ImageView(f.toURI().toString());
-        System.out.println(imgName);
-        System.out.println(name);
+        File f = new File("client/src/main/resources/client/scenes/emojiimages/" + imgName);
+        ImageView imageView1 = new ImageView(f.toURI().toString());
+        //make new image
+        imageView1.setFitWidth(50);
+        imageView1.setFitHeight(50);
+        imageView1.setY(anchorPane.getHeight()- 80);
+        imageView1.setX((anchorPane.getWidth()- 90) * Math.random());
+        //animation y coords
+        TranslateTransition transition = new TranslateTransition();
+        transition.setDuration(Duration.seconds(1));
+        transition.setToY(-200);
+        transition.setNode(imageView1);
+        transition.setOnFinished(event -> removeImage(transition.getNode()));
+        //animation fade
+        FadeTransition ft = new FadeTransition();
+        ft.setFromValue(1.0);
+        ft.setToValue(0);
+        ft.setDuration(Duration.seconds(10));
+        ft.setNode(imageView1);
+        //start transitions
+        transition.play();
+        ft.play();
+
+        anchorPane.getChildren().add(imageView1);
+    }
+
+    private void removeImage(Node node) {
+        anchorPane.getChildren().remove(node);
     }
 
 
@@ -256,9 +287,6 @@ public class MultiplayerScreenCtrl {
 
 
     public void enterAnswer(KeyEvent keyEvent) {
-        if(keyEvent.getCode().equals(KeyCode.P)){ //later should replace L with ENTER
-            sendEmoji();
-        }
         if(keyEvent.getCode().equals(KeyCode.L)){ //later should replace L with ENTER
             submitAnswer();
         }

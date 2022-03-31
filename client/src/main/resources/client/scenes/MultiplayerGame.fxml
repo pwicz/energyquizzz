@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#enterAnswer" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#submitAnswer" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
 
     <Label fx:id="headTitle" alignment="CENTER" layoutX="213.0" layoutY="72.0" prefHeight="80.0" prefWidth="1092.0" styleClass="question" text="Question 5: Which activity consumes most energy?" AnchorPane.bottomAnchor="830.0">
     </Label>
@@ -108,7 +108,7 @@
             <String fx:value="hover-element" />
         </styleClass>
     </Rectangle>
-   <ListView fx:id="emojiHolder" layoutX="1296.0" layoutY="430.0" prefHeight="299.0" prefWidth="121.0">
+   <ListView fx:id="emojiHolder" layoutX="1296.0" layoutY="430.0" onMouseClicked="#sendEmoji" prefHeight="299.0" prefWidth="121.0">
       <styleClass>
          <String fx:value="gradientBox" />
          <String fx:value="emojiH" />
