@@ -5,6 +5,11 @@
     -fx-pref-width: 1077;
 }
 
+.backgroundSmall{
+    -fx-background-color: #272727;
+    -fx-font-family: "Roboto";
+}
+
 .button{
     -fx-font-family: "Roboto Light";
     -fx-background-color: none;
