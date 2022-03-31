@@ -39,7 +39,7 @@
       </styleClass>
    </Button>
 
-   <Button fx:id="admin" alignment="CENTER" contentDisplay="CENTER" layoutX="378.0" layoutY="874.0" mnemonicParsing="false" onAction="#showAdminPanel" prefHeight="78.0" prefWidth="321.0" text="Admin Panel" AnchorPane.bottomAnchor="50.0">
+   <Button fx:id="admin" alignment="CENTER" contentDisplay="CENTER" layoutX="378.0" layoutY="874.0" mnemonicParsing="false" onAction="#showAdminPanel" prefHeight="78.0" prefWidth="321.0" text="Admin Panel" AnchorPane.bottomAnchor="100.0">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="whiteButton" />
@@ -54,9 +54,9 @@
          <String fx:value="hugeButton" />
       </styleClass>
    </Button>
-   <Text fx:id="message" layoutX="-200.0" layoutY="677.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="message-splash" text="Message" wrappingWidth="1513.8034825325012">
+   <Text fx:id="message" layoutX="238.5" layoutY="677.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="message-splash" text="Message" wrappingWidth="600" AnchorPane.bottomAnchor="20">
       <font>
-         <Font name="Lato Regular" size="25.0" />
+         <Font name="Lato Regular" size="20.0" />
       </font>
    </Text>
 </AnchorPane>
