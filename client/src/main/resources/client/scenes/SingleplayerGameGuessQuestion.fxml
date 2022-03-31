@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerScreenCtrl">
 
-    <Label fx:id="screenTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="93.0" prefHeight="66.0" prefWidth="1255.0" styleClass="question" text="Question 5: How much electricity does this activity cost?" textFill="#38c768" AnchorPane.leftAnchor="-89.0" AnchorPane.topAnchor="50.0">
+    <Label fx:id="screenTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="93.0" prefHeight="45.0" prefWidth="1200.0" styleClass="question" text="Question 5: How much electricity does this activity cost?" textFill="#38c768" AnchorPane.leftAnchor="-61.5" AnchorPane.topAnchor="50.0">
     </Label>
 
     <ProgressBar fx:id="timeBar" layoutX="138.5" layoutY="120.0" prefHeight="40.0" prefWidth="800.0" progress="0.0" styleClass="timeBar"/>
