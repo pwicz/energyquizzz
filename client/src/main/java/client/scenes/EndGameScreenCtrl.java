@@ -18,10 +18,10 @@ public class EndGameScreenCtrl {
     ListView leaderboardSingle;
 
     @FXML
-    Label yourScore;
+    Label yourPlace;
 
     @FXML
-    Label score;
+    Label yourScore;
 
     @Inject
     public EndGameScreenCtrl(MainCtrl mainCtrl) {
@@ -32,11 +32,12 @@ public class EndGameScreenCtrl {
         leaderboardSingle.getItems().clear();
         leaderboardSingle.getItems().addAll(players);
         for(int i = 0; i < players.size(); i++){
-            if(players.get(i).contains(mainCtrl.getName())){
+            String[] stat = players.get(i).split(":");
+            if(stat[0].equals(mainCtrl.getName())){
                 //set name
-                yourScore.setText("#" + (i+1) + " " + mainCtrl.getName());
+                yourPlace.setText("#" + (i+1) + " " + mainCtrl.getName());
                 //set score
-                score.setText("Score: " + players.get(i).replace(mainCtrl.getName()+":", ""));
+                yourScore.setText("Your Score: " + stat[1]);
             }
         }
     }

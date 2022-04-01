@@ -87,8 +87,11 @@ public class MainMessageController {
                     if(waitingRoom != null
                             && waitingRoom.getPlayers()
                             .stream().anyMatch(players ->
-                                    (players.getName()).equalsIgnoreCase(msg.playerName)))
+                                    (players.getName()).equalsIgnoreCase(msg.playerName))) {
+                        simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
+                                new ServerMessage(ServerMessage.Type.NAME_TAKEN));
                         return;
+                    }
 
                     joinWaitingRoom(msg);
                     break;

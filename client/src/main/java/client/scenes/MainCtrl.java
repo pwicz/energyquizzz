@@ -247,6 +247,9 @@ public class MainCtrl {
                 // for testing purposes only
                 System.out.println("It works! Received a msg!");
                 break;
+            case NAME_TAKEN:
+                inputNameScreenCtrl.nameTaken();
+                break;
             default:
                 // invalid msg type
         }
@@ -348,7 +351,7 @@ public class MainCtrl {
             showInputServer();
             return;
         }
-
+        inputNameScreenCtrl.resetNameTaken();
         primaryStage.setTitle("input Name");
         primaryStage.setScene(inputName);
     }
