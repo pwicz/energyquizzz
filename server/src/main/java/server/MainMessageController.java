@@ -197,7 +197,6 @@ public class MainMessageController {
         return result;
     }
 
-    //CHECKSTYLE: OFF
     /**
      * Generates a question randomly out of the available types
      * @return new randomly generated question
@@ -253,7 +252,6 @@ public class MainMessageController {
         }
         return null;
     }
-    //CHECKSTYLE: ON
 
     /**
      * Generates a random number in the appropriate bounds of a correct answer
@@ -262,7 +260,7 @@ public class MainMessageController {
      */
     private long getRandomAnswer(long correct){
         Random rand = new Random();
-        return (correct/2) + rand.nextInt((int) ((2 * correct) - (correct/2)));
+        return (long) ((correct/2) + Math.random() * ((2 * correct) - (correct/2)));
     }
 
     /**

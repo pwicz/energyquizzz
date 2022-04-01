@@ -29,10 +29,13 @@ public class Question {
         this.type = type;
         this.title = getTitleFromType(type);
 
-        //Get correct answer from guess type
-        if(type == Type.GUESS){
+        //Selects correct & incorrect answers for compare type questions
+        if (type == Type.COMPARE) {
             for(Activity a : activities){
-                if(a.consumptionInWh > this.correct) this.correct = a.consumptionInWh;
+                if(this.correct < a.consumptionInWh) this.correct = a.consumptionInWh;
+            }
+            for(Activity a : activities){
+                if(this.correct != a.consumptionInWh) this.incorrect.add((long) a.consumptionInWh);
             }
         }
     }
