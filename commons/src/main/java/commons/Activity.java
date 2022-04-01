@@ -24,11 +24,11 @@ public class Activity {
     public long id;
 
     public String title;
-    public Integer consumptionInWh;
+    public long consumptionInWh;
     public String source;
     public String imagePath;
 
-    public Activity(String title, Integer consumptionInWh, String source, String imagePath) {
+    public Activity(String title, long consumptionInWh, String source, String imagePath) {
         this.title = title;
         this.consumptionInWh = consumptionInWh;
         this.source = source;
@@ -57,7 +57,7 @@ public class Activity {
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (consumptionInWh != null ? consumptionInWh.hashCode() : 0);
+        result = 31 * result + (int) (consumptionInWh ^ (consumptionInWh >>> 32));
         result = 31 * result + (source != null ? source.hashCode() : 0);
         result = 31 * result + (imagePath != null ? imagePath.hashCode() : 0);
         return result;

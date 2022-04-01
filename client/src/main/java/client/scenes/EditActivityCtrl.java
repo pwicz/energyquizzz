@@ -57,14 +57,14 @@ public class EditActivityCtrl {
     public void fillActivity(Activity activity){
         currentActivityID = activity.id;
         titleField.setText(activity.title);
-        consumptionField.setText(activity.consumptionInWh.toString());
+        consumptionField.setText(String.valueOf(activity.consumptionInWh));
         sourceField.setText(activity.source);
         imageField.setText(activity.imagePath);
     }
 
     public void saveActivity(MouseEvent actionEvent) throws MalformedURLException {
         String title = titleField.getText();
-        int consumption = 0;
+        long consumption = 0;
         String source = sourceField.getText();
         String image = imageField.getText();
         boolean canBeSaved = true;
@@ -89,7 +89,7 @@ public class EditActivityCtrl {
         }
 
         try {
-            consumption = Integer.parseInt(consumptionField.getText());
+            consumption = Long.parseLong(consumptionField.getText());
             if(consumption > 0){
                 consumptionErrorText.setVisible(false);
             }else{
