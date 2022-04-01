@@ -18,13 +18,13 @@
     </Button>
    <Label layoutX="71.0" layoutY="55.0" prefHeight="17.0" prefWidth="536.0" styleClass="smallTitle" text="How to play" />
    <Text layoutX="69.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="description" text=
-"In this game you will be asked 20 questions with a limited amount of time to answer them.
+"In this game you will be asked 20 questions with 10 seconds to answer them.
 The faster you answer the more points you get.
 There are 3 jokers, these jokers can be used once per game.
 The jokers do the following:&#10;
-Cut an answer       -&gt; Removes a wrong answer, only for you.&#10;
-Double points(2x) -&gt; You get double points if your answer is correct&#10;
-Reduce time          -&gt; The time of others is reduced this round&#10;" wrappingWidth="531.0" AnchorPane.leftAnchor="69.0" AnchorPane.topAnchor="125.0" />
+-Cut an answer       -&gt; Removes a wrong answer, only for you.&#10;
+-Double points(2x) -&gt; You get double points if your answer is correct&#10;
+-Reduce time          -&gt; The time of others halved this round&#10;" wrappingWidth="531.0" AnchorPane.leftAnchor="69.0" AnchorPane.topAnchor="125.0" />
 
     <stylesheets>
         <URL value="@/client/scenes/styles/styles.css" />
