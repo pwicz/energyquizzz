@@ -157,10 +157,6 @@ public class MainMessageController {
                 case USE_JOKER:
                     if (game == null || player == null) return;
 
-                    if(msg.joker == ClientMessage.Joker.CUT_ANSWER){
-
-                    }
-
                     switch(msg.joker){
                         case CUT_ANSWER:
                             if(game.getCurrentQuestion().type == Question.Type.GUESS) break;
@@ -169,6 +165,7 @@ public class MainMessageController {
                             break;
                         case SPLIT_TIME:
                             // remake timers
+
                             break;
                         case DOUBLE_POINTS:
                             // set the double score modifier
@@ -382,7 +379,7 @@ public class MainMessageController {
      */
     public List<String> correctAnswer(Game game){
         List<Player> playerList = game.getPlayers().stream()
-                .filter(p -> p.getAnswerStatus() == true)
+                .filter(p -> p.getAnswerStatus())
                 .collect(Collectors.toList());
         List<String> correctAnswers = new ArrayList<>();
         for (Player p : playerList) {
@@ -398,7 +395,7 @@ public class MainMessageController {
      */
     public List<String> incorrectAnswer(Game game){
         List<Player> playerList = game.getPlayers().stream()
-                .filter(p -> p.getAnswerStatus() == false)
+                .filter(p -> !p.getAnswerStatus())
                 .collect(Collectors.toList());
         List<String> incorrectAnswers = new ArrayList<>();
         for (Player p : playerList) {
@@ -496,5 +493,31 @@ public class MainMessageController {
             result.score = p.getScore();
             simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
         }
+    }
+
+    private void changeTimerForSome(List<Player> players, int newTimeMs){
+        UUID timerID = UUID.randomUUID();
+
+        for(var p : players) p.setTimerID(timerID);
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+
+                // send lock answer message to players with
+                // timerIDs equal to timerID
+
+                for(var p : players) {
+                    if(Objects.equals(p.getTimerID(), timerID)){
+                        if(!p.hasAnswered()){
+                            // set player's answer to -1 (no answer)
+                            p.setAnswer(-1L);
+                            // send lock answer
+                        }
+                    }
+                }
+
+            }
+        }, newTimeMs);
     }
 }

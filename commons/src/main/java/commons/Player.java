@@ -1,5 +1,7 @@
 package commons;
 
+import java.util.UUID;
+
 public class Player {
 
     private boolean hasAnswered;
@@ -9,6 +11,8 @@ public class Player {
     private int scoreModifier = 1;
     private long answer;
     private boolean answerStatus = false;
+
+    private UUID timerID;
 
     public Player(String name, String ID) {
         this.name = name;
@@ -71,4 +75,11 @@ public class Player {
 
     public int getScoreModifier(){ return scoreModifier; }
 
+    public UUID getTimerID() {
+        return timerID;
+    }
+
+    public void setTimerID(UUID timerID) {
+        this.timerID = timerID;
+    }
 }
