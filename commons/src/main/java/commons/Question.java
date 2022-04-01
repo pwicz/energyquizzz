@@ -24,10 +24,16 @@ public class Question {
         activities = new ArrayList<>();
     }
 
+    /**
+     * Constructor for compare & estimation questions
+     * @param activities selected activities to formulate question
+     * @param type type of question
+     */
     public Question(List<Activity> activities, Type type) {
         this.activities = activities;
         this.type = type;
         this.title = getTitleFromType(type);
+        this.incorrect = new ArrayList<>();
 
         //Selects correct & incorrect answers for compare type questions
         if (type == Type.COMPARE) {
@@ -43,7 +49,7 @@ public class Question {
     /**
      * Constructor for guessing & how many times type questions
      * @param activities activity selected
-     * @param type question type (Guess)
+     * @param type question type (Guess or how many times)
      * @param options three values (only one correct)
      */
     public Question(List<Activity> activities, Type type, List<Long> options) {
@@ -62,7 +68,7 @@ public class Question {
         Collections.shuffle(this.options);
     }
 
-    public String getTitleFromType(Type type){
+    public static String getTitleFromType(Type type){
         if(type == Type.COMPARE) return "Which activity consumes most energy?";
         else if(type == Type.GUESS) return "How much electricity does this activity cost?";
         else if(type == Type.HOW_MANY_TIMES) return "How many times can you ";
@@ -80,6 +86,14 @@ public class Question {
 
     public void setActivities(List<Activity> activities) {
         this.activities = activities;
+    }
+
+    public long getCorrect(){
+        return correct;
+    }
+
+    public List<Long> getIncorrect(){
+        return incorrect;
     }
 
     public Type getType() {
