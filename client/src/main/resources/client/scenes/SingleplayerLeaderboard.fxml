@@ -8,25 +8,25 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerLeaderboardCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerLeaderboardCtrl">
 
-   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="149.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="Leaderboard" AnchorPane.bottomAnchor="730.0">
+   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="149.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="Leaderboard" AnchorPane.topAnchor="50.0" AnchorPane.leftAnchor="171.5">
    </Label>
 
-   <ListView fx:id="leaderboard" layoutX="509.0" layoutY="284.0" prefHeight="328.0" prefWidth="495.0" AnchorPane.bottomAnchor="370.0">
+   <ListView fx:id="leaderboard" layoutX="509.0" layoutY="284.0" prefHeight="328.0" prefWidth="495.0" AnchorPane.topAnchor="180.0" AnchorPane.leftAnchor="291" >
       <styleClass>
          <String fx:value="container" />
          <String fx:value="gradientBox" />
       </styleClass>
    </ListView>
-   <TextField fx:id="nameField" layoutX="509.0" layoutY="642.0" maxHeight="49.0" maxWidth="495.0" onAction="#insertName" prefHeight="49.0" prefWidth="495.0" promptText="Enter your name" AnchorPane.bottomAnchor="291.0">
+   <TextField fx:id="nameField" layoutX="509.0" layoutY="642.0" maxHeight="49.0" maxWidth="495.0" onAction="#insertName" prefHeight="49.0" prefWidth="495.0" promptText="Enter your name" AnchorPane.bottomAnchor="130" AnchorPane.leftAnchor="291">
       <styleClass>
          <String fx:value="container" />
          <String fx:value="inputName" />
       </styleClass>
    </TextField>
 
-   <Button fx:id="start" layoutX="643.0" layoutY="751.0" mnemonicParsing="false" onMouseClicked="#start" prefHeight="63.0" prefWidth="226.0" text="Start" AnchorPane.bottomAnchor="168.0">
+   <Button fx:id="start" layoutX="643.0" layoutY="751.0" mnemonicParsing="false" onMouseClicked="#start" prefHeight="63.0" prefWidth="226.0" text="Start" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="425.5">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="greenButton" />
@@ -34,7 +34,7 @@
       </styleClass>
    </Button>
 
-   <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="32.0">
+   <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="redButton" />

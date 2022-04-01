@@ -135,7 +135,7 @@ public class MainCtrl {
         this.inputServer = new Scene(inputServer.getValue());
         this.inputServerScreenCtrl = inputServer.getKey();
 
-
+        primaryStage.setResizable(false);
         showSplash();
         primaryStage.show();
         inputServerScreenCtrl.hideLeaveButton();

@@ -28,6 +28,7 @@ import java.util.Objects;
 public class MultiplayerScreenCtrl {
 
     private final MainCtrl mainCtrl;
+    public Text description;
     private Rectangle choice;
     private HashMap<Rectangle, Long> optionToID;
     private boolean canInteractWithUI;
