@@ -503,16 +503,16 @@ public class MainMessageController {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-
-                // send lock answer message to players with
-                // timerIDs equal to timerID
-
                 for(var p : players) {
                     if(Objects.equals(p.getTimerID(), timerID)){
+                        // send lock answer message to players with
+                        // timerIDs equal to timerID
                         if(!p.hasAnswered()){
                             // set player's answer to -1 (no answer)
                             p.setAnswer(-1L);
                             // send lock answer
+                            ServerMessage msg = new ServerMessage(ServerMessage.Type.LOCK_ANSWER);
+                            simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), msg);
                         }
                     }
                 }
