@@ -16,11 +16,11 @@
    <ListView fx:id="leaderboardR" layoutX="95.0" layoutY="301.0" prefHeight="328.0" prefWidth="250.0" styleClass="redBox" AnchorPane.topAnchor="180.0" AnchorPane.leftAnchor="30"/>
    <ListView fx:id="leaderboardG" layoutX="1138.0" layoutY="301.0" prefHeight="328.0" prefWidth="250.0" styleClass="greenBox" AnchorPane.topAnchor="180.0" AnchorPane.rightAnchor="30"/>
 
-   <Label layoutX="661.0" layoutY="649.0" styleClass="question-label" text="Question" AnchorPane.bottomAnchor="135.0" AnchorPane.leftAnchor="450"/>
-   <Label fx:id="questionNo" alignment="CENTER" layoutX="681.0" layoutY="733.0" prefHeight="49.0" prefWidth="150.0" styleClass="question-number" text="7/20" AnchorPane.bottomAnchor="105.0" AnchorPane.leftAnchor="470"/>
-   <Label fx:id="endOfGame" visible="false" alignment="CENTER" layoutX="586.0" layoutY="810.0" prefHeight="40.0" prefWidth="400.0" styleClass="question-number" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="338.5"/>
+   <Label layoutX="661.0" layoutY="649.0" styleClass="question-label" text="Question" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="450"/>
+   <Label fx:id="questionNo" alignment="CENTER" layoutX="681.0" layoutY="733.0" prefHeight="49.0" prefWidth="150.0" styleClass="question-number" text="7/20" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="470"/>
+   <Label fx:id="endOfGame" visible="false" alignment="CENTER" layoutX="586.0" layoutY="810.0" prefHeight="40.0" prefWidth="400.0" styleClass="question-number" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="338.5"/>
 
-   <Label fx:id="score" alignment="CENTER" layoutX="554.0" layoutY="910.0" prefHeight="40.0" prefWidth="405.0" styleClass="bottom-score" text="Score: 1200" textAlignment="CENTER" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="336.0">
+   <Label fx:id="score" alignment="CENTER" layoutX="554.0" layoutY="910.0" prefHeight="40.0" prefWidth="405.0" styleClass="bottom-score" text="Score: 1200" textAlignment="CENTER" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="336.0">
    </Label>
 
    <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0">

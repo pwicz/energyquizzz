@@ -18,9 +18,9 @@
 
     <TextField alignment="CENTER" layoutX="357.0" layoutY="540.0" prefHeight="69.0" prefWidth="600.0" promptText="Enter your answer" styleClass="textPrompt" AnchorPane.topAnchor="400" AnchorPane.leftAnchor="238.5"/>
 
-    <Label fx:id="score" alignment="CENTER" layoutX="554.0" layoutY="910.0" prefHeight="40.0" prefWidth="405.0" styleClass="score" text="Score: 1200" textAlignment="CENTER" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="336.0">
+    <Label fx:id="score" alignment="CENTER" layoutX="554.0" layoutY="910.0" prefHeight="40.0" prefWidth="405.0" styleClass="score" text="Score: 1200" textAlignment="CENTER" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="336.0">
     </Label>
-    <Text fx:id="result" layoutX="698.0" layoutY="235.0" wrappingWidth="300" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text=" " AnchorPane.topAnchor="120.0" AnchorPane.leftAnchor="488.5"/>
+    <Text fx:id="result" layoutX="698.0" layoutY="235.0" wrappingWidth="800" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" styleClass="result-text" text=" " AnchorPane.topAnchor="120.0" AnchorPane.leftAnchor="138.5"/>
 
     <Button fx:id="submit" disable="true" layoutX="1312.0" layoutY="910.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="40.0" prefWidth="150.0" text="Submit" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0">
         <styleClass>
