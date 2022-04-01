@@ -232,6 +232,15 @@ public class MainCtrl {
                 // for testing purposes only
                 System.out.println("It works! Received a msg!");
                 break;
+            case LOCK_ANSWER:
+                // this message only comes in multiplayer mode
+                multiplayerScreenCtrl.lockUI();
+                break;
+            case UPDATE_TIMER:
+                    // this message only comes in multiplayer mode:
+                runLater(() -> {
+                    multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                });
             default:
                 // invalid msg type
         }

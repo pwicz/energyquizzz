@@ -42,6 +42,7 @@ public class MainMessageController {
     private final double timeToAnswer = 10.0;
     private final int scoreBase = 100;          // points for correct answer
     private final int scoreBonusPerSecond = 10; // extra points for every second left
+    private final int jokerTimeSplit = 2;
 
     public MainMessageController(SimpMessagingTemplate simpMessagingTemplate,
                                  ActivityController activityController, ScoreController scoreController) {
@@ -165,7 +166,12 @@ public class MainMessageController {
                             break;
                         case SPLIT_TIME:
                             // remake timers
+                            List<Player> otherPlayers = game.getPlayers();
+                            if(!otherPlayers.remove(player)) return; // player not in game
 
+                            long timeLeft = (int)(timeToAnswer * 1000)
+                                    - (System.currentTimeMillis() - game.getQuestionStartTime());
+                            changeTimerForSome(otherPlayers, timeLeft / jokerTimeSplit);
                             break;
                         case DOUBLE_POINTS:
                             // set the double score modifier
@@ -408,7 +414,10 @@ public class MainMessageController {
         // first reveal answers
         System.out.println("[msg] revealing answers to all players");
         for(var p : g.getPlayers()){
-            if(!p.hasAnswered()) p.setAnswer(-1L); // set incorrect ID so that 'you chose text' is not shown
+            if(!p.hasAnswered()) {
+                p.setHasAnswered(true);
+                p.setAnswer(-1L); // set incorrect ID so that 'you chose text' is not shown
+            }
             simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), displayAnswer(p, g));
         }
 
@@ -495,10 +504,17 @@ public class MainMessageController {
         }
     }
 
-    private void changeTimerForSome(List<Player> players, int newTimeMs){
+    private void changeTimerForSome(List<Player> players, long newTimeMs){
         UUID timerID = UUID.randomUUID();
 
-        for(var p : players) p.setTimerID(timerID);
+        for(var p : players) {
+            p.setTimerID(timerID);
+
+            ServerMessage msg = new ServerMessage(ServerMessage.Type.UPDATE_TIMER);
+            msg.timerFull = timeToAnswer; // 10 seconds
+            msg.timerFraction = (newTimeMs / 1000.0) / timeToAnswer;
+            simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), msg);
+        }
 
         new Timer().schedule(new TimerTask() {
             @Override
@@ -509,6 +525,7 @@ public class MainMessageController {
                         // timerIDs equal to timerID
                         if(!p.hasAnswered()){
                             // set player's answer to -1 (no answer)
+                            p.setHasAnswered(true);
                             p.setAnswer(-1L);
                             // send lock answer
                             ServerMessage msg = new ServerMessage(ServerMessage.Type.LOCK_ANSWER);

@@ -157,18 +157,21 @@ public class SingleplayerScreenCtrl {
 
     public void submitAnswer(){
         if(!canInteractWithUI || choice == null) return;
-        canInteractWithUI = false;
+        lockUI();
 
         if(timer != null){
             timer.stop();
         }
 
-        submit.setDisable(true);
-
         ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
         msg.chosenActivity = optionToID.get(choice);
         mainCtrl.getServer().send("/app/general", msg);
+    }
+
+    public void lockUI(){
+        canInteractWithUI = false;
+        submit.setDisable(true);
     }
 
     public void showAnswer(Long correctID, Long pickedID){

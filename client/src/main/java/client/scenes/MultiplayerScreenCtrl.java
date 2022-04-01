@@ -101,11 +101,11 @@ public class MultiplayerScreenCtrl {
     //submits answer, stops time,
     public void submitAnswer(){
         if(!canInteractWithUI || choice == null) return;
-        canInteractWithUI = false;
+        lockUI();
 
-        timer.stop();
-
-        submit.setDisable(true);
+        if(timer != null){
+            timer.stop();
+        }
 
         ClientMessage msg = new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
@@ -113,6 +113,11 @@ public class MultiplayerScreenCtrl {
 
 
         mainCtrl.getServer().send("/app/general", msg);
+    }
+
+    public void lockUI(){
+        canInteractWithUI = false;
+        submit.setDisable(true);
     }
 
     public void showAnswer(Long correctID, Long pickedID) {
@@ -151,7 +156,13 @@ public class MultiplayerScreenCtrl {
         System.out.println(event.getSource());
     }
 
-    public void lowerTime(){}
+    public void lowerTime(){
+        ClientMessage msg = new ClientMessage(ClientMessage.Type.USE_JOKER,
+                mainCtrl.getClientID(), mainCtrl.getGameID());
+        msg.joker = ClientMessage.Joker.SPLIT_TIME;
+
+        mainCtrl.getServer().send("/app/general", msg);
+    }
     /**
      * Sets visible timer to a desired value and starts decreasing it in the rate calculated using totalTime.
      *
@@ -164,7 +175,7 @@ public class MultiplayerScreenCtrl {
 
         timer = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(timeBar.progressProperty(), fractionLeft)),
-                new KeyFrame(Duration.seconds(totalTime), new KeyValue(timeBar.progressProperty(), 0.0))
+                new KeyFrame(Duration.seconds(totalTime * fractionLeft), new KeyValue(timeBar.progressProperty(), 0.0))
         );
         timer.play();
     }
