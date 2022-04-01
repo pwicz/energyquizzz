@@ -198,67 +198,95 @@ public class MainMessageController {
         return result;
     }
 
+    //CHECKSTYLE: OFF
     /**
      * Generates a question randomly out of the available types
      * @return new randomly generated question
      */
     private Question generateQuestion(){
+        //Chose number for random question type
         Random rand = new Random();
         int randomType = rand.nextInt(Question.Type.values().length);
-        if(randomType == 0){    //Type = Compare
+        //Type = Compare
+        if(randomType == 0){
+            //Get three activities from database
              List<Activity> selectedActivities =
                     List.of(Objects.requireNonNull(activityController.getRandom().getBody()),
                         activityController.getRandom().getBody(),
                         activityController.getRandom().getBody());
             return new Question(selectedActivities, Question.Type.COMPARE);
-        } else if(randomType == 1){   //Type = Guess
+            //Type = Guess
+        } else if(randomType == 1){
+            //Get random activity from database
             List<Activity> selectedActivity =  List.of(
                     Objects.requireNonNull(activityController.getRandom().getBody()));
+
+            //Get three possible options
             List<Integer> options = new ArrayList<>();
-            int correct = selectedActivity.get(0).consumptionInWh;
-            int randomAnswer01 = rand.nextInt(2 * correct);
-            int randomAnswer02 = rand.nextInt(2 * correct);
-            boolean different = false;
-            while(!different){
-                randomAnswer02 = rand.nextInt(2 * correct);
-                if(randomAnswer01 != randomAnswer02) different = true;
-            }
+            int correct = selectedActivity.get(0).consumptionInWh;    //Get correct answer
+            //Add options to list
             options.add(correct);
-            options.add(randomAnswer01);
-            options.add(randomAnswer02);
+            options.addAll(getOptions(correct));
             Collections.shuffle(options);
+
             return new Question(selectedActivity, Question.Type.GUESS, options);
-        } else if(randomType == 2){    //Type = How many times
+            //Type = How many times
+        } else if(randomType == 2) {
             List<Activity> selectedActivities = new ArrayList<>();
+            //Get 2 random activities
             selectedActivities.add(activityController.getRandom().getBody());
-            boolean found = false;
-            while(!found){
-                Activity selected = activityController.getRandom().getBody();
-                if(selected.consumptionInWh >= selectedActivities.get(0).consumptionInWh){
-                    selectedActivities.add(selected);
-                    found = true;
-                }
+            selectedActivities.add(activityController.getRandom().getBody());
+            //Check if activities are equal
+            while(selectedActivities.get(1).consumptionInWh <= selectedActivities.get(0).consumptionInWh){
+                selectedActivities.set(1, activityController.getRandom().getBody());
             }
+            //Get three options
             List<Integer> options = new ArrayList<>();
             int correct = selectedActivities.get(1).consumptionInWh / selectedActivities.get(0).consumptionInWh;
-            int randomAnswer01 = rand.nextInt(2 * correct);
-            int randomAnswer02 = rand.nextInt(2 * correct);
-            boolean different = false;
-            while(!different){
-                randomAnswer02 = rand.nextInt(2 * correct);
-                if(randomAnswer01 != randomAnswer02) different = true;
-            }
             options.add(correct);
-            options.add(randomAnswer01);
-            options.add(randomAnswer02);
+            options.addAll(getOptions(correct));
             Collections.shuffle(options);
+
             return new Question(selectedActivities, Question.Type.HOW_MANY_TIMES, options);
-        } else if(randomType == 3){    //Type = Estimation
+            //Type = Estimation
+        } else if(randomType == 3){
             List<Activity> selectedActivity = List.of(
                     Objects.requireNonNull(activityController.getRandom().getBody()));
             return new Question(selectedActivity, Question.Type.ESTIMATION);
         }
         return null;
+    }
+    //CHECKSTYLE: ON
+
+    /**
+     * Generates a random number in the appropriate bounds of a correct answer
+     * @param correct answer which determines bounds
+     * @return option given a correct answer
+     */
+    private int getRandomAnswer(int correct){
+        Random rand = new Random();
+        return (correct/2) + rand.nextInt((2 * correct) - (correct/2));
+    }
+
+    /**
+     * gets unique list of options given a correct answer
+     * @param correct answer for which to create options
+     * @return list with two possible options for a correct answer
+     */
+    private List<Integer> getOptions(int correct){
+        List<Integer> res = new ArrayList<>();
+        int randomAnswer01 = getRandomAnswer(correct);
+        int randomAnswer02 = getRandomAnswer(correct);
+        //Check if selected options are equal
+        while(randomAnswer01 == randomAnswer02 || randomAnswer01 == correct || randomAnswer02 == correct){
+            if(randomAnswer01 == correct) randomAnswer01 = getRandomAnswer(correct);
+            if(randomAnswer02 == correct || randomAnswer02 == randomAnswer01){
+                randomAnswer02 = getRandomAnswer(correct);
+            }
+        }
+        res.add(randomAnswer01);
+        res.add(randomAnswer02);
+        return res;
     }
 
     private ServerMessage singleplayerSendNewQuestion(int playerScore, Game forGame) {
