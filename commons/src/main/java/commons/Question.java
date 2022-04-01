@@ -1,13 +1,17 @@
 package commons;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Question {
     public List<Activity> activities;
     public Type type;
     public String title;
-    public List<Integer> options;
+    public List<Long> options;
+
+    private long correct;
+    private List<Long> incorrect;
 
     public enum Type{
         COMPARE,
@@ -25,8 +29,11 @@ public class Question {
         this.type = type;
         this.title = getTitleFromType(type);
 
-        if(type == Type.HOW_MANY_TIMES){
-            title += activities.get(0).title + " with the energy it takes to do this activity?";
+        //Get correct answer from guess type
+        if(type == Type.GUESS){
+            for(Activity a : activities){
+                if(a.consumptionInWh > this.correct) this.correct = a.consumptionInWh;
+            }
         }
     }
 
@@ -36,11 +43,20 @@ public class Question {
      * @param type question type (Guess)
      * @param options three values (only one correct)
      */
-    public Question(List<Activity> activities, Type type, List<Integer> options) {
+    public Question(List<Activity> activities, Type type, List<Long> options) {
         this.activities = activities;
         this.type = type;
         this.title = getTitleFromType(type);
+        if(type == Type.HOW_MANY_TIMES){
+            title += activities.get(0).title + " with the energy it takes to do this activity?";
+        }
+        this.correct = options.get(0);
         this.options = options;
+        //Add incorrect answer
+        this.incorrect = new ArrayList<>();
+        this.incorrect.add(options.get(1));
+        this.incorrect.add(options.get(2));
+        Collections.shuffle(this.options);
     }
 
     public String getTitleFromType(Type type){
@@ -71,11 +87,11 @@ public class Question {
         this.type = type;
     }
 
-    public List<Integer> getOptions(){
+    public List<Long> getOptions(){
         return this.options;
     }
 
-    public void setOptions(List<Integer> options){
+    public void setOptions(List<Long> options){
         this.options = options;
     }
 

@@ -17,7 +17,6 @@ import server.api.ActivityController;
 import server.api.ScoreController;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -222,12 +221,11 @@ public class MainMessageController {
                     Objects.requireNonNull(activityController.getRandom().getBody()));
 
             //Get three possible options
-            List<Integer> options = new ArrayList<>();
-            int correct = selectedActivity.get(0).consumptionInWh;    //Get correct answer
+            List<Long> options = new ArrayList<>();
+            long correct = selectedActivity.get(0).consumptionInWh;    //Get correct answer
             //Add options to list
             options.add(correct);
             options.addAll(getOptions(correct));
-            Collections.shuffle(options);
 
             return new Question(selectedActivity, Question.Type.GUESS, options);
             //Type = How many times
@@ -241,11 +239,10 @@ public class MainMessageController {
                 selectedActivities.set(1, activityController.getRandom().getBody());
             }
             //Get three options
-            List<Integer> options = new ArrayList<>();
-            int correct = selectedActivities.get(1).consumptionInWh / selectedActivities.get(0).consumptionInWh;
+            List<Long> options = new ArrayList<>();
+            long correct = selectedActivities.get(1).consumptionInWh / selectedActivities.get(0).consumptionInWh;
             options.add(correct);
             options.addAll(getOptions(correct));
-            Collections.shuffle(options);
 
             return new Question(selectedActivities, Question.Type.HOW_MANY_TIMES, options);
             //Type = Estimation
@@ -263,9 +260,9 @@ public class MainMessageController {
      * @param correct answer which determines bounds
      * @return option given a correct answer
      */
-    private int getRandomAnswer(int correct){
+    private long getRandomAnswer(long correct){
         Random rand = new Random();
-        return (correct/2) + rand.nextInt((2 * correct) - (correct/2));
+        return (correct/2) + rand.nextInt((int) ((2 * correct) - (correct/2)));
     }
 
     /**
@@ -273,10 +270,10 @@ public class MainMessageController {
      * @param correct answer for which to create options
      * @return list with two possible options for a correct answer
      */
-    private List<Integer> getOptions(int correct){
-        List<Integer> res = new ArrayList<>();
-        int randomAnswer01 = getRandomAnswer(correct);
-        int randomAnswer02 = getRandomAnswer(correct);
+    private List<Long> getOptions(long correct){
+        List<Long> res = new ArrayList<>();
+        long randomAnswer01 = getRandomAnswer(correct);
+        long randomAnswer02 = getRandomAnswer(correct);
         //Check if selected options are equal
         while(randomAnswer01 == randomAnswer02 || randomAnswer01 == correct || randomAnswer02 == correct){
             if(randomAnswer01 == correct) randomAnswer01 = getRandomAnswer(correct);
