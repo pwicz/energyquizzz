@@ -97,7 +97,7 @@ public class SingleplayerScreenCtrl {
         ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
 
-        mainCtrl.showLeave(mainCtrl.getSingleplayerScreen(), () -> mainCtrl.getServer().send("/app/general", msg));
+        mainCtrl.showLeave(mainCtrl::showSingleLeaderboardScreen, () -> mainCtrl.getServer().send("/app/general", msg));
     }
 
     public void lockAnswer(MouseEvent mouseEvent) {
@@ -131,7 +131,7 @@ public class SingleplayerScreenCtrl {
 
             optionToID.put(options.get(i), a.id);
 
-            titles.get(i).setText(Integer.toString(a.consumptionInWh));
+            titles.get(i).setText(Long.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
 
             images.get(i).setImage(new Image("http://localhost:8080/activities/" + a.imagePath));

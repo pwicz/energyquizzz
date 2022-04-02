@@ -35,6 +35,6 @@ public class InputNameScreenCtrl {
     }
 
     public void leave(){
-        mainCtrl.showLeave(mainCtrl.getInputName());
+        mainCtrl.showSplash();
     }
 }

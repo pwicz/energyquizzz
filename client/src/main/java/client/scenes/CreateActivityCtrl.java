@@ -63,7 +63,7 @@ public class CreateActivityCtrl {
 
     public void saveActivity() throws MalformedURLException {
         String title = titleField.getText();
-        int consumption = 0;
+        long consumption = 0;
         String source = sourceField.getText();
         String image = imageField.getText();
         boolean canBeSaved = true;
@@ -88,7 +88,7 @@ public class CreateActivityCtrl {
         }
 
         try {
-            consumption = Integer.parseInt(consumptionField.getText());
+            consumption = Long.parseLong(consumptionField.getText());
             if(consumption > 0){
                 consumptionErrorText.setVisible(false);
             }else{
@@ -118,7 +118,7 @@ public class CreateActivityCtrl {
     }
 
     public void leave(){
-        mainCtrl.showLeave(mainCtrl.getCreateActivity());
+        mainCtrl.showLeave(mainCtrl::showAdminPanel);
     }
 
 }

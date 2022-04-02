@@ -15,7 +15,7 @@
  */
 package client.scenes;
 
-import client.utils.BeforeLeave;
+import client.utils.OnLeaveAction;
 import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Activity;
@@ -142,6 +142,7 @@ public class MainCtrl {
         this.help = new Scene(help.getValue());
         this.helpCtrl = help.getKey();
 
+        primaryStage.setResizable(false);
 
         showSplash();
         primaryStage.show();
@@ -249,20 +250,19 @@ public class MainCtrl {
         primaryStage.setScene(inBetweenScore);
     }
 
-    public void showLeave(Scene scene){
+    public void showLeave(OnLeaveAction afterLeave){
+        leaveCtrl.setAfterLeave(afterLeave);
+
         this.stage = new Stage();
         this.stage.setScene(leave);
         this.stage.initModality(Modality.APPLICATION_MODAL);
         this.stage.showAndWait();
     }
 
-    public void showLeave(Scene scene, BeforeLeave beforeLeave){
-        this.stage = new Stage();
+    public void showLeave(OnLeaveAction afterLeave, OnLeaveAction beforeLeave){
         leaveCtrl.setBeforeLeave(beforeLeave);
 
-        this.stage.setScene(leave);
-        this.stage.initModality(Modality.APPLICATION_MODAL);
-        this.stage.showAndWait();
+        showLeave(afterLeave);
     }
 
     public void showInputServer(){
@@ -279,11 +279,6 @@ public class MainCtrl {
 
     public void closePopup() {
         this.stage.close();
-    }
-
-    public void showLeaveWaitingroom(Scene scene, BeforeLeave beforeLeave){
-        leaveCtrl.setBeforeLeave(beforeLeave);
-        showLeave(scene);
     }
 
     public void stayWaitingroom(Scene previous){
