@@ -60,6 +60,15 @@ public class MultiplayerScreenCtrl {
     ImageView image3;
 
     @FXML
+    ImageView cutAnswer;
+
+    @FXML
+    ImageView doublePoints;
+
+    @FXML
+    ImageView splitTime;
+
+    @FXML
     Label title1;
 
     @FXML
@@ -154,6 +163,9 @@ public class MultiplayerScreenCtrl {
         msg.joker = ClientMessage.Joker.CUT_ANSWER;
 
         mainCtrl.getServer().send("/app/general", msg);
+
+        cutAnswer.setDisable(true);
+        cutAnswer.setStyle("visibility: hidden;");
     }
 
     // doubles your points for this round
@@ -163,6 +175,9 @@ public class MultiplayerScreenCtrl {
         msg.joker = ClientMessage.Joker.DOUBLE_POINTS;
 
         mainCtrl.getServer().send("/app/general", msg);
+
+        doublePoints.setDisable(true);
+        doublePoints.setStyle("visibility: hidden;");
     }
 
     // halves time of your opponents
@@ -172,6 +187,9 @@ public class MultiplayerScreenCtrl {
         msg.joker = ClientMessage.Joker.SPLIT_TIME;
 
         mainCtrl.getServer().send("/app/general", msg);
+
+        splitTime.setDisable(true);
+        splitTime.setStyle("visibility: hidden;");
     }
     /**
      * Sets visible timer to a desired value and starts decreasing it in the rate calculated using totalTime.
