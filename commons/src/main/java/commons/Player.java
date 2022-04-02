@@ -1,5 +1,6 @@
 package commons;
 
+import java.util.Timer;
 import java.util.UUID;
 
 public class Player {
@@ -11,6 +12,9 @@ public class Player {
     private int scoreModifier = 1;
     private long answer;
     private boolean answerStatus = false;
+    private long timePenaltyMs = 0;
+
+    private Timer lockAnswerTimer;
 
     private UUID timerID;
 
@@ -81,5 +85,21 @@ public class Player {
 
     public void setTimerID(UUID timerID) {
         this.timerID = timerID;
+    }
+
+    public long getTimePenalty() {
+        return timePenaltyMs;
+    }
+
+    public void setTimePenalty(long timePenalty) {
+        this.timePenaltyMs = timePenalty;
+    }
+
+    public Timer getLockAnswerTimer() {
+        return lockAnswerTimer;
+    }
+
+    public void setLockAnswerTimer(Timer lockAnswerTimer) {
+        this.lockAnswerTimer = lockAnswerTimer;
     }
 }

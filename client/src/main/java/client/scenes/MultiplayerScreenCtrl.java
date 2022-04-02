@@ -171,8 +171,12 @@ public class MultiplayerScreenCtrl {
      * @param totalTime time that the full timer corresponds to
      */
     public void setTimer(double fractionLeft, double totalTime){
+        System.out.println("Set timer");
+
         // by default, our timer is 10.0s long
         if(totalTime <= 0.0) totalTime = 10.0;
+
+        if(timer != null) timer.stop();
 
         timer = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(timeBar.progressProperty(), fractionLeft)),

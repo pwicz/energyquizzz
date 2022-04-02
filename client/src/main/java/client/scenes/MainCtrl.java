@@ -228,13 +228,16 @@ public class MainCtrl {
                 break;
             case END:
                 runLater(this::showSingleLeaderboardScreen);
+                break;
             case TEST:
                 // for testing purposes only
                 System.out.println("It works! Received a msg!");
                 break;
             case LOCK_ANSWER:
                 // this message only comes in multiplayer mode
-                multiplayerScreenCtrl.lockUI();
+                runLater(() -> {
+                    multiplayerScreenCtrl.lockUI();
+                });
                 break;
             case UPDATE_TIMER:
                     // this message only comes in multiplayer mode:

@@ -17,15 +17,15 @@ import server.api.ActivityController;
 import server.api.ScoreController;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
-
-import java.util.Comparator;
 import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/")
 public class MainMessageController {
@@ -108,12 +108,7 @@ public class MainMessageController {
                     processAnswer(msg, player, game);
 
                     System.out.println("[msg] submit answer");
-                    if(game.getPlayersAnswered() == game.getPlayers().size()){
-                        // all players have answered
-                        game.questionEndAction.cancel();
-                        multiplayerShowAnswersProcedure(game);
-                        System.out.println("[msg] all players submitted!");
-                    }
+                    checkIfEveryoneAnswered(game);
                     break;
                 case TEST:
                     // for testing purposes
@@ -166,12 +161,10 @@ public class MainMessageController {
                             break;
                         case SPLIT_TIME:
                             // remake timers
-                            List<Player> otherPlayers = game.getPlayers();
+                            List<Player> otherPlayers = new ArrayList<>(game.getPlayers());
                             if(!otherPlayers.remove(player)) return; // player not in game
 
-                            long timeLeft = (int)(timeToAnswer * 1000)
-                                    - (System.currentTimeMillis() - game.getQuestionStartTime());
-                            changeTimerForSome(otherPlayers, timeLeft / jokerTimeSplit);
+                            changeTimerForSome(game, otherPlayers);
                             break;
                         case DOUBLE_POINTS:
                             // set the double score modifier
@@ -190,24 +183,35 @@ public class MainMessageController {
             System.out.println("MessagingException on handleClientMessages: " + ex.getMessage());
         }
     }
+
+    private void checkIfEveryoneAnswered(Game game) {
+        if(game.getPlayersAnswered() == game.getPlayers().size()){
+            // all players have answered
+            game.questionEndAction.cancel();
+            multiplayerShowAnswersProcedure(game);
+            System.out.println("[msg] all players submitted!");
+        }
+    }
     //CHECKSTYLE:ON
 
-        public void processAnswer(ClientMessage msg, Player p, Game g) {
-            g.setPlayersAnswered(g.getPlayersAnswered() + 1);
+    public void processAnswer(ClientMessage msg, Player p, Game g) {
+        g.setPlayersAnswered(g.getPlayersAnswered() + 1);
 
-            int scoreForQuestion = 0;
-            if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
-                double answerTime = timeToAnswer - (System.currentTimeMillis() - g.getQuestionStartTime()) / 1000.0;
-                scoreForQuestion = scoreBase + (int) (scoreBonusPerSecond * answerTime);
-                scoreForQuestion *= p.getScoreModifier();
-                p.setAnswerStatus(true);
-            }
-            p.setScore(p.getScore() + scoreForQuestion);
-            p.setHasAnswered(true);
-            p.setAnswer(msg.chosenActivity);
+        int scoreForQuestion = 0;
+        if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
+            double answerTime = timeToAnswer - (System.currentTimeMillis() - g.getQuestionStartTime()) / 1000.0;
+            scoreForQuestion = scoreBase + (int) (scoreBonusPerSecond * answerTime);
+            scoreForQuestion *= p.getScoreModifier();
+            p.setAnswerStatus(true);
         }
+        p.setScore(p.getScore() + scoreForQuestion);
+        p.setHasAnswered(true);
+        p.setAnswer(msg.chosenActivity);
 
-        private ServerMessage initSingleplayerGame(ClientMessage msg) {
+        if(p.getLockAnswerTimer() != null) p.getLockAnswerTimer().cancel();
+    }
+
+    private ServerMessage initSingleplayerGame(ClientMessage msg) {
         // 0. Check if player name is correct
         if (msg.playerName == null || msg.playerName.isEmpty()) {
             // TODO: send error message
@@ -499,42 +503,49 @@ public class MainMessageController {
         for(var p : g.getPlayers()){
             p.setHasAnswered(false);
             p.setAnswerStatus(false);
+            p.setTimePenalty(0);
+
             result.score = p.getScore();
             simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
         }
     }
 
-    private void changeTimerForSome(List<Player> players, long newTimeMs){
-        UUID timerID = UUID.randomUUID();
-
+    private void changeTimerForSome(Game g, List<Player> players){
         for(var p : players) {
-            p.setTimerID(timerID);
+            // don't update timers of those who has already answered
+            if(p.hasAnswered()) continue;
+
+            long timeLeftMs = (int)(timeToAnswer * 1000)
+                    - (System.currentTimeMillis() - g.getQuestionStartTime() + p.getTimePenalty());
+
+            long newTimeMs = timeLeftMs / jokerTimeSplit;
+            p.setTimePenalty(p.getTimePenalty() + newTimeMs);
 
             ServerMessage msg = new ServerMessage(ServerMessage.Type.UPDATE_TIMER);
             msg.timerFull = timeToAnswer; // 10 seconds
             msg.timerFraction = (newTimeMs / 1000.0) / timeToAnswer;
-            simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), msg);
-        }
 
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                for(var p : players) {
-                    if(Objects.equals(p.getTimerID(), timerID)){
-                        // send lock answer message to players with
-                        // timerIDs equal to timerID
-                        if(!p.hasAnswered()){
-                            // set player's answer to -1 (no answer)
-                            p.setHasAnswered(true);
-                            p.setAnswer(-1L);
-                            // send lock answer
-                            ServerMessage msg = new ServerMessage(ServerMessage.Type.LOCK_ANSWER);
-                            simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), msg);
-                        }
+            simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), msg);
+
+            if(p.getLockAnswerTimer() != null) p.getLockAnswerTimer().cancel();
+            p.setLockAnswerTimer(new Timer());
+            p.getLockAnswerTimer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+
+                    if(!p.hasAnswered()){
+                        // set player's answer to -1 (no answer)
+                        p.setHasAnswered(true);
+                        p.setAnswer(-1L);
+                        g.setPlayersAnswered(g.getPlayersAnswered() + 1);
+                        // send lock answer
+                        ServerMessage msg = new ServerMessage(ServerMessage.Type.LOCK_ANSWER);
+                        simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), msg);
+
+                        checkIfEveryoneAnswered(g);
                     }
                 }
-
-            }
-        }, newTimeMs);
+            }, newTimeMs);
+        }
     }
 }
