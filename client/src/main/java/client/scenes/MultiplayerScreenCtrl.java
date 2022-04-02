@@ -147,16 +147,25 @@ public class MultiplayerScreenCtrl {
         System.out.println(event.getSource());
     }
 
-    //removes oneanswer
+    // removes one incorrect answer
     public void cutAnswer(MouseEvent event){
-        System.out.println(event.getSource());
+        ClientMessage msg = new ClientMessage(ClientMessage.Type.USE_JOKER,
+                mainCtrl.getClientID(), mainCtrl.getGameID());
+        msg.joker = ClientMessage.Joker.CUT_ANSWER;
+
+        mainCtrl.getServer().send("/app/general", msg);
     }
 
-    //doubles your points for this round
+    // doubles your points for this round
     public void doublePoints(MouseEvent event){
-        System.out.println(event.getSource());
+        ClientMessage msg = new ClientMessage(ClientMessage.Type.USE_JOKER,
+                mainCtrl.getClientID(), mainCtrl.getGameID());
+        msg.joker = ClientMessage.Joker.DOUBLE_POINTS;
+
+        mainCtrl.getServer().send("/app/general", msg);
     }
 
+    // halves time of your opponents
     public void lowerTime(){
         ClientMessage msg = new ClientMessage(ClientMessage.Type.USE_JOKER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());

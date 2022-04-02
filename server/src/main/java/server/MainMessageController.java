@@ -155,9 +155,14 @@ public class MainMessageController {
 
                     switch(msg.joker){
                         case CUT_ANSWER:
+                            // this joker has no effect for GUESS question
                             if(game.getCurrentQuestion().type == Question.Type.GUESS) break;
 
                             // send back the id of one of the incorrect answers
+                            ServerMessage response = new ServerMessage(ServerMessage.Type.REMOVE_ANSWER);
+                            // TODO: set the incorrect answer in the response
+
+                            simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, response);
                             break;
                         case SPLIT_TIME:
                             // remake timers
@@ -505,6 +510,7 @@ public class MainMessageController {
             p.setHasAnswered(false);
             p.setAnswerStatus(false);
             p.setTimePenalty(0);
+            p.setScoreModifier(1);
 
             result.score = p.getScore();
             simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
