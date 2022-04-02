@@ -9,24 +9,23 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.EndGameScreenCtrl">
 
-   <Label alignment="CENTER" layoutY="103.0" prefHeight="131.0" prefWidth="1513.0" styleClass="title" text="Score" AnchorPane.bottomAnchor="748.0" />
-
-   <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="32.0">
+   <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="redButton" />
          <String fx:value="bigButton" />
       </styleClass>
    </Button>
-   <ListView fx:id="leaderboardSingle" layoutX="415.0" layoutY="234.0" prefHeight="445.0" prefWidth="683.0" styleClass="gradientBox" />
-   <Label fx:id="yourPlace" alignment="CENTER" contentDisplay="CENTER" layoutX="415.0" layoutY="753.0" prefHeight="53.0" prefWidth="683.0" styleClass="your-stats" textAlignment="CENTER" textFill="WHITE" />
-   <Button fx:id="nextGame" layoutX="1312.0" layoutY="910.0" mnemonicParsing="false" onAction="#showWaitingRoom" prefHeight="40.0" prefWidth="150.0" text="Next Game" AnchorPane.bottomAnchor="32.0">
+   <ListView fx:id="leaderboardSingle" layoutX="292.0" layoutY="181.0" prefHeight="328.0" prefWidth="495.0" styleClass="gradientBox" AnchorPane.leftAnchor="292.0" AnchorPane.topAnchor="181.0" />
+   <Label fx:id="yourPlace" alignment="CENTER" contentDisplay="CENTER" layoutX="290.0" layoutY="540.0" prefHeight="53.0" prefWidth="498.0" styleClass="your-stats" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="290.0" AnchorPane.topAnchor="540.0" />
+   <Button fx:id="nextGame" layoutX="1312.0" layoutY="910.0" mnemonicParsing="false" onAction="#showWaitingRoom" prefHeight="40.0" prefWidth="150.0" text="Next Game" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0">
       <styleClass>
          <String fx:value="greenButton" />
          <String fx:value="bigButton" />
       </styleClass>
    </Button>
-   <Label fx:id="yourScore" alignment="CENTER" contentDisplay="CENTER" layoutX="474.0" layoutY="834.0" prefHeight="53.0" prefWidth="566.0" styleClass="your-stats" textAlignment="CENTER" textFill="WHITE" />
+   <Label fx:id="yourScore" alignment="CENTER" contentDisplay="CENTER" layoutX="346.0" layoutY="610.0" prefHeight="53.0" prefWidth="385.0" styleClass="your-stats" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="346.0" AnchorPane.topAnchor="610.0" />
+   <Label alignment="CENTER" layoutX="10.0" layoutY="113.0" prefHeight="131.0" prefWidth="734.0" styleClass="title" text="Score" AnchorPane.leftAnchor="171.5" AnchorPane.topAnchor="50.0" />
    <stylesheets>
       <URL value="@/client/scenes/styles/styles.css" />
       <URL value="@/client/scenes/styles/EndScreen.css" />
