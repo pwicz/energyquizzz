@@ -28,6 +28,7 @@ import java.util.Objects;
 public class MultiplayerScreenCtrl {
 
     private final MainCtrl mainCtrl;
+    public Text description;
     private Rectangle choice;
     private HashMap<Rectangle, Long> optionToID;
     private boolean canInteractWithUI;
@@ -185,7 +186,7 @@ public class MultiplayerScreenCtrl {
             if(a == null) continue;
             optionToID.put(options.get(i), a.id);
             
-            titles.get(i).setText(Integer.toString(a.consumptionInWh));
+            titles.get(i).setText(Long.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
 
             images.get(i).setImage(new Image("http://localhost:8080/activities/" + a.imagePath));

@@ -1,6 +1,13 @@
 .background{
     -fx-background-color: #272727;
     -fx-font-family: "Roboto";
+    -fx-pref-height: 700;
+    -fx-pref-width: 1077;
+}
+
+.backgroundSmall{
+    -fx-background-color: #272727;
+    -fx-font-family: "Roboto";
 }
 
 .button{
@@ -39,12 +46,12 @@
 }
 
 .hugeButton{
-    -fx-font-size: 36.0 px;
+    -fx-font-size: 30.0 px;
 }
 
 .title{
     -fx-font-family: 'Roboto Thin';
-    -fx-font-size: 100;
+    -fx-font-size: 80;
     -fx-text-fill: linear-gradient(to left, #1BED62, #21A0E8);
 }
 
