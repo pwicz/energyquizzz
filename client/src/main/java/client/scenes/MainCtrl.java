@@ -77,8 +77,6 @@ public class MainCtrl {
 
     private Stage stage = new Stage();
 
-    private String name = null;
-
 
     @Inject
     public MainCtrl(ServerUtils server) {
@@ -420,10 +418,6 @@ public class MainCtrl {
 
     public Stage getPrimaryStage() {
         return primaryStage;
-    }
-
-    public void setName(String name){
-        this.name = name;
     }
 
     /**
