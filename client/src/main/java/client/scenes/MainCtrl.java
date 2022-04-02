@@ -244,6 +244,12 @@ public class MainCtrl {
                 runLater(() -> {
                     multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
                 });
+                break;
+            case JOKER_USED:
+                runLater(() -> {
+                    multiplayerScreenCtrl.insertJokerNotification(msg.jokerUsedBy, msg.jokerType);
+                });
+                break;
             default:
                 // invalid msg type
         }

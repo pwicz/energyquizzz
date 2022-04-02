@@ -14,11 +14,8 @@ public class ServerMessage {
     public Type type;
     // add more fields as we start exchanging messages
 
-    public enum Joker{
-        CUT_ANSWER, SPLIT_TIME, DOUBLE_POINTS
-    }
-    Joker jokerType;
-    String jokerUsedBy;
+    public ClientMessage.Joker jokerType;
+    public String jokerUsedBy;
 
     public Question question;
     public int score;

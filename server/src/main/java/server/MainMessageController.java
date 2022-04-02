@@ -158,12 +158,15 @@ public class MainMessageController {
 
                     switch(msg.joker){
                         case CUT_ANSWER:
+                            System.out.println("CUT ANSWER RECEIVED");
                             if(player.isUsedCutAnswer()) return;
                             else player.setUsedCutAnswer(true);
 
+                            // TODO: implement this check
                             // this joker has no effect for GUESS question
-                            if(game.getCurrentQuestion().type == Question.Type.GUESS) break;
+//                            if(game.getCurrentQuestion().type == Question.Type.GUESS) return;
 
+                            System.out.println("CUT ANSWER FORWARD");
                             // send back the id of one of the incorrect answers
                             ServerMessage response = new ServerMessage(ServerMessage.Type.REMOVE_ANSWER);
                             // TODO: set the incorrect answer in the response
@@ -192,6 +195,10 @@ public class MainMessageController {
                     }
 
                     // send used joker information to other players
+                    ServerMessage jokerUsedNotification = new ServerMessage(ServerMessage.Type.JOKER_USED);
+                    jokerUsedNotification.jokerType = msg.joker;
+                    jokerUsedNotification.jokerUsedBy = player.getName();
+                    sendMessageToAllPlayers(jokerUsedNotification, game);
                     break;
                 default:
                     // unknown message

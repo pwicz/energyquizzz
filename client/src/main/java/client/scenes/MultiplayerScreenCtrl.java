@@ -7,6 +7,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,6 +17,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -25,6 +28,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static javafx.application.Platform.runLater;
 
 public class MultiplayerScreenCtrl {
 
@@ -95,6 +100,9 @@ public class MultiplayerScreenCtrl {
 
     @FXML
     Label headTitle;
+
+    @FXML
+    GridPane jokerMessages;
 
     @Inject
     public MultiplayerScreenCtrl(MainCtrl mainCtrl) {
@@ -295,5 +303,45 @@ public class MultiplayerScreenCtrl {
         if(keyEvent.getCode().equals(KeyCode.L)){ //later should replace L with ENTER
             submitAnswer();
         }
+    }
+
+    public void insertJokerNotification(String playerName, ClientMessage.Joker jokerType){
+        String jokerNotificationText = playerName + " has done something weird!";
+        switch(jokerType){
+            case CUT_ANSWER:
+                jokerNotificationText = playerName + " has removed one of their incorrect answers!";
+                break;
+            case SPLIT_TIME:
+                jokerNotificationText = playerName + " has split all of their opponents time!";
+                break;
+            case DOUBLE_POINTS:
+                jokerNotificationText = playerName + " has doubled their points!";
+                break;
+            default:
+                // bad joker type
+        }
+
+        // use it to avoid height problems
+        RowConstraints con = new RowConstraints();
+        con.setPrefHeight(30);
+        jokerMessages.getRowConstraints().add(con);
+
+        // construct text
+        var textTest = new Text(jokerNotificationText);
+        textTest.getStyleClass().add("joker-notification");
+        textTest.maxWidth(jokerMessages.getMaxWidth());
+
+        jokerMessages.addRow(jokerMessages.getRowCount(), textTest);
+        GridPane.setHalignment(textTest, HPos.RIGHT);
+
+        // remove notification after 3 seconds
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runLater(() -> {
+                    jokerMessages.getChildren().remove(textTest);
+                });
+            }
+        }, 3000);
     }
 }
