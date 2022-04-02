@@ -155,6 +155,9 @@ public class MainMessageController {
 
                     switch(msg.joker){
                         case CUT_ANSWER:
+                            if(player.isUsedCutAnswer()) return;
+                            else player.setUsedCutAnswer(true);
+
                             // this joker has no effect for GUESS question
                             if(game.getCurrentQuestion().type == Question.Type.GUESS) break;
 
@@ -165,6 +168,9 @@ public class MainMessageController {
                             simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, response);
                             break;
                         case SPLIT_TIME:
+                            if(player.isUsedSplitTime()) return;
+                            else player.setUsedSplitTime(true);
+
                             // remake timers
                             List<Player> otherPlayers = new ArrayList<>(game.getPlayers());
                             if(!otherPlayers.remove(player)) return; // player not in game
@@ -172,11 +178,14 @@ public class MainMessageController {
                             changeTimerForSome(game, otherPlayers);
                             break;
                         case DOUBLE_POINTS:
+                            if(player.isUsedDoublePoints()) return;
+                            else player.setUsedDoublePoints(true);
+
                             // set the double score modifier
                             player.setScoreModifier(player.getScoreModifier() * 2);
                             break;
                         default:
-                            // invalid joker
+                            return;
                     }
 
                     // send used joker information to other players

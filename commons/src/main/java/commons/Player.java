@@ -13,10 +13,13 @@ public class Player {
     private long answer;
     private boolean answerStatus = false;
     private long timePenaltyMs = 0;
-
     private Timer lockAnswerTimer;
-
     private UUID timerID;
+
+    // jokers
+    private boolean usedSplitTime = false;
+    private boolean usedDoublePoints = false;
+    private boolean usedCutAnswer = false;
 
     public Player(String name, String ID) {
         this.name = name;
@@ -101,5 +104,29 @@ public class Player {
 
     public void setLockAnswerTimer(Timer lockAnswerTimer) {
         this.lockAnswerTimer = lockAnswerTimer;
+    }
+
+    public boolean isUsedSplitTime() {
+        return usedSplitTime;
+    }
+
+    public void setUsedSplitTime(boolean usedSplitTime) {
+        this.usedSplitTime = usedSplitTime;
+    }
+
+    public boolean isUsedDoublePoints() {
+        return usedDoublePoints;
+    }
+
+    public void setUsedDoublePoints(boolean usedDoublePoints) {
+        this.usedDoublePoints = usedDoublePoints;
+    }
+
+    public boolean isUsedCutAnswer() {
+        return usedCutAnswer;
+    }
+
+    public void setUsedCutAnswer(boolean usedCutAnswer) {
+        this.usedCutAnswer = usedCutAnswer;
     }
 }
