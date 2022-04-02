@@ -161,7 +161,7 @@ public class MainCtrl {
                 });
                 break;
             case NEW_MULTIPLAYER_GAME:
-                // do something
+                multiplayerScreenCtrl.showJokers();
                 break;
             case NEW_SINGLEPLAYER_GAME:
                 gameID = msg.gameID;

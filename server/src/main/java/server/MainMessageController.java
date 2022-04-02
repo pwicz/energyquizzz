@@ -100,6 +100,9 @@ public class MainMessageController {
                     waitingRoom = new Game(new ArrayList<>(), UUID.randomUUID().toString());
 
                     System.out.println("[msg] init question");
+                    ServerMessage multiplayerStarts = new ServerMessage(ServerMessage.Type.NEW_MULTIPLAYER_GAME);
+                    sendMessageToAllPlayers(multiplayerStarts, game);
+
                     multiplayerSendNewQuestions(game);
                     break;
                 case SUBMIT_ANSWER:

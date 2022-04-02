@@ -23,7 +23,8 @@ import javafx.util.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MultiplayerScreenCtrl {
 
@@ -198,8 +199,6 @@ public class MultiplayerScreenCtrl {
      * @param totalTime time that the full timer corresponds to
      */
     public void setTimer(double fractionLeft, double totalTime){
-        System.out.println("Set timer");
-
         // by default, our timer is 10.0s long
         if(totalTime <= 0.0) totalTime = 10.0;
 
@@ -210,6 +209,18 @@ public class MultiplayerScreenCtrl {
                 new KeyFrame(Duration.seconds(totalTime * fractionLeft), new KeyValue(timeBar.progressProperty(), 0.0))
         );
         timer.play();
+
+        if(fractionLeft < 1.0){
+            // show red pulse
+            timeBar.setStyle("-fx-accent: #e0503d;");
+
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    timeBar.setStyle("-fx-accent: #21A0E8;");
+                }
+            }, 100);
+        }
     }
 
     public void displayActivities(List<Activity> activities){
@@ -245,6 +256,15 @@ public class MultiplayerScreenCtrl {
         choice = null;
         picked.setStyle("visibility: hidden");
 
+    }
+
+    public void showJokers(){
+        cutAnswer.setDisable(false);
+        cutAnswer.setStyle("visibility: visible;");
+        splitTime.setDisable(false);
+        splitTime.setStyle("visibility: visible;");
+        doublePoints.setDisable(false);
+        doublePoints.setStyle("visibility: visible;");
     }
 
     public void lockAnswer(MouseEvent mouseEvent) {

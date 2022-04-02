@@ -8,11 +8,17 @@ public class ServerMessage {
     public enum Type{
         NEW_SINGLEPLAYER_GAME, NEW_MULTIPLAYER_GAME, TEST, NEXT_QUESTION, RESULT, END,
         LOAD_NEW_QUESTIONS, DISPLAY_ANSWER, DISPLAY_INBETWEENSCORES, END_GAME, INIT_PLAYER,
-        EXTRA_PLAYER, PING, LOCK_ANSWER, UPDATE_TIMER, REMOVE_ANSWER
+        EXTRA_PLAYER, PING, LOCK_ANSWER, UPDATE_TIMER, REMOVE_ANSWER, JOKER_USED
     }
 
     public Type type;
     // add more fields as we start exchanging messages
+
+    public enum Joker{
+        CUT_ANSWER, SPLIT_TIME, DOUBLE_POINTS
+    }
+    Joker jokerType;
+    String jokerUsedBy;
 
     public Question question;
     public int score;
