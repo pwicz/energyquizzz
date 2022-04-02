@@ -234,7 +234,7 @@ public class MultiplayerScreenCtrl {
     public void displayActivities(List<Activity> activities){
         // for convenience
 
-       resetUI();
+        resetUI();
 
         List<Rectangle> options = List.of(option1, option2, option3);
         List<Label> titles = List.of(title1, title2, title3);
@@ -252,18 +252,19 @@ public class MultiplayerScreenCtrl {
 
             images.get(i).setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
         }
+
+        for(var rect : optionToID.keySet()) {
+            rect.setStyle("-fx-stroke: #fff");
+            rect.setDisable(false);
+        }
     }
 
     public void resetUI(){
         canInteractWithUI = true;
 
-        option1.setStyle("-fx-stroke: #fff");
-        option2.setStyle("-fx-stroke: #fff");
-        option3.setStyle("-fx-stroke: #fff");
         optionToID = new HashMap<>();
         choice = null;
         picked.setStyle("visibility: hidden");
-
     }
 
     public void showJokers(){
@@ -278,16 +279,34 @@ public class MultiplayerScreenCtrl {
     public void lockAnswer(MouseEvent mouseEvent) {
         if(!canInteractWithUI) return;
 
-        option1.setStyle("-fx-border-color: white");
-        option2.setStyle("-fx-border-color: white");
-        option3.setStyle("-fx-border-color: white");
+        for(var rect : optionToID.keySet()) rect.setStyle("-fx-border-color: white");
+
         Rectangle rectangle = (Rectangle) mouseEvent.getSource();
+
+        if(!optionToID.containsKey(rectangle)) return;
+
         rectangle.setStyle("-fx-stroke: linear-gradient(#38c768, #21A0E8)");
         submit.setDisable(false);
         submit.setCursor(Cursor.HAND);
 
         choice = rectangle;
 
+    }
+
+    public void disableAnswer(long optionID){
+
+        Rectangle target = null;
+
+        for(var entry : optionToID.entrySet()){
+            if(Objects.equals(entry.getValue(), optionID))
+                target = entry.getKey();
+        }
+
+        if(target == null) return;
+
+        optionToID.remove(target);
+        target.setStyle("-fx-stroke: #e0503d");
+        target.setDisable(true);
     }
 
     public void updateTitle(int question){

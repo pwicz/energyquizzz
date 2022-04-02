@@ -240,9 +240,15 @@ public class MainCtrl {
                 });
                 break;
             case UPDATE_TIMER:
-                    // this message only comes in multiplayer mode:
+                // this message only comes in multiplayer mode:
                 runLater(() -> {
                     multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                });
+                break;
+            case REMOVE_ANSWER:
+                runLater(() -> {
+                    // TODO: insert wrong answer ID from the message
+                    multiplayerScreenCtrl.disableAnswer(124L);
                 });
                 break;
             case JOKER_USED:
