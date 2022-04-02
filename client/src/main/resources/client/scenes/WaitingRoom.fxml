@@ -5,29 +5,29 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WaitingRoomScreenCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WaitingRoomScreenCtrl">
 
-    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="389.0" layoutY="107.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="Waiting Room" AnchorPane.bottomAnchor="742.0">
+    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="389.0" layoutY="107.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="Waiting Room" AnchorPane.topAnchor="50.0" AnchorPane.leftAnchor="171.5">
     </Label>
 
-    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="391.0" layoutY="267.0" prefHeight="25.0" prefWidth="734.0" styleClass="description" text="Start the game or wait for other players to join" AnchorPane.bottomAnchor="673.0">
+    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="391.0" layoutY="267.0" prefHeight="25.0" prefWidth="734.0" styleClass="description" text="Start the game or wait for other players to join" AnchorPane.topAnchor="160.0" AnchorPane.leftAnchor="171.5">
     </Label>
 
-    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="325.0" prefHeight="25.0" prefWidth="734.0" styleClass="smallTitle" text="Players waiting:" AnchorPane.bottomAnchor="612.0">
+    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="325.0" prefHeight="25.0" prefWidth="734.0" styleClass="smallTitle" text="Players waiting:" AnchorPane.topAnchor="210.0" AnchorPane.leftAnchor="-200">
     </Label>
 
-    <ListView fx:id="playerList" layoutX="510.0" layoutY="401.0" prefHeight="335.0" prefWidth="495.0" styleClass="waitingBox" AnchorPane.bottomAnchor="246.0">
+    <ListView fx:id="playerList" layoutX="510.0" layoutY="401.0" prefHeight="335.0" prefWidth="495.0" styleClass="waitingBox" AnchorPane.topAnchor="220.0" AnchorPane.leftAnchor="291">
     </ListView>
 
-    <Button fx:id="start" layoutX="643.0" layoutY="772.0" mnemonicParsing="false" onMouseClicked="#start" prefHeight="63.0" prefWidth="226.0" text="Start" AnchorPane.bottomAnchor="134.0">
+    <Button fx:id="start" layoutX="643.0" layoutY="751.0" mnemonicParsing="false" onMouseClicked="#start" prefHeight="40.0" prefWidth="150.0" text="Start" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="463.5">
         <styleClass>
             <String fx:value="button" />
             <String fx:value="greenButton" />
-            <String fx:value="hugeButton" />
+            <String fx:value="bigButton" />
         </styleClass>
     </Button>
 
-    <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="32.0">
+    <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0">
         <styleClass>
             <String fx:value="button" />
             <String fx:value="redButton" />

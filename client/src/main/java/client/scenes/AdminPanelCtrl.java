@@ -32,7 +32,7 @@ public class AdminPanelCtrl {
     }
 
     public void leave(){
-        mainCtrl.showLeave(mainCtrl.getAdminPanel());
+        mainCtrl.showSplash();
     }
 
     /**

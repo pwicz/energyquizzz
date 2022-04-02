@@ -5,25 +5,25 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.InBetweenScoreCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"  prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.InBetweenScoreCtrl">
 
-   <Label alignment="CENTER" layoutY="103.0" prefHeight="131.0" prefWidth="1513.0" styleClass="title" text="Score" AnchorPane.bottomAnchor="748.0" />
+   <Label alignment="CENTER" layoutY="103.0" prefHeight="131.0" prefWidth="734.0" styleClass="title" text="Score" AnchorPane.topAnchor="50.0" AnchorPane.leftAnchor="171.5" />
 
    <Label alignment="CENTER" layoutX="95.0" layoutY="267.0" prefHeight="17.0" prefWidth="304.0" styleClass="wrong-right-text" text="Picked the wrong answer:" AnchorPane.bottomAnchor="698.0" />
    <Label alignment="CENTER" layoutX="1138.0" layoutY="267.0" prefHeight="17.0" prefWidth="304.0" styleClass="wrong-right-text" text="Picked the correct answer:" AnchorPane.bottomAnchor="698.0" />
 
-   <ListView fx:id="leaderboardSingle" layoutX="508.0" layoutY="301.0" prefHeight="328.0" prefWidth="495.0" styleClass="gradientBox" AnchorPane.bottomAnchor="353.0" />
-   <ListView fx:id="leaderboardR" layoutX="95.0" layoutY="301.0" prefHeight="328.0" prefWidth="304.0" styleClass="redBox" AnchorPane.bottomAnchor="353.0" />
-   <ListView fx:id="leaderboardG" layoutX="1138.0" layoutY="301.0" prefHeight="328.0" prefWidth="304.0" styleClass="greenBox" AnchorPane.bottomAnchor="353.0" />
+   <ListView fx:id="leaderboardSingle" layoutX="508.0" layoutY="301.0" prefHeight="328.0" prefWidth="495.0" styleClass="gradientBox" AnchorPane.topAnchor="180.0" AnchorPane.leftAnchor="291" />
+   <ListView fx:id="leaderboardR" layoutX="95.0" layoutY="301.0" prefHeight="328.0" prefWidth="250.0" styleClass="redBox" AnchorPane.topAnchor="180.0" AnchorPane.leftAnchor="30"/>
+   <ListView fx:id="leaderboardG" layoutX="1138.0" layoutY="301.0" prefHeight="328.0" prefWidth="250.0" styleClass="greenBox" AnchorPane.topAnchor="180.0" AnchorPane.rightAnchor="30"/>
 
-   <Label layoutX="661.0" layoutY="649.0" styleClass="question-label" text="Question" AnchorPane.bottomAnchor="265.0" />
-   <Label fx:id="questionNo" alignment="CENTER" layoutX="681.0" layoutY="733.0" prefHeight="49.0" prefWidth="150.0" styleClass="question-number" text="7/20" AnchorPane.bottomAnchor="200.0" />
-   <Label fx:id="endOfGame" visible="false" alignment="CENTER" layoutX="586.0" layoutY="810.0" prefHeight="49.0" prefWidth="342.0" styleClass="question-number" AnchorPane.bottomAnchor="123.0" />
+   <Label layoutX="661.0" layoutY="649.0" styleClass="question-label" text="Question" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="450"/>
+   <Label fx:id="questionNo" alignment="CENTER" layoutX="681.0" layoutY="733.0" prefHeight="49.0" prefWidth="150.0" styleClass="question-number" text="7/20" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="470"/>
+   <Label fx:id="endOfGame" visible="false" alignment="CENTER" layoutX="586.0" layoutY="810.0" prefHeight="40.0" prefWidth="400.0" styleClass="question-number" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="338.5"/>
 
-   <Label fx:id="score" alignment="CENTER" layoutX="554.0" layoutY="910.0" prefHeight="40.0" prefWidth="405.0" styleClass="bottom-score" text="Score: 1200" textAlignment="CENTER" AnchorPane.bottomAnchor="32.0">
+   <Label fx:id="score" alignment="CENTER" layoutX="554.0" layoutY="910.0" prefHeight="40.0" prefWidth="405.0" styleClass="bottom-score" text="Score: 1200" textAlignment="CENTER" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="336.0">
    </Label>
 
-   <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="32.0">
+   <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="redButton" />

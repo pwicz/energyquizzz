@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="251.0" prefWidth="821.0" styleClass="background" stylesheets="@/client/scenes/styles/inputname.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.InputNameScreenCtrl">
+<AnchorPane prefHeight="251.0" prefWidth="821.0" styleClass="backgroundSmall" stylesheets="@/client/scenes/styles/inputname.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.InputNameScreenCtrl">
 
    <Label layoutX="201.0" layoutY="48.0" styleClass="message" text="Choose a unique name to join this waiting room" AnchorPane.bottomAnchor="175.0" />
    <TextField fx:id="textBox" alignment="CENTER" layoutX="278.0" layoutY="99.0" prefHeight="30.0" prefWidth="265.0" promptText="Enter your name" styleClass="textPrompt" AnchorPane.bottomAnchor="122.0" />

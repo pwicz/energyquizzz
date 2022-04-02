@@ -29,7 +29,7 @@ public class CustomActivityDeserializer extends StdDeserializer<Activity> {
 
         activity.imagePath = node.get("image_path").asText();
         activity.title = node.get("title").asText();
-        activity.consumptionInWh = node.get("consumption_in_wh").asInt();
+        activity.consumptionInWh = node.get("consumption_in_wh").asLong();
         activity.source = node.get("source").asText();
 
         // length checks so that DB doesn't fail
