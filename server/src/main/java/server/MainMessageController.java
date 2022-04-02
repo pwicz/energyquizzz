@@ -199,7 +199,8 @@ public class MainMessageController {
 
         int scoreForQuestion = 0;
         if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
-            double answerTime = timeToAnswer - (System.currentTimeMillis() - g.getQuestionStartTime()) / 1000.0;
+            double answerTime = timeToAnswer -
+                    (System.currentTimeMillis() - g.getQuestionStartTime() + p.getTimePenalty()) / 1000.0;
             scoreForQuestion = scoreBase + (int) (scoreBonusPerSecond * answerTime);
             scoreForQuestion *= p.getScoreModifier();
             p.setAnswerStatus(true);
