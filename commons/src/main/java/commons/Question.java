@@ -57,7 +57,7 @@ public class Question {
         this.type = type;
         this.title = getTitleFromType(type);
         if(type == Type.HOW_MANY_TIMES){
-            title += activities.get(0).title + ", how many times could you do this activity?";
+            title += activities.get(1).title + ", how many times could you do this activity?";
         }
         this.correct = options.get(0);
         this.options = options;
