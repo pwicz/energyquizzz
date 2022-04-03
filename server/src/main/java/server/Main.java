@@ -19,6 +19,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
+import java.util.Arrays;
+
 @SpringBootApplication
 @EntityScan(basePackages = { "commons", "server" })
 public class Main {
@@ -27,11 +29,13 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         var context = SpringApplication.run(Main.class, args);
+        var arguments = Arrays.asList(args);
 
 
-        if(args.length > 0 && args[0].equals("load")){
+        if(arguments.contains("load")){
             System.out.println("Load activities");
             readJson = context.getBean(ReadJson.class);
+            readJson.deleteAllFromDB();
             readJson.readFile();
             readJson.saveAllToDB();
         }else{

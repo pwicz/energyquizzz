@@ -50,6 +50,10 @@ public class ReadJson {
         repo.saveAll(activities);
     }
 
+    public void deleteAllFromDB(){
+        repo.deleteAll();
+    }
+
     public void saveSomeToDB(int numberOfActivitiesToSave){
         for(int i = 0; i < numberOfActivitiesToSave; ++i) repo.save(activities.get(i));
     }
