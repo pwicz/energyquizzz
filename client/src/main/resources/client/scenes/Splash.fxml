@@ -47,7 +47,8 @@
       </styleClass>
    </Button>
 
-   <Button fx:id="help" alignment="CENTER" contentDisplay="CENTER" layoutX="1326.0" layoutY="871.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="136.0" text="Help" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+
+   <Button fx:id="help" alignment="CENTER" contentDisplay="CENTER" layoutX="1326.0" layoutY="871.0" mnemonicParsing="false" onAction="#showHelp" prefHeight="67.0" prefWidth="136.0" text="Help" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="helpButton" />

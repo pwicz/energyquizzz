@@ -72,6 +72,9 @@ public class MainCtrl {
     private Scene inputServer;
     private InputServerScreenCtrl inputServerScreenCtrl;
 
+    private Scene help;
+    private HelpCtrl helpCtrl;
+
     private Scene endScreen;
     private EndGameScreenCtrl endGameScreenCtrl;
 
@@ -79,8 +82,6 @@ public class MainCtrl {
     private String gameID = null;
 
     private Stage stage = new Stage();
-
-    private String name = null;
 
 
     @Inject
@@ -100,6 +101,7 @@ public class MainCtrl {
                            Pair<LeaveCtrl, Parent> leave,
                            Pair<InputNameScreenCtrl, Parent> inputName,
                            Pair<InputServerScreenCtrl, Parent> inputServer,
+                           Pair<HelpCtrl, Parent> help,
                            Pair<EndGameScreenCtrl, Parent> end){
         this.primaryStage = primaryStage;
 
@@ -142,7 +144,11 @@ public class MainCtrl {
         this.inputServer = new Scene(inputServer.getValue());
         this.inputServerScreenCtrl = inputServer.getKey();
 
+        this.help = new Scene(help.getValue());
+        this.helpCtrl = help.getKey();
+
         primaryStage.setResizable(false);
+
         showSplash();
         primaryStage.show();
         inputServerScreenCtrl.hideLeaveButton();
@@ -247,6 +253,11 @@ public class MainCtrl {
             case TEST:
                 // for testing purposes only
                 System.out.println("It works! Received a msg!");
+                break;
+            case SHOW_EMOJI:
+                runLater(() -> {
+                    multiplayerScreenCtrl.showEmoji(msg.imgName, msg.namePLayerEmoji);
+                });
                 break;
             case NAME_TAKEN:
                 inputNameScreenCtrl.nameTaken();
@@ -374,6 +385,14 @@ public class MainCtrl {
         primaryStage.setScene(adminPanel);
     }
 
+    public void showHelp() {
+        this.stage = new Stage();
+
+        this.stage.setScene(help);
+        this.stage.initModality(Modality.APPLICATION_MODAL);
+        this.stage.showAndWait();
+    }
+
     public void showEditActivity(Activity selected) {
         if(selected != null){
             primaryStage.setTitle("EditActivity");
@@ -440,10 +459,6 @@ public class MainCtrl {
 
     public Stage getPrimaryStage() {
         return primaryStage;
-    }
-
-    public void setName(String name){
-        this.name = name;
     }
 
     /**
