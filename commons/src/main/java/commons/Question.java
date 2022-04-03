@@ -57,7 +57,7 @@ public class Question {
         this.type = type;
         this.title = getTitleFromType(type);
         if(type == Type.HOW_MANY_TIMES){
-            title += activities.get(0).title + " with the energy it takes to do this activity?";
+            title += activities.get(0).title + ", how many times could you do this activity?";
         }
         this.correct = options.get(0);
         this.options = options;
@@ -71,7 +71,7 @@ public class Question {
     public static String getTitleFromType(Type type){
         if(type == Type.COMPARE) return "Which activity consumes most energy?";
         else if(type == Type.GUESS) return "How much electricity does this activity cost?";
-        else if(type == Type.HOW_MANY_TIMES) return "How many times can you ";
+        else if(type == Type.HOW_MANY_TIMES) return "Instead of ";
         else if(type == Type.ESTIMATION) return "How much energy does it take to...?";
         return null;
     }
