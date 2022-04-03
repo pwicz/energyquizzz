@@ -80,8 +80,6 @@ public class MainCtrl {
 
     private Stage stage = new Stage();
 
-    private String name = null;
-
 
     @Inject
     public MainCtrl(ServerUtils server) {
@@ -240,6 +238,10 @@ public class MainCtrl {
                 // for testing purposes only
                 System.out.println("It works! Received a msg!");
                 break;
+            case SHOW_EMOJI:
+                runLater(() -> {
+                    multiplayerScreenCtrl.showEmoji(msg.imgName, msg.namePLayerEmoji);
+                });
             default:
                 // invalid msg type
         }
@@ -432,10 +434,6 @@ public class MainCtrl {
 
     public Stage getPrimaryStage() {
         return primaryStage;
-    }
-
-    public void setName(String name){
-        this.name = name;
     }
 
     /**

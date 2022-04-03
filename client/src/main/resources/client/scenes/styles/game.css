@@ -53,3 +53,15 @@
     visibility: hidden;
 }
 
+.list-cell{
+    -fx-background-color: #272727;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color:#272727;
+}
+
+.thumb{
+    -fx-background-color: black;
+}
+
