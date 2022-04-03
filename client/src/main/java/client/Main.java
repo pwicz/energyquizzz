@@ -33,6 +33,7 @@ import client.scenes.SingleplayerLeaderboardCtrl;
 import client.scenes.SingleplayerScreenCtrl;
 import client.scenes.SplashScreenCtrl;
 import client.scenes.WaitingRoomScreenCtrl;
+import client.scenes.HelpCtrl;
 import com.google.inject.Injector;
 
 import javafx.application.Application;
@@ -71,11 +72,13 @@ public class Main extends Application {
 
         var leave = FXML.load(LeaveCtrl.class, "client", "scenes", "Leave.fxml");
 
+        var help = FXML.load(HelpCtrl.class, "client", "scenes", "Help.fxml");
+
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 
         mainCtrl.initialize(primaryStage, splashScreen, adminPanel, editActivity, createActivity,
                 singleplayerLeaderboard, singleplayerGame, waitingRoom, multiplayerGame,
-                inBetweenScore, leave, inputName, inputServer);
+                inBetweenScore, leave, inputName, inputServer, help);
 
     }
 }

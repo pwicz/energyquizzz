@@ -1,9 +1,10 @@
 package commons;
 
+
 public class ClientMessage {
     public enum Type{
         INIT_SINGLEPLAYER, INIT_MULTIPLAYER, TEST, SUBMIT_SINGLEPLAYER, QUIT,
-        SUBMIT_ANSWER, START_MULTIPLAYER, QUIT_WAITING_ROOM, PING, USE_JOKER;
+        SUBMIT_ANSWER, START_MULTIPLAYER, QUIT_WAITING_ROOM, PING, SHOW_EMOJI, USE_JOKER;
     }
 
     public Type type;
@@ -20,7 +21,8 @@ public class ClientMessage {
     }
 
     public Joker joker;
-    
+    public String imgName;
+
     public ClientMessage() {
     }
 

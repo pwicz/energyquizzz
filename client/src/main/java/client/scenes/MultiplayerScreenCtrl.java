@@ -3,14 +3,18 @@ package client.scenes;
 import com.google.inject.Inject;
 import commons.Activity;
 import commons.ClientMessage;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,10 +23,17 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -40,6 +51,7 @@ public class MultiplayerScreenCtrl {
     private boolean canInteractWithUI;
 
     private Timeline timer;
+
 
     @FXML
     ProgressBar timeBar;
@@ -104,10 +116,19 @@ public class MultiplayerScreenCtrl {
     @FXML
     GridPane jokerMessages;
 
+    @FXML
+    ListView emojiHolder;
+
+    @FXML
+    AnchorPane anchorPane;
+
     @Inject
     public MultiplayerScreenCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
         optionToID = new HashMap<>();
+        runLater(() -> {
+           initilizeEmojis();
+        });
     }
 
     public void leave(){
@@ -161,11 +182,69 @@ public class MultiplayerScreenCtrl {
     }
 
     //shows an emoji
-    public void showEmoji(MouseEvent event){
-        System.out.println(event.getSource());
+    public void sendEmoji(){
+        String[] dir = ((ImageView) emojiHolder.getSelectionModel().getSelectedItem()).getImage().getUrl().split("/");
+        System.out.println(dir[dir.length - 1]);
+
+        ClientMessage msg = new ClientMessage(ClientMessage.Type.SHOW_EMOJI,
+                mainCtrl.getClientID(), mainCtrl.getGameID());
+        msg.imgName = dir[dir.length - 1];
+
+        mainCtrl.getServer().send("/app/general", msg);
     }
 
-    // removes one incorrect answer
+    public void showEmoji(String imgName, String name){
+        File f = new File("client/src/main/resources/client/scenes/emojiimages/" + imgName);
+        ImageView imageView1 = new ImageView(f.toURI().toString());
+        Text playerName = new Text(name);
+
+        //make new image
+        imageView1.setFitWidth(50);
+        imageView1.setFitHeight(50);
+        imageView1.setY(anchorPane.getHeight()- 80);
+        imageView1.setX((anchorPane.getWidth()- 90) * Math.random());
+
+        playerName.setX(imageView1.getX() + 25 - name.chars().count()*3);
+        playerName.setTextAlignment(TextAlignment.CENTER);
+        playerName.setY(imageView1.getY()+ 65);
+        playerName.setFill(Color.WHITE);
+        //animation y coords
+        List<Node> transitions = new ArrayList<>(Arrays.asList(imageView1,playerName));
+        for (int i = 0; i < transitions.size(); i++) {
+            TranslateTransition transition = new TranslateTransition();
+            transition.setDuration(Duration.seconds(1));
+            transition.setToY(-200);
+            transition.setNode(transitions.get(i));
+            transition.setOnFinished(event -> removeImage(transition.getNode()));
+            //animation fade
+            FadeTransition ft = new FadeTransition();
+            ft.setFromValue(1.0);
+            ft.setToValue(0);
+            ft.setDuration(Duration.seconds(10));
+            ft.setNode(transitions.get(i));
+            //start transitions
+            transition.play();
+            ft.play();
+
+//            List<Rectangle> options = List.of();
+            List<Node> titles = List.of(title1, title2, title3, description1, description2, description3,
+                    image1, image2, image3, option1, option2, option3);
+
+            anchorPane.getChildren().add(transitions.get(i));
+
+            anchorPane.getChildren().removeAll(titles);
+            anchorPane.getChildren().addAll(titles);
+        }
+
+
+       // anchorPane.getChildren().add(imageView1);
+       // anchorPane.getChildren().add(playerName);
+    }
+
+    private void removeImage(Node node) {
+        anchorPane.getChildren().remove(node);
+    }
+
     public void cutAnswer(MouseEvent event){
         ClientMessage msg = new ClientMessage(ClientMessage.Type.USE_JOKER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
@@ -363,4 +442,18 @@ public class MultiplayerScreenCtrl {
             }
         }, 3000);
     }
+
+    public void initilizeEmojis(){
+        File folder = new File("client/src/main/resources/client/scenes/emojiimages");
+        File[] listOfFiles = folder.listFiles();
+        for (File f: listOfFiles) {
+            if (f.isFile()) {
+                ImageView img = new ImageView(f.toURI().toString());
+                img.setFitHeight(80);
+                img.setFitWidth(90);
+                emojiHolder.getItems().add(img);
+            }
+        }
+    }
+
 }
