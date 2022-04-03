@@ -83,6 +83,8 @@ public class MainCtrl {
 
     private Stage stage = new Stage();
 
+    private String name = null;
+
 
     @Inject
     public MainCtrl(ServerUtils server) {
@@ -507,6 +509,10 @@ public class MainCtrl {
 
     public Scene getCreateActivity() {
         return createActivity;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getName() {
