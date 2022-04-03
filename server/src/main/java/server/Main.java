@@ -27,8 +27,13 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         var context = SpringApplication.run(Main.class, args);
-
         readJson = context.getBean(ReadJson.class);
+
+        if(args.length > 0 && args[0].equals("load")){
+            System.out.println("load selected");
+        }else{
+            System.out.println("Not load");
+        }
 
         // Right now we add activities everytime we start the server - this must be changed
         // later, as the example backlog says so. We will allow players to reload the activities
