@@ -13,10 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -37,7 +34,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import static javafx.application.Platform.isNestedLoopRunning;
 import static javafx.application.Platform.runLater;
 
 
@@ -80,13 +76,16 @@ public class MultiplayerScreenCtrl {
     Text picked;
 
     @FXML
-    Label headTitle;
+    Label headTitle, headTitle1, headTitle2;
 
     @FXML
     ListView emojiHolder;
 
     @FXML
     AnchorPane anchorPane;
+
+    @FXML
+    TextField textField;
 
     @Inject
     public MultiplayerScreenCtrl(MainCtrl mainCtrl) {
@@ -107,11 +106,11 @@ public class MultiplayerScreenCtrl {
     //submits answer, stops time,
     public void submitAnswer(){
         if(!canInteractWithUI || choice == null) return;
-        canInteractWithUI = false;
 
-        timer.stop();
 
-        submit.setDisable(true);
+
+
+
 
         Scene scene = mainCtrl.getPrimaryStage().getScene();
         if (mainCtrl.getMultiplayer().equals(scene)) {
@@ -119,16 +118,32 @@ public class MultiplayerScreenCtrl {
                     mainCtrl.getClientID(), mainCtrl.getGameID());
             msg.chosenActivity = optionToID.get(choice);
             mainCtrl.getServer().send("/app/general", msg);
-        } else if (mainCtrl.getGuessQuestion().equals(scene)) {
-
-        } else if (mainCtrl.getInputQuestion().equals(scene)) {
-
+        } else if (mainCtrl.getGuessQuestionM().equals(scene)) {
+            ClientMessage msg = new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER,
+                    mainCtrl.getClientID(), mainCtrl.getGameID());
+            msg.chosenActivity = optionToID.get(choice);
+            mainCtrl.getServer().send("/app/general", msg);
+        } else if (mainCtrl.getInputQuestionM().equals(scene)) {
+            if(textField.getText().equals("")){
+                textField.setText("give a Number");
+                return;
+            }
+            try{
+                //todo: make a working message
+                long answer = Long.parseLong(textField.getText());
+                ClientMessage msg = new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER,
+                        mainCtrl.getClientID(), mainCtrl.getGameID());
+                msg.chosenActivity = answer;
+                mainCtrl.getServer().send("/app/general", msg);
+            }catch (NumberFormatException e){
+                textField.setText("give a Number");
+                return;
+            }
         }
+        canInteractWithUI = false;
+        timer.stop();
 
-
-
-
-
+        submit.setDisable(true);
     }
 
     public void showAnswer(Long correctID, Long pickedID) {
@@ -249,9 +264,9 @@ public class MultiplayerScreenCtrl {
 
         if (mainCtrl.getMultiplayer().equals(scene)) {
             displayCompareActivities(question.activities);
-        } else if (mainCtrl.getGuessQuestion().equals(scene)) {
+        } else if (mainCtrl.getGuessQuestionM().equals(scene)) {
             displayGuessActivities(question);
-        } else if (mainCtrl.getInputQuestion().equals(scene)) {
+        } else if (mainCtrl.getInputQuestionM().equals(scene)) {
             displayInputActivities(question.activities);
         }
 
@@ -261,11 +276,25 @@ public class MultiplayerScreenCtrl {
     public void displayGuessActivities(Question question){
         resetUI();
             Activity a = question.getActivities().get(0);
-
+        optionToID = new HashMap<>();
         List<Label> descriptions = List.of(description1, description3 , description4);
-        for (int i = 0; i < descriptions.size(); i++) {
-            descriptions.get(i).setText(question.options.get(i).toString());
+        List<Rectangle> options = List.of(option1, option2, option3);
+        switch (question.type){
+            case GUESS:
+                for (int i = 0; i < descriptions.size(); i++) {
+                    descriptions.get(i).setText(question.options.get(i).toString() + " wh");
+                    optionToID.put(options.get(i), question.options.get(i));
+                }
+                break;
+            case HOW_MANY_TIMES:
+                for (int i = 0; i < descriptions.size(); i++) {
+                    descriptions.get(i).setText(question.options.get(i).toString() + " Times");
+                    optionToID.put(options.get(i), question.options.get(i));
+                }
+                break;
+            default:
         }
+
 
             title.setText(Long.toString(a.consumptionInWh));
             description2.setText(a.title);
@@ -274,7 +303,10 @@ public class MultiplayerScreenCtrl {
     }
 
     public void displayInputActivities(List<Activity> activities){
-            description.setText(activities.get(0).title);
+        choice = new Rectangle();
+        canInteractWithUI = true;
+        submit.setDisable(false);
+        description.setText(activities.get(0).title);
 
     }
 
@@ -355,5 +387,12 @@ public class MultiplayerScreenCtrl {
 
     public void setHeadTitle(String headTitle) {
         this.headTitle.setText(headTitle);
+    }
+
+    public void setHeadGuessTitle(String headTitle) {
+        String[] s = headTitle.split(",");
+        headTitle1.setText(s[0]);
+        if(s.length > 1)
+            headTitle2.setText(s[1]);
     }
 }

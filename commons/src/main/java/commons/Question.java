@@ -72,7 +72,7 @@ public class Question {
         if(type == Type.COMPARE) return "Which activity consumes most energy?";
         else if(type == Type.GUESS) return "How much energy does this activity take?";
         else if(type == Type.HOW_MANY_TIMES) return "Instead of ";
-        else if(type == Type.ESTIMATION) return "How much energy does it take to...?";
+        else if(type == Type.ESTIMATION) return "How much energy does this activity take?";
         return null;
     }
 
