@@ -168,7 +168,6 @@ public class MainCtrl {
         this.helpCtrl = help.getKey();
 
         primaryStage.setResizable(false);
-
         showSplash();
         primaryStage.show();
         inputServerScreenCtrl.hideLeaveButton();

@@ -74,11 +74,15 @@ public class Main extends Application {
 
         var help = FXML.load(HelpCtrl.class, "client", "scenes", "Help.fxml");
 
-        var inputQuestionM = FXML.load(MultiplayerScreenCtrl.class, "client", "scenes", "MultiplayerGameInputQuestion.fxml");
-        var guesQuestionM = FXML.load(MultiplayerScreenCtrl.class, "client", "scenes", "MultiplayerGameGuessQuestion.fxml");
+        var inputQuestionM =
+                FXML.load(MultiplayerScreenCtrl.class, "client", "scenes", "MultiplayerGameInputQuestion.fxml");
+        var guesQuestionM =
+                FXML.load(MultiplayerScreenCtrl.class, "client", "scenes", "MultiplayerGameGuessQuestion.fxml");
 
-        var inputQuestionS = FXML.load(SingleplayerScreenCtrl.class, "client", "scenes", "SingleplayerInputQuestion.fxml");
-        var guesQuestionS = FXML.load(SingleplayerScreenCtrl.class, "client", "scenes", "SingleplayerGameGuessQuestion.fxml");
+        var inputQuestionS =
+                FXML.load(SingleplayerScreenCtrl.class, "client", "scenes", "SingleplayerInputQuestion.fxml");
+        var guesQuestionS =
+                FXML.load(SingleplayerScreenCtrl.class, "client", "scenes", "SingleplayerGameGuessQuestion.fxml");
 
 
 
