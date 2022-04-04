@@ -241,15 +241,11 @@ public class MainCtrl {
                 break;
             case LOCK_ANSWER:
                 // this message only comes in multiplayer mode
-                runLater(() -> {
-                    multiplayerScreenCtrl.lockUI();
-                });
+                runLater(() -> multiplayerScreenCtrl.lockUI());
                 break;
             case UPDATE_TIMER:
                 // this message only comes in multiplayer mode:
-                runLater(() -> {
-                    multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
-                });
+                runLater(() -> multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull));
                 break;
             case REMOVE_ANSWER:
                 runLater(() -> {
@@ -258,14 +254,11 @@ public class MainCtrl {
                 });
                 break;
             case JOKER_USED:
-                runLater(() -> {
-                    multiplayerScreenCtrl.insertJokerNotification(msg.jokerUsedBy, msg.jokerType);
-                });
+                runLater(() -> multiplayerScreenCtrl.insertJokerNotification(msg.jokerUsedBy, msg.jokerType));
                 break;
             case SHOW_EMOJI:
-                runLater(() -> {
-                    multiplayerScreenCtrl.showEmoji(msg.imgName, msg.namePLayerEmoji);
-                });
+                runLater(() -> multiplayerScreenCtrl.showEmoji(msg.imgName, msg.namePLayerEmoji));
+                break;
             default:
                 // invalid msg type
         }

@@ -200,6 +200,7 @@ public class MainMessageController {
                     jokerUsedNotification.jokerType = msg.joker;
                     jokerUsedNotification.jokerUsedBy = player.getName();
                     sendMessageToAllPlayers(jokerUsedNotification, game);
+                    break;
                 case SHOW_EMOJI:
                     ServerMessage serverMessage = new ServerMessage(ServerMessage.Type.SHOW_EMOJI);
                     serverMessage.imgName = msg.imgName;

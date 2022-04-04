@@ -52,6 +52,8 @@ public class MultiplayerScreenCtrl {
 
     private Timeline timer;
 
+    private boolean cutAnswerUsed = false;
+    private boolean doublePointsUsed = false;
 
     @FXML
     ProgressBar timeBar;
@@ -158,6 +160,15 @@ public class MultiplayerScreenCtrl {
     public void lockUI(){
         canInteractWithUI = false;
         submit.setDisable(true);
+
+        if(!doublePointsUsed){
+            doublePoints.setStyle("-fx-opacity: 0.2");
+            doublePoints.setDisable(true);
+        }
+        if(!cutAnswerUsed){
+            cutAnswer.setStyle("-fx-opacity: 0.2");
+            cutAnswer.setDisable(true);
+        }
     }
 
     public void showAnswer(Long correctID, Long pickedID) {
@@ -254,6 +265,7 @@ public class MultiplayerScreenCtrl {
 
         cutAnswer.setDisable(true);
         cutAnswer.setStyle("visibility: hidden;");
+        cutAnswerUsed = true;
     }
 
     // doubles your points for this round
@@ -266,6 +278,7 @@ public class MultiplayerScreenCtrl {
 
         doublePoints.setDisable(true);
         doublePoints.setStyle("visibility: hidden;");
+        doublePointsUsed = true;
     }
 
     // halves time of your opponents
@@ -344,15 +357,28 @@ public class MultiplayerScreenCtrl {
         optionToID = new HashMap<>();
         choice = null;
         picked.setStyle("visibility: hidden");
+
+        if(!cutAnswerUsed) {
+            cutAnswer.setDisable(false);
+            cutAnswer.setStyle("-fx-opacity: 1.0");
+        }
+        if(!doublePointsUsed){
+            doublePoints.setDisable(false);
+            doublePoints.setStyle("-fx-opacity: 1.0");
+        }
     }
 
     public void showJokers(){
         cutAnswer.setDisable(false);
         cutAnswer.setStyle("visibility: visible;");
+        cutAnswerUsed = false;
+
         splitTime.setDisable(false);
         splitTime.setStyle("visibility: visible;");
+
         doublePoints.setDisable(false);
         doublePoints.setStyle("visibility: visible;");
+        doublePointsUsed = false;
     }
 
     public void lockAnswer(MouseEvent mouseEvent) {
