@@ -43,6 +43,9 @@ public class MainCtrl {
     private Scene splash;
 
     private Scene multiplayer;
+    private Scene guessQuestion;
+    private Scene inputQuestion;
+
     private  MultiplayerScreenCtrl multiplayerScreenCtrl;
 
     private Scene singleLeaderboard;
@@ -98,7 +101,9 @@ public class MainCtrl {
                            Pair<LeaveCtrl, Parent> leave,
                            Pair<InputNameScreenCtrl, Parent> inputName,
                            Pair<InputServerScreenCtrl, Parent> inputServer,
-                           Pair<HelpCtrl, Parent> help){
+                           Pair<HelpCtrl, Parent> help,
+                           Pair<MultiplayerScreenCtrl, Parent> inputQuestion,
+                           Pair<MultiplayerScreenCtrl, Parent> guesQuestion){
         this.primaryStage = primaryStage;
 
         this.splashScreenCtrl = splashScreen.getKey();
@@ -124,6 +129,10 @@ public class MainCtrl {
 
         this.multiplayerScreenCtrl = multiplayer.getKey();
         this.multiplayer = new Scene(multiplayer.getValue());
+
+        this.inputQuestion = new Scene(inputQuestion.getValue());
+
+        this.guessQuestion = new Scene(guesQuestion.getValue());
 
         this.inBetweenScoreCtrl = inBetweenScore.getKey();
         this.inBetweenScore = new Scene(inBetweenScore.getValue());
@@ -182,8 +191,8 @@ public class MainCtrl {
                 // on the JavaFX Application Thread
                 runLater(() -> {
                     multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
-                    multiplayerScreenCtrl.displayActivities(msg.question.getActivities());
-                    showMultiplayerScreen();
+                    showQuestion(msg);
+
                 });
                 System.out.println("[msg] loadingGame");
                 break;
@@ -247,6 +256,34 @@ public class MainCtrl {
         }
     }
 
+    public void showQuestion(ServerMessage msg){
+        switch (msg.question.type){
+            case HOW_MANY_TIMES:
+                showMultiplayerGuessScreen();
+                multiplayerScreenCtrl.setHeadTitle(msg.question.title);
+                multiplayerScreenCtrl.displayActivities(msg.question, guessQuestion);
+                break;
+            case ESTIMATION:
+                showMultiplayerInputScreen();
+                multiplayerScreenCtrl.setHeadTitle(msg.question.title);
+                multiplayerScreenCtrl.displayActivities(msg.question, inputQuestion);
+                break;
+            case COMPARE:
+                showMultiplayerScreen();
+                multiplayerScreenCtrl.setHeadTitle(msg.question.title);
+                multiplayerScreenCtrl.displayActivities(msg.question, multiplayer);
+                break;
+            case GUESS:
+                showMultiplayerGuessScreen();
+                multiplayerScreenCtrl.setHeadTitle(msg.question.title);
+                multiplayerScreenCtrl.displayActivities(msg.question, guessQuestion);
+                break;
+            default:
+                System.out.println("weird question type");
+                break;
+        }
+    }
+
     public void showInbetweenScore() {
         primaryStage.setTitle("Score");
         primaryStage.setScene(inBetweenScore);
@@ -304,6 +341,16 @@ public class MainCtrl {
     public void showMultiplayerScreen(){
         primaryStage.setTitle("Multiplayer");
         primaryStage.setScene(multiplayer);
+    }
+
+    public void showMultiplayerInputScreen(){
+        primaryStage.setTitle("Multiplayer");
+        primaryStage.setScene(inputQuestion);
+    }
+
+    public void showMultiplayerGuessScreen(){
+        primaryStage.setTitle("Multiplayer");
+        primaryStage.setScene(guessQuestion);
     }
 
     public void showSingleLeaderboardScreen(){
@@ -482,5 +529,13 @@ public class MainCtrl {
 
     public Scene getCreateActivity() {
         return createActivity;
+    }
+
+    public Scene getInputQuestion() {
+        return inputQuestion;
+    }
+
+    public Scene getGuessQuestion() {
+        return guessQuestion;
     }
 }

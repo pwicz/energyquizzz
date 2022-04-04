@@ -65,3 +65,10 @@
     -fx-background-color: black;
 }
 
+.textPrompt{
+    -fx-border-color: white;
+    -fx-border-radius: 5;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 36;
+}

@@ -3,6 +3,7 @@ package client.scenes;
 import com.google.inject.Inject;
 import commons.Activity;
 import commons.ClientMessage;
+import commons.Question;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -11,6 +12,7 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -35,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import static javafx.application.Platform.isNestedLoopRunning;
 import static javafx.application.Platform.runLater;
 
 
@@ -53,43 +56,22 @@ public class MultiplayerScreenCtrl {
     ProgressBar timeBar;
 
     @FXML
-    Rectangle option1;
-
-    @FXML
-    Rectangle option2;
-
-    @FXML
-    Rectangle option3;
+    Rectangle option1, option2, option3;
 
     @FXML
     Button submit;
 
     @FXML
-    ImageView image1;
+    ImageView image, image1, image2, image3;
 
     @FXML
-    ImageView image2;
+    Label title1, title2, title3, title;
 
     @FXML
-    ImageView image3;
+    Label description1, description2, description3, description4;
 
     @FXML
-    Label title1;
-
-    @FXML
-    Label title2;
-
-    @FXML
-    Label title3;
-
-    @FXML
-    Label description1;
-
-    @FXML
-    Label description2;
-
-    @FXML
-    Label description3;
+    Rectangle activity;
 
     @FXML
     Label score;
@@ -131,12 +113,22 @@ public class MultiplayerScreenCtrl {
 
         submit.setDisable(true);
 
-        ClientMessage msg = new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER,
-                mainCtrl.getClientID(), mainCtrl.getGameID());
-        msg.chosenActivity = optionToID.get(choice);
+        Scene scene = mainCtrl.getPrimaryStage().getScene();
+        if (mainCtrl.getMultiplayer().equals(scene)) {
+            ClientMessage msg = new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER,
+                    mainCtrl.getClientID(), mainCtrl.getGameID());
+            msg.chosenActivity = optionToID.get(choice);
+            mainCtrl.getServer().send("/app/general", msg);
+        } else if (mainCtrl.getGuessQuestion().equals(scene)) {
+
+        } else if (mainCtrl.getInputQuestion().equals(scene)) {
+
+        }
 
 
-        mainCtrl.getServer().send("/app/general", msg);
+
+
+
     }
 
     public void showAnswer(Long correctID, Long pickedID) {
@@ -206,18 +198,15 @@ public class MultiplayerScreenCtrl {
             ft.play();
 
 //            List<Rectangle> options = List.of();
-            List<Node> titles = List.of(title1, title2, title3, description1, description2, description3,
-                    image1, image2, image3, option1, option2, option3);
+//            List<Node> titles = List.of(title1, title2, title3, description1, description2, description3,
+//                    image1, image2, image3, option1, option2, option3);
 
             anchorPane.getChildren().add(transitions.get(i));
 
-            anchorPane.getChildren().removeAll(titles);
-            anchorPane.getChildren().addAll(titles);
+//            anchorPane.getChildren().removeAll(titles);
+//            anchorPane.getChildren().addAll(titles);
         }
 
-
-       // anchorPane.getChildren().add(imageView1);
-       // anchorPane.getChildren().add(playerName);
     }
 
     private void removeImage(Node node) {
@@ -253,11 +242,41 @@ public class MultiplayerScreenCtrl {
         timer.play();
     }
 
-    public void displayActivities(List<Activity> activities){
+    public void displayActivities(Question question, Scene scene){
         // for convenience
 
-       resetUI();
+        resetUI();
 
+        if (mainCtrl.getMultiplayer().equals(scene)) {
+            displayCompareActivities(question.activities);
+        } else if (mainCtrl.getGuessQuestion().equals(scene)) {
+            displayGuessActivities(question);
+        } else if (mainCtrl.getInputQuestion().equals(scene)) {
+            displayInputActivities(question.activities);
+        }
+
+
+    }
+
+    public void displayGuessActivities(Question question){
+            Activity a = question.getActivities().get(0);
+
+            description1.setText(question.options.get(0).toString());
+            description3.setText(question.options.get(1).toString());
+            description4.setText(question.options.get(2).toString());
+
+            title.setText(Long.toString(a.consumptionInWh));
+            description2.setText(a.title);
+
+            image.setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
+    }
+
+    public void displayInputActivities(List<Activity> activities){
+            description.setText(activities.get(0).title);
+
+    }
+
+    public void displayCompareActivities(List<Activity> activities){
         List<Rectangle> options = List.of(option1, option2, option3);
         List<Label> titles = List.of(title1, title2, title3);
         List<Label> descriptions = List.of(description1, description2, description3);
@@ -268,7 +287,7 @@ public class MultiplayerScreenCtrl {
 
             if(a == null) continue;
             optionToID.put(options.get(i), a.id);
-            
+
             titles.get(i).setText(Long.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
 
@@ -331,4 +350,7 @@ public class MultiplayerScreenCtrl {
         }
     }
 
+    public void setHeadTitle(String headTitle) {
+        this.headTitle.setText(headTitle);
+    }
 }

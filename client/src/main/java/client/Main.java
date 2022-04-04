@@ -74,11 +74,14 @@ public class Main extends Application {
 
         var help = FXML.load(HelpCtrl.class, "client", "scenes", "Help.fxml");
 
+        var inputQuestion = FXML.load(MultiplayerScreenCtrl.class, "client", "scenes", "MultiplayerGameInputQuestion.fxml");
+        var guesQuestion = FXML.load(MultiplayerScreenCtrl.class, "client", "scenes", "MultiplayerGameGuessQuestion.fxml");
+
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 
         mainCtrl.initialize(primaryStage, splashScreen, adminPanel, editActivity, createActivity,
                 singleplayerLeaderboard, singleplayerGame, waitingRoom, multiplayerGame,
-                inBetweenScore, leave, inputName, inputServer, help);
+                inBetweenScore, leave, inputName, inputServer, help, inputQuestion, guesQuestion);
 
     }
 }
