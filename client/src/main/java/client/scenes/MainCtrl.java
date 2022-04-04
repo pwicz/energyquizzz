@@ -43,10 +43,13 @@ public class MainCtrl {
     private Scene splash;
 
     private Scene multiplayer;
+
     private Scene guessQuestion;
     private Scene inputQuestion;
 
     private  MultiplayerScreenCtrl multiplayerScreenCtrl;
+    private  MultiplayerScreenCtrl multiplayerScreenGuessCtrl;
+    private  MultiplayerScreenCtrl multiplayerScreenInputCtrl;
 
     private Scene singleLeaderboard;
     private SingleplayerLeaderboardCtrl singleplayerLeaderboardCtrl;
@@ -131,8 +134,10 @@ public class MainCtrl {
         this.multiplayer = new Scene(multiplayer.getValue());
 
         this.inputQuestion = new Scene(inputQuestion.getValue());
+        this.multiplayerScreenInputCtrl = inputQuestion.getKey();
 
         this.guessQuestion = new Scene(guesQuestion.getValue());
+        this.multiplayerScreenGuessCtrl = guesQuestion.getKey();
 
         this.inBetweenScoreCtrl = inBetweenScore.getKey();
         this.inBetweenScore = new Scene(inBetweenScore.getValue());
@@ -260,13 +265,13 @@ public class MainCtrl {
         switch (msg.question.type){
             case HOW_MANY_TIMES:
                 showMultiplayerGuessScreen();
-                multiplayerScreenCtrl.setHeadTitle(msg.question.title);
-                multiplayerScreenCtrl.displayActivities(msg.question, guessQuestion);
+                multiplayerScreenGuessCtrl.setHeadTitle(msg.question.title);
+                multiplayerScreenGuessCtrl.displayActivities(msg.question, guessQuestion);
                 break;
             case ESTIMATION:
                 showMultiplayerInputScreen();
                 multiplayerScreenCtrl.setHeadTitle(msg.question.title);
-                multiplayerScreenCtrl.displayActivities(msg.question, inputQuestion);
+                multiplayerScreenInputCtrl.displayActivities(msg.question, inputQuestion);
                 break;
             case COMPARE:
                 showMultiplayerScreen();
@@ -275,8 +280,8 @@ public class MainCtrl {
                 break;
             case GUESS:
                 showMultiplayerGuessScreen();
-                multiplayerScreenCtrl.setHeadTitle(msg.question.title);
-                multiplayerScreenCtrl.displayActivities(msg.question, guessQuestion);
+                multiplayerScreenGuessCtrl.setHeadTitle(msg.question.title);
+                multiplayerScreenGuessCtrl.displayActivities(msg.question, guessQuestion);
                 break;
             default:
                 System.out.println("weird question type");

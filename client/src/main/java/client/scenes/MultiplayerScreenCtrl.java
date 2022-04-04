@@ -245,7 +245,7 @@ public class MultiplayerScreenCtrl {
     public void displayActivities(Question question, Scene scene){
         // for convenience
 
-        resetUI();
+
 
         if (mainCtrl.getMultiplayer().equals(scene)) {
             displayCompareActivities(question.activities);
@@ -259,11 +259,13 @@ public class MultiplayerScreenCtrl {
     }
 
     public void displayGuessActivities(Question question){
+        resetUI();
             Activity a = question.getActivities().get(0);
 
-            description1.setText(question.options.get(0).toString());
-            description3.setText(question.options.get(1).toString());
-            description4.setText(question.options.get(2).toString());
+        List<Label> descriptions = List.of(description1, description3 , description4);
+        for (int i = 0; i < descriptions.size(); i++) {
+            descriptions.get(i).setText(question.options.get(i).toString());
+        }
 
             title.setText(Long.toString(a.consumptionInWh));
             description2.setText(a.title);
@@ -277,6 +279,7 @@ public class MultiplayerScreenCtrl {
     }
 
     public void displayCompareActivities(List<Activity> activities){
+        resetUI();
         List<Rectangle> options = List.of(option1, option2, option3);
         List<Label> titles = List.of(title1, title2, title3);
         List<Label> descriptions = List.of(description1, description2, description3);
