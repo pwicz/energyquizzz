@@ -1,6 +1,6 @@
 .question{
     -fx-text-fill: #38c768;
-    -fx-font-size: 43;
+    -fx-font-size: 40;
 }
 
 .timeBar{
@@ -51,5 +51,17 @@
     -fx-font-size: 25px;
     -fx-font-family: "Roboto-Light";
     visibility: hidden;
+}
+
+.list-cell{
+    -fx-background-color: #272727;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color:#272727;
+}
+
+.thumb{
+    -fx-background-color: black;
 }
 

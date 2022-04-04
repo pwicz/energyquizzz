@@ -7,7 +7,6 @@ import javafx.scene.control.ListView;
 
 import java.util.List;
 
-
 public class WaitingRoomScreenCtrl {
     private final MainCtrl mainCtrl;
 
@@ -25,7 +24,7 @@ public class WaitingRoomScreenCtrl {
     }
 
     public void leave(){
-        mainCtrl.showLeaveWaitingroom(mainCtrl.getWaitingRoom(), () -> mainCtrl.getServer().send("/app/general",
+        mainCtrl.showLeave(mainCtrl::showSplash, () -> mainCtrl.getServer().send("/app/general",
                 new ClientMessage(ClientMessage.Type.QUIT_WAITING_ROOM, mainCtrl.getClientID(), mainCtrl.getGameID())));
     }
 

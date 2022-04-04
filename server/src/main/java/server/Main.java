@@ -19,6 +19,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
+import java.util.Arrays;
+
 @SpringBootApplication
 @EntityScan(basePackages = { "commons", "server" })
 public class Main {
@@ -27,13 +29,17 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         var context = SpringApplication.run(Main.class, args);
+        var arguments = Arrays.asList(args);
 
-        readJson = context.getBean(ReadJson.class);
 
-        // Right now we add activities everytime we start the server - this must be changed
-        // later, as the example backlog says so. We will allow players to reload the activities
-        // from an admin panel
-        readJson.readFile();
-        readJson.saveAllToDB();
+        if(arguments.contains("load")){
+            System.out.println("Load activities");
+            readJson = context.getBean(ReadJson.class);
+            readJson.deleteAllFromDB();
+            readJson.readFile();
+            readJson.saveAllToDB();
+        }else{
+            System.out.println("Don't load activities");
+        }
     }
 }

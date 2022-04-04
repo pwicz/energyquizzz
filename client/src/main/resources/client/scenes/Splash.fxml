@@ -9,10 +9,10 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" stylesheets="@/client/scenes/styles/styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SplashScreenCtrl">
 
-   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="149.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="ENERGYQUIZZZ" AnchorPane.bottomAnchor="700.0">
+   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="149.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="ENERGYQUIZZZ" AnchorPane.topAnchor="50.0">
    </Label>
 
-   <Button layoutX="595.0" layoutY="413.0" mnemonicParsing="false" onAction="#showSingleplayerScreen" prefHeight="78.0" prefWidth="321.0" text="Singleplayer" AnchorPane.bottomAnchor="504.0">
+   <Button layoutX="378.0" layoutY="413.0" mnemonicParsing="false" onAction="#showSingleplayerScreen" prefHeight="40.0" prefWidth="300.0" text="Singleplayer" AnchorPane.topAnchor="250.0" AnchorPane.leftAnchor="388.5">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="greenButton" />
@@ -20,7 +20,7 @@
       </styleClass>
    </Button>
 
-   <Button layoutX="595.0" layoutY="526.0" mnemonicParsing="false" onAction="#showWaitingRoom" prefHeight="78.0" prefWidth="321.0" text="Multiplayer" AnchorPane.bottomAnchor="355.0">
+   <Button layoutX="378.0" layoutY="526.0" mnemonicParsing="false" onAction="#showWaitingRoom" prefHeight="40.0" prefWidth="300.0" text="Multiplayer" AnchorPane.topAnchor="350.0" AnchorPane.leftAnchor="388.5">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="greenButton" />
@@ -31,7 +31,7 @@
       </font>
    </Button>
 
-   <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="32.0">
+   <Button fx:id="leave" layoutX="50.0" layoutY="910.0" mnemonicParsing="false" onAction="#leave" prefHeight="40.0" prefWidth="150.0" text="Leave" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="redButton" />
@@ -39,7 +39,7 @@
       </styleClass>
    </Button>
 
-   <Button fx:id="admin" alignment="CENTER" contentDisplay="CENTER" layoutX="595.0" layoutY="874.0" mnemonicParsing="false" onAction="#showAdminPanel" prefHeight="78.0" prefWidth="321.0" text="Admin Panel" AnchorPane.bottomAnchor="32.0">
+   <Button fx:id="admin" alignment="CENTER" contentDisplay="CENTER" layoutX="378.0" layoutY="874.0" mnemonicParsing="false" onAction="#showAdminPanel" prefHeight="40.0" prefWidth="300.0" text="Admin Panel" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="388.5">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="whiteButton" />
@@ -47,16 +47,17 @@
       </styleClass>
    </Button>
 
-   <Button fx:id="help" alignment="CENTER" contentDisplay="CENTER" layoutX="1326.0" layoutY="871.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="136.0" text="Help" AnchorPane.bottomAnchor="32.0">
+
+   <Button fx:id="help" alignment="CENTER" contentDisplay="CENTER" layoutX="1326.0" layoutY="871.0" mnemonicParsing="false" onAction="#showHelp" prefHeight="67.0" prefWidth="136.0" text="Help" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="helpButton" />
          <String fx:value="hugeButton" />
       </styleClass>
    </Button>
-   <Text fx:id="message" layoutX="-1.0" layoutY="677.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="message-splash" text="Message" wrappingWidth="1513.8034825325012">
+   <Text fx:id="message" layoutX="238.5" layoutY="677.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="message-splash" text="Message" wrappingWidth="600" AnchorPane.bottomAnchor="20">
       <font>
-         <Font name="Lato Regular" size="25.0" />
+         <Font name="Lato Regular" size="20.0" />
       </font>
    </Text>
 </AnchorPane>

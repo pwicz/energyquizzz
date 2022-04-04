@@ -1,5 +1,6 @@
 .global {
     -fx-background-color: #272727;
+    -fx-font-family: "Roboto";
 
 }
 .label{

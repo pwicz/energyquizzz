@@ -29,12 +29,11 @@ public class InputNameScreenCtrl {
         msg.playerID = mainCtrl.getClientID();
         //place holder for when we implement waiting room
         msg.playerName = textBox.getText();
-        mainCtrl.setName(msg.playerName);
 
         mainCtrl.getServer().send("/app/general", msg);
     }
 
     public void leave(){
-        mainCtrl.showLeave(mainCtrl.getInputName());
+        mainCtrl.showSplash();
     }
 }

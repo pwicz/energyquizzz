@@ -41,7 +41,6 @@ public class SingleplayerLeaderboardCtrl {
     /**
      * Instantiates a new Singleplayer leaderboard ctrl.
      *
-     * @param server   the server
      * @param mainCtrl the main ctrl
      */
     @Inject
@@ -101,6 +100,6 @@ public class SingleplayerLeaderboardCtrl {
      * Leave.
      */
     public void leave(){
-        mainCtrl.showLeave(mainCtrl.getSingleLeaderboard());
+        mainCtrl.showSplash();
     }
 }
