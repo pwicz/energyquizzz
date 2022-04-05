@@ -90,10 +90,20 @@ public class SingleplayerLeaderboardCtrl {
         List<Score> response = mainCtrl.getServer().getTopScores();
         if(response != null){
             for(Score score : response){
-                topScores.add(score.toString());
+                topScores.add(toStringScore(score));
             }
         }
         leaderboard.getItems().setAll(topScores);
+    }
+
+    public String toStringScore(Score score) {
+        int temp = 70;
+        temp = temp - score.getPlayerName().length();
+        StringBuilder sb = new StringBuilder();
+        sb.append(score.playerName);
+        for(int i = 0; i < temp; i++) {sb.append(" ");}
+        sb.append(score.playerScore + " Points!");
+        return sb.toString();
     }
 
     /**
