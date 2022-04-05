@@ -15,7 +15,7 @@
     </Label>
     <ProgressBar fx:id="timeBar" layoutX="138.5" layoutY="120.0" prefHeight="40.0" prefWidth="800.0" progress="0.0" styleClass="timeBar" />
 
-    <Text fx:id="description" layoutX="238.0" layoutY="418.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="questionTitle" text="Play computer games for 5 hours." textAlignment="CENTER" wrappingWidth="600.0" AnchorPane.leftAnchor="238.0" AnchorPane.topAnchor="300">
+    <Text fx:id="description" fill="#38c768" layoutX="238.0" layoutY="418.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="inputQuestion" text="Play computer games for 5 hours." textAlignment="CENTER" wrappingWidth="600.0" AnchorPane.leftAnchor="238.0" AnchorPane.topAnchor="300">
     </Text>
 
     <TextField fx:id="textField" alignment="CENTER" layoutX="357.0" layoutY="540.0" prefHeight="69.0" prefWidth="600.0" promptText="Enter your answer" styleClass="textPrompt" AnchorPane.leftAnchor="238.5" AnchorPane.topAnchor="400" />

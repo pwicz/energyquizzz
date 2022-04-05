@@ -44,7 +44,8 @@ public class Question {
                 if(this.correct != a.consumptionInWh) this.incorrect.add((long) a.consumptionInWh);
             }
         }else{
-            correct = activities.get(0).consumptionInWh;
+            if(activities.size() >0)
+                correct = activities.get(0).consumptionInWh;
         }
     }
 
