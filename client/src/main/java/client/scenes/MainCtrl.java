@@ -278,20 +278,36 @@ public class MainCtrl {
         switch (msg.question.type){
             case COMPARE:
                 singleplayerScreenCtrl.restoreView();
-                singleplayerScreenCtrl.displayActivities(msg.question.activities);
+                singleplayerScreenCtrl.displayActivities(msg.question, singleplayerScreen);
                 singleplayerScreenCtrl.setScoreTo(msg.score);
-                singleplayerScreenCtrl.setTitleTo("Question " + msg.round + ": " + msg.question.title);
+                singleplayerScreenCtrl.setTitleTo(msg.question.title);
                 singleplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
                 showSingleplayerGameScreen();
                 break;
             case GUESS:
+                singleplayerScreenGuessCtrl.restoreView();
+                singleplayerScreenGuessCtrl.displayActivities(msg.question, singleplayerGuessScreen);
+                singleplayerScreenGuessCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                singleplayerScreenGuessCtrl.setHeadGuessTitle(msg.question.title);
+                singleplayerScreenGuessCtrl.setScoreTo(msg.score);
                 showSingleplayerGuessGameScreen();
                 break;
             case ESTIMATION:
-                showSingleplayerGuessGameScreen();
+                //                singleplayerScreenInputCtrl.restoreView();
+                singleplayerScreenInputCtrl.displayActivities(msg.question, singleplayerInputScreen);
+                singleplayerScreenInputCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                singleplayerScreenInputCtrl.setTitleTo(msg.question.title);
+                singleplayerScreenInputCtrl.setScoreTo(msg.score);
+                showSingleplayerInputGameScreen();
                 break;
             case HOW_MANY_TIMES:
-                showSingleplayerInputGameScreen();
+                singleplayerScreenGuessCtrl.restoreView();
+                singleplayerScreenGuessCtrl.displayActivities(msg.question, singleplayerGuessScreen);
+                singleplayerScreenGuessCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                singleplayerScreenGuessCtrl.setHeadGuessTitle(msg.question.title);
+                singleplayerScreenGuessCtrl.setScoreTo(msg.score);
+                showSingleplayerGuessGameScreen();
+
                 break;
             default:
                 System.out.println("weird question");
@@ -593,5 +609,13 @@ public class MainCtrl {
 
     public Scene getGuessQuestionM() {
         return guessQuestionM;
+    }
+
+    public Scene getSingleplayerGuessScreen() {
+        return singleplayerGuessScreen;
+    }
+
+    public Scene getSingleplayerInputScreen() {
+        return singleplayerInputScreen;
     }
 }

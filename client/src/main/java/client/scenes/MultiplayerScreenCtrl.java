@@ -279,7 +279,7 @@ public class MultiplayerScreenCtrl {
 
     public void displayGuessActivities(Question question){
         resetUI();
-            Activity a = question.getActivities().get(0);
+        Activity a = question.getActivities().get(0);
         optionToID = new HashMap<>();
         List<Label> descriptions = List.of(description1, description3 , description4);
         List<Rectangle> options = List.of(option1, option2, option3);

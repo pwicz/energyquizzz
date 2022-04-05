@@ -3,14 +3,17 @@ package client.scenes;
 import com.google.inject.Inject;
 import commons.Activity;
 import commons.ClientMessage;
+import commons.Question;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -35,40 +38,16 @@ public class SingleplayerScreenCtrl {
     ProgressBar timeBar;
 
     @FXML
-    Rectangle option1;
+    Rectangle option1, option2, option3, activity;
 
     @FXML
-    Rectangle option2;
+    ImageView image1, image2, image3, image;
 
     @FXML
-    Rectangle option3;
+    Label description4,description1, description2, description3;
 
     @FXML
-    ImageView image1;
-
-    @FXML
-    ImageView image2;
-
-    @FXML
-    ImageView image3;
-
-    @FXML
-    Label description1;
-
-    @FXML
-    Label description2;
-
-    @FXML
-    Label description3;
-
-    @FXML
-    Label title1;
-
-    @FXML
-    Label title2;
-
-    @FXML
-    Label title3;
+    Label title, title1, title2, title3;
 
     @FXML
     Button submit;
@@ -77,13 +56,20 @@ public class SingleplayerScreenCtrl {
     Label score;
 
     @FXML
-    Label screenTitle;
+    Label screenTitle, screenTitle1, screenTitle2;
 
     @FXML
     Text picked;
 
     @FXML
     Text result;
+
+    @FXML
+    Text description;
+
+    @FXML
+    TextField textField;
+
 
     @Inject
     public SingleplayerScreenCtrl(MainCtrl mainCtrl) {
@@ -115,7 +101,21 @@ public class SingleplayerScreenCtrl {
     }
 
 
-    public void displayActivities(List<Activity> activities){
+    public void displayActivities(Question question, Scene scene){
+
+
+        if (mainCtrl.getSingleplayerScreen().equals(scene)) {
+            displayCompareActivities(question.activities);
+        } else if (mainCtrl.getSingleplayerGuessScreen().equals(scene)) {
+            displayGuessActivities(question);
+        } else if (mainCtrl.getSingleplayerInputScreen().equals(scene)) {
+            displayInputActivities(question.activities);
+        }
+
+    }
+
+    private void displayCompareActivities(List<Activity> activities) {
+
         optionToID = new HashMap<>();
 
         // for convenience
@@ -136,6 +136,41 @@ public class SingleplayerScreenCtrl {
 
             images.get(i).setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
         }
+
+
+    }
+    private void displayGuessActivities(Question question) {
+        optionToID = new HashMap<>();
+        List<Label> descriptions = List.of(description1, description2, description3);
+        List<Rectangle> options = List.of(option1, option2, option3);
+        Activity a = question.getActivities().get(0);
+        switch (question.type) {
+            case GUESS:
+                for (int i = 0; i < descriptions.size(); i++) {
+                    descriptions.get(i).setText(question.options.get(i).toString() + " wh");
+                    optionToID.put(options.get(i), question.options.get(i));
+                }
+                break;
+            case HOW_MANY_TIMES:
+                for (int i = 0; i < descriptions.size(); i++) {
+                    descriptions.get(i).setText(question.options.get(i).toString() + " Times");
+                    optionToID.put(options.get(i), question.options.get(i));
+                }
+                break;
+            default:
+        }
+        title.setText(Long.toString(a.consumptionInWh));
+        description4.setText(a.title);
+
+        image.setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
+
+    }
+    private void displayInputActivities(List<Activity> activities) {
+        choice = new Rectangle();
+        canInteractWithUI = true;
+        submit.setDisable(false);
+        description.setText(activities.get(0).title);
+
     }
 
     /**
@@ -157,6 +192,36 @@ public class SingleplayerScreenCtrl {
 
     public void submitAnswer(){
         if(!canInteractWithUI || choice == null) return;
+
+        Scene scene = mainCtrl.getPrimaryStage().getScene();
+        if (mainCtrl.getSingleplayerScreen().equals(scene)) {
+            ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
+                    mainCtrl.getClientID(), mainCtrl.getGameID());
+            msg.chosenActivity = optionToID.get(choice);
+            mainCtrl.getServer().send("/app/general", msg);
+        } else if (mainCtrl.getSingleplayerGuessScreen().equals(scene)) {
+            ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
+                    mainCtrl.getClientID(), mainCtrl.getGameID());
+            msg.chosenActivity = optionToID.get(choice);
+            mainCtrl.getServer().send("/app/general", msg);
+        } else if (mainCtrl.getSingleplayerInputScreen().equals(scene)) {
+            if(textField.getText().equals("")){
+                textField.setText("give a Number");
+                return;
+            }
+            try{
+                //todo: make a working message
+                long answer = Long.parseLong(textField.getText());
+                ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
+                        mainCtrl.getClientID(), mainCtrl.getGameID());
+                msg.chosenActivity = answer;
+                mainCtrl.getServer().send("/app/general", msg);
+            }catch (NumberFormatException e){
+                textField.setText("give a Number");
+                return;
+            }
+        }
+
         canInteractWithUI = false;
 
         if(timer != null){
@@ -165,10 +230,7 @@ public class SingleplayerScreenCtrl {
 
         submit.setDisable(true);
 
-        ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
-                mainCtrl.getClientID(), mainCtrl.getGameID());
-        msg.chosenActivity = optionToID.get(choice);
-        mainCtrl.getServer().send("/app/general", msg);
+
     }
 
     public void showAnswer(Long correctID, Long pickedID){
@@ -221,5 +283,14 @@ public class SingleplayerScreenCtrl {
 
         result.setStyle("visibility: hidden");
         choice = null;
+    }
+
+
+    public void setHeadGuessTitle(String headTitle) {
+        String[] s = headTitle.split(",");
+        screenTitle1.setText(s[0]);
+        screenTitle2.setText("");
+        if(s.length > 1)
+            screenTitle2.setText(s[1]);
     }
 }
