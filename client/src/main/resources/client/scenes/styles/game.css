@@ -13,7 +13,7 @@
     -fx-background-color: #272727;
 }
 
-.option{
+.option, .card{
     -fx-stroke: white;
     -fx-background-color: none;
     -fx-fill: TRANSPARENT;
@@ -71,4 +71,10 @@
     -fx-background-color: transparent;
     -fx-text-fill: white;
     -fx-font-size: 36;
+}
+
+.answerInput{
+    -fx-font-size: 25;
+    -fx-text-alignment: center;
+    -fx-text-fill: #38c768;
 }

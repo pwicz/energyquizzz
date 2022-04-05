@@ -18,7 +18,7 @@
 
     <ProgressBar fx:id="timeBar" layoutX="138.5" layoutY="120.0" prefHeight="40.0" prefWidth="800.0" progress="0.0" styleClass="timeBar" />
 
-    <Rectangle fx:id="activity" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="369.0" layoutX="275.5" layoutY="200.0" strokeType="INSIDE" styleClass="option" width="251.0" />
+    <Rectangle fx:id="activity" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="369.0" layoutX="275.5" layoutY="200.0" strokeType="INSIDE" styleClass="card" width="251.0" />
     <ImageView fx:id="image" fitHeight="200.0" fitWidth="200.0" layoutX="657.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="301">
         <Image url="@/client/scenes/images/tempShit.png" />
     </ImageView>

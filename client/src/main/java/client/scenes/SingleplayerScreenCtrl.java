@@ -17,10 +17,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -59,10 +61,7 @@ public class SingleplayerScreenCtrl {
     Label screenTitle, screenTitle1, screenTitle2;
 
     @FXML
-    Text picked;
-
-    @FXML
-    Text result;
+    Text picked, result, answerInput;
 
     @FXML
     Text description;
@@ -111,6 +110,7 @@ public class SingleplayerScreenCtrl {
         } else if (mainCtrl.getSingleplayerInputScreen().equals(scene)) {
             displayInputActivities(question.activities);
         }
+        timeBar.setStyle("-fx-border-color: #38c768");
 
     }
 
@@ -166,6 +166,7 @@ public class SingleplayerScreenCtrl {
 
     }
     private void displayInputActivities(List<Activity> activities) {
+        answerInput.setStyle("visibility: hidden");
         result.setStyle("visibility: hidden");
         choice = new Rectangle();
         canInteractWithUI = true;
@@ -270,12 +271,23 @@ public class SingleplayerScreenCtrl {
     public void showAnswerInput(Long correctID, Long pickedID){
         timeBar.setProgress(0.0);
 
+        DecimalFormat df = new DecimalFormat("#.#");
+        double dif = (double)pickedID/correctID;
+        String percentage =  df.format(100 * (Math.abs(1 - dif  )));
+
         if(correctID*0.5 <= pickedID && correctID*1.5 >= pickedID ) {
+            answerInput.setStyle("visibility: visible");
+            answerInput.setFill(Color.web("#38c768"));
+            answerInput.setText("The correct answer was " + correctID + "\nyou were " + percentage + "% off");
             result.setText("You got it right :)");
             result.setStyle("visibility: visible");
             timeBar.setStyle("-fx-border-color: #38c768");
         }
         else {
+            answerInput.setStyle("visibility: visible");
+            answerInput.setFill(Color.web("#e0503d"));
+            answerInput.setStyle("-fx-text-fill: #e0503d");
+            answerInput.setText("The correct answer was " + correctID + "\nyou were " + percentage + "% off");
             result.setText("You got it wrong :(");
             result.setStyle("visibility: visible");
             timeBar.setStyle("-fx-border-color: #e0503d");
@@ -303,11 +315,16 @@ public class SingleplayerScreenCtrl {
     }
 
 
-    public void setHeadGuessTitle(String headTitle) {
-        String[] s = headTitle.split(",");
+    public void setHeadGuessTitle(String screenTitle) {
+        String[] s = screenTitle.split(",");
         screenTitle1.setText(s[0]);
         screenTitle2.setText("");
-        if(s.length > 1)
+        screenTitle1.setStyle("-fx-font-size: 40");
+        screenTitle2.setStyle("-fx-font-size: 40");
+        if(s.length > 1) {
             screenTitle2.setText(s[1]);
+            screenTitle1.setStyle("-fx-font-size: 25");
+            screenTitle2.setStyle("-fx-font-size: 25");
+        }
     }
 }

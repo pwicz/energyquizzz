@@ -32,6 +32,7 @@ import javafx.util.Duration;
 
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -77,7 +78,7 @@ public class MultiplayerScreenCtrl {
     Label score;
 
     @FXML
-    Text picked, result;
+    Text picked, result, answerInput;
 
     @FXML
     Label headTitle, headTitle1, headTitle2;
@@ -110,11 +111,6 @@ public class MultiplayerScreenCtrl {
     //submits answer, stops time,
     public void submitAnswer(){
         if(!canInteractWithUI || choice == null) return;
-
-
-
-
-
 
         Scene scene = mainCtrl.getPrimaryStage().getScene();
         if (mainCtrl.getMultiplayer().equals(scene)) {
@@ -185,13 +181,22 @@ public class MultiplayerScreenCtrl {
 
     public void showAnswerInput(Long correctID, Long pickedID){
         timeBar.setProgress(0.0);
+        DecimalFormat df = new DecimalFormat("#.#");
+        double dif = (double)pickedID/correctID;
+        String percentage = df.format(Math.abs(100 - dif  ));
 
         if(correctID*0.5 <= pickedID && correctID*1.5 >= pickedID ) {
+            answerInput.setStyle("visibility: visible");
+            answerInput.setFill(Color.web("#38c768"));
+            answerInput.setText("The correct answer was " + correctID + "\nyou were " + percentage + "% off");
             result.setText("You got it right :)");
             result.setStyle("visibility: visible");
             timeBar.setStyle("-fx-border-color: #38c768");
         }
         else {
+            answerInput.setStyle("visibility: visible");
+            answerInput.setFill(Color.web("#e0503d"));
+            answerInput.setText("The correct answer was " + correctID + "\nyou were " + percentage + "% off");
             result.setText("You got it wrong :(");
             result.setStyle("visibility: visible");
             timeBar.setStyle("-fx-border-color: #e0503d");
@@ -297,7 +302,7 @@ public class MultiplayerScreenCtrl {
         } else if (mainCtrl.getInputQuestionM().equals(scene)) {
             displayInputActivities(question.activities);
         }
-
+        timeBar.setStyle("-fx-border-color: #38c768");
 
     }
 
@@ -323,14 +328,14 @@ public class MultiplayerScreenCtrl {
             default:
         }
 
+        title.setText(Long.toString(a.consumptionInWh));
+        description2.setText(a.title);
 
-            title.setText(Long.toString(a.consumptionInWh));
-            description2.setText(a.title);
-
-            image.setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
+        image.setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
     }
 
     public void displayInputActivities(List<Activity> activities){
+        answerInput.setStyle("visibility: hidden");
         result.setStyle("visibility: hidden");
         choice = new Rectangle();
         canInteractWithUI = true;
@@ -420,8 +425,15 @@ public class MultiplayerScreenCtrl {
 
     public void setHeadGuessTitle(String headTitle) {
         String[] s = headTitle.split(",");
+        headTitle1.setStyle("-fx-font-size: 40 ");
+        headTitle2.setStyle("-fx-font-size: 40 ");
+        headTitle2.setText("");
         headTitle1.setText(s[0]);
-        if(s.length > 1)
+        if(s.length > 1) {
             headTitle2.setText(s[1]);
+            headTitle1.setStyle("-fx-font-size: 25 ");
+            headTitle2.setStyle("-fx-font-size: 25 ");
+
+        }
     }
 }

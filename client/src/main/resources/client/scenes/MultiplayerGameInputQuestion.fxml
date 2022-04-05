@@ -71,7 +71,8 @@
          <String fx:value="emojiH" />
       </styleClass>
    </ListView>
-   <Text fx:id="description" fill="#38c768" layoutX="239.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="inputQuestion" text="Play computer games for 5 hours." textAlignment="CENTER" wrappingWidth="600.0" />
+   <Text fx:id="description" fill="#38c768" layoutX="239.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="inputQuestion" text="Play computer games for 5 hours." textAlignment="CENTER" wrappingWidth="600.0" AnchorPane.topAnchor="226.05078125" />
+   <Text fx:id="answerInput" fill="#38c768" layoutX="336.0" layoutY="519.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="answerInput" text="The correct answer was 123 you were 13% off" wrappingWidth="405.0" AnchorPane.topAnchor="506.0" />
 
     <stylesheets>
         <URL value="@/client/scenes/styles/styles.css" />
