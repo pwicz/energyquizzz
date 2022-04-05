@@ -43,6 +43,8 @@ public class Question {
             for(Activity a : activities){
                 if(this.correct != a.consumptionInWh) this.incorrect.add((long) a.consumptionInWh);
             }
+        }else{
+            correct = activities.get(0).consumptionInWh;
         }
     }
 

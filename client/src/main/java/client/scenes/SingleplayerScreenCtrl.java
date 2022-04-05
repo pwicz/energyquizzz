@@ -105,7 +105,7 @@ public class SingleplayerScreenCtrl {
 
 
         if (mainCtrl.getSingleplayerScreen().equals(scene)) {
-            displayCompareActivities(question.activities);
+            displayCompareActivities(question);
         } else if (mainCtrl.getSingleplayerGuessScreen().equals(scene)) {
             displayGuessActivities(question);
         } else if (mainCtrl.getSingleplayerInputScreen().equals(scene)) {
@@ -114,8 +114,8 @@ public class SingleplayerScreenCtrl {
 
     }
 
-    private void displayCompareActivities(List<Activity> activities) {
-
+    private void displayCompareActivities(Question question) {
+        List<Activity> activities = question.activities;
         optionToID = new HashMap<>();
 
         // for convenience
@@ -129,7 +129,7 @@ public class SingleplayerScreenCtrl {
 
             if(a == null) continue;
 
-            optionToID.put(options.get(i), a.id);
+            optionToID.put(options.get(i), a.consumptionInWh);
 
             titles.get(i).setText(Long.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
@@ -166,6 +166,7 @@ public class SingleplayerScreenCtrl {
 
     }
     private void displayInputActivities(List<Activity> activities) {
+        result.setStyle("visibility: hidden");
         choice = new Rectangle();
         canInteractWithUI = true;
         submit.setDisable(false);
@@ -265,6 +266,22 @@ public class SingleplayerScreenCtrl {
             }
         }
     }
+
+    public void showAnswerInput(Long correctID, Long pickedID){
+        timeBar.setProgress(0.0);
+
+        if(correctID*0.5 <= pickedID && correctID*1.5 >= pickedID ) {
+            result.setText("You got it right :)");
+            result.setStyle("visibility: visible");
+            timeBar.setStyle("-fx-border-color: #38c768");
+        }
+        else {
+            result.setText("You got it wrong :(");
+            result.setStyle("visibility: visible");
+            timeBar.setStyle("-fx-border-color: #e0503d");
+        }
+    }
+
     public void setScoreTo(int s){
         score.setText("Score " + s);
     }

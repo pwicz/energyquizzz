@@ -14,11 +14,7 @@
 
 <AnchorPane fx:id="anchorPane" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#enterAnswer" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
 
-    <Rectangle fx:id="activity" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="369.0" layoutX="275.5" layoutY="200.0" strokeType="INSIDE" width="251.0">
-        <styleClass>
-            <String fx:value="option" />
-        </styleClass>
-    </Rectangle>
+    <Rectangle fx:id="activity" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="369.0" layoutX="275.5" layoutY="200.0" strokeType="INSIDE" styleClass="option" width="251.0" />
 
     <Label fx:id="headTitle1" alignment="CENTER" layoutX="-61.0" layoutY="14.0" prefHeight="45.0" prefWidth="1200.0" styleClass="question" text="Question 1: How much electricity does this activity cost?" AnchorPane.leftAnchor="-61.0" AnchorPane.topAnchor="14.0">
     </Label>
@@ -32,37 +28,18 @@
     </Label>
 
 
-    <Label fx:id="description1" alignment="CENTER" layoutX="570.0" layoutY="265.0" prefHeight="40.0" prefWidth="200.0" styleClass="description" text="temp cost KWH" textAlignment="CENTER">
+    <Label fx:id="description1" alignment="CENTER" layoutX="570.0" layoutY="241.0" prefHeight="40.0" prefWidth="200.0" styleClass="description" text="temp cost KWH" textAlignment="CENTER">
     </Label>
 
     <Label fx:id="description3" alignment="CENTER" layoutX="570.0" layoutY="365.0" prefHeight="40.0" prefWidth="200.0" styleClass="description" text="temp cost KWH" textAlignment="CENTER">
     </Label>
 
-    <Label fx:id="description4" alignment="CENTER" layoutX="570.0" layoutY="465.0" prefHeight="40.0" prefWidth="200.0" styleClass="description" text="temp cost KWH" textAlignment="CENTER">
+    <Label fx:id="description4" alignment="CENTER" layoutX="570.0" layoutY="491.0" prefHeight="40.0" prefWidth="200.0" styleClass="description" text="temp cost KWH" textAlignment="CENTER">
     </Label>
 
 
-    <Text fx:id="picked" layoutX="367.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text="You picked this one" AnchorPane.leftAnchor="560.5" />
+    <Text fx:id="picked" layoutX="582.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text="You picked this one" AnchorPane.leftAnchor="582.0" />
     <Text fx:id="result" layoutX="698.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text=" " textAlignment="CENTER" wrappingWidth="800" AnchorPane.leftAnchor="138.5" AnchorPane.topAnchor="120.0" />
-
-    <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="72.0" layoutX="560.5" layoutY="250.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0">
-        <styleClass>
-            <String fx:value="option" />
-            <String fx:value="hover-element" />
-        </styleClass>
-    </Rectangle>
-    <Rectangle fx:id="option2" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="72.0" layoutX="560.5" layoutY="348.5" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0">
-        <styleClass>
-            <String fx:value="option" />
-            <String fx:value="hover-element" />
-        </styleClass>
-    </Rectangle>
-    <Rectangle fx:id="option3" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="72.0" layoutX="560.5" layoutY="447.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0">
-        <styleClass>
-            <String fx:value="option" />
-            <String fx:value="hover-element" />
-        </styleClass>
-    </Rectangle>
 
     <Label fx:id="jokerHolder" layoutX="63.0" layoutY="430.0" prefHeight="300.0" prefWidth="100.0" styleClass="gradientBox" AnchorPane.leftAnchor="30" AnchorPane.topAnchor="234.5">
     </Label>
@@ -114,6 +91,25 @@
       </styleClass>
    </ListView>
    <Label fx:id="headTitle2" alignment="CENTER" layoutX="-61.0" layoutY="65.0" prefHeight="45.0" prefWidth="1200.0" styleClass="question" text="Question 1: How much electricity does this activity cost?" AnchorPane.leftAnchor="-61.0" AnchorPane.topAnchor="65.0" />
+
+    <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="72.0" layoutX="561.0" layoutY="224.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.topAnchor="225.0">
+        <styleClass>
+            <String fx:value="option" />
+            <String fx:value="hover-element" />
+        </styleClass>
+    </Rectangle>
+    <Rectangle fx:id="option2" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="72.0" layoutX="561.0" layoutY="350.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.topAnchor="350.0">
+        <styleClass>
+            <String fx:value="option" />
+            <String fx:value="hover-element" />
+        </styleClass>
+    </Rectangle>
+    <Rectangle fx:id="option3" arcHeight="5.0" arcWidth="5.0" focusTraversable="true" height="72.0" layoutX="561.0" layoutY="473.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.topAnchor="475.0">
+        <styleClass>
+            <String fx:value="option" />
+            <String fx:value="hover-element" />
+        </styleClass>
+    </Rectangle>
 
     <stylesheets>
         <URL value="@/client/scenes/styles/styles.css" />

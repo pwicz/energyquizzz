@@ -20,6 +20,7 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Activity;
 import commons.ClientMessage;
+import commons.Question;
 import commons.ServerMessage;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -216,8 +217,13 @@ public class MainCtrl {
                 break;
             case DISPLAY_ANSWER:
                 runLater(() -> {
+                    if(msg.typeQ == Question.Type.ESTIMATION){
+                        multiplayerScreenInputCtrl.showAnswerInput(msg.correctID, msg.pickedID);
+                    }else {
+                        multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
+                        multiplayerScreenGuessCtrl.showAnswer(msg.correctID, msg.pickedID);
+                    }
                     System.out.println("[update] topScores: " + msg.topScores);
-                    multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
                     multiplayerScreenCtrl.updateScore(msg.score);
                     multiplayerScreenGuessCtrl.updateScore(msg.score);
                     multiplayerScreenInputCtrl.updateScore(msg.score);
@@ -253,8 +259,15 @@ public class MainCtrl {
                 long correctID = msg.correctAnswerID;
                 long pickedID = msg.pickedAnswerID;
                 runLater(() -> {
+                    if(msg.typeQ == Question.Type.ESTIMATION){
+                        singleplayerScreenInputCtrl.showAnswerInput(correctID, pickedID);
+                    }else{
+                        singleplayerScreenGuessCtrl.showAnswer(correctID, pickedID);
+                        singleplayerScreenCtrl.showAnswer(correctID, pickedID);
+                    }
+                    singleplayerScreenInputCtrl.setScoreTo(msg.score);
+                    singleplayerScreenGuessCtrl.setScoreTo(msg.score);
                     singleplayerScreenCtrl.setScoreTo(msg.score);
-                    singleplayerScreenCtrl.showAnswer(correctID, pickedID);
                 });
                 break;
             case END:

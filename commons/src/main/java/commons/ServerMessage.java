@@ -13,7 +13,7 @@ public class ServerMessage {
 
     public Type type;
     // add more fields as we start exchanging messages
-
+    public Question.Type typeQ;
     public Question question;
     public int score;
     public double timerFull;

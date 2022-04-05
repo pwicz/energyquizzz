@@ -77,7 +77,7 @@ public class MultiplayerScreenCtrl {
     Label score;
 
     @FXML
-    Text picked;
+    Text picked, result;
 
     @FXML
     Label headTitle, headTitle1, headTitle2;
@@ -151,23 +151,50 @@ public class MultiplayerScreenCtrl {
     }
 
     public void showAnswer(Long correctID, Long pickedID) {
-        for (var entry : optionToID.entrySet()) {
+        timeBar.setProgress(0.0);
+        for(var entry : optionToID.entrySet()){
             Long activityID = entry.getValue();
             Rectangle op = entry.getKey();
 
             // set rectangle color
-            if (Objects.equals(activityID, correctID)) {
+            if(Objects.equals(activityID, correctID)){
                 op.setStyle("-fx-stroke: #38c768");
-            } else {
+            }
+            else{
                 op.setStyle("-fx-stroke: #e0503d");
             }
 
-            if (Objects.equals(activityID, pickedID)) {
+            if(Objects.equals(activityID, pickedID)){
                 // render the "You picked this one" text
                 picked.setLayoutX(op.getLayoutX() + (op.getWidth() - picked.getLayoutBounds().getWidth()) / 2.0);
                 picked.setLayoutY(op.getLayoutY() - 15.0);
                 picked.setStyle("visibility: visible");
             }
+
+            if(Objects.equals(correctID, pickedID)){
+                result.setText("You got it right :)");
+                result.setStyle("visibility: visible");
+                timeBar.setStyle("-fx-border-color: #38c768");
+            }else{
+                result.setText("You got it wrong :(");
+                result.setStyle("visibility: visible");
+                timeBar.setStyle("-fx-border-color: #e0503d");
+            }
+        }
+    }
+
+    public void showAnswerInput(Long correctID, Long pickedID){
+        timeBar.setProgress(0.0);
+
+        if(correctID*0.5 <= pickedID && correctID*1.5 >= pickedID ) {
+            result.setText("You got it right :)");
+            result.setStyle("visibility: visible");
+            timeBar.setStyle("-fx-border-color: #38c768");
+        }
+        else {
+            result.setText("You got it wrong :(");
+            result.setStyle("visibility: visible");
+            timeBar.setStyle("-fx-border-color: #e0503d");
         }
     }
 
@@ -263,9 +290,6 @@ public class MultiplayerScreenCtrl {
 
     public void displayActivities(Question question, Scene scene){
         // for convenience
-
-
-
         if (mainCtrl.getMultiplayer().equals(scene)) {
             displayCompareActivities(question.activities);
         } else if (mainCtrl.getGuessQuestionM().equals(scene)) {
@@ -307,6 +331,7 @@ public class MultiplayerScreenCtrl {
     }
 
     public void displayInputActivities(List<Activity> activities){
+        result.setStyle("visibility: hidden");
         choice = new Rectangle();
         canInteractWithUI = true;
         submit.setDisable(false);
@@ -325,7 +350,7 @@ public class MultiplayerScreenCtrl {
             Activity a = activities.get(i);
 
             if(a == null) continue;
-            optionToID.put(options.get(i), a.id);
+            optionToID.put(options.get(i), a.consumptionInWh);
 
             titles.get(i).setText(Long.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
@@ -336,7 +361,7 @@ public class MultiplayerScreenCtrl {
 
     public void resetUI(){
         canInteractWithUI = true;
-
+        result.setStyle("visibility: hidden");
         option1.setStyle("-fx-stroke: #fff");
         option2.setStyle("-fx-stroke: #fff");
         option3.setStyle("-fx-stroke: #fff");
