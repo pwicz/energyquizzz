@@ -166,13 +166,14 @@ public class SingleplayerScreenCtrl {
 
     }
     private void displayInputActivities(List<Activity> activities) {
+        textField.setText("");
+
         answerInput.setStyle("visibility: hidden");
         result.setStyle("visibility: hidden");
         choice = new Rectangle();
         canInteractWithUI = true;
         submit.setDisable(false);
         description.setText(activities.get(0).title);
-
     }
 
     /**

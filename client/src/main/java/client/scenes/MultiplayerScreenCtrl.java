@@ -333,6 +333,8 @@ public class MultiplayerScreenCtrl {
     }
 
     public void displayInputActivities(List<Activity> activities){
+        textField.setText("");
+
         answerInput.setStyle("visibility: hidden");
         result.setStyle("visibility: hidden");
         choice = new Rectangle();
