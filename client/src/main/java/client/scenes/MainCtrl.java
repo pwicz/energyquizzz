@@ -637,6 +637,14 @@ public class MainCtrl {
         this.server.setServerURL(serverName);
     }
 
+    public void cleanupAndClose(){
+        multiplayerScreenCtrl.cleanup();
+        multiplayerScreenGuessCtrl.cleanup();
+        multiplayerScreenInputCtrl.cleanup();
+
+        primaryStage.close();
+    }
+
     public boolean connectToServer(String url){
         this.server.setServerURL(url);
 

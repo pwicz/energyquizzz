@@ -56,6 +56,8 @@ public class MultiplayerScreenCtrl {
 
     private Timeline timer;
 
+    private List<Timer> notifications;
+
     private boolean cutAnswerUsed = false;
     private boolean doublePointsUsed = false;
     private boolean splitTimeUsed = false;
@@ -113,6 +115,8 @@ public class MultiplayerScreenCtrl {
         this.mainCtrl = mainCtrl;
         optionToID = new HashMap<>();
         runLater(this::initilizeEmojis);
+
+        notifications = new ArrayList<>();
     }
 
     public void leave(){
@@ -570,15 +574,20 @@ public class MultiplayerScreenCtrl {
         jokerMessages.addRow(jokerMessages.getRowCount(), textTest);
         GridPane.setHalignment(textTest, HPos.RIGHT);
 
-        // remove notification after 3 seconds
-        new Timer().schedule(new TimerTask() {
+//         remove notification after 3 seconds
+        var x = new Timer();
+        x.schedule(new TimerTask() {
             @Override
             public void run() {
                 runLater(() -> {
-                    jokerMessages.getChildren().remove(textTest);
+                    System.out.println("REMOVING");
+                    if(jokerMessages != null){
+                        jokerMessages.getChildren().remove(textTest);
+                    }
                 });
             }
         }, 3000);
+        notifications.add(x);
     }
 
     public void initilizeEmojis(){
@@ -634,5 +643,9 @@ public class MultiplayerScreenCtrl {
     public void timeStop(){
         if(timer!= null)
             timer.stop();
+    }
+
+    public void cleanup(){
+        for(var t : notifications) t.cancel();
     }
 }

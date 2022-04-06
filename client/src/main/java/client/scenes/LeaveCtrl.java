@@ -27,7 +27,7 @@ public class LeaveCtrl {
 
         if(afterLeave == null){
             // close the application
-            mainCtrl.getPrimaryStage().close();
+            mainCtrl.cleanupAndClose();
         }
         else
             afterLeave.doSomething();
