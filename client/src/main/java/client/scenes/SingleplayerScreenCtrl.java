@@ -194,12 +194,6 @@ public class SingleplayerScreenCtrl {
     public void submitAnswer(){
         if(!canInteractWithUI || choice == null) return;
 
-        lockUI();
-
-        if(timer != null){
-            timer.stop();
-        }
-
         ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
 
@@ -220,6 +214,12 @@ public class SingleplayerScreenCtrl {
         else{
             msg.chosenActivity = optionToID.get(choice);
             mainCtrl.getServer().send("/app/general", msg);
+        }
+
+        lockUI();
+
+        if(timer != null){
+            timer.stop();
         }
     }
 

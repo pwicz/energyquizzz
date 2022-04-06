@@ -134,12 +134,6 @@ public class MultiplayerScreenCtrl {
     public void submitAnswer(){
         if(!canInteractWithUI || choice == null) return;
 
-        lockUI();
-
-        if(timer != null){
-            timer.stop();
-        }
-
         ClientMessage msg = new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
 
@@ -159,6 +153,12 @@ public class MultiplayerScreenCtrl {
         else{
             msg.chosenActivity = optionToID.get(choice);
             mainCtrl.getServer().send("/app/general", msg);
+        }
+
+        lockUI();
+
+        if(timer != null){
+            timer.stop();
         }
     }
 
