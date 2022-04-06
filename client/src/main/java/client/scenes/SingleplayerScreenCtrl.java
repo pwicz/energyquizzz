@@ -226,7 +226,7 @@ public class SingleplayerScreenCtrl {
         submit.setDisable(true);
     }
 
-    public void showAnswer(Long correctID, Long pickedID){
+    public void showAnswer(Long correctID, Long pickedID, int pointReceived){
         timeBar.setProgress(0.0);
         for(var entry : optionToID.entrySet()){
             Long activityID = entry.getValue();
@@ -248,7 +248,7 @@ public class SingleplayerScreenCtrl {
             }
 
             if(Objects.equals(correctID, pickedID)){
-                result.setText("You got it right :)");
+                result.setText("You got it right :) +" + pointReceived + " points");
                 result.setStyle("visibility: visible");
                 timeBar.setStyle("-fx-border-color: #38c768");
             }else{

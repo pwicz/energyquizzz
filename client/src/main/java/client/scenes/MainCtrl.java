@@ -220,8 +220,8 @@ public class MainCtrl {
                         multiplayerScreenInputCtrl.showAnswerInput(msg.answeredCorrect,
                                 msg.correctID, msg.pickedID, msg.receivedPoints);
                     }else {
-                        multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
-                        multiplayerScreenGuessCtrl.showAnswer(msg.correctID, msg.pickedID);
+                        multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID, msg.receivedPoints);
+                        multiplayerScreenGuessCtrl.showAnswer(msg.correctID, msg.pickedID, msg.receivedPoints);
                     }
                     System.out.println("[update] topScores: " + msg.topScores);
                     multiplayerScreenCtrl.updateScore(msg.score);
@@ -263,8 +263,8 @@ public class MainCtrl {
                         singleplayerScreenInputCtrl.showAnswerInput(msg.answeredCorrect,
                                 correctID, pickedID, msg.receivedPoints);
                     }else{
-                        singleplayerScreenGuessCtrl.showAnswer(correctID, pickedID);
-                        singleplayerScreenCtrl.showAnswer(correctID, pickedID);
+                        singleplayerScreenGuessCtrl.showAnswer(correctID, pickedID, msg.receivedPoints);
+                        singleplayerScreenCtrl.showAnswer(correctID, pickedID, msg.receivedPoints);
                     }
                     singleplayerScreenInputCtrl.setScoreTo(msg.score);
                     singleplayerScreenGuessCtrl.setScoreTo(msg.score);

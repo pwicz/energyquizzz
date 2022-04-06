@@ -172,6 +172,7 @@ public class MainMessageController {
     public void processAnswer(ClientMessage msg, Player p, Game g) {
         g.setPlayersAnswered(g.getPlayersAnswered() + 1);
 
+        p.setAnswerStatus(false);
         int scoreForQuestion = 0;
         double timeLeft = timeToAnswer - (System.currentTimeMillis() - g.getQuestionStartTime()) / 1000.0;
 
