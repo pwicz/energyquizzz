@@ -25,7 +25,7 @@ public class ServerMessage {
     public List<String> correctlyAnswered;
     public List<String> incorrectlyAnswered;
 
-    public List<String> topScores;
+    public List<Score> topScores;
     public List<String> playersWaiting;
     public long pickedID;
     public long correctID;

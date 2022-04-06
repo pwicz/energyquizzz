@@ -429,14 +429,14 @@ public class MainMessageController {
         return result;
     }
 
-    public List<String> getTopScores(Game game) {
+    public List<Score> getTopScores(Game game) {
         List<Player> playerList = game.getPlayers().stream()
                 .sorted(Comparator.comparing(Player::getScore).thenComparing(Player::getID).reversed())
                 .limit(5)
                 .collect(Collectors.toList());
-        List<String> topScores = new ArrayList<>();
+        List<Score> topScores = new ArrayList<>();
         for (Player p : playerList) {
-            topScores.add(p.getName() + ":" + p.getScore());
+            topScores.add(new Score(p.getName(),p.getScore()));
         }
         return topScores;
     }

@@ -1,6 +1,7 @@
 package client.scenes;
 
 import commons.ClientMessage;
+import commons.Score;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,7 +21,7 @@ public class InBetweenScoreCtrl {
     Button leave;
 
     @FXML
-    ListView<String> leaderboardSingle;
+    ListView<Score> leaderboardSingle;
 
     @FXML
     ListView<String> leaderboardG;
@@ -43,9 +44,10 @@ public class InBetweenScoreCtrl {
         endOfGame.setVisible(false);
     }
 
-    public void insertLeaderboard(List<String> players)  { //needs to change to import the database leaderboard
+    public void insertLeaderboard(List<Score> players)  { //needs to change to import the database leaderboard
         leaderboardSingle.getItems().clear();
-        leaderboardSingle.getItems().addAll(refactorPlayerList(players));
+        leaderboardSingle.setCellFactory(lv -> new CustomListCell());
+        leaderboardSingle.getItems().addAll(players);
 
     }
     public void insertLeaderboardG(List<String> players) { //needs to change to import the database leaderboard
