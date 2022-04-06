@@ -462,6 +462,9 @@ public class MultiplayerScreenCtrl {
         option1.setStyle("-fx-stroke: #fff");
         option2.setStyle("-fx-stroke: #fff");
         option3.setStyle("-fx-stroke: #fff");
+        option1.setDisable(false);
+        option2.setDisable(false);
+        option3.setDisable(false);
 
         optionToID = new HashMap<>();
         choice = null;
