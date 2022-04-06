@@ -1,0 +1,41 @@
+.your-stats{
+    -fx-border-color: linear-gradient(to left, #1BED62, #21A0E8);
+    -fx-border-radius: 5px;
+    -fx-font-size: 36;
+    -fx-text-fill: linear-gradient(to left, #1BED62, #21A0E8);
+}
+
+.name{
+    -fx-font-size: 36;
+    -fx-text-fill: white;
+}
+
+.scroll-bar:vertical{
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal{
+    -fx-background-color: transparent;
+}
+
+.thumb{
+    -fx-background-color: black;
+}
+
+.list-cell{
+    -fx-background-color: #272727;
+    -fx-text-fill: linear-gradient(to left, #1BED62, #21A0E8);
+    -fx-font-size: 15px;
+}
+
+.score-board{
+    -fx-padding: 3px ;
+    -fx-border-color: linear-gradient(to left, #1BED62, #21A0E8);
+}
+
+.bottom-score{
+    -fx-text-fill: #38C768;
+    -fx-font-size: 35;
+    -fx-font-family: "Roboto Light";
+}
+

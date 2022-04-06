@@ -8,7 +8,7 @@ public class ServerMessage {
     public enum Type{
         NEW_SINGLEPLAYER_GAME, NEW_MULTIPLAYER_GAME, TEST, NEXT_QUESTION, RESULT, END,
         LOAD_NEW_QUESTIONS, DISPLAY_ANSWER, DISPLAY_INBETWEENSCORES, END_GAME, INIT_PLAYER,
-        EXTRA_PLAYER, PING, SHOW_EMOJI
+        EXTRA_PLAYER, PING, SHOW_EMOJI, NAME_TAKEN
     }
 
     public Type type;
@@ -33,6 +33,8 @@ public class ServerMessage {
     public int totalQuestions;
     public String imgName;
     public String namePLayerEmoji;
+
+    public String playerName;
 
     public ServerMessage() {
     }
