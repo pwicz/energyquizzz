@@ -120,10 +120,8 @@ public class MainCtrl {
                            Pair<SingleplayerScreenCtrl, Parent> guesQuestionS,
                            Pair<EndGameScreenCtrl, Parent> end){
         this.primaryStage = primaryStage;
-
         this.splashScreenCtrl = splashScreen.getKey();
         this.splash = new Scene(splashScreen.getValue());
-
         this.adminPanelCtrl = adminPanel.getKey();
         this.adminPanel = new Scene(adminPanel.getValue());
 
@@ -174,7 +172,6 @@ public class MainCtrl {
 
         this.help = new Scene(help.getValue());
         this.helpCtrl = help.getKey();
-
         primaryStage.setResizable(false);
         showSplash();
         primaryStage.show();
