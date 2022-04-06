@@ -475,7 +475,7 @@ public class MainMessageController {
 
     public ServerMessage displayAnswer(Player p, Game g) {
         ServerMessage result = new ServerMessage(ServerMessage.Type.DISPLAY_ANSWER);
-        result.topScores = getTop5Scores(g);
+        result.topScores = getTopScores(g);
         result.score = p.getScore();
         result.pickedID = p.getAnswer();
         result.correctID = g.getCorrectAnswerID();
@@ -488,25 +488,13 @@ public class MainMessageController {
         return result;
     }
 
-    public List<String> getTop5Scores(Game game) {
-        List<Player> playerList = game.getPlayers().stream()
-                .sorted(Comparator.comparing(Player::getScore).thenComparing(Player::getID).reversed())
-                .limit(5)
-                .collect(Collectors.toList());
-        List<String> topScores = new ArrayList<>();
-        for (Player p : playerList) {
-            topScores.add(p.getName() + ":" + p.getScore());
-        }
-        return topScores;
-    }
-
-    public List<String> getTopScores(Game game) {
+    public List<Score> getTopScores(Game game) {
         List<Player> playerList = game.getPlayers().stream()
                 .sorted(Comparator.comparing(Player::getScore).thenComparing(Player::getID).reversed())
                 .collect(Collectors.toList());
-        List<String> topScores = new ArrayList<>();
+        List<Score> topScores = new ArrayList<>();
         for (Player p : playerList) {
-            topScores.add(p.getName() + ":" + p.getScore());
+            topScores.add(new Score(p.getName(), p.getScore()));
         }
         return topScores;
     }
@@ -560,7 +548,7 @@ public class MainMessageController {
                 for(var p : g.getPlayers()){
                     System.out.println("[msg] revealing in-between-scores to all players");
                     ServerMessage result = new ServerMessage(ServerMessage.Type.DISPLAY_INBETWEENSCORES);
-                    result.topScores = getTop5Scores(g);
+                    result.topScores = getTopScores(g);
                     result.questionCounter = g.getQuestionCounter();
                     result.totalQuestions = questionsPerGame;
                     simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
