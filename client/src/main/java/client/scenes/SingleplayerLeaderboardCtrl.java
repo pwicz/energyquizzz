@@ -86,7 +86,7 @@ public class SingleplayerLeaderboardCtrl {
      *
      */
     public void insertLeaderboard() { //needs to change to import the database leaderboard
-        List<String> topScores = new ArrayList<>();
+        leaderboard.getItems().clear();
         List<Score> response = mainCtrl.getServer().getTopScores();
         leaderboard.setCellFactory(lv -> new CustomListCell());
         if(response != null){
