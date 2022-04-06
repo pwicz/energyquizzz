@@ -217,7 +217,8 @@ public class MainCtrl {
             case DISPLAY_ANSWER:
                 runLater(() -> {
                     if(msg.typeQ == Question.Type.ESTIMATION){
-                        multiplayerScreenInputCtrl.showAnswerInput(msg.answeredCorrect, msg.correctID, msg.pickedID);
+                        multiplayerScreenInputCtrl.showAnswerInput(msg.answeredCorrect,
+                                msg.correctID, msg.pickedID, msg.receivedPoints);
                     }else {
                         multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
                         multiplayerScreenGuessCtrl.showAnswer(msg.correctID, msg.pickedID);
@@ -255,11 +256,12 @@ public class MainCtrl {
                 });
                 break;
             case RESULT:
-                long correctID = msg.correctAnswerID;
-                long pickedID = msg.pickedAnswerID;
+                long correctID = msg.correctID;
+                long pickedID = msg.pickedID;
                 runLater(() -> {
                     if(msg.typeQ == Question.Type.ESTIMATION){
-                        singleplayerScreenInputCtrl.showAnswerInput(correctID, pickedID);
+                        singleplayerScreenInputCtrl.showAnswerInput(msg.answeredCorrect,
+                                correctID, pickedID, msg.receivedPoints);
                     }else{
                         singleplayerScreenGuessCtrl.showAnswer(correctID, pickedID);
                         singleplayerScreenCtrl.showAnswer(correctID, pickedID);

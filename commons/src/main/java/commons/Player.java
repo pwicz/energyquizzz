@@ -6,6 +6,7 @@ public class Player {
     private String name;
     private String ID;
     private int score = 0;
+    private int recentlyReceivedPoints = 0;
     private long answer;
     private boolean answerStatus = false;
 
@@ -66,4 +67,11 @@ public class Player {
         return answerStatus;
     }
 
+    public int getRecentlyReceivedPoints() {
+        return recentlyReceivedPoints;
+    }
+
+    public void setRecentlyReceivedPoints(int recentlyReceivedPoints) {
+        this.recentlyReceivedPoints = recentlyReceivedPoints;
+    }
 }

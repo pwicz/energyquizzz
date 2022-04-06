@@ -118,16 +118,14 @@ public class MultiplayerScreenCtrl {
         Scene scene = mainCtrl.getPrimaryStage().getScene();
         if (mainCtrl.getInputQuestionM().equals(scene)) {
             if(textField.getText().equals("")){
-                textField.setText("give a Number");
                 return;
             }
             try{
-                //todo: make a working message
                 long answer = Long.parseLong(textField.getText());
                 msg.chosenActivity = answer;
                 mainCtrl.getServer().send("/app/general", msg);
             } catch (NumberFormatException e){
-                textField.setText("give a Number");
+                textField.setText("incorrect number");
                 return;
             }
         }
@@ -178,18 +176,17 @@ public class MultiplayerScreenCtrl {
         }
     }
 
-    public void showAnswerInput(boolean answeredCorrect, Long correctID, Long pickedID){
+    public void showAnswerInput(boolean answeredCorrect, Long correctID, Long pickedID, int pointReceived){
         timeBar.setProgress(0.0);
 
         DecimalFormat df = new DecimalFormat("#.#");
         double dif = (double)pickedID/correctID;
-        String percentage = df.format(Math.abs(1.0 - dif));
+        String percentage = df.format(Math.abs(1.0 - dif) * 100);
 
         if(answeredCorrect) {
             answerInput.setStyle("visibility: visible");
             answerInput.setFill(Color.web("#38c768"));
-            answerInput.setText("The correct answer was " + correctID + "\nyou were " + percentage + "% off");
-            result.setText("You got it right :) +42 points");
+            result.setText("You got it right :) +" + pointReceived + " points");
             result.setStyle("visibility: visible");
             timeBar.setStyle("-fx-border-color: #38c768");
         }

@@ -198,6 +198,7 @@ public class MainMessageController {
         }
 
         p.setScore(p.getScore() + scoreForQuestion);
+        p.setRecentlyReceivedPoints(scoreForQuestion);
         p.setHasAnswered(true);
         p.setAnswer(msg.chosenActivity);
     }
@@ -230,9 +231,6 @@ public class MainMessageController {
         //Chose number for random question type
         Random rand = new Random();
         int randomType = rand.nextInt(Question.Type.values().length);
-
-        // TEST ONLY TODO: remove after testing
-        randomType = 3;
 
         //Type = Compare
         if(randomType == 0){
@@ -356,9 +354,11 @@ public class MainMessageController {
         // send the correct answer id and the picked answer id
         ServerMessage m = new ServerMessage(ServerMessage.Type.RESULT);
         m.typeQ = g.getType();
-        m.correctAnswerID = g.getCorrectAnswerID();
-        m.pickedAnswerID = msg.chosenActivity;
+        m.correctID = g.getCorrectAnswerID();
+        m.pickedID = msg.chosenActivity;
         m.score = p.getScore();
+        m.answeredCorrect = p.getAnswerStatus();
+        m.receivedPoints = p.getRecentlyReceivedPoints();
         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, m);
 
         if (g.getRound() < questionsPerGame) {
@@ -441,6 +441,7 @@ public class MainMessageController {
         result.incorrectlyAnswered = incorrectAnswer(g);
         result.typeQ = g.getType();
         result.answeredCorrect = p.getAnswerStatus();
+        result.receivedPoints = p.getRecentlyReceivedPoints();
 
         return result;
     }
