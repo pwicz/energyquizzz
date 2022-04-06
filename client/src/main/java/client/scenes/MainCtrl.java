@@ -432,7 +432,8 @@ public class MainCtrl {
                         new ClientMessage(ClientMessage.Type.QUIT_WAITING_ROOM, getClientID(), getGameID())));
 
             }else{
-                showLeave(null, () -> server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID)));
+                showLeave(null, () -> server.send("/app/general",
+                        new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID)));
 
             }
         });
