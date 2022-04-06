@@ -183,7 +183,7 @@ public class MultiplayerScreenCtrl {
 
         DecimalFormat df = new DecimalFormat("#.#");
         double dif = (double)pickedID/correctID;
-        String percentage = df.format(Math.abs(100 - dif));
+        String percentage = df.format(Math.abs(1.0 - dif));
 
         if(answeredCorrect) {
             answerInput.setStyle("visibility: visible");
@@ -196,11 +196,12 @@ public class MultiplayerScreenCtrl {
         else {
             answerInput.setStyle("visibility: visible");
             answerInput.setFill(Color.web("#e0503d"));
-            answerInput.setText("The correct answer was " + correctID + "\nyou were " + percentage + "% off");
             result.setText("You got it wrong :(");
             result.setStyle("visibility: visible");
             timeBar.setStyle("-fx-border-color: #e0503d");
         }
+
+        answerInput.setText("The correct answer was " + correctID + "\nyou were " + percentage + "% off");
     }
 
     //shows an emoji
