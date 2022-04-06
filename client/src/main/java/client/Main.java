@@ -75,12 +75,26 @@ public class Main extends Application {
 
         var help = FXML.load(HelpCtrl.class, "client", "scenes", "Help.fxml");
 
+        var inputQuestionM =
+                FXML.load(MultiplayerScreenCtrl.class, "client", "scenes", "MultiplayerGameInputQuestion.fxml");
+        var guesQuestionM =
+                FXML.load(MultiplayerScreenCtrl.class, "client", "scenes", "MultiplayerGameGuessQuestion.fxml");
+
+        var inputQuestionS =
+                FXML.load(SingleplayerScreenCtrl.class, "client", "scenes", "SingleplayerInputQuestion.fxml");
+        var guesQuestionS =
+                FXML.load(SingleplayerScreenCtrl.class, "client", "scenes", "SingleplayerGameGuessQuestion.fxml");
+
+
+
+
         var end = FXML.load(EndGameScreenCtrl.class, "client", "scenes", "EndGameScreen.fxml");
         var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 
         mainCtrl.initialize(primaryStage, splashScreen, adminPanel, editActivity, createActivity,
                 singleplayerLeaderboard, singleplayerGame, waitingRoom, multiplayerGame,
-                inBetweenScore, leave, inputName, inputServer, help, end);
+                inBetweenScore, leave, inputName, inputServer, help, inputQuestionM, guesQuestionM
+                , inputQuestionS, guesQuestionS, end);
 
     }
 }

@@ -20,8 +20,8 @@ import client.utils.ServerUtils;
 import com.google.inject.Inject;
 import commons.Activity;
 import commons.ClientMessage;
+import commons.Question;
 import commons.ServerMessage;
-import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -43,7 +43,12 @@ public class MainCtrl {
     private Scene splash;
 
     private Scene multiplayer;
+    private Scene guessQuestionM;
+    private Scene inputQuestionM;
+
     private  MultiplayerScreenCtrl multiplayerScreenCtrl;
+    private  MultiplayerScreenCtrl multiplayerScreenGuessCtrl;
+    private  MultiplayerScreenCtrl multiplayerScreenInputCtrl;
 
     private Scene singleLeaderboard;
     private SingleplayerLeaderboardCtrl singleplayerLeaderboardCtrl;
@@ -55,7 +60,12 @@ public class MainCtrl {
     private LeaveCtrl leaveCtrl;
 
     private Scene singleplayerScreen;
+    private Scene singleplayerInputScreen;
+    private Scene singleplayerGuessScreen;
+
     private SingleplayerScreenCtrl singleplayerScreenCtrl;
+    private SingleplayerScreenCtrl singleplayerScreenInputCtrl;
+    private SingleplayerScreenCtrl singleplayerScreenGuessCtrl;
 
     private Scene adminPanel;
     private AdminPanelCtrl adminPanelCtrl;
@@ -104,12 +114,14 @@ public class MainCtrl {
                            Pair<InputNameScreenCtrl, Parent> inputName,
                            Pair<InputServerScreenCtrl, Parent> inputServer,
                            Pair<HelpCtrl, Parent> help,
+                           Pair<MultiplayerScreenCtrl, Parent> inputQuestion,
+                           Pair<MultiplayerScreenCtrl, Parent> guesQuestion,
+                           Pair<SingleplayerScreenCtrl, Parent> inputQuestionS,
+                           Pair<SingleplayerScreenCtrl, Parent> guesQuestionS,
                            Pair<EndGameScreenCtrl, Parent> end){
         this.primaryStage = primaryStage;
-
         this.splashScreenCtrl = splashScreen.getKey();
         this.splash = new Scene(splashScreen.getValue());
-
         this.adminPanelCtrl = adminPanel.getKey();
         this.adminPanel = new Scene(adminPanel.getValue());
 
@@ -128,8 +140,20 @@ public class MainCtrl {
         this.singleplayerScreen = new Scene(singleplayerGame.getValue());
         this.singleplayerScreenCtrl = singleplayerGame.getKey();
 
+        this.singleplayerGuessScreen = new Scene(guesQuestionS.getValue());
+        this.singleplayerScreenGuessCtrl = guesQuestionS.getKey();
+
+        this.singleplayerScreenInputCtrl = inputQuestionS.getKey();
+        this.singleplayerInputScreen = new Scene(inputQuestionS.getValue());
+
         this.multiplayerScreenCtrl = multiplayer.getKey();
         this.multiplayer = new Scene(multiplayer.getValue());
+
+        this.inputQuestionM = new Scene(inputQuestion.getValue());
+        this.multiplayerScreenInputCtrl = inputQuestion.getKey();
+
+        this.guessQuestionM = new Scene(guesQuestion.getValue());
+        this.multiplayerScreenGuessCtrl = guesQuestion.getKey();
 
         this.inBetweenScoreCtrl = inBetweenScore.getKey();
         this.inBetweenScore = new Scene(inBetweenScore.getValue());
@@ -148,9 +172,7 @@ public class MainCtrl {
 
         this.help = new Scene(help.getValue());
         this.helpCtrl = help.getKey();
-
         primaryStage.setResizable(false);
-
         showSplash();
         primaryStage.show();
         inputServerScreenCtrl.hideLeaveButton();
@@ -166,6 +188,8 @@ public class MainCtrl {
                 name = msg.playerName;
                 runLater(() -> {
                     multiplayerScreenCtrl.updateScore(0);
+                    multiplayerScreenGuessCtrl.updateScore(0);
+                    multiplayerScreenInputCtrl.updateScore(0);
                     showWaitingRoom();
                 });
 
@@ -182,26 +206,31 @@ public class MainCtrl {
             case NEW_SINGLEPLAYER_GAME:
                 gameID = msg.gameID;
                 primaryStage.setOnCloseRequest(e -> {
-                    server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID));
-                    Platform.exit();
-                    System.exit(0);
+                    e.consume();
+                    showLeave(null, () -> server.send("/app/general",
+                            new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID)));
+
                 });
                 break;
             case LOAD_NEW_QUESTIONS:
                 // runLater() must be used to run the following code
                 // on the JavaFX Application Thread
-                runLater(() -> {
-                    multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
-                    multiplayerScreenCtrl.displayActivities(msg.question.getActivities());
-                    showMultiplayerScreen();
-                });
+                runLater(() -> showQuestionM(msg));
                 System.out.println("[msg] loadingGame");
                 break;
             case DISPLAY_ANSWER:
                 runLater(() -> {
+                    if(msg.typeQ == Question.Type.ESTIMATION){
+                        multiplayerScreenInputCtrl.showAnswerInput(msg.answeredCorrect,
+                                msg.correctID, msg.pickedID, msg.receivedPoints);
+                    }else {
+                        multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID, msg.receivedPoints);
+                        multiplayerScreenGuessCtrl.showAnswer(msg.correctID, msg.pickedID, msg.receivedPoints);
+                    }
                     System.out.println("[update] topScores: " + msg.topScores);
-                    multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
                     multiplayerScreenCtrl.updateScore(msg.score);
+                    multiplayerScreenGuessCtrl.updateScore(msg.score);
+                    multiplayerScreenInputCtrl.updateScore(msg.score);
                     inBetweenScoreCtrl.setScoreTo(msg.score);
                     inBetweenScoreCtrl.insertLeaderboard(msg.topScores);
                     inBetweenScoreCtrl.insertLeaderboardG(msg.correctlyAnswered);
@@ -225,40 +254,40 @@ public class MainCtrl {
                     showEndScreen();
                 });
                 primaryStage.setOnCloseRequest(e -> {
-                    Platform.exit();
-                    System.exit(0);
+                    e.consume();
+                    showLeave(null);
                 });
                 System.out.println("[msg] end game");
                 break;
             case NEXT_QUESTION:
                 // runLater() must be used to run the following code
                 // on the JavaFX Application Thread
-                runLater(() -> {
-                    singleplayerScreenCtrl.restoreView();
-                    singleplayerScreenCtrl.displayActivities(msg.question.activities);
-                    singleplayerScreenCtrl.setScoreTo(msg.score);
-                    singleplayerScreenCtrl.setTitleTo("Question " + msg.round + ": " + msg.question.title);
-                    singleplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
-                    showSingleplayerGameScreen();
-                });
+                runLater(() -> showQuestionS(msg));
                 break;
             case RESULT:
-                long correctID = msg.correctAnswerID;
-                long pickedID = msg.pickedAnswerID;
+                long correctID = msg.correctID;
+                long pickedID = msg.pickedID;
                 runLater(() -> {
+                    if(msg.typeQ == Question.Type.ESTIMATION){
+                        singleplayerScreenInputCtrl.showAnswerInput(msg.answeredCorrect,
+                                correctID, pickedID, msg.receivedPoints);
+                    }else{
+                        singleplayerScreenGuessCtrl.showAnswer(correctID, pickedID, msg.receivedPoints);
+                        singleplayerScreenCtrl.showAnswer(correctID, pickedID, msg.receivedPoints);
+                    }
+                    singleplayerScreenInputCtrl.setScoreTo(msg.score);
+                    singleplayerScreenGuessCtrl.setScoreTo(msg.score);
                     singleplayerScreenCtrl.setScoreTo(msg.score);
-                    singleplayerScreenCtrl.showAnswer(correctID, pickedID);
                 });
                 break;
             case END:
                 runLater(this::showSingleLeaderboardScreen);
-            case TEST:
-                // for testing purposes only
-                System.out.println("It works! Received a msg!");
                 break;
             case SHOW_EMOJI:
                 runLater(() -> {
                     multiplayerScreenCtrl.showEmoji(msg.imgName, msg.namePLayerEmoji);
+                    multiplayerScreenInputCtrl.showEmoji(msg.imgName, msg.namePLayerEmoji);
+                    multiplayerScreenGuessCtrl.showEmoji(msg.imgName, msg.namePLayerEmoji);
                 });
                 break;
             case NAME_TAKEN:
@@ -266,6 +295,66 @@ public class MainCtrl {
                 break;
             default:
                 // invalid msg type
+        }
+    }
+
+    public void showQuestionS(ServerMessage msg){
+        switch (msg.question.type){
+            case COMPARE:
+                singleplayerScreenCtrl.restoreView();
+                singleplayerScreenCtrl.displayActivities(msg.question, singleplayerScreen);
+                singleplayerScreenCtrl.setScoreTo(msg.score);
+                singleplayerScreenCtrl.setTitleTo(msg.question.title);
+                singleplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                showSingleplayerGameScreen();
+                break;
+            case GUESS:
+            case HOW_MANY_TIMES:
+                singleplayerScreenGuessCtrl.restoreView();
+                singleplayerScreenGuessCtrl.displayActivities(msg.question, singleplayerGuessScreen);
+                singleplayerScreenGuessCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                singleplayerScreenGuessCtrl.setHeadGuessTitle(msg.question.title);
+                singleplayerScreenGuessCtrl.setScoreTo(msg.score);
+                showSingleplayerGuessGameScreen();
+                break;
+            case ESTIMATION:
+                //                singleplayerScreenInputCtrl.restoreView();
+                singleplayerScreenInputCtrl.displayActivities(msg.question, singleplayerInputScreen);
+                singleplayerScreenInputCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                singleplayerScreenInputCtrl.setTitleTo(msg.question.title);
+                singleplayerScreenInputCtrl.setScoreTo(msg.score);
+                showSingleplayerInputGameScreen();
+                break;
+
+            default:
+                System.out.println("weird question");
+        }
+    }
+
+    public void showQuestionM(ServerMessage msg){
+        switch (msg.question.type){
+            case HOW_MANY_TIMES:
+            case GUESS:
+                multiplayerScreenGuessCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                multiplayerScreenGuessCtrl.setHeadGuessTitle(msg.question.title);
+                multiplayerScreenGuessCtrl.displayActivities(msg.question, guessQuestionM);
+                showMultiplayerGuessScreen();
+                break;
+            case ESTIMATION:
+                multiplayerScreenInputCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                multiplayerScreenInputCtrl.setHeadTitle(msg.question.title);
+                multiplayerScreenInputCtrl.displayActivities(msg.question, inputQuestionM);
+                showMultiplayerInputScreen();
+                break;
+            case COMPARE:
+                multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                multiplayerScreenCtrl.setHeadTitle(msg.question.title);
+                multiplayerScreenCtrl.displayActivities(msg.question, multiplayer);
+                showMultiplayerScreen();
+                break;
+            default:
+                System.out.println("weird question type");
+                break;
         }
     }
 
@@ -278,6 +367,7 @@ public class MainCtrl {
         leaveCtrl.setAfterLeave(afterLeave);
 
         this.stage = new Stage();
+        this.stage.setResizable(false);
         this.stage.setScene(leave);
         this.stage.initModality(Modality.APPLICATION_MODAL);
         this.stage.showAndWait();
@@ -293,7 +383,7 @@ public class MainCtrl {
         inputServerScreenCtrl.render(server.isConnected());
 
         this.stage = new Stage();
-
+        this.stage.setResizable(false);
         this.stage.setScene(inputServer);
         this.stage.initModality(Modality.APPLICATION_MODAL);
         this.stage.showAndWait();
@@ -318,14 +408,24 @@ public class MainCtrl {
         primaryStage.setTitle("SplashScreen");
         primaryStage.setScene(splash);
         primaryStage.setOnCloseRequest(e -> {
-            Platform.exit();
-            System.exit(0);
+            e.consume();
+            showLeave(null);
         });
     }
 
     public void showMultiplayerScreen(){
         primaryStage.setTitle("Multiplayer");
         primaryStage.setScene(multiplayer);
+    }
+
+    public void showMultiplayerInputScreen(){
+        primaryStage.setTitle("Multiplayer");
+        primaryStage.setScene(inputQuestionM);
+    }
+
+    public void showMultiplayerGuessScreen(){
+        primaryStage.setTitle("Multiplayer");
+        primaryStage.setScene(guessQuestionM);
     }
 
     public void showEndScreen(){
@@ -349,14 +449,16 @@ public class MainCtrl {
         primaryStage.setTitle("WaitingRoomScreen");
         primaryStage.setScene(waitingRoom);
         primaryStage.setOnCloseRequest(e -> {
+            e.consume();
             if(primaryStage.getScene().equals(waitingRoom)) {
-                server.send("/app/general",
-                        new ClientMessage(ClientMessage.Type.QUIT_WAITING_ROOM, getClientID(), getGameID()));
+                showLeave(null, () -> server.send("/app/general",
+                        new ClientMessage(ClientMessage.Type.QUIT_WAITING_ROOM, getClientID(), getGameID())));
+
             }else{
-                server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID));
+                showLeave(null, () -> server.send("/app/general",
+                        new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID)));
+
             }
-            Platform.exit();
-            System.exit(0);
         });
     }
 
@@ -373,6 +475,16 @@ public class MainCtrl {
     public void showSingleplayerGameScreen(){
         primaryStage.setTitle("Singleplayer");
         primaryStage.setScene(singleplayerScreen);
+    }
+
+    public void showSingleplayerGuessGameScreen(){
+        primaryStage.setTitle("Singleplayer");
+        primaryStage.setScene(singleplayerGuessScreen);
+    }
+
+    public void showSingleplayerInputGameScreen(){
+        primaryStage.setTitle("Singleplayer");
+        primaryStage.setScene(singleplayerInputScreen);
     }
 
     public void showAdminPanel() {
@@ -517,5 +629,21 @@ public class MainCtrl {
 
     public String getName() {
         return name;
+    }
+
+    public Scene getInputQuestionM() {
+        return inputQuestionM;
+    }
+
+    public Scene getGuessQuestionM() {
+        return guessQuestionM;
+    }
+
+    public Scene getSingleplayerGuessScreen() {
+        return singleplayerGuessScreen;
+    }
+
+    public Scene getSingleplayerInputScreen() {
+        return singleplayerInputScreen;
     }
 }

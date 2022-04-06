@@ -17,6 +17,7 @@ public class Game {
     private boolean hasEnded;
     private long questionStartTime;
     private TimerTask endOfQuestionTask;
+    private Question.Type type;
 
     public Timer questionEndAction;
 
@@ -95,6 +96,14 @@ public class Game {
     public int incQuestionCounter() {
         this.questionCounter = questionCounter + 1;
         return questionCounter;
+    }
+
+    public Question.Type getType() {
+        return type;
+    }
+
+    public void setType(Question.Type type) {
+        this.type = type;
     }
 
     public void setQuestionCounter(int questionCounter) {

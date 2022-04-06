@@ -13,14 +13,12 @@ public class ServerMessage {
 
     public Type type;
     // add more fields as we start exchanging messages
-
+    public Question.Type typeQ;
     public Question question;
     public int score;
     public double timerFull;
     public double timerFraction;
     public String gameID;
-    public Long correctAnswerID;
-    public Long pickedAnswerID;
     public int round;
     public List<String> correctlyAnswered;
     public List<String> incorrectlyAnswered;
@@ -35,6 +33,9 @@ public class ServerMessage {
     public String namePLayerEmoji;
 
     public String playerName;
+
+    public boolean answeredCorrect;
+    public int receivedPoints;
 
     public ServerMessage() {
     }

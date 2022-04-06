@@ -39,7 +39,7 @@
       </styleClass>
    </Button>
 
-   <Button fx:id="admin" alignment="CENTER" contentDisplay="CENTER" layoutX="378.0" layoutY="874.0" mnemonicParsing="false" onAction="#showAdminPanel" prefHeight="40.0" prefWidth="300.0" text="Admin Panel" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="388.5">
+   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="378.0" layoutY="874.0" mnemonicParsing="false" onAction="#showAdminPanel" prefHeight="40.0" prefWidth="300.0" text="Admin Panel" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="388.5">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="whiteButton" />
@@ -48,7 +48,7 @@
    </Button>
 
 
-   <Button fx:id="help" alignment="CENTER" contentDisplay="CENTER" layoutX="1326.0" layoutY="871.0" mnemonicParsing="false" onAction="#showHelp" prefHeight="67.0" prefWidth="136.0" text="Help" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1326.0" layoutY="871.0" mnemonicParsing="false" onAction="#showHelp" prefHeight="67.0" prefWidth="136.0" text="Help" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
       <styleClass>
          <String fx:value="button" />
          <String fx:value="helpButton" />

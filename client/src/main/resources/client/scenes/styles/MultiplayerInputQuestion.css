@@ -5,7 +5,6 @@
 
 .inputQuestion{
     -fx-background-color: none;
-    -fx-border-radius: 5;
     -fx-font-size: 36px;
-    -fx-text-fill: "white";
+    -fx-text-fill: white;
 }
