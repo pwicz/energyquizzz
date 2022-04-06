@@ -22,7 +22,6 @@ import commons.Activity;
 import commons.ClientMessage;
 import commons.Question;
 import commons.ServerMessage;
-import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -200,10 +199,9 @@ public class MainCtrl {
             case NEW_SINGLEPLAYER_GAME:
                 gameID = msg.gameID;
                 primaryStage.setOnCloseRequest(e -> {
-                    showLeave(this::showSplash, () ->{
+                    e.consume();
+                    showLeave(null, () ->{
                         server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID));
-                        Platform.exit();
-                        System.exit(0);
                     });
 
                 });
@@ -360,6 +358,7 @@ public class MainCtrl {
         leaveCtrl.setAfterLeave(afterLeave);
 
         this.stage = new Stage();
+        this.stage.setResizable(false);
         this.stage.setScene(leave);
         this.stage.initModality(Modality.APPLICATION_MODAL);
         this.stage.showAndWait();
@@ -375,7 +374,7 @@ public class MainCtrl {
         inputServerScreenCtrl.render(server.isConnected());
 
         this.stage = new Stage();
-
+        this.stage.setResizable(false);
         this.stage.setScene(inputServer);
         this.stage.initModality(Modality.APPLICATION_MODAL);
         this.stage.showAndWait();
@@ -400,10 +399,8 @@ public class MainCtrl {
         primaryStage.setTitle("SplashScreen");
         primaryStage.setScene(splash);
         primaryStage.setOnCloseRequest(e -> {
-            showLeave(this::showSplash, () ->{
-                Platform.exit();
-                System.exit(0);
-            });
+            e.consume();
+            showLeave(null);
         });
     }
 
@@ -438,19 +435,16 @@ public class MainCtrl {
         primaryStage.setTitle("WaitingRoomScreen");
         primaryStage.setScene(waitingRoom);
         primaryStage.setOnCloseRequest(e -> {
+            e.consume();
             if(primaryStage.getScene().equals(waitingRoom)) {
-                showLeave(this::showSplash, () ->{
+                showLeave(null, () ->{
                     server.send("/app/general",
                             new ClientMessage(ClientMessage.Type.QUIT_WAITING_ROOM, getClientID(), getGameID()));
-                    Platform.exit();
-                    System.exit(0);
                 });
 
             }else{
-                showLeave(this::showSplash, () ->{
+                showLeave(null, () ->{
                     server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID));
-                    Platform.exit();
-                    System.exit(0);
                 });
 
             }
