@@ -57,6 +57,14 @@
             <String fx:value="bigButton" />
         </styleClass>
     </Button>
+    <GridPane fx:id="jokerMessages" alignment="CENTER_RIGHT" layoutX="23.0" layoutY="14.0" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="1032.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+    </GridPane>
     <ListView fx:id="emojiHolder" layoutX="1306.0" layoutY="440.0" onMouseClicked="#sendEmoji" prefHeight="299.0" prefWidth="121.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="234.544">
         <styleClass>
             <String fx:value="gradientBox" />

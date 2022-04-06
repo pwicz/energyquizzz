@@ -298,7 +298,11 @@ public class MainCtrl {
                 });
                 break;
             case JOKER_USED:
-                runLater(() -> multiplayerScreenCtrl.insertJokerNotification(msg.jokerUsedBy, msg.jokerType));
+                runLater(() -> {
+                    multiplayerScreenCtrl.insertJokerNotification(msg.jokerUsedBy, msg.jokerType);
+                    multiplayerScreenGuessCtrl.insertJokerNotification(msg.jokerUsedBy, msg.jokerType);
+                    multiplayerScreenInputCtrl.insertJokerNotification(msg.jokerUsedBy, msg.jokerType);
+                });
                 break;
             case SHOW_EMOJI:
                 runLater(() -> {
