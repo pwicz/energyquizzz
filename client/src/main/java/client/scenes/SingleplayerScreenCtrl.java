@@ -82,7 +82,11 @@ public class SingleplayerScreenCtrl {
         ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
 
-        mainCtrl.showLeave(mainCtrl::showSingleLeaderboardScreen, () -> mainCtrl.getServer().send("/app/general", msg));
+        mainCtrl.showLeave(mainCtrl::showSingleLeaderboardScreen,
+                () ->{
+                mainCtrl.getServer().send("/app/general", msg);
+                timeStop();
+            });
     }
 
     public void lockAnswer(MouseEvent mouseEvent) {
@@ -336,5 +340,10 @@ public class SingleplayerScreenCtrl {
 
         textField.setText(validatedText.toString());
         textField.positionCaret(caret);
+    }
+
+    public void timeStop(){
+        if(timer!= null)
+            timer.stop();
     }
 }

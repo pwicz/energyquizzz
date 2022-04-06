@@ -105,7 +105,11 @@ public class MultiplayerScreenCtrl {
         // inform the server about leaving
         ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
-        mainCtrl.showLeave(mainCtrl::showSplash, () -> mainCtrl.getServer().send("/app/general", msg));
+        mainCtrl.showLeave(mainCtrl::showSplash,
+                () ->{
+            mainCtrl.getServer().send("/app/general", msg);
+            timeStop();
+        });
     }
 
     //submits answer, stops time,
@@ -453,5 +457,10 @@ public class MultiplayerScreenCtrl {
 
         textField.setText(validatedText.toString());
         textField.positionCaret(caret);
+    }
+
+    public void timeStop(){
+        if(timer!= null)
+            timer.stop();
     }
 }
