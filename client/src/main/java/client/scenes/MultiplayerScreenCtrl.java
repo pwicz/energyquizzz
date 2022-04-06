@@ -10,6 +10,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -23,6 +24,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -38,9 +41,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static javafx.application.Platform.runLater;
-
 
 public class MultiplayerScreenCtrl {
 
@@ -52,6 +56,12 @@ public class MultiplayerScreenCtrl {
 
     private Timeline timer;
 
+    private List<Timer> notifications;
+
+    private boolean cutAnswerUsed = false;
+    private boolean doublePointsUsed = false;
+    private boolean splitTimeUsed = false;
+
     @FXML
     ProgressBar timeBar;
 
@@ -60,6 +70,15 @@ public class MultiplayerScreenCtrl {
 
     @FXML
     Button submit;
+
+    @FXML
+    ImageView cutAnswer;
+
+    @FXML
+    ImageView doublePoints;
+
+    @FXML
+    ImageView splitTime;
 
     @FXML
     ImageView image, image1, image2, image3;
@@ -80,6 +99,9 @@ public class MultiplayerScreenCtrl {
     Label headTitle, headTitle1, headTitle2;
 
     @FXML
+    GridPane jokerMessages;
+
+    @FXML
     ListView emojiHolder;
 
     @FXML
@@ -93,6 +115,8 @@ public class MultiplayerScreenCtrl {
         this.mainCtrl = mainCtrl;
         optionToID = new HashMap<>();
         runLater(this::initilizeEmojis);
+
+        notifications = new ArrayList<>();
     }
 
     public void leave(){
@@ -131,13 +155,32 @@ public class MultiplayerScreenCtrl {
             mainCtrl.getServer().send("/app/general", msg);
         }
 
-        canInteractWithUI = false;
+        lockUI();
 
         if(timer != null){
             timer.stop();
         }
+    }
 
+    public void lockUI(){
+        canInteractWithUI = false;
         submit.setDisable(true);
+
+        if(!doublePointsUsed){
+            doublePoints.setStyle("-fx-opacity: 0.2");
+            doublePoints.setDisable(true);
+        }
+        if(!cutAnswerUsed){
+            cutAnswer.setStyle("-fx-opacity: 0.2");
+            cutAnswer.setDisable(true);
+        }
+    }
+
+    public void lockSplitTimeJoker(){
+        if(!splitTimeUsed){
+            splitTime.setStyle("-fx-opacity: 0.2");
+            splitTime.setDisable(true);
+        }
     }
 
     public void showAnswer(Long correctID, Long pickedID, int pointReceived) {
@@ -258,18 +301,54 @@ public class MultiplayerScreenCtrl {
         anchorPane.getChildren().remove(node);
     }
 
-
-    //removes oneanswer
     public void cutAnswer(MouseEvent event){
-        System.out.println(event.getSource());
+        ClientMessage msg = new ClientMessage(ClientMessage.Type.USE_JOKER,
+                mainCtrl.getClientID(), mainCtrl.getGameID());
+        msg.joker = ClientMessage.Joker.CUT_ANSWER;
+
+        mainCtrl.getServer().send("/app/general", msg);
+        mainCtrl.hideCutAnswerJokers();
     }
 
-    //doubles your points for this round
+    public void useCutAnswer(){
+        cutAnswer.setDisable(true);
+        cutAnswer.setStyle("visibility: hidden;");
+        cutAnswerUsed = true;
+    }
+
+
+    // doubles your points for this round
     public void doublePoints(MouseEvent event){
-        System.out.println(event.getSource());
+        ClientMessage msg = new ClientMessage(ClientMessage.Type.USE_JOKER,
+                mainCtrl.getClientID(), mainCtrl.getGameID());
+        msg.joker = ClientMessage.Joker.DOUBLE_POINTS;
+
+        mainCtrl.getServer().send("/app/general", msg);
+        mainCtrl.hideDoublePointsJoker();
     }
 
-    public void lowerTime(){}
+    public void useDoublePoints(){
+        doublePoints.setDisable(true);
+        doublePoints.setStyle("visibility: hidden;");
+        doublePointsUsed = true;
+    }
+
+    // halves time of your opponents
+    public void lowerTime(){
+        ClientMessage msg = new ClientMessage(ClientMessage.Type.USE_JOKER,
+                mainCtrl.getClientID(), mainCtrl.getGameID());
+        msg.joker = ClientMessage.Joker.SPLIT_TIME;
+
+        mainCtrl.getServer().send("/app/general", msg);
+        mainCtrl.hideLowerTimeJoker();
+    }
+
+    public void useLowerTime(){
+        splitTime.setDisable(true);
+        splitTime.setStyle("visibility: hidden;");
+        splitTimeUsed = true;
+    }
+
     /**
      * Sets visible timer to a desired value and starts decreasing it in the rate calculated using totalTime.
      *
@@ -280,11 +359,25 @@ public class MultiplayerScreenCtrl {
         // by default, our timer is 10.0s long
         if(totalTime <= 0.0) totalTime = 10.0;
 
+        if(timer != null) timer.stop();
+
         timer = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(timeBar.progressProperty(), fractionLeft)),
-                new KeyFrame(Duration.seconds(totalTime), new KeyValue(timeBar.progressProperty(), 0.0))
+                new KeyFrame(Duration.seconds(totalTime * fractionLeft), new KeyValue(timeBar.progressProperty(), 0.0))
         );
         timer.play();
+
+        if(fractionLeft < 1.0){
+            // show red pulse
+            timeBar.setStyle("-fx-accent: #e0503d;");
+
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    timeBar.setStyle("-fx-accent: #21A0E8;");
+                }
+            }, 100);
+        }
     }
 
     public void displayActivities(Question question, Scene scene){
@@ -328,6 +421,7 @@ public class MultiplayerScreenCtrl {
     }
 
     public void displayInputActivities(List<Activity> activities){
+        resetJokers();
         textField.setText("");
 
         answerInput.setStyle("visibility: hidden");
@@ -354,33 +448,89 @@ public class MultiplayerScreenCtrl {
 
             images.get(i).setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
         }
+
+        for(var rect : optionToID.keySet()) {
+            rect.setStyle("-fx-stroke: #fff");
+            rect.setDisable(false);
+        }
     }
 
     public void resetUI(){
         canInteractWithUI = true;
+
         result.setStyle("visibility: hidden");
         option1.setStyle("-fx-stroke: #fff");
         option2.setStyle("-fx-stroke: #fff");
         option3.setStyle("-fx-stroke: #fff");
+        option1.setDisable(false);
+        option2.setDisable(false);
+        option3.setDisable(false);
+
         optionToID = new HashMap<>();
         choice = null;
         picked.setStyle("visibility: hidden");
 
+        resetJokers();
+    }
+
+    public void resetJokers(){
+        if(!cutAnswerUsed) {
+            cutAnswer.setDisable(false);
+            cutAnswer.setStyle("-fx-opacity: 1.0");
+        }
+        if(!doublePointsUsed){
+            doublePoints.setDisable(false);
+            doublePoints.setStyle("-fx-opacity: 1.0");
+        }
+        if(!splitTimeUsed){
+            splitTime.setDisable(false);
+            splitTime.setStyle("-fx-opacity: 1.0");
+        }
+    }
+
+    public void showJokers(){
+        cutAnswer.setDisable(false);
+        cutAnswer.setStyle("visibility: visible;");
+        cutAnswerUsed = false;
+
+        splitTime.setDisable(false);
+        splitTime.setStyle("visibility: visible;");
+        splitTimeUsed = false;
+
+        doublePoints.setDisable(false);
+        doublePoints.setStyle("visibility: visible;");
+        doublePointsUsed = false;
     }
 
     public void lockAnswer(MouseEvent mouseEvent) {
         if(!canInteractWithUI) return;
 
-        option1.setStyle("-fx-border-color: white");
-        option2.setStyle("-fx-border-color: white");
-        option3.setStyle("-fx-border-color: white");
+        for(var rect : optionToID.keySet()) rect.setStyle("-fx-border-color: white");
+
         Rectangle rectangle = (Rectangle) mouseEvent.getSource();
+
+        if(!optionToID.containsKey(rectangle)) return;
+
         rectangle.setStyle("-fx-stroke: linear-gradient(#38c768, #21A0E8)");
         submit.setDisable(false);
         submit.setCursor(Cursor.HAND);
 
         choice = rectangle;
+    }
 
+    public void disableAnswer(long optionID){
+        Rectangle target = null;
+
+        for(var entry : optionToID.entrySet()){
+            if(Objects.equals(entry.getValue(), optionID))
+                target = entry.getKey();
+        }
+
+        if(target == null) return;
+
+        optionToID.remove(target);
+        target.setStyle("-fx-stroke: #e0503d");
+        target.setDisable(true);
     }
 
     public void updateTitle(int question){
@@ -391,11 +541,55 @@ public class MultiplayerScreenCtrl {
         this.score.setText("Score: " + score);
     }
 
-
     public void enterAnswer(KeyEvent keyEvent) {
         if(keyEvent.getCode().equals(KeyCode.L)){ //later should replace L with ENTER
             submitAnswer();
         }
+    }
+
+    public void insertJokerNotification(String playerName, ClientMessage.Joker jokerType){
+        String jokerNotificationText = playerName + " has done something weird!";
+        switch(jokerType){
+            case CUT_ANSWER:
+                jokerNotificationText = playerName + " has removed one of their incorrect answers!";
+                break;
+            case SPLIT_TIME:
+                jokerNotificationText = playerName + " has split all of their opponents time!";
+                break;
+            case DOUBLE_POINTS:
+                jokerNotificationText = playerName + " has doubled their points!";
+                break;
+            default:
+                // bad joker type
+        }
+
+        // use it to avoid height problems
+        RowConstraints con = new RowConstraints();
+        con.setPrefHeight(30);
+        jokerMessages.getRowConstraints().add(con);
+
+        // construct text
+        var textTest = new Text(jokerNotificationText);
+        textTest.getStyleClass().add("joker-notification");
+        textTest.maxWidth(jokerMessages.getMaxWidth());
+
+        jokerMessages.addRow(jokerMessages.getRowCount(), textTest);
+        GridPane.setHalignment(textTest, HPos.RIGHT);
+
+//         remove notification after 3 seconds
+        var x = new Timer();
+        x.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runLater(() -> {
+                    System.out.println("REMOVING");
+                    if(jokerMessages != null){
+                        jokerMessages.getChildren().remove(textTest);
+                    }
+                });
+            }
+        }, 3000);
+        notifications.add(x);
     }
 
     public void initilizeEmojis(){
@@ -451,5 +645,9 @@ public class MultiplayerScreenCtrl {
     public void timeStop(){
         if(timer!= null)
             timer.stop();
+    }
+
+    public void cleanup(){
+        for(var t : notifications) t.cancel();
     }
 }

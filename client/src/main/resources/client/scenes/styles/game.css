@@ -53,6 +53,12 @@
     visibility: hidden;
 }
 
+.joker-notification{
+    -fx-text-alignment: right;
+    -fx-font-size: 20;
+    -fx-fill: "white";
+}
+
 .list-cell{
     -fx-background-color: #272727;
 }

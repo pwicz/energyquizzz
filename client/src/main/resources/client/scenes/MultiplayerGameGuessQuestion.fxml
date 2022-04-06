@@ -38,19 +38,19 @@
     <Label layoutX="63.0" layoutY="430.0" prefHeight="300.0" prefWidth="100.0" styleClass="gradientBox" AnchorPane.leftAnchor="30" AnchorPane.topAnchor="234.5">
     </Label>
 
-    <ImageView fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="445.0" onMouseClicked="#cutAnswer" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="255.0">
+    <ImageView fx:id="cutAnswer" fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="445.0" onMouseClicked="#cutAnswer" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="255.0">
         <styleClass>
             <String fx:value="hover-element" />
         </styleClass>
         <Image url="@/client/scenes/images/scissor.png" />
     </ImageView>
-    <ImageView fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="541.0" onMouseClicked="#doublePoints" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="350">
+    <ImageView fx:id="doublePoints" fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="541.0" onMouseClicked="#doublePoints" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="350">
         <styleClass>
             <String fx:value="hover-element" />
         </styleClass>
         <Image url="@/client/scenes/images/2x.png" />
     </ImageView>
-    <ImageView fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="632.0" onMouseClicked="#lowerTime" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="450">
+    <ImageView fx:id="splitTime" fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="54.0" layoutY="441.0" onMouseClicked="#lowerTime" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="54.0" AnchorPane.topAnchor="441.0">
         <styleClass>
             <String fx:value="hover-element" />
         </styleClass>
@@ -75,12 +75,20 @@
             <String fx:value="bigButton" />
         </styleClass>
     </Button>
-   <ListView fx:id="emojiHolder" layoutX="1316.0" layoutY="450.0" onMouseClicked="#sendEmoji" prefHeight="299.0" prefWidth="121.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="234.5">
-      <styleClass>
-         <String fx:value="gradientBox" />
-      </styleClass>
-   </ListView>
-   <Label fx:id="headTitle2" alignment="CENTER" layoutX="-61.0" layoutY="65.0" prefHeight="45.0" prefWidth="1200.0" styleClass="question" text="Question 1: How much electricity does this activity cost?" AnchorPane.leftAnchor="-61.0" AnchorPane.topAnchor="65.0" />
+    <GridPane fx:id="jokerMessages" alignment="CENTER_RIGHT" layoutX="23.0" layoutY="14.0" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="1032.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+    </GridPane>
+    <ListView fx:id="emojiHolder" layoutX="1316.0" layoutY="450.0" onMouseClicked="#sendEmoji" prefHeight="299.0" prefWidth="121.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="234.5">
+        <styleClass>
+            <String fx:value="gradientBox" />
+        </styleClass>
+    </ListView>
+    <Label fx:id="headTitle2" alignment="CENTER" layoutX="-61.0" layoutY="65.0" prefHeight="45.0" prefWidth="1200.0" styleClass="question" text="Question 1: How much electricity does this activity cost?" AnchorPane.leftAnchor="-61.0" AnchorPane.topAnchor="65.0" />
 
     <Rectangle fx:id="option1" arcHeight="5.0" arcWidth="5.0" fill="#0074e000" focusTraversable="true" height="72.0" layoutX="561.0" layoutY="224.0" onMouseClicked="#lockAnswer" stroke="WHITE" strokeType="INSIDE" width="251.0" AnchorPane.topAnchor="225.0">
         <styleClass>

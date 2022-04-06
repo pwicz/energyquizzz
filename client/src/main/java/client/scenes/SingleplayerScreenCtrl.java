@@ -198,6 +198,7 @@ public class SingleplayerScreenCtrl {
                 mainCtrl.getClientID(), mainCtrl.getGameID());
 
         Scene scene = mainCtrl.getPrimaryStage().getScene();
+
         if (mainCtrl.getSingleplayerInputScreen().equals(scene)) {
             if(textField.getText().equals("")){
                 return;
@@ -215,12 +216,15 @@ public class SingleplayerScreenCtrl {
             mainCtrl.getServer().send("/app/general", msg);
         }
 
-        canInteractWithUI = false;
+        lockUI();
 
         if(timer != null){
             timer.stop();
         }
+    }
 
+    public void lockUI(){
+        canInteractWithUI = false;
         submit.setDisable(true);
     }
 
