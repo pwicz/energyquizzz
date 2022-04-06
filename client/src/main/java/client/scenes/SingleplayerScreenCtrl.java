@@ -195,18 +195,11 @@ public class SingleplayerScreenCtrl {
     public void submitAnswer(){
         if(!canInteractWithUI || choice == null) return;
 
+        ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
+                mainCtrl.getClientID(), mainCtrl.getGameID());
+
         Scene scene = mainCtrl.getPrimaryStage().getScene();
-        if (mainCtrl.getSingleplayerScreen().equals(scene)) {
-            ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
-                    mainCtrl.getClientID(), mainCtrl.getGameID());
-            msg.chosenActivity = optionToID.get(choice);
-            mainCtrl.getServer().send("/app/general", msg);
-        } else if (mainCtrl.getSingleplayerGuessScreen().equals(scene)) {
-            ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
-                    mainCtrl.getClientID(), mainCtrl.getGameID());
-            msg.chosenActivity = optionToID.get(choice);
-            mainCtrl.getServer().send("/app/general", msg);
-        } else if (mainCtrl.getSingleplayerInputScreen().equals(scene)) {
+        if (mainCtrl.getSingleplayerInputScreen().equals(scene)) {
             if(textField.getText().equals("")){
                 textField.setText("give a Number");
                 return;
@@ -214,14 +207,16 @@ public class SingleplayerScreenCtrl {
             try{
                 //todo: make a working message
                 long answer = Long.parseLong(textField.getText());
-                ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
-                        mainCtrl.getClientID(), mainCtrl.getGameID());
                 msg.chosenActivity = answer;
                 mainCtrl.getServer().send("/app/general", msg);
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e){
                 textField.setText("give a Number");
                 return;
             }
+        }
+        else{
+            msg.chosenActivity = optionToID.get(choice);
+            mainCtrl.getServer().send("/app/general", msg);
         }
 
         canInteractWithUI = false;
@@ -231,8 +226,6 @@ public class SingleplayerScreenCtrl {
         }
 
         submit.setDisable(true);
-
-
     }
 
     public void showAnswer(Long correctID, Long pickedID){

@@ -64,7 +64,6 @@ public class MainCtrl {
     private Scene singleplayerInputScreen;
     private Scene singleplayerGuessScreen;
 
-
     private SingleplayerScreenCtrl singleplayerScreenCtrl;
     private SingleplayerScreenCtrl singleplayerScreenInputCtrl;
     private SingleplayerScreenCtrl singleplayerScreenGuessCtrl;
@@ -298,6 +297,7 @@ public class MainCtrl {
                 showSingleplayerGameScreen();
                 break;
             case GUESS:
+            case HOW_MANY_TIMES:
                 singleplayerScreenGuessCtrl.restoreView();
                 singleplayerScreenGuessCtrl.displayActivities(msg.question, singleplayerGuessScreen);
                 singleplayerScreenGuessCtrl.setTimer(msg.timerFraction, msg.timerFull);
@@ -313,15 +313,7 @@ public class MainCtrl {
                 singleplayerScreenInputCtrl.setScoreTo(msg.score);
                 showSingleplayerInputGameScreen();
                 break;
-            case HOW_MANY_TIMES:
-                singleplayerScreenGuessCtrl.restoreView();
-                singleplayerScreenGuessCtrl.displayActivities(msg.question, singleplayerGuessScreen);
-                singleplayerScreenGuessCtrl.setTimer(msg.timerFraction, msg.timerFull);
-                singleplayerScreenGuessCtrl.setHeadGuessTitle(msg.question.title);
-                singleplayerScreenGuessCtrl.setScoreTo(msg.score);
-                showSingleplayerGuessGameScreen();
 
-                break;
             default:
                 System.out.println("weird question");
         }
@@ -330,6 +322,7 @@ public class MainCtrl {
     public void showQuestionM(ServerMessage msg){
         switch (msg.question.type){
             case HOW_MANY_TIMES:
+            case GUESS:
                 multiplayerScreenGuessCtrl.setTimer(msg.timerFraction, msg.timerFull);
                 multiplayerScreenGuessCtrl.setHeadGuessTitle(msg.question.title);
                 multiplayerScreenGuessCtrl.displayActivities(msg.question, guessQuestionM);
@@ -346,12 +339,6 @@ public class MainCtrl {
                 multiplayerScreenCtrl.setHeadTitle(msg.question.title);
                 multiplayerScreenCtrl.displayActivities(msg.question, multiplayer);
                 showMultiplayerScreen();
-                break;
-            case GUESS:
-                multiplayerScreenGuessCtrl.setTimer(msg.timerFraction, msg.timerFull);
-                multiplayerScreenGuessCtrl.setHeadGuessTitle(msg.question.title);
-                multiplayerScreenGuessCtrl.displayActivities(msg.question, guessQuestionM);
-                showMultiplayerGuessScreen();
                 break;
             default:
                 System.out.println("weird question type");
