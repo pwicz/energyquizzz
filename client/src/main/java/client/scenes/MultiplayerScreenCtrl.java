@@ -58,6 +58,7 @@ public class MultiplayerScreenCtrl {
 
     private boolean cutAnswerUsed = false;
     private boolean doublePointsUsed = false;
+    private boolean splitTimeUsed = false;
 
     @FXML
     ProgressBar timeBar;
@@ -168,6 +169,13 @@ public class MultiplayerScreenCtrl {
         if(!cutAnswerUsed){
             cutAnswer.setStyle("-fx-opacity: 0.2");
             cutAnswer.setDisable(true);
+        }
+    }
+
+    public void lockSplitTimeJoker(){
+        if(!splitTimeUsed){
+            splitTime.setStyle("-fx-opacity: 0.2");
+            splitTime.setDisable(true);
         }
     }
 
@@ -334,6 +342,7 @@ public class MultiplayerScreenCtrl {
     public void useLowerTime(){
         splitTime.setDisable(true);
         splitTime.setStyle("visibility: hidden;");
+        splitTimeUsed = true;
     }
 
     /**
@@ -368,7 +377,6 @@ public class MultiplayerScreenCtrl {
     }
 
     public void displayActivities(Question question, Scene scene){
-        resetUI();
         // for convenience
         if (mainCtrl.getMultiplayer().equals(scene)) {
             displayCompareActivities(question.activities);
@@ -467,6 +475,10 @@ public class MultiplayerScreenCtrl {
             doublePoints.setDisable(false);
             doublePoints.setStyle("-fx-opacity: 1.0");
         }
+        if(!splitTimeUsed){
+            splitTime.setDisable(false);
+            splitTime.setStyle("-fx-opacity: 1.0");
+        }
     }
 
     public void showJokers(){
@@ -476,6 +488,7 @@ public class MultiplayerScreenCtrl {
 
         splitTime.setDisable(false);
         splitTime.setStyle("visibility: visible;");
+        splitTimeUsed = false;
 
         doublePoints.setDisable(false);
         doublePoints.setStyle("visibility: visible;");
@@ -496,11 +509,9 @@ public class MultiplayerScreenCtrl {
         submit.setCursor(Cursor.HAND);
 
         choice = rectangle;
-
     }
 
     public void disableAnswer(long optionID){
-
         Rectangle target = null;
 
         for(var entry : optionToID.entrySet()){

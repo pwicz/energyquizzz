@@ -235,6 +235,9 @@ public class MainCtrl {
                     multiplayerScreenCtrl.updateScore(msg.score);
                     multiplayerScreenGuessCtrl.updateScore(msg.score);
                     multiplayerScreenInputCtrl.updateScore(msg.score);
+                    multiplayerScreenCtrl.lockSplitTimeJoker();
+                    multiplayerScreenGuessCtrl.lockSplitTimeJoker();
+                    multiplayerScreenInputCtrl.lockSplitTimeJoker();
                     inBetweenScoreCtrl.setScoreTo(msg.score);
                     inBetweenScoreCtrl.insertLeaderboard(msg.topScores);
                     inBetweenScoreCtrl.insertLeaderboardG(msg.correctlyAnswered);
