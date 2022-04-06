@@ -341,7 +341,6 @@ public class MultiplayerScreenCtrl {
         canInteractWithUI = true;
         submit.setDisable(false);
         description.setText(activities.get(0).title);
-
     }
 
     public void displayCompareActivities(List<Activity> activities){
@@ -435,5 +434,24 @@ public class MultiplayerScreenCtrl {
             headTitle2.setStyle("-fx-font-size: 25 ");
 
         }
+    }
+
+    public void checkInput(){
+        String text = textField.getText();
+        if(text.length() < 1) return;
+
+        int caret = textField.getCaretPosition();
+
+        StringBuilder validatedText = new StringBuilder();
+
+        for(int i = 0; i < text.length(); ++i){
+            int charValue = text.charAt(i) - '0';
+            if(charValue >= 0 && charValue <= 9){
+                validatedText.append(text.charAt(i));
+            }
+        }
+
+        textField.setText(validatedText.toString());
+        textField.positionCaret(caret);
     }
 }
