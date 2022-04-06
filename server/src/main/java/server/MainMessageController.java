@@ -223,53 +223,86 @@ public class MainMessageController {
         Random rand = new Random();
         int randomType = rand.nextInt(Question.Type.values().length);
 
-        //Type = Compare
+        System.out.println("[1] Trying to generate question type " + randomType);
+
         if(randomType == 0){
-            //Get three activities from database
-             List<Activity> selectedActivities =
-                    List.of(Objects.requireNonNull(activityController.getRandom().getBody()),
-                        activityController.getRandom().getBody(),
-                        activityController.getRandom().getBody());
-            return new Question(selectedActivities, Question.Type.COMPARE);
-            //Type = Guess
+            // Type = Compare
+
+            return generateCompareQuestion();
+
         } else if(randomType == 1){
-            //Get random activity from database
-            List<Activity> selectedActivity =  List.of(
-                    Objects.requireNonNull(activityController.getRandom().getBody()));
+            // Type = Guess
 
-            //Get three possible options
-            List<Long> options = new ArrayList<>();
-            long correct = selectedActivity.get(0).consumptionInWh;    //Get correct answer
-            //Add options to list
-            options.add(correct);
-            options.addAll(getOptions(correct));
+            return generateGuessQuestion();
 
-            return new Question(selectedActivity, Question.Type.GUESS, options);
-            //Type = How many times
         } else if(randomType == 2) {
-            List<Activity> selectedActivities = new ArrayList<>();
-            //Get 2 random activities
-            selectedActivities.add(activityController.getRandom().getBody());
-            selectedActivities.add(activityController.getRandom().getBody());
-            //Check if activities are equal
-            while(selectedActivities.get(1).consumptionInWh <= selectedActivities.get(0).consumptionInWh){
-                selectedActivities.set(1, activityController.getRandom().getBody());
-            }
-            //Get three options
-            List<Long> options = new ArrayList<>();
-            long correct = selectedActivities.get(1).consumptionInWh / selectedActivities.get(0).consumptionInWh;
-            options.add(correct);
-            options.addAll(getOptions(correct));
+            // Type = How many times
 
-            return new Question(selectedActivities, Question.Type.HOW_MANY_TIMES, options);
-
+            return generateHowManyTimesQuestion();
         }
         //Type = Estimation
         List<Activity> selectedActivity = List.of(
                 Objects.requireNonNull(activityController.getRandom().getBody()));
         System.out.println(selectedActivity.get(0).consumptionInWh);
         return new Question(selectedActivity, Question.Type.ESTIMATION);
+    }
 
+    private Question generateCompareQuestion(){
+        List<Activity> selectedActivities =
+                List.of(Objects.requireNonNull(activityController.getRandom().getBody()),
+                        activityController.getRandom().getBody(),
+                        activityController.getRandom().getBody());
+        return new Question(selectedActivities, Question.Type.COMPARE);
+    }
+
+    private Question generateGuessQuestion(){
+        //Get random activity from database
+        List<Activity> selectedActivity =  List.of(
+                Objects.requireNonNull(activityController.getRandom().getBody()));
+
+        //Get three possible options
+        List<Long> options = new ArrayList<>();
+        long correct = selectedActivity.get(0).consumptionInWh;    //Get correct answer
+        //Add options to list
+        options.add(correct);
+        options.addAll(getOptions(correct));
+
+        return new Question(selectedActivity, Question.Type.GUESS, options);
+    }
+
+    private Question generateHowManyTimesQuestion(){
+        List<Activity> selectedActivities = new ArrayList<>();
+        //Get 2 random activities
+        var randActivity1 = activityController.getRandom().getBody();
+        var randActivity2 = activityController.getRandom().getBody();
+
+        if(randActivity1 == null || randActivity2 == null) return null;
+
+        // Check if activities are equal
+        while(randActivity1.consumptionInWh == randActivity2.consumptionInWh){
+            System.out.println(randActivity1.consumptionInWh + " EQUALS " + randActivity2.consumptionInWh);
+            randActivity1 = activityController.getRandom().getBody();
+        }
+
+        if(randActivity1.consumptionInWh > randActivity2.consumptionInWh){
+            // swap activities because we need the first one to be smaller
+            // than the second one
+            var temp = randActivity1;
+            randActivity1 = randActivity2;
+            randActivity2 = temp;
+        }
+
+        selectedActivities.add(randActivity1);
+        selectedActivities.add(randActivity2);
+
+        // Get three options
+        List<Long> options = new ArrayList<>();
+        long correct = randActivity2.consumptionInWh / randActivity1.consumptionInWh;
+
+        options.add(correct);
+        options.addAll(getOptions(correct));
+
+        return new Question(selectedActivities, Question.Type.HOW_MANY_TIMES, options);
     }
 
     /**
@@ -277,9 +310,8 @@ public class MainMessageController {
      * @param correct answer which determines bounds
      * @return option given a correct answer
      */
-    private long getRandomAnswer(long correct){
-        Random rand = new Random();
-        return (long) ((correct/2) + Math.random() * ((2 * correct) - (correct/2)));
+    private long getRandomAnswer(long correct, long addition){
+        return 1 + (long)(correct * Math.random()) + (long)(Math.random() * addition);
     }
 
     /**
@@ -289,13 +321,25 @@ public class MainMessageController {
      */
     private List<Long> getOptions(long correct){
         List<Long> res = new ArrayList<>();
-        long randomAnswer01 = getRandomAnswer(correct);
-        long randomAnswer02 = getRandomAnswer(correct);
+
+        long addition = (long)(correct * 0.2);
+
+        long randomAnswer01 = getRandomAnswer(correct, addition);
+        long randomAnswer02 = getRandomAnswer(correct, addition);
         //Check if selected options are equal
         while(randomAnswer01 == randomAnswer02 || randomAnswer01 == correct || randomAnswer02 == correct){
-            if(randomAnswer01 == correct) randomAnswer01 = getRandomAnswer(correct);
+
+            // addition makes sure that we don't end up with an infinite
+            // loop - we will start generating bigger and bigger values
+            // if the ratio is very small
+            addition = (long)((addition + 1) * 1.2);
+
+            System.out.println("RANDOM ANSWER 1: " + randomAnswer01);
+            System.out.println("RANDOM ANSWER 2: " + randomAnswer02);
+
+            if(randomAnswer01 == correct) randomAnswer01 = getRandomAnswer(correct, addition);
             if(randomAnswer02 == correct || randomAnswer02 == randomAnswer01){
-                randomAnswer02 = getRandomAnswer(correct);
+                randomAnswer02 = getRandomAnswer(correct, addition);
             }
         }
         res.add(randomAnswer01);
@@ -306,6 +350,7 @@ public class MainMessageController {
     private ServerMessage singleplayerSendNewQuestion(int playerScore, Game forGame) {
         ServerMessage result = new ServerMessage(ServerMessage.Type.NEXT_QUESTION);
         result.question = generateQuestion();
+        System.out.println("[DONE-single] Trying to generate question type finished");
         forGame.setType(result.question.type);
 
         forGame.setCorrectAnswerID(result.question.getCorrect());
@@ -539,6 +584,7 @@ public class MainMessageController {
         ServerMessage result = new ServerMessage(ServerMessage.Type.LOAD_NEW_QUESTIONS);
 
         result.question = generateQuestion();
+        System.out.println("[DONE-multi] Trying to generate question type finished");
         g.setCorrectAnswerID(result.question.getCorrect());
         g.setType(result.question.type);
         g.setQuestionStartTime(System.currentTimeMillis());
