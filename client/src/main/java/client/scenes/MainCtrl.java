@@ -201,7 +201,11 @@ public class MainCtrl {
                 });
                 break;
             case NEW_MULTIPLAYER_GAME:
-                multiplayerScreenCtrl.showJokers();
+                runLater(() -> {
+                    multiplayerScreenCtrl.showJokers();
+                    multiplayerScreenInputCtrl.showJokers();
+                    multiplayerScreenGuessCtrl.showJokers();
+                });
                 break;
             case NEW_SINGLEPLAYER_GAME:
                 gameID = msg.gameID;
@@ -285,11 +289,19 @@ public class MainCtrl {
                 break;
             case LOCK_ANSWER:
                 // this message only comes in multiplayer mode
-                runLater(() -> multiplayerScreenCtrl.lockUI());
+                runLater(() -> {
+                    multiplayerScreenCtrl.lockUI();
+                    multiplayerScreenGuessCtrl.lockUI();
+                    multiplayerScreenInputCtrl.lockUI();
+                });
                 break;
             case UPDATE_TIMER:
                 // this message only comes in multiplayer mode:
-                runLater(() -> multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull));
+                runLater(() -> {
+                    multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                    multiplayerScreenGuessCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                    multiplayerScreenInputCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                });
                 break;
             case REMOVE_ANSWER:
                 runLater(() -> {
@@ -542,6 +554,24 @@ public class MainCtrl {
         primaryStage.setScene(createActivity);
         createActivityCtrl.resetErrorText();
         createActivityCtrl.clearFields();
+    }
+
+    public void hideCutAnswerJokers(){
+        multiplayerScreenGuessCtrl.useCutAnswer();
+        multiplayerScreenInputCtrl.useCutAnswer();
+        multiplayerScreenCtrl.useCutAnswer();
+    }
+
+    public void hideDoublePointsJoker(){
+        multiplayerScreenGuessCtrl.useDoublePoints();
+        multiplayerScreenInputCtrl.useDoublePoints();
+        multiplayerScreenCtrl.useDoublePoints();
+    }
+
+    public void hideLowerTimeJoker(){
+        multiplayerScreenGuessCtrl.useLowerTime();
+        multiplayerScreenInputCtrl.useLowerTime();
+        multiplayerScreenCtrl.useLowerTime();
     }
 
     public Scene getInBetweenScore() {

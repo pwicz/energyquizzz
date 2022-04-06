@@ -295,11 +295,15 @@ public class MultiplayerScreenCtrl {
         msg.joker = ClientMessage.Joker.CUT_ANSWER;
 
         mainCtrl.getServer().send("/app/general", msg);
+        mainCtrl.hideCutAnswerJokers();
+    }
 
+    public void useCutAnswer(){
         cutAnswer.setDisable(true);
         cutAnswer.setStyle("visibility: hidden;");
         cutAnswerUsed = true;
     }
+
 
     // doubles your points for this round
     public void doublePoints(MouseEvent event){
@@ -308,7 +312,10 @@ public class MultiplayerScreenCtrl {
         msg.joker = ClientMessage.Joker.DOUBLE_POINTS;
 
         mainCtrl.getServer().send("/app/general", msg);
+        mainCtrl.hideDoublePointsJoker();
+    }
 
+    public void useDoublePoints(){
         doublePoints.setDisable(true);
         doublePoints.setStyle("visibility: hidden;");
         doublePointsUsed = true;
@@ -321,10 +328,14 @@ public class MultiplayerScreenCtrl {
         msg.joker = ClientMessage.Joker.SPLIT_TIME;
 
         mainCtrl.getServer().send("/app/general", msg);
+        mainCtrl.hideLowerTimeJoker();
+    }
 
+    public void useLowerTime(){
         splitTime.setDisable(true);
         splitTime.setStyle("visibility: hidden;");
     }
+
     /**
      * Sets visible timer to a desired value and starts decreasing it in the rate calculated using totalTime.
      *
@@ -357,6 +368,7 @@ public class MultiplayerScreenCtrl {
     }
 
     public void displayActivities(Question question, Scene scene){
+        resetUI();
         // for convenience
         if (mainCtrl.getMultiplayer().equals(scene)) {
             displayCompareActivities(question.activities);
@@ -397,6 +409,7 @@ public class MultiplayerScreenCtrl {
     }
 
     public void displayInputActivities(List<Activity> activities){
+        resetJokers();
         textField.setText("");
 
         answerInput.setStyle("visibility: hidden");
@@ -442,6 +455,10 @@ public class MultiplayerScreenCtrl {
         choice = null;
         picked.setStyle("visibility: hidden");
 
+        resetJokers();
+    }
+
+    public void resetJokers(){
         if(!cutAnswerUsed) {
             cutAnswer.setDisable(false);
             cutAnswer.setStyle("-fx-opacity: 1.0");
