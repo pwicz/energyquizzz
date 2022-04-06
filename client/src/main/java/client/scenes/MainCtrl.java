@@ -217,7 +217,7 @@ public class MainCtrl {
             case DISPLAY_ANSWER:
                 runLater(() -> {
                     if(msg.typeQ == Question.Type.ESTIMATION){
-                        multiplayerScreenInputCtrl.showAnswerInput(msg.correctID, msg.pickedID);
+                        multiplayerScreenInputCtrl.showAnswerInput(msg.answeredCorrect, msg.correctID, msg.pickedID);
                     }else {
                         multiplayerScreenCtrl.showAnswer(msg.correctID, msg.pickedID);
                         multiplayerScreenGuessCtrl.showAnswer(msg.correctID, msg.pickedID);

@@ -34,6 +34,8 @@ public class ServerMessage {
     public String imgName;
     public String namePLayerEmoji;
 
+    public boolean answeredCorrect;
+
     public ServerMessage() {
     }
 

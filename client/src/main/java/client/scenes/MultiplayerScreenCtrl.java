@@ -112,7 +112,7 @@ public class MultiplayerScreenCtrl {
     public void submitAnswer(){
         if(!canInteractWithUI || choice == null) return;
 
-        ClientMessage msg = new ClientMessage(commons.ClientMessage.Type.SUBMIT_SINGLEPLAYER,
+        ClientMessage msg = new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
 
         Scene scene = mainCtrl.getPrimaryStage().getScene();
@@ -178,17 +178,18 @@ public class MultiplayerScreenCtrl {
         }
     }
 
-    public void showAnswerInput(Long correctID, Long pickedID){
+    public void showAnswerInput(boolean answeredCorrect, Long correctID, Long pickedID){
         timeBar.setProgress(0.0);
+
         DecimalFormat df = new DecimalFormat("#.#");
         double dif = (double)pickedID/correctID;
-        String percentage = df.format(Math.abs(100 - dif  ));
+        String percentage = df.format(Math.abs(100 - dif));
 
-        if(correctID*0.5 <= pickedID && correctID*1.5 >= pickedID ) {
+        if(answeredCorrect) {
             answerInput.setStyle("visibility: visible");
             answerInput.setFill(Color.web("#38c768"));
             answerInput.setText("The correct answer was " + correctID + "\nyou were " + percentage + "% off");
-            result.setText("You got it right :)");
+            result.setText("You got it right :) +42 points");
             result.setStyle("visibility: visible");
             timeBar.setStyle("-fx-border-color: #38c768");
         }

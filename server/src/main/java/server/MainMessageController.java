@@ -123,7 +123,7 @@ public class MainMessageController {
                 case SUBMIT_SINGLEPLAYER:
                     if (game == null || player == null) return;
                     // check if specified game and player exist
-                    if (player.hasAnswered()) return;
+                    if (player.hasAnswered() || game.isMultiplayer()) return;
 
                     player.setHasAnswered(true);
                     submitSingleplayer(msg, game, player);
@@ -189,6 +189,7 @@ public class MainMessageController {
                 // add at most 5*points time bonus
                 scoreForQuestion = points + (int) (points * (timeLeft / 2));
                 System.out.println("Points received: " + points + " and time bonus: " + (scoreForQuestion - points));
+                p.setAnswerStatus(true);
             }
 
         } else if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
@@ -229,6 +230,9 @@ public class MainMessageController {
         //Chose number for random question type
         Random rand = new Random();
         int randomType = rand.nextInt(Question.Type.values().length);
+
+        // TEST ONLY TODO: remove after testing
+        randomType = 3;
 
         //Type = Compare
         if(randomType == 0){
@@ -436,6 +440,7 @@ public class MainMessageController {
         result.correctlyAnswered = correctAnswer(g);
         result.incorrectlyAnswered = incorrectAnswer(g);
         result.typeQ = g.getType();
+        result.answeredCorrect = p.getAnswerStatus();
 
         return result;
     }
