@@ -8,15 +8,12 @@ import javafx.scene.text.Text;
 
 public class CustomListCell extends ListCell<Score> {
 
-
-
     @Override
     protected void updateItem(Score item, boolean empty) {
         super.updateItem(item, empty);
 
         Pane pane = new Pane();
         if(!empty) {
-            pane.setStyle("list-view");
             final Text leftText = new Text(item.getPlayerName());
             leftText.setTextOrigin(VPos.TOP);
             leftText.relocate(0,0);
