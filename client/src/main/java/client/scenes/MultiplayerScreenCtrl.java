@@ -3,6 +3,7 @@ package client.scenes;
 import com.google.inject.Inject;
 import commons.Activity;
 import commons.ClientMessage;
+import commons.Question;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -12,10 +13,12 @@ import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -32,6 +35,7 @@ import javafx.util.Duration;
 
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -59,25 +63,10 @@ public class MultiplayerScreenCtrl {
     ProgressBar timeBar;
 
     @FXML
-    Rectangle option1;
-
-    @FXML
-    Rectangle option2;
-
-    @FXML
-    Rectangle option3;
+    Rectangle option1, option2, option3;
 
     @FXML
     Button submit;
-
-    @FXML
-    ImageView image1;
-
-    @FXML
-    ImageView image2;
-
-    @FXML
-    ImageView image3;
 
     @FXML
     ImageView cutAnswer;
@@ -89,31 +78,22 @@ public class MultiplayerScreenCtrl {
     ImageView splitTime;
 
     @FXML
-    Label title1;
+    ImageView image, image1, image2, image3;
 
     @FXML
-    Label title2;
+    Label description1, description2, description3, description4;
 
     @FXML
-    Label title3;
-
-    @FXML
-    Label description1;
-
-    @FXML
-    Label description2;
-
-    @FXML
-    Label description3;
+    Rectangle activity;
 
     @FXML
     Label score;
 
     @FXML
-    Text picked;
+    Text picked, result, answerInput;
 
     @FXML
-    Label headTitle;
+    Label headTitle, headTitle1, headTitle2;
 
     @FXML
     GridPane jokerMessages;
@@ -124,25 +104,31 @@ public class MultiplayerScreenCtrl {
     @FXML
     AnchorPane anchorPane;
 
+    @FXML
+    TextField textField;
+
     @Inject
     public MultiplayerScreenCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
         optionToID = new HashMap<>();
-        runLater(() -> {
-           initilizeEmojis();
-        });
+        runLater(this::initilizeEmojis);
     }
 
     public void leave(){
         // inform the server about leaving
         ClientMessage msg = new ClientMessage(ClientMessage.Type.QUIT,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
-        mainCtrl.showLeave(mainCtrl::showSplash, () -> mainCtrl.getServer().send("/app/general", msg));
+        mainCtrl.showLeave(mainCtrl::showSplash,
+                () ->{
+            mainCtrl.getServer().send("/app/general", msg);
+            timeStop();
+        });
     }
 
     //submits answer, stops time,
     public void submitAnswer(){
         if(!canInteractWithUI || choice == null) return;
+
         lockUI();
 
         if(timer != null){
@@ -151,10 +137,24 @@ public class MultiplayerScreenCtrl {
 
         ClientMessage msg = new ClientMessage(ClientMessage.Type.SUBMIT_ANSWER,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
-        msg.chosenActivity = optionToID.get(choice);
 
-
-        mainCtrl.getServer().send("/app/general", msg);
+        Scene scene = mainCtrl.getPrimaryStage().getScene();
+        if (mainCtrl.getInputQuestionM().equals(scene)) {
+            if(textField.getText().equals("")){
+                return;
+            }
+            try{
+                msg.chosenActivity = Long.parseLong(textField.getText());
+                mainCtrl.getServer().send("/app/general", msg);
+            } catch (NumberFormatException e){
+                textField.setText("incorrect number");
+                return;
+            }
+        }
+        else{
+            msg.chosenActivity = optionToID.get(choice);
+            mainCtrl.getServer().send("/app/general", msg);
+        }
     }
 
     public void lockUI(){
@@ -171,31 +171,67 @@ public class MultiplayerScreenCtrl {
         }
     }
 
-    public void showAnswer(Long correctID, Long pickedID) {
-        for (var entry : optionToID.entrySet()) {
+    public void showAnswer(Long correctID, Long pickedID, int pointReceived) {
+        timeBar.setProgress(0.0);
+        for(var entry : optionToID.entrySet()){
             Long activityID = entry.getValue();
             Rectangle op = entry.getKey();
 
             // set rectangle color
-            if (Objects.equals(activityID, correctID)) {
+            if(Objects.equals(activityID, correctID)){
                 op.setStyle("-fx-stroke: #38c768");
-            } else {
+            }
+            else{
                 op.setStyle("-fx-stroke: #e0503d");
             }
 
-            if (Objects.equals(activityID, pickedID)) {
+            if(Objects.equals(activityID, pickedID)){
                 // render the "You picked this one" text
                 picked.setLayoutX(op.getLayoutX() + (op.getWidth() - picked.getLayoutBounds().getWidth()) / 2.0);
                 picked.setLayoutY(op.getLayoutY() - 15.0);
                 picked.setStyle("visibility: visible");
             }
+
+            if(Objects.equals(correctID, pickedID)){
+                result.setText("You got it right :) +" + pointReceived + " points");
+                result.setStyle("visibility: visible");
+                timeBar.setStyle("-fx-border-color: #38c768");
+            }else{
+                result.setText("You got it wrong :(");
+                result.setStyle("visibility: visible");
+                timeBar.setStyle("-fx-border-color: #e0503d");
+            }
         }
+    }
+
+    public void showAnswerInput(boolean answeredCorrect, Long correctID, Long pickedID, int pointReceived){
+        timeBar.setProgress(0.0);
+
+        DecimalFormat df = new DecimalFormat("#.#");
+        double dif = (double)pickedID/correctID;
+        String percentage = df.format(Math.abs(1.0 - dif) * 100);
+
+        if(answeredCorrect) {
+            answerInput.setStyle("visibility: visible");
+            answerInput.setFill(Color.web("#38c768"));
+            result.setText("You got it right :) +" + pointReceived + " points");
+            result.setStyle("visibility: visible");
+            timeBar.setStyle("-fx-border-color: #38c768");
+        }
+        else {
+            answerInput.setStyle("visibility: visible");
+            answerInput.setFill(Color.web("#e0503d"));
+            result.setText("You got it wrong :(");
+            result.setStyle("visibility: visible");
+            timeBar.setStyle("-fx-border-color: #e0503d");
+        }
+
+        answerInput.setText("The correct answer was " + correctID + "\nyou were " + percentage + "% off");
     }
 
     //shows an emoji
     public void sendEmoji(){
         String[] dir = ((ImageView) emojiHolder.getSelectionModel().getSelectedItem()).getImage().getUrl().split("/");
-        System.out.println(dir[dir.length - 1]);
 
         ClientMessage msg = new ClientMessage(ClientMessage.Type.SHOW_EMOJI,
                 mainCtrl.getClientID(), mainCtrl.getGameID());
@@ -238,18 +274,15 @@ public class MultiplayerScreenCtrl {
             ft.play();
 
 //            List<Rectangle> options = List.of();
-            List<Node> titles = List.of(title1, title2, title3, description1, description2, description3,
-                    image1, image2, image3, option1, option2, option3);
+//            List<Node> titles = List.of(title1, title2, title3, description1, description2, description3,
+//                    image1, image2, image3, option1, option2, option3);
 
             anchorPane.getChildren().add(transitions.get(i));
 
-            anchorPane.getChildren().removeAll(titles);
-            anchorPane.getChildren().addAll(titles);
+//            anchorPane.getChildren().removeAll(titles);
+//            anchorPane.getChildren().addAll(titles);
         }
 
-
-       // anchorPane.getChildren().add(imageView1);
-       // anchorPane.getChildren().add(playerName);
     }
 
     private void removeImage(Node node) {
@@ -323,13 +356,60 @@ public class MultiplayerScreenCtrl {
         }
     }
 
-    public void displayActivities(List<Activity> activities){
+    public void displayActivities(Question question, Scene scene){
         // for convenience
+        if (mainCtrl.getMultiplayer().equals(scene)) {
+            displayCompareActivities(question.activities);
+        } else if (mainCtrl.getGuessQuestionM().equals(scene)) {
+            displayGuessActivities(question);
+        } else if (mainCtrl.getInputQuestionM().equals(scene)) {
+            displayInputActivities(question.activities);
+        }
+        timeBar.setStyle("-fx-border-color: #38c768");
 
+    }
+
+    public void displayGuessActivities(Question question){
         resetUI();
-
+        Activity a = question.getActivities().get(0);
+        optionToID = new HashMap<>();
+        List<Label> descriptions = List.of(description1, description3 , description4);
         List<Rectangle> options = List.of(option1, option2, option3);
-        List<Label> titles = List.of(title1, title2, title3);
+        switch (question.type){
+            case GUESS:
+                for (int i = 0; i < descriptions.size(); i++) {
+                    descriptions.get(i).setText(question.options.get(i).toString() + " wh");
+                    optionToID.put(options.get(i), question.options.get(i));
+                }
+                break;
+            case HOW_MANY_TIMES:
+                for (int i = 0; i < descriptions.size(); i++) {
+                    descriptions.get(i).setText(question.options.get(i).toString() + " Times");
+                    optionToID.put(options.get(i), question.options.get(i));
+                }
+                break;
+            default:
+        }
+
+        description2.setText(a.title);
+
+        image.setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
+    }
+
+    public void displayInputActivities(List<Activity> activities){
+        textField.setText("");
+
+        answerInput.setStyle("visibility: hidden");
+        result.setStyle("visibility: hidden");
+        choice = new Rectangle();
+        canInteractWithUI = true;
+        submit.setDisable(false);
+        description.setText(activities.get(0).title);
+    }
+
+    public void displayCompareActivities(List<Activity> activities){
+        resetUI();
+        List<Rectangle> options = List.of(option1, option2, option3);
         List<Label> descriptions = List.of(description1, description2, description3);
         List<ImageView> images = List.of(image1, image2, image3);
 
@@ -337,9 +417,8 @@ public class MultiplayerScreenCtrl {
             Activity a = activities.get(i);
 
             if(a == null) continue;
-            optionToID.put(options.get(i), a.id);
-            
-            titles.get(i).setText(Long.toString(a.consumptionInWh));
+            optionToID.put(options.get(i), a.consumptionInWh);
+
             descriptions.get(i).setText(a.title);
 
             images.get(i).setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
@@ -353,6 +432,11 @@ public class MultiplayerScreenCtrl {
 
     public void resetUI(){
         canInteractWithUI = true;
+
+        result.setStyle("visibility: hidden");
+        option1.setStyle("-fx-stroke: #fff");
+        option2.setStyle("-fx-stroke: #fff");
+        option3.setStyle("-fx-stroke: #fff");
 
         optionToID = new HashMap<>();
         choice = null;
@@ -482,4 +566,45 @@ public class MultiplayerScreenCtrl {
         }
     }
 
+    public void setHeadTitle(String headTitle) {
+        this.headTitle.setText(headTitle);
+    }
+
+    public void setHeadGuessTitle(String headTitle) {
+        String[] s = headTitle.split(",");
+        headTitle1.setStyle("-fx-font-size: 40 ");
+        headTitle2.setStyle("-fx-font-size: 40 ");
+        headTitle2.setText("");
+        headTitle1.setText(s[0]);
+        if(s.length > 1) {
+            headTitle2.setText(s[1]);
+            headTitle1.setStyle("-fx-font-size: 25 ");
+            headTitle2.setStyle("-fx-font-size: 25 ");
+
+        }
+    }
+
+    public void checkInput(){
+        String text = textField.getText();
+        if(text.length() < 1) return;
+
+        int caret = textField.getCaretPosition();
+
+        StringBuilder validatedText = new StringBuilder();
+
+        for(int i = 0; i < text.length(); ++i){
+            int charValue = text.charAt(i) - '0';
+            if(charValue >= 0 && charValue <= 9){
+                validatedText.append(text.charAt(i));
+            }
+        }
+
+        textField.setText(validatedText.toString());
+        textField.positionCaret(caret);
+    }
+
+    public void timeStop(){
+        if(timer!= null)
+            timer.stop();
+    }
 }

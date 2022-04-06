@@ -11,11 +11,12 @@ public class Game {
     private int playersAnswered = 0;
     private int questionCounter = 0;
     private Question currentQuestion;
-    private long questionStartTime;
     private long correctAnswerID;
     private int round;
     private boolean hasEnded;
     private boolean isMultiplayer;
+    private long questionStartTime;
+    private Question.Type type;
 
     public Timer questionEndAction;
 
@@ -93,6 +94,14 @@ public class Game {
     public int incQuestionCounter() {
         this.questionCounter = questionCounter + 1;
         return questionCounter;
+    }
+
+    public Question.Type getType() {
+        return type;
+    }
+
+    public void setType(Question.Type type) {
+        this.type = type;
     }
 
     public void setQuestionCounter(int questionCounter) {

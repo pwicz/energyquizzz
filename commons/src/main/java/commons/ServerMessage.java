@@ -8,7 +8,8 @@ public class ServerMessage {
     public enum Type{
         NEW_SINGLEPLAYER_GAME, NEW_MULTIPLAYER_GAME, TEST, NEXT_QUESTION, RESULT, END,
         LOAD_NEW_QUESTIONS, DISPLAY_ANSWER, DISPLAY_INBETWEENSCORES, END_GAME, INIT_PLAYER,
-        EXTRA_PLAYER, PING,  SHOW_EMOJI, LOCK_ANSWER, UPDATE_TIMER, REMOVE_ANSWER, JOKER_USED
+        EXTRA_PLAYER, PING, SHOW_EMOJI, NAME_TAKEN, LOCK_ANSWER, UPDATE_TIMER, REMOVE_ANSWER,
+        JOKER_USED
     }
 
     public Type type;
@@ -17,13 +18,13 @@ public class ServerMessage {
     public ClientMessage.Joker jokerType;
     public String jokerUsedBy;
 
+    public Question.Type typeQ;
+
     public Question question;
     public int score;
     public double timerFull;
     public double timerFraction;
     public String gameID;
-    public Long correctAnswerID;
-    public Long pickedAnswerID;
     public int round;
     public List<String> correctlyAnswered;
     public List<String> incorrectlyAnswered;
@@ -36,6 +37,11 @@ public class ServerMessage {
     public int totalQuestions;
     public String imgName;
     public String namePLayerEmoji;
+
+    public String playerName;
+
+    public boolean answeredCorrect;
+    public int receivedPoints;
 
     public ServerMessage() {
     }

@@ -41,8 +41,11 @@ public class Question {
                 if(this.correct < a.consumptionInWh) this.correct = a.consumptionInWh;
             }
             for(Activity a : activities){
-                if(this.correct != a.consumptionInWh) this.incorrect.add((long) a.consumptionInWh);
+                if(this.correct != a.consumptionInWh) this.incorrect.add(a.consumptionInWh);
             }
+        }else{
+            if(activities.size() >0)
+                correct = activities.get(0).consumptionInWh;
         }
     }
 
@@ -72,7 +75,7 @@ public class Question {
         if(type == Type.COMPARE) return "Which activity consumes most energy?";
         else if(type == Type.GUESS) return "How much energy does this activity take?";
         else if(type == Type.HOW_MANY_TIMES) return "Instead of ";
-        else if(type == Type.ESTIMATION) return "How much energy does it take to...?";
+        else if(type == Type.ESTIMATION) return "How much energy does this activity take?";
         return null;
     }
 
@@ -110,6 +113,13 @@ public class Question {
 
     public void setOptions(List<Long> options){
         this.options = options;
+    }
+
+    public Long getOneOfTheIncorrectOptions(){
+        if(type == Type.ESTIMATION) return -1L;
+
+        int index = (int) (Math.random() * incorrect.size());
+        return incorrect.get(index);
     }
 
     @Override

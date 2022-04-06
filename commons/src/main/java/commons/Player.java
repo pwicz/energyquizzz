@@ -10,6 +10,7 @@ public class Player {
     private String ID;
     private int score = 0;
     private int scoreModifier = 1;
+    private int recentlyReceivedPoints = 0;
     private long answer;
     private boolean answerStatus = false;
     private long timePenaltyMs = 0;
@@ -128,5 +129,13 @@ public class Player {
 
     public void setUsedCutAnswer(boolean usedCutAnswer) {
         this.usedCutAnswer = usedCutAnswer;
+    }
+
+    public int getRecentlyReceivedPoints() {
+        return recentlyReceivedPoints;
+    }
+
+    public void setRecentlyReceivedPoints(int recentlyReceivedPoints) {
+        this.recentlyReceivedPoints = recentlyReceivedPoints;
     }
 }
