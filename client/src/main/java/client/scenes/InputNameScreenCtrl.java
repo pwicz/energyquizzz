@@ -3,8 +3,8 @@ import com.google.inject.Inject;
 
 import commons.ClientMessage;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 
 
 public class InputNameScreenCtrl {
@@ -14,7 +14,7 @@ public class InputNameScreenCtrl {
     TextField textBox;
 
     @FXML
-    Text connectionFailed;
+    Label nameTaken;
 
     @Inject
     public InputNameScreenCtrl(MainCtrl mainCtrl) {
@@ -23,7 +23,6 @@ public class InputNameScreenCtrl {
 
     public void join(){
         if(textBox.getText().equals("")) return;
-
         ClientMessage msg = new ClientMessage(ClientMessage.Type.INIT_MULTIPLAYER);
 
         msg.playerID = mainCtrl.getClientID();
@@ -35,5 +34,19 @@ public class InputNameScreenCtrl {
 
     public void leave(){
         mainCtrl.showSplash();
+    }
+
+    public void nameTaken(){
+        nameTaken.setVisible(false);
+        try {
+            Thread.sleep(30);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        nameTaken.setVisible(true);
+    }
+
+    public void resetNameTaken(){
+        nameTaken.setVisible(false);
     }
 }

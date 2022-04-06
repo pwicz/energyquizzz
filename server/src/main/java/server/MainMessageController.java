@@ -87,8 +87,11 @@ public class MainMessageController {
                     if(waitingRoom != null
                             && waitingRoom.getPlayers()
                             .stream().anyMatch(players ->
-                                    (players.getName()).equalsIgnoreCase(msg.playerName)))
+                                    (players.getName()).equalsIgnoreCase(msg.playerName))) {
+                        simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
+                                new ServerMessage(ServerMessage.Type.NAME_TAKEN));
                         return;
+                    }
 
                     joinWaitingRoom(msg);
                     break;
@@ -388,8 +391,11 @@ public class MainMessageController {
     public void joinWaitingRoom(ClientMessage msg) {
         // add player to waiting room and init game for him
         waitingRoom.addPlayer(new Player(msg.playerName, msg.playerID));
+
+
         ServerMessage result = new ServerMessage(ServerMessage.Type.INIT_PLAYER);
         result.gameID = waitingRoom.getID();
+        result.playerName = msg.playerName;
         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
 
 
@@ -432,11 +438,10 @@ public class MainMessageController {
     public List<Score> getTopScores(Game game) {
         List<Player> playerList = game.getPlayers().stream()
                 .sorted(Comparator.comparing(Player::getScore).thenComparing(Player::getID).reversed())
-                .limit(5)
                 .collect(Collectors.toList());
         List<Score> topScores = new ArrayList<>();
         for (Player p : playerList) {
-            topScores.add(new Score(p.getName(),p.getScore()));
+            topScores.add(new Score(p.getName(), p.getScore()));
         }
         return topScores;
     }
@@ -518,8 +523,10 @@ public class MainMessageController {
                     System.out.println("[msg] ending game");
                     for(var p : g.getPlayers()){
                         ServerMessage result = new ServerMessage(ServerMessage.Type.END_GAME);
+                        result.topScores = getTopScores(g);
                         simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
                     }
+                    games.remove(g.getID());
                 }
             }, 6000);
         }
