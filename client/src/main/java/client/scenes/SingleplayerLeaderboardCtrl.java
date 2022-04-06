@@ -36,7 +36,7 @@ public class SingleplayerLeaderboardCtrl {
      * The Leaderboard.
      */
     @FXML
-    ListView<String> leaderboard;
+    ListView<Score> leaderboard;
 
     /**
      * Instantiates a new Singleplayer leaderboard ctrl.
@@ -88,23 +88,14 @@ public class SingleplayerLeaderboardCtrl {
     public void insertLeaderboard() { //needs to change to import the database leaderboard
         List<String> topScores = new ArrayList<>();
         List<Score> response = mainCtrl.getServer().getTopScores();
+        leaderboard.setCellFactory(lv -> new CustomListCell());
         if(response != null){
             for(Score score : response){
-                topScores.add(toStringScore(score));
+                leaderboard.getItems().add(score);
             }
         }
-        leaderboard.getItems().setAll(topScores);
     }
 
-    public String toStringScore(Score score) {
-        int temp = 70;
-        temp = temp - score.getPlayerName().length();
-        StringBuilder sb = new StringBuilder();
-        sb.append(score.playerName);
-        for(int i = 0; i < temp; i++) {sb.append(" ");}
-        sb.append(score.playerScore + " Points!");
-        return sb.toString();
-    }
 
     /**
      * Leave.
