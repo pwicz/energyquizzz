@@ -10,23 +10,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerScreenCtrl">
 
-    <Label fx:id="screenTitle" alignment="CENTER" layoutX="210.0" layoutY="71.0" prefHeight="45.0" prefWidth="1200.0" styleClass="question" text="Question 5: Which activity consumes most energy?" AnchorPane.topAnchor="50.0" AnchorPane.leftAnchor="-61.5">
+    <Label fx:id="screenTitle" alignment="CENTER" layoutX="210.0" layoutY="71.0" prefHeight="45.0" prefWidth="1200.0" styleClass="question" text="Question 5: Which activity consumes most energy?" AnchorPane.leftAnchor="-61.5" AnchorPane.topAnchor="50.0">
     </Label>
 
-    <ProgressBar fx:id="timeBar" layoutX="138.5" layoutY="120.0" prefHeight="40.0" prefWidth="800.0" progress="0.0" styleClass="timeBar"/>
+    <ProgressBar fx:id="timeBar" layoutX="138.5" layoutY="120.0" prefHeight="40.0" prefWidth="800.0" progress="0.0" styleClass="timeBar" />
 
-    <Label fx:id="title1" alignment="CENTER" layoutX="323.0" layoutY="634.0" prefHeight="30.0" prefWidth="200.0" styleClass="questionTitle" text="Gaming" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="175.5">
+    <Label fx:id="description1" alignment="CENTER" layoutX="176.0" layoutY="681.0" prefHeight="134.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="176.0">
     </Label>
-    <Label fx:id="title2" alignment="CENTER" layoutX="656.0" layoutY="634.0" prefHeight="30.0" prefWidth="200.0" styleClass="questionTitle" text="Charging a car" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="438.5">
+    <Label fx:id="description2" alignment="CENTER" layoutX="439.0" layoutY="678.0" prefHeight="134.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="439.0">
     </Label>
-    <Label fx:id="title3" alignment="CENTER" layoutX="987.0" layoutY="634.0" prefHeight="30.0" prefWidth="200.0" styleClass="questionTitle" text="Gaming" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="701.5">
-    </Label>
-
-    <Label fx:id="description1" alignment="CENTER" layoutX="306.0" layoutY="681.0" prefHeight="100.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="175.5">
-    </Label>
-    <Label fx:id="description2" alignment="CENTER" layoutX="641.0" layoutY="678.0" prefHeight="100.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="438.5">
-    </Label>
-    <Label fx:id="description3" alignment="CENTER" layoutX="974.0" layoutY="674.0" prefHeight="100.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="701.5">
+    <Label fx:id="description3" alignment="CENTER" layoutX="702.0" layoutY="674.0" prefHeight="134.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="702.0">
     </Label>
 
     <ImageView fx:id="image1" fitHeight="200.0" fitWidth="200.0" layoutX="319.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="175.5">
@@ -39,8 +32,8 @@
         <Image url="@/client/scenes/images/tempShit.png" />
     </ImageView>
 
-    <Text fx:id="picked" layoutX="367.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text="You picked this one" AnchorPane.topAnchor="165.0"/>
-    <Text fx:id="result" layoutX="698.0" layoutY="235.0" wrappingWidth="800" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" styleClass="result-text" text=" " AnchorPane.topAnchor="120.0" AnchorPane.leftAnchor="138.5"/>
+    <Text fx:id="picked" layoutX="367.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text="You picked this one" AnchorPane.topAnchor="165.0" />
+    <Text fx:id="result" layoutX="698.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text=" " textAlignment="CENTER" wrappingWidth="800" AnchorPane.leftAnchor="138.5" AnchorPane.topAnchor="120.0" />
 
     <Label fx:id="score" alignment="CENTER" layoutX="554.0" layoutY="910.0" prefHeight="40.0" prefWidth="405.0" styleClass="score" text="Score: 1200" textAlignment="CENTER" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="336.0">
     </Label>

@@ -38,7 +38,7 @@ public class MainMessageController {
     private boolean sentToAll = false;
 
     // game options
-    private final int questionsPerGame = 4;
+    private final int questionsPerGame = 20;
     private final double timeToAnswer = 10.0;
     private final int scoreBase = 100;          // points for correct answer
     private final int scoreBonusPerSecond = 10; // extra points for every second left
@@ -58,7 +58,6 @@ public class MainMessageController {
     //CHECKSTYLE:OFF
     @MessageMapping("/general")
     public void handleClientMessages(ClientMessage msg) {
-        ServerMessage result = null;
         try {
             Game game = games.get(msg.gameID);
             Player player = null;
@@ -80,9 +79,6 @@ public class MainMessageController {
                     break;
                 case INIT_MULTIPLAYER:
 
-                    if(msg.serverName == null){
-                        //show server screen
-                    }
                     // if name is already taken
                     if(waitingRoom != null
                             && waitingRoom.getPlayers()
@@ -113,12 +109,6 @@ public class MainMessageController {
                         multiplayerShowAnswersProcedure(game);
                         System.out.println("[msg] all players submitted!");
                     }
-                    break;
-                case TEST:
-                    // for testing purposes
-                    result = new ServerMessage(ServerMessage.Type.TEST);
-                    System.out.println("[test] message received");
-                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
                     break;
                 case SUBMIT_SINGLEPLAYER:
                     if (game == null || player == null) return;
@@ -466,7 +456,7 @@ public class MainMessageController {
      */
     public List<String> correctAnswer(Game game){
         List<Player> playerList = game.getPlayers().stream()
-                .filter(p -> p.getAnswerStatus() == true)
+                .filter(Player::getAnswerStatus)
                 .collect(Collectors.toList());
         List<String> correctAnswers = new ArrayList<>();
         for (Player p : playerList) {
@@ -482,7 +472,7 @@ public class MainMessageController {
      */
     public List<String> incorrectAnswer(Game game){
         List<Player> playerList = game.getPlayers().stream()
-                .filter(p -> p.getAnswerStatus() == false)
+                .filter(p -> !p.getAnswerStatus())
                 .collect(Collectors.toList());
         List<String> incorrectAnswers = new ArrayList<>();
         for (Player p : playerList) {

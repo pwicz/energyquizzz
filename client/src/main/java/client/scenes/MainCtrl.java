@@ -200,19 +200,15 @@ public class MainCtrl {
                 gameID = msg.gameID;
                 primaryStage.setOnCloseRequest(e -> {
                     e.consume();
-                    showLeave(null, () ->{
-                        server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID));
-                    });
+                    showLeave(null, () -> server.send("/app/general",
+                            new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID)));
 
                 });
                 break;
             case LOAD_NEW_QUESTIONS:
                 // runLater() must be used to run the following code
                 // on the JavaFX Application Thread
-                runLater(() -> {
-                    showQuestionM(msg);
-
-                });
+                runLater(() -> showQuestionM(msg));
                 System.out.println("[msg] loadingGame");
                 break;
             case DISPLAY_ANSWER:
@@ -251,10 +247,7 @@ public class MainCtrl {
             case NEXT_QUESTION:
                 // runLater() must be used to run the following code
                 // on the JavaFX Application Thread
-                runLater(() -> {
-                    showQuestionS(msg);
-
-                });
+                runLater(() -> showQuestionS(msg));
                 break;
             case RESULT:
                 long correctID = msg.correctID;
@@ -274,9 +267,6 @@ public class MainCtrl {
                 break;
             case END:
                 runLater(this::showSingleLeaderboardScreen);
-            case TEST:
-                // for testing purposes only
-                System.out.println("It works! Received a msg!");
                 break;
             case SHOW_EMOJI:
                 runLater(() -> {
@@ -284,6 +274,7 @@ public class MainCtrl {
                     multiplayerScreenInputCtrl.showEmoji(msg.imgName, msg.namePLayerEmoji);
                     multiplayerScreenGuessCtrl.showEmoji(msg.imgName, msg.namePLayerEmoji);
                 });
+                break;
             default:
                 // invalid msg type
         }
@@ -437,15 +428,11 @@ public class MainCtrl {
         primaryStage.setOnCloseRequest(e -> {
             e.consume();
             if(primaryStage.getScene().equals(waitingRoom)) {
-                showLeave(null, () ->{
-                    server.send("/app/general",
-                            new ClientMessage(ClientMessage.Type.QUIT_WAITING_ROOM, getClientID(), getGameID()));
-                });
+                showLeave(null, () -> server.send("/app/general",
+                        new ClientMessage(ClientMessage.Type.QUIT_WAITING_ROOM, getClientID(), getGameID())));
 
             }else{
-                showLeave(null, () ->{
-                    server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID));
-                });
+                showLeave(null, () -> server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID)));
 
             }
         });

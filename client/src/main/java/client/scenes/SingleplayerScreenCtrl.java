@@ -49,9 +49,6 @@ public class SingleplayerScreenCtrl {
     Label description4,description1, description2, description3;
 
     @FXML
-    Label title, title1, title2, title3;
-
-    @FXML
     Button submit;
 
     @FXML
@@ -124,7 +121,6 @@ public class SingleplayerScreenCtrl {
 
         // for convenience
         List<Rectangle> options = List.of(option1, option2, option3);
-        List<Label> titles = List.of(title1, title2, title3);
         List<Label> descriptions = List.of(description1, description2, description3);
         List<ImageView> images = List.of(image1, image2, image3);
 
@@ -135,7 +131,6 @@ public class SingleplayerScreenCtrl {
 
             optionToID.put(options.get(i), a.consumptionInWh);
 
-            titles.get(i).setText(Long.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
 
             images.get(i).setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
@@ -163,7 +158,6 @@ public class SingleplayerScreenCtrl {
                 break;
             default:
         }
-        title.setText(Long.toString(a.consumptionInWh));
         description4.setText(a.title);
 
         image.setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
@@ -209,8 +203,7 @@ public class SingleplayerScreenCtrl {
                 return;
             }
             try{
-                long answer = Long.parseLong(textField.getText());
-                msg.chosenActivity = answer;
+                msg.chosenActivity = Long.parseLong(textField.getText());
                 mainCtrl.getServer().send("/app/general", msg);
             } catch (NumberFormatException e){
                 textField.setText("incorrect number");

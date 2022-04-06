@@ -41,7 +41,7 @@ public class Question {
                 if(this.correct < a.consumptionInWh) this.correct = a.consumptionInWh;
             }
             for(Activity a : activities){
-                if(this.correct != a.consumptionInWh) this.incorrect.add((long) a.consumptionInWh);
+                if(this.correct != a.consumptionInWh) this.incorrect.add(a.consumptionInWh);
             }
         }else{
             if(activities.size() >0)
@@ -116,7 +116,7 @@ public class Question {
     }
 
     public Long getOneOfTheIncorrectOptions(){
-        if(type == Type.ESTIMATION) return  -1l;
+        if(type == Type.ESTIMATION) return -1L;
 
         int index = (int) (Math.random() * incorrect.size());
         return incorrect.get(index);

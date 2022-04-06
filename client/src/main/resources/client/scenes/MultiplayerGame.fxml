@@ -1,36 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import java.net.URL?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Text?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#enterAnswer" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#enterAnswer" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
 
     <Label fx:id="headTitle" alignment="CENTER" layoutX="210.0" layoutY="71.0" prefHeight="45.0" prefWidth="1200.0" styleClass="question" text="Question 5: Which activity consumes most energy?" AnchorPane.leftAnchor="-61.5" AnchorPane.topAnchor="50.0">
     </Label>
 
     <ProgressBar fx:id="timeBar" layoutX="138.5" layoutY="120.0" prefHeight="40.0" prefWidth="800.0" progress="0.0" styleClass="timeBar" />
 
-    <Label fx:id="title1" alignment="CENTER" layoutX="323.0" layoutY="634.0" prefHeight="30.0" prefWidth="200.0" styleClass="questionTitle" text="Gaming" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="175.5">
+    <Label fx:id="description1" alignment="CENTER" layoutX="176.0" layoutY="681.0" prefHeight="132.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="176.0">
     </Label>
-    <Label fx:id="title2" alignment="CENTER" layoutX="656.0" layoutY="634.0" prefHeight="30.0" prefWidth="200.0" styleClass="questionTitle" text="Charging a car" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="438.5">
+    <Label fx:id="description2" alignment="CENTER" layoutX="439.0" layoutY="678.0" prefHeight="132.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="439.0">
     </Label>
-    <Label fx:id="title3" alignment="CENTER" layoutX="987.0" layoutY="634.0" prefHeight="30.0" prefWidth="200.0" styleClass="questionTitle" text="Gaming" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="701.5">
-    </Label>
-
-    <Label fx:id="description1" alignment="CENTER" layoutX="306.0" layoutY="681.0" prefHeight="100.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="175.5">
-    </Label>
-    <Label fx:id="description2" alignment="CENTER" layoutX="641.0" layoutY="678.0" prefHeight="100.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="438.5">
-    </Label>
-    <Label fx:id="description3" alignment="CENTER" layoutX="974.0" layoutY="674.0" prefHeight="100.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="701.5">
+    <Label fx:id="description3" alignment="CENTER" layoutX="702.0" layoutY="674.0" prefHeight="132.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="702.0">
     </Label>
 
     <ImageView fx:id="image1" fitHeight="200.0" fitWidth="200.0" layoutX="319.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="175.5">

@@ -52,7 +52,6 @@ public class MultiplayerScreenCtrl {
 
     private Timeline timer;
 
-
     @FXML
     ProgressBar timeBar;
 
@@ -64,9 +63,6 @@ public class MultiplayerScreenCtrl {
 
     @FXML
     ImageView image, image1, image2, image3;
-
-    @FXML
-    Label title1, title2, title3, title;
 
     @FXML
     Label description1, description2, description3, description4;
@@ -96,9 +92,7 @@ public class MultiplayerScreenCtrl {
     public MultiplayerScreenCtrl(MainCtrl mainCtrl) {
         this.mainCtrl = mainCtrl;
         optionToID = new HashMap<>();
-        runLater(() -> {
-           initilizeEmojis();
-        });
+        runLater(this::initilizeEmojis);
     }
 
     public void leave(){
@@ -125,8 +119,7 @@ public class MultiplayerScreenCtrl {
                 return;
             }
             try{
-                long answer = Long.parseLong(textField.getText());
-                msg.chosenActivity = answer;
+                msg.chosenActivity = Long.parseLong(textField.getText());
                 mainCtrl.getServer().send("/app/general", msg);
             } catch (NumberFormatException e){
                 textField.setText("incorrect number");
@@ -330,7 +323,6 @@ public class MultiplayerScreenCtrl {
             default:
         }
 
-        title.setText(Long.toString(a.consumptionInWh));
         description2.setText(a.title);
 
         image.setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
@@ -350,7 +342,6 @@ public class MultiplayerScreenCtrl {
     public void displayCompareActivities(List<Activity> activities){
         resetUI();
         List<Rectangle> options = List.of(option1, option2, option3);
-        List<Label> titles = List.of(title1, title2, title3);
         List<Label> descriptions = List.of(description1, description2, description3);
         List<ImageView> images = List.of(image1, image2, image3);
 
@@ -360,7 +351,6 @@ public class MultiplayerScreenCtrl {
             if(a == null) continue;
             optionToID.put(options.get(i), a.consumptionInWh);
 
-            titles.get(i).setText(Long.toString(a.consumptionInWh));
             descriptions.get(i).setText(a.title);
 
             images.get(i).setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
