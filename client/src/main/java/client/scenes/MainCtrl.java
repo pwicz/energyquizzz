@@ -200,9 +200,12 @@ public class MainCtrl {
             case NEW_SINGLEPLAYER_GAME:
                 gameID = msg.gameID;
                 primaryStage.setOnCloseRequest(e -> {
-                    server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID));
-                    Platform.exit();
-                    System.exit(0);
+                    showLeave(this::showSplash, () ->{
+                        server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID));
+                        Platform.exit();
+                        System.exit(0);
+                    });
+
                 });
                 break;
             case LOAD_NEW_QUESTIONS:
@@ -397,8 +400,10 @@ public class MainCtrl {
         primaryStage.setTitle("SplashScreen");
         primaryStage.setScene(splash);
         primaryStage.setOnCloseRequest(e -> {
-            Platform.exit();
-            System.exit(0);
+            showLeave(this::showSplash, () ->{
+                Platform.exit();
+                System.exit(0);
+            });
         });
     }
 
@@ -434,13 +439,21 @@ public class MainCtrl {
         primaryStage.setScene(waitingRoom);
         primaryStage.setOnCloseRequest(e -> {
             if(primaryStage.getScene().equals(waitingRoom)) {
-                server.send("/app/general",
-                        new ClientMessage(ClientMessage.Type.QUIT_WAITING_ROOM, getClientID(), getGameID()));
+                showLeave(this::showSplash, () ->{
+                    server.send("/app/general",
+                            new ClientMessage(ClientMessage.Type.QUIT_WAITING_ROOM, getClientID(), getGameID()));
+                    Platform.exit();
+                    System.exit(0);
+                });
+
             }else{
-                server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID));
+                showLeave(this::showSplash, () ->{
+                    server.send("/app/general", new ClientMessage(ClientMessage.Type.QUIT, clientID, gameID));
+                    Platform.exit();
+                    System.exit(0);
+                });
+
             }
-            Platform.exit();
-            System.exit(0);
         });
     }
 
