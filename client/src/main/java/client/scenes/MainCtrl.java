@@ -85,10 +85,15 @@ public class MainCtrl {
     private Scene help;
     private HelpCtrl helpCtrl;
 
+    private Scene endScreen;
+    private EndGameScreenCtrl endGameScreenCtrl;
+
     private String clientID = null;
     private String gameID = null;
 
     private Stage stage = new Stage();
+
+    private String name = null;
 
 
     @Inject
@@ -112,12 +117,11 @@ public class MainCtrl {
                            Pair<MultiplayerScreenCtrl, Parent> inputQuestion,
                            Pair<MultiplayerScreenCtrl, Parent> guesQuestion,
                            Pair<SingleplayerScreenCtrl, Parent> inputQuestionS,
-                           Pair<SingleplayerScreenCtrl, Parent> guesQuestionS){
+                           Pair<SingleplayerScreenCtrl, Parent> guesQuestionS,
+                           Pair<EndGameScreenCtrl, Parent> end){
         this.primaryStage = primaryStage;
-
         this.splashScreenCtrl = splashScreen.getKey();
         this.splash = new Scene(splashScreen.getValue());
-
         this.adminPanelCtrl = adminPanel.getKey();
         this.adminPanel = new Scene(adminPanel.getValue());
 
@@ -160,12 +164,14 @@ public class MainCtrl {
         this.leave = new Scene(leave.getValue());
         this.leaveCtrl = leave.getKey();
 
+        this.endScreen = new Scene(end.getValue());
+        this.endGameScreenCtrl = end.getKey();
+
         this.inputServer = new Scene(inputServer.getValue());
         this.inputServerScreenCtrl = inputServer.getKey();
 
         this.help = new Scene(help.getValue());
         this.helpCtrl = help.getKey();
-
         primaryStage.setResizable(false);
         showSplash();
         primaryStage.show();
@@ -179,6 +185,7 @@ public class MainCtrl {
         switch(msg.type){
             case INIT_PLAYER:
                 gameID = msg.gameID;
+                name = msg.playerName;
                 runLater(() -> {
                     multiplayerScreenCtrl.updateScore(0);
                     multiplayerScreenGuessCtrl.updateScore(0);
@@ -241,7 +248,15 @@ public class MainCtrl {
                 System.out.println("[msg] show leaderboard ");
                 break;
             case END_GAME:
-                runLater(this::showWaitingRoom);
+                runLater(() -> {
+                    endGameScreenCtrl.insertLeaderboard(msg.topScores);
+                    multiplayerScreenCtrl.updateTitle(0);
+                    showEndScreen();
+                });
+                primaryStage.setOnCloseRequest(e -> {
+                    e.consume();
+                    showLeave(null);
+                });
                 System.out.println("[msg] end game");
                 break;
             case NEXT_QUESTION:
@@ -274,6 +289,9 @@ public class MainCtrl {
                     multiplayerScreenInputCtrl.showEmoji(msg.imgName, msg.namePLayerEmoji);
                     multiplayerScreenGuessCtrl.showEmoji(msg.imgName, msg.namePLayerEmoji);
                 });
+                break;
+            case NAME_TAKEN:
+                inputNameScreenCtrl.nameTaken();
                 break;
             default:
                 // invalid msg type
@@ -410,6 +428,11 @@ public class MainCtrl {
         primaryStage.setScene(guessQuestionM);
     }
 
+    public void showEndScreen(){
+        primaryStage.setTitle("End");
+        primaryStage.setScene(endScreen);
+    }
+
     public void showSingleLeaderboardScreen(){
         if(!server.isConnected()){
             showInputServer();
@@ -444,7 +467,7 @@ public class MainCtrl {
             showInputServer();
             return;
         }
-
+        inputNameScreenCtrl.resetNameTaken();
         primaryStage.setTitle("input Name");
         primaryStage.setScene(inputName);
     }
@@ -598,6 +621,14 @@ public class MainCtrl {
 
     public Scene getCreateActivity() {
         return createActivity;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Scene getInputQuestionM() {
