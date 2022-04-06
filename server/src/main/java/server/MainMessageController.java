@@ -155,8 +155,8 @@ public class MainMessageController {
                             if(player.isUsedCutAnswer()) return;
                             else player.setUsedCutAnswer(true);
 
-                            // this joker has no effect for GUESS question
-                            if(game.getCurrentQuestion().type == Question.Type.GUESS) return;
+                            // this joker has no effect for ESTIMATION question
+                            if(game.getCurrentQuestion().type == Question.Type.ESTIMATION) return;
 
                             // send back the id of one of the incorrect answers
                             ServerMessage response = new ServerMessage(ServerMessage.Type.REMOVE_ANSWER);
