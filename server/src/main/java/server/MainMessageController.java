@@ -152,18 +152,15 @@ public class MainMessageController {
 
                     switch(msg.joker){
                         case CUT_ANSWER:
-                            System.out.println("CUT ANSWER RECEIVED");
                             if(player.isUsedCutAnswer()) return;
                             else player.setUsedCutAnswer(true);
 
-                            // TODO: implement this check
                             // this joker has no effect for GUESS question
-//                            if(game.getCurrentQuestion().type == Question.Type.GUESS) return;
+                            if(game.getCurrentQuestion().type == Question.Type.GUESS) return;
 
-                            System.out.println("CUT ANSWER FORWARD");
                             // send back the id of one of the incorrect answers
                             ServerMessage response = new ServerMessage(ServerMessage.Type.REMOVE_ANSWER);
-                            // TODO: set the incorrect answer in the response
+                            response.incorrectID = game.getCurrentQuestion().getOneOfTheIncorrectOptions();
 
                             simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, response);
                             break;
@@ -416,7 +413,7 @@ public class MainMessageController {
     private ServerMessage singleplayerSendNewQuestion(int playerScore, Game forGame) {
         ServerMessage result = new ServerMessage(ServerMessage.Type.NEXT_QUESTION);
         result.question = generateQuestion();
-        System.out.println("[DONE-single] Trying to generate question type finished");
+        forGame.setCurrentQuestion(result.question);
         forGame.setType(result.question.type);
 
         forGame.setCorrectAnswerID(result.question.getCorrect());
@@ -669,8 +666,8 @@ public class MainMessageController {
         ServerMessage result = new ServerMessage(ServerMessage.Type.LOAD_NEW_QUESTIONS);
 
         result.question = generateQuestion();
-        System.out.println("[DONE-multi] Trying to generate question type finished");
         g.setCorrectAnswerID(result.question.getCorrect());
+        g.setCurrentQuestion(result.question);
         g.setType(result.question.type);
         g.setQuestionStartTime(System.currentTimeMillis());
         g.setPlayersAnswered(0);

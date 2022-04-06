@@ -33,6 +33,7 @@ public class ServerMessage {
     public List<String> playersWaiting;
     public long pickedID;
     public long correctID;
+    public long incorrectID;
     public int questionCounter;
     public int totalQuestions;
     public String imgName;

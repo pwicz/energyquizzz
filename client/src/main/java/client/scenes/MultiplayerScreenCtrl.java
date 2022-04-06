@@ -538,7 +538,6 @@ public class MultiplayerScreenCtrl {
         this.score.setText("Score: " + score);
     }
 
-
     public void enterAnswer(KeyEvent keyEvent) {
         if(keyEvent.getCode().equals(KeyCode.L)){ //later should replace L with ENTER
             submitAnswer();

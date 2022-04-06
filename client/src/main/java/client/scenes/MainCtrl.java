@@ -308,8 +308,8 @@ public class MainCtrl {
                 break;
             case REMOVE_ANSWER:
                 runLater(() -> {
-                    // TODO: insert wrong answer ID from the message
-                    multiplayerScreenCtrl.disableAnswer(124L);
+                    multiplayerScreenCtrl.disableAnswer(msg.incorrectID);
+                    multiplayerScreenGuessCtrl.disableAnswer(msg.incorrectID);
                 });
                 break;
             case JOKER_USED:
