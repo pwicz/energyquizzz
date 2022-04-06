@@ -257,8 +257,8 @@ public class MainCtrl {
                     showEndScreen();
                 });
                 primaryStage.setOnCloseRequest(e -> {
-                    Platform.exit();
-                    System.exit(0);
+                    e.consume();
+                    showLeave(null);
                 });
                 System.out.println("[msg] end game");
                 break;
