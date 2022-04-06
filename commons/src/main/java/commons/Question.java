@@ -115,6 +115,11 @@ public class Question {
         this.options = options;
     }
 
+    public Long getOneOfTheIncorrectOptions(){
+        int index = (int)(Math.random() * incorrect.size());
+        return incorrect.get(index);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
