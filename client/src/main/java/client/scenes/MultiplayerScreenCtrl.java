@@ -201,7 +201,6 @@ public class MultiplayerScreenCtrl {
     //shows an emoji
     public void sendEmoji(){
         String[] dir = ((ImageView) emojiHolder.getSelectionModel().getSelectedItem()).getImage().getUrl().split("/");
-        System.out.println(dir[dir.length - 1]);
 
         ClientMessage msg = new ClientMessage(ClientMessage.Type.SHOW_EMOJI,
                 mainCtrl.getClientID(), mainCtrl.getGameID());

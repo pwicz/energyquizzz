@@ -11,3 +11,7 @@
     -fx-text-fill: "white";
 }
 
+.name-taken{
+    -fx-text-fill: #e0503d;
+    -fx-alignment: center;
+}
