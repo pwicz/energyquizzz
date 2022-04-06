@@ -15,7 +15,7 @@
     <Label fx:id="headTitle1" alignment="CENTER" layoutX="-61.0" layoutY="14.0" prefHeight="45.0" prefWidth="1200.0" styleClass="question" text="Question 1: How much electricity does this activity cost?" AnchorPane.leftAnchor="-61.0" AnchorPane.topAnchor="14.0">
     </Label>
     <ProgressBar fx:id="timeBar" layoutX="138.5" layoutY="120.0" prefHeight="40.0" prefWidth="800.0" progress="0.0" styleClass="timeBar" />
-    <ImageView fx:id="image" fitHeight="200.0" fitWidth="200.0" layoutX="657.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="301">
+    <ImageView fx:id="image" fitHeight="200.0" fitWidth="200.0" layoutX="657.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="301">
         <Image url="@/client/scenes/images/tempShit.png" />
     </ImageView>
     <Label fx:id="description2" alignment="CENTER" layoutX="643.0" layoutY="573.0" prefHeight="138.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="301">
@@ -35,26 +35,23 @@
     <Text fx:id="picked" layoutX="582.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text="You picked this one" AnchorPane.leftAnchor="582.0" />
     <Text fx:id="result" layoutX="698.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text=" " textAlignment="CENTER" wrappingWidth="800" AnchorPane.leftAnchor="138.5" AnchorPane.topAnchor="120.0" />
 
-    <Label fx:id="jokerHolder" layoutX="63.0" layoutY="430.0" prefHeight="300.0" prefWidth="100.0" styleClass="gradientBox" AnchorPane.leftAnchor="30" AnchorPane.topAnchor="234.5">
+    <Label layoutX="63.0" layoutY="430.0" prefHeight="300.0" prefWidth="100.0" styleClass="gradientBox" AnchorPane.leftAnchor="30" AnchorPane.topAnchor="234.5">
     </Label>
 
     <ImageView fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="445.0" onMouseClicked="#cutAnswer" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="255.0">
         <styleClass>
-            <String fx:value="jokers" />
             <String fx:value="hover-element" />
         </styleClass>
         <Image url="@/client/scenes/images/scissor.png" />
     </ImageView>
     <ImageView fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="541.0" onMouseClicked="#doublePoints" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="350">
         <styleClass>
-            <String fx:value="jokers" />
             <String fx:value="hover-element" />
         </styleClass>
         <Image url="@/client/scenes/images/2x.png" />
     </ImageView>
     <ImageView fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="632.0" onMouseClicked="#lowerTime" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="450">
         <styleClass>
-            <String fx:value="jokers" />
             <String fx:value="hover-element" />
         </styleClass>
         <Image url="@/client/scenes/images/hourglass.png" />
@@ -81,7 +78,6 @@
    <ListView fx:id="emojiHolder" layoutX="1316.0" layoutY="450.0" onMouseClicked="#sendEmoji" prefHeight="299.0" prefWidth="121.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="234.5">
       <styleClass>
          <String fx:value="gradientBox" />
-         <String fx:value="emojiH" />
       </styleClass>
    </ListView>
    <Label fx:id="headTitle2" alignment="CENTER" layoutX="-61.0" layoutY="65.0" prefHeight="45.0" prefWidth="1200.0" styleClass="question" text="Question 1: How much electricity does this activity cost?" AnchorPane.leftAnchor="-61.0" AnchorPane.topAnchor="65.0" />

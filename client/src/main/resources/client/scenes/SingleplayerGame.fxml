@@ -22,13 +22,13 @@
     <Label fx:id="description3" alignment="CENTER" layoutX="702.0" layoutY="674.0" prefHeight="134.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="702.0">
     </Label>
 
-    <ImageView fx:id="image1" fitHeight="200.0" fitWidth="200.0" layoutX="319.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="175.5">
+    <ImageView fx:id="image1" fitHeight="200.0" fitWidth="200.0" layoutX="319.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="175.5">
         <Image url="@/client/scenes/images/tempShit.png" />
     </ImageView>
-    <ImageView fx:id="image2" fitHeight="200.0" fitWidth="200.0" layoutX="659.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="438.5">
+    <ImageView fx:id="image2" fitHeight="200.0" fitWidth="200.0" layoutX="659.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="438.5">
         <Image url="@/client/scenes/images/tempShit.png" />
     </ImageView>
-    <ImageView fx:id="image3" fitHeight="200.0" fitWidth="200.0" layoutX="994.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="701.5">
+    <ImageView fx:id="image3" fitHeight="200.0" fitWidth="200.0" layoutX="994.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="701.5">
         <Image url="@/client/scenes/images/tempShit.png" />
     </ImageView>
 
