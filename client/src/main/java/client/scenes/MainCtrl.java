@@ -677,6 +677,10 @@ public class MainCtrl {
         return server.isConnected();
     }
 
+    public void resetServer(){
+        server.setServerURL(null);
+    }
+
     public Scene getEditActivity() {
         return editActivity;
     }
