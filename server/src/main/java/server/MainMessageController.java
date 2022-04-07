@@ -226,13 +226,9 @@ public class MainMessageController {
         Random rand = new Random();
         int randomType = rand.nextInt(Question.Type.values().length);
 
-        randomType = 0;
-
         System.out.println("[1] Trying to generate question type " + randomType);
 
-        for(int i = 0; i < 10; ++i){
-            System.out.println(Math.random() * 10);
-        }
+        randomType = 0;
 
         if(randomType == 0){
             // Type = Compare
@@ -290,32 +286,45 @@ public class MainMessageController {
 
     private Question generateHowManyTimesQuestion(){
         List<Activity> selectedActivities = new ArrayList<>();
-        //Get 2 random activities
-        var randActivity1 = activityController.getRandom().getBody();
-        var randActivity2 = activityController.getRandom().getBody();
 
-        if(randActivity1 == null || randActivity2 == null) return null;
+        long correct = 0;
 
-        // Check if activities are equal
-        while(randActivity1.consumptionInWh == randActivity2.consumptionInWh){
-            System.out.println(randActivity1.consumptionInWh + " EQUALS " + randActivity2.consumptionInWh);
+        Activity randActivity1 = null;
+        Activity randActivity2 = null;
+
+        int attempt = 1;
+
+        do{
+            System.out.println("Attempt: " + attempt++);
+            //Get 2 random activities
             randActivity1 = activityController.getRandom().getBody();
-        }
+            randActivity2 = activityController.getRandom().getBody();
 
-        if(randActivity1.consumptionInWh > randActivity2.consumptionInWh){
-            // swap activities because we need the first one to be smaller
-            // than the second one
-            var temp = randActivity1;
-            randActivity1 = randActivity2;
-            randActivity2 = temp;
-        }
+            if(randActivity1 == null || randActivity2 == null) return null;
+
+            // Check if activities are equal
+            while(randActivity1.consumptionInWh == randActivity2.consumptionInWh){
+                System.out.println(randActivity1.consumptionInWh + " EQUALS " + randActivity2.consumptionInWh);
+                randActivity1 = activityController.getRandom().getBody();
+            }
+
+            if(randActivity1.consumptionInWh > randActivity2.consumptionInWh){
+                // swap activities because we need the first one to be smaller
+                // than the second one
+                var temp = randActivity1;
+                randActivity1 = randActivity2;
+                randActivity2 = temp;
+            }
+
+            correct = randActivity2.consumptionInWh / randActivity1.consumptionInWh;
+        } while(correct > 200);
+
 
         selectedActivities.add(randActivity1);
         selectedActivities.add(randActivity2);
 
         // Get three options
         List<Long> options = new ArrayList<>();
-        long correct = randActivity2.consumptionInWh / randActivity1.consumptionInWh;
 
         options.add(correct);
         options.addAll(getOptions(correct));
@@ -619,8 +628,10 @@ public class MainMessageController {
 
         result.question = generateQuestion();
 
-        for(var a : result.question.getActivities())
+        for(var a : result.question.getActivities()){
             System.out.println("Activity " + a.title + " consumption: " + a.consumptionInWh);
+            System.out.println("IMAGE: " + a.imagePath);
+        }
 
         System.out.println("[DONE-multi] Trying to generate question type finished");
         g.setCorrectAnswerID(result.question.getCorrect());
