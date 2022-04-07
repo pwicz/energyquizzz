@@ -326,6 +326,7 @@ public class MultiplayerScreenCtrl {
 
         description2.setText(a.title);
 
+        a.imagePath = a.imagePath.replace(" ", "%20");
         image.setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
     }
 
@@ -354,6 +355,7 @@ public class MultiplayerScreenCtrl {
 
             descriptions.get(i).setText(a.title);
 
+            a.imagePath = a.imagePath.replace(" ", "%20");
             images.get(i).setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
         }
     }
