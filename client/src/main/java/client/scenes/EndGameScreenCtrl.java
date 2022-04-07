@@ -1,5 +1,6 @@
 package client.scenes;
 
+import commons.Score;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,16 +29,16 @@ public class EndGameScreenCtrl {
         this.mainCtrl = mainCtrl;
     }
 
-    public void insertLeaderboard(List<String> players)  { //needs to change to import the database leaderboard
+    public void insertLeaderboard(List<Score> players)  { //needs to change to import the database leaderboard
         leaderboardSingle.getItems().clear();
+        leaderboardSingle.setCellFactory(lv -> new CustomListCell());
         leaderboardSingle.getItems().addAll(players);
         for(int i = 0; i < players.size(); i++){
-            String[] stat = players.get(i).split(":");
-            if(stat[0].equals(mainCtrl.getName())){
+            if(players.get(i).getPlayerName().equals(mainCtrl.getName())){
                 //set name
                 yourPlace.setText("#" + (i+1) + " " + mainCtrl.getName());
                 //set score
-                yourScore.setText("Your Score: " + stat[1]);
+                yourScore.setText("Your Score: " + players.get(i).getPlayerScore());
             }
         }
     }

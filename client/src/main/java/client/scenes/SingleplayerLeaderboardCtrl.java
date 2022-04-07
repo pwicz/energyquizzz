@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +35,7 @@ public class SingleplayerLeaderboardCtrl {
      * The Leaderboard.
      */
     @FXML
-    ListView<String> leaderboard;
+    ListView<Score> leaderboard;
 
     /**
      * Instantiates a new Singleplayer leaderboard ctrl.
@@ -86,15 +85,16 @@ public class SingleplayerLeaderboardCtrl {
      *
      */
     public void insertLeaderboard() { //needs to change to import the database leaderboard
-        List<String> topScores = new ArrayList<>();
+        leaderboard.getItems().clear();
         List<Score> response = mainCtrl.getServer().getTopScores();
+        leaderboard.setCellFactory(lv -> new CustomListCell());
         if(response != null){
             for(Score score : response){
-                topScores.add(score.toString());
+                leaderboard.getItems().add(score);
             }
         }
-        leaderboard.getItems().setAll(topScores);
     }
+
 
     /**
      * Leave.

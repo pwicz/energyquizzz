@@ -13,10 +13,12 @@
    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="390.0" layoutY="149.0" prefHeight="133.0" prefWidth="734.0" styleClass="title" text="Leaderboard" AnchorPane.topAnchor="50.0" AnchorPane.leftAnchor="171.5">
    </Label>
 
-   <ListView fx:id="leaderboard" layoutX="509.0" layoutY="284.0" prefHeight="328.0" prefWidth="495.0" AnchorPane.topAnchor="180.0" AnchorPane.leftAnchor="291" >
+   <ListView fx:id="leaderboard" layoutX="509.0" layoutY="284.0"  prefHeight="328.0" prefWidth="495.0" AnchorPane.topAnchor="180.0" AnchorPane.leftAnchor="291" >
       <styleClass>
          <String fx:value="container" />
          <String fx:value="gradientBox" />
+         <String fx:value="list-cell"/>
+         <String fx:value="list-view"/>
       </styleClass>
    </ListView>
    <TextField fx:id="nameField" layoutX="509.0" layoutY="642.0" maxHeight="49.0" maxWidth="495.0" onAction="#insertName" prefHeight="49.0" prefWidth="495.0" promptText="Enter your name" AnchorPane.bottomAnchor="130" AnchorPane.leftAnchor="291">

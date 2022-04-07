@@ -201,7 +201,11 @@ public class MainCtrl {
                 });
                 break;
             case NEW_MULTIPLAYER_GAME:
-                // do something
+                runLater(() -> {
+                    multiplayerScreenCtrl.showJokers();
+                    multiplayerScreenInputCtrl.showJokers();
+                    multiplayerScreenGuessCtrl.showJokers();
+                });
                 break;
             case NEW_SINGLEPLAYER_GAME:
                 gameID = msg.gameID;
@@ -231,6 +235,9 @@ public class MainCtrl {
                     multiplayerScreenCtrl.updateScore(msg.score);
                     multiplayerScreenGuessCtrl.updateScore(msg.score);
                     multiplayerScreenInputCtrl.updateScore(msg.score);
+                    multiplayerScreenCtrl.lockSplitTimeJoker();
+                    multiplayerScreenGuessCtrl.lockSplitTimeJoker();
+                    multiplayerScreenInputCtrl.lockSplitTimeJoker();
                     inBetweenScoreCtrl.setScoreTo(msg.score);
                     inBetweenScoreCtrl.insertLeaderboard(msg.topScores);
                     inBetweenScoreCtrl.insertLeaderboardG(msg.correctlyAnswered);
@@ -282,6 +289,35 @@ public class MainCtrl {
                 break;
             case END:
                 runLater(this::showSingleLeaderboardScreen);
+                break;
+            case LOCK_ANSWER:
+                // this message only comes in multiplayer mode
+                runLater(() -> {
+                    multiplayerScreenCtrl.lockUI();
+                    multiplayerScreenGuessCtrl.lockUI();
+                    multiplayerScreenInputCtrl.lockUI();
+                });
+                break;
+            case UPDATE_TIMER:
+                // this message only comes in multiplayer mode:
+                runLater(() -> {
+                    multiplayerScreenCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                    multiplayerScreenGuessCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                    multiplayerScreenInputCtrl.setTimer(msg.timerFraction, msg.timerFull);
+                });
+                break;
+            case REMOVE_ANSWER:
+                runLater(() -> {
+                    multiplayerScreenCtrl.disableAnswer(msg.incorrectID);
+                    multiplayerScreenGuessCtrl.disableAnswer(msg.incorrectID);
+                });
+                break;
+            case JOKER_USED:
+                runLater(() -> {
+                    multiplayerScreenCtrl.insertJokerNotification(msg.jokerUsedBy, msg.jokerType);
+                    multiplayerScreenGuessCtrl.insertJokerNotification(msg.jokerUsedBy, msg.jokerType);
+                    multiplayerScreenInputCtrl.insertJokerNotification(msg.jokerUsedBy, msg.jokerType);
+                });
                 break;
             case SHOW_EMOJI:
                 runLater(() -> {
@@ -523,6 +559,24 @@ public class MainCtrl {
         createActivityCtrl.clearFields();
     }
 
+    public void hideCutAnswerJokers(){
+        multiplayerScreenGuessCtrl.useCutAnswer();
+        multiplayerScreenInputCtrl.useCutAnswer();
+        multiplayerScreenCtrl.useCutAnswer();
+    }
+
+    public void hideDoublePointsJoker(){
+        multiplayerScreenGuessCtrl.useDoublePoints();
+        multiplayerScreenInputCtrl.useDoublePoints();
+        multiplayerScreenCtrl.useDoublePoints();
+    }
+
+    public void hideLowerTimeJoker(){
+        multiplayerScreenGuessCtrl.useLowerTime();
+        multiplayerScreenInputCtrl.useLowerTime();
+        multiplayerScreenCtrl.useLowerTime();
+    }
+
     public Scene getInBetweenScore() {
         return inBetweenScore;
     }
@@ -581,6 +635,14 @@ public class MainCtrl {
      */
     public void setServerName(String serverName){
         this.server.setServerURL(serverName);
+    }
+
+    public void cleanupAndClose(){
+        multiplayerScreenCtrl.cleanup();
+        multiplayerScreenGuessCtrl.cleanup();
+        multiplayerScreenInputCtrl.cleanup();
+
+        primaryStage.close();
     }
 
     public boolean connectToServer(String url){

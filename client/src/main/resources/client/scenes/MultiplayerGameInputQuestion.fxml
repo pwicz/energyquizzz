@@ -19,19 +19,19 @@
     <Label layoutX="63.0" layoutY="430.0" prefHeight="300.0" prefWidth="100.0" styleClass="gradientBox" AnchorPane.leftAnchor="30" AnchorPane.topAnchor="234.5">
     </Label>
 
-    <ImageView fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="445.0" onMouseClicked="#cutAnswer" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="255.0">
+    <ImageView fx:id="cutAnswer" fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="445.0" onMouseClicked="#cutAnswer" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="255.0">
         <styleClass>
             <String fx:value="hover-element" />
         </styleClass>
         <Image url="@/client/scenes/images/scissor.png" />
     </ImageView>
-    <ImageView fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="541.0" onMouseClicked="#doublePoints" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="350">
+    <ImageView fx:id="doublePoints" fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="541.0" onMouseClicked="#doublePoints" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="350">
         <styleClass>
             <String fx:value="hover-element" />
         </styleClass>
         <Image url="@/client/scenes/images/2x.png" />
     </ImageView>
-    <ImageView fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="632.0" onMouseClicked="#lowerTime" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="450">
+    <ImageView fx:id="splitTime" fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="54.0" layoutY="441.0" onMouseClicked="#lowerTime" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="54.0" AnchorPane.topAnchor="439.0">
         <styleClass>
             <String fx:value="hover-element" />
         </styleClass>
@@ -57,13 +57,21 @@
             <String fx:value="bigButton" />
         </styleClass>
     </Button>
-   <ListView fx:id="emojiHolder" layoutX="1306.0" layoutY="440.0" onMouseClicked="#sendEmoji" prefHeight="299.0" prefWidth="121.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="234.544">
-      <styleClass>
-         <String fx:value="gradientBox" />
-      </styleClass>
-   </ListView>
-   <Text fx:id="description" fill="#38c768" layoutX="239.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="inputQuestion" text="Play computer games for 5 hours." textAlignment="CENTER" wrappingWidth="600.0" AnchorPane.topAnchor="226.05078125" />
-   <Text fx:id="answerInput" fill="#38c768" layoutX="336.0" layoutY="519.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="answerInput" text="The correct answer was 123 you were 13% off" wrappingWidth="405.0" AnchorPane.topAnchor="506.0" />
+    <GridPane fx:id="jokerMessages" alignment="CENTER_RIGHT" layoutX="23.0" layoutY="14.0" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="1032.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+    </GridPane>
+    <ListView fx:id="emojiHolder" layoutX="1306.0" layoutY="440.0" onMouseClicked="#sendEmoji" prefHeight="299.0" prefWidth="121.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="234.544">
+        <styleClass>
+            <String fx:value="gradientBox" />
+        </styleClass>
+    </ListView>
+    <Text fx:id="description" fill="#38c768" layoutX="239.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="inputQuestion" text="Play computer games for 5 hours." textAlignment="CENTER" wrappingWidth="600.0" AnchorPane.topAnchor="226.05078125" />
+    <Text fx:id="answerInput" fill="#38c768" layoutX="336.0" layoutY="519.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="answerInput" text="The correct answer was 123 you were 13% off" wrappingWidth="405.0" AnchorPane.topAnchor="506.0" />
 
     <stylesheets>
         <URL value="@/client/scenes/styles/styles.css" />
