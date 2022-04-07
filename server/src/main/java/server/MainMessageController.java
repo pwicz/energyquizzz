@@ -226,10 +226,6 @@ public class MainMessageController {
         Random rand = new Random();
         int randomType = rand.nextInt(Question.Type.values().length);
 
-        System.out.println("[1] Trying to generate question type " + randomType);
-
-        randomType = 0;
-
         if(randomType == 0){
             // Type = Compare
 
