@@ -116,7 +116,7 @@ public class Question {
     }
 
     public Long getOneOfTheIncorrectOptions(){
-        if(type == Type.ESTIMATION) return -1L;
+        if(type == Type.ESTIMATION || incorrect.size() < 1) return -1L;
 
         int index = (int) (Math.random() * incorrect.size());
         return incorrect.get(index);

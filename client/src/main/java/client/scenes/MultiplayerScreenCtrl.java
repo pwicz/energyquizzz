@@ -146,6 +146,8 @@ public class MultiplayerScreenCtrl {
             Long activityID = entry.getValue();
             Rectangle op = entry.getKey();
 
+            System.out.println("CORRECT ID: " + correctID + ", ActivityID: " + activityID);
+
             // set rectangle color
             if(Objects.equals(activityID, correctID)){
                 op.setStyle("-fx-stroke: #38c768");

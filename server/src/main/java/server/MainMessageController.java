@@ -226,7 +226,13 @@ public class MainMessageController {
         Random rand = new Random();
         int randomType = rand.nextInt(Question.Type.values().length);
 
+        randomType = 0;
+
         System.out.println("[1] Trying to generate question type " + randomType);
+
+        for(int i = 0; i < 10; ++i){
+            System.out.println(Math.random() * 10);
+        }
 
         if(randomType == 0){
             // Type = Compare
@@ -251,11 +257,20 @@ public class MainMessageController {
     }
 
     private Question generateCompareQuestion(){
-        List<Activity> selectedActivities =
-                List.of(Objects.requireNonNull(activityController.getRandom().getBody()),
-                        activityController.getRandom().getBody(),
-                        activityController.getRandom().getBody());
-        return new Question(selectedActivities, Question.Type.COMPARE);
+//        List<Activity> selectedActivities =
+//                List.of(Objects.requireNonNull(activityController.getRandom().getBody()),
+//                        activityController.getRandom().getBody(),
+//                        activityController.getRandom().getBody());
+
+        Activity first = activityController.getRandom().getBody();
+        System.out.println("First generated ID: " + first.id);
+        if(first == null) return null;
+        Activity second = activityController.getRandomCloseTo(first.consumptionInWh, List.of(first.id));
+        System.out.println("Second generated ID: " + second.id);
+        Activity third = activityController.getRandomCloseTo(first.consumptionInWh, List.of(first.id, second.id));
+        System.out.println("Third generated ID: " + third.id);
+
+        return new Question(List.of(first, second, third), Question.Type.COMPARE);
     }
 
     private Question generateGuessQuestion(){
@@ -603,6 +618,10 @@ public class MainMessageController {
         ServerMessage result = new ServerMessage(ServerMessage.Type.LOAD_NEW_QUESTIONS);
 
         result.question = generateQuestion();
+
+        for(var a : result.question.getActivities())
+            System.out.println("Activity " + a.title + " consumption: " + a.consumptionInWh);
+
         System.out.println("[DONE-multi] Trying to generate question type finished");
         g.setCorrectAnswerID(result.question.getCorrect());
         g.setType(result.question.type);

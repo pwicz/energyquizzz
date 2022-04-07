@@ -117,6 +117,8 @@ public class SingleplayerScreenCtrl {
 
     private void displayCompareActivities(Question question) {
         List<Activity> activities = question.activities;
+        System.out.println("ACTIVITIES IDS: " + activities.get(0).id + ", " +
+                activities.get(1).id + ", " + activities.get(2).id );
         optionToID = new HashMap<>();
 
         // for convenience
