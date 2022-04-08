@@ -8,19 +8,18 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SingleplayerScreenCtrl">
 
-    <Label alignment="CENTER" layoutX="202.0" layoutY="96.0" prefHeight="45.0" prefWidth="1200.0" styleClass="question" text="Question 1: How much energy does it take to..?" AnchorPane.leftAnchor="-61.5" AnchorPane.topAnchor="50.0">
+    <Label fx:id="screenTitle" alignment="CENTER" layoutX="202.0" layoutY="96.0" prefHeight="45.0" prefWidth="1200.0" styleClass="question" text="Question 1: How much energy does it take to..?" AnchorPane.leftAnchor="-61.5" AnchorPane.topAnchor="50.0">
     </Label>
-    <ProgressBar fx:id="timeBar" layoutX="138.5" layoutY="120.0" prefHeight="40.0" prefWidth="800.0" progress="0.0" styleClass="timeBar"/>
+    <ProgressBar fx:id="timeBar" layoutX="138.5" layoutY="120.0" prefHeight="40.0" prefWidth="800.0" progress="0.0" styleClass="timeBar" />
 
-    <Text fx:id="description" layoutX="576.0" layoutY="418.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="questionTitle"
-          text="Play computer games for 5 hours." textAlignment="CENTER" wrappingWidth="400" AnchorPane.topAnchor="300" AnchorPane.leftAnchor="338.5">
+    <Text fx:id="description" fill="#38c768" layoutX="238.0" layoutY="418.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="inputQuestion" text="Play computer games for 5 hours." textAlignment="CENTER" wrappingWidth="600.0" AnchorPane.leftAnchor="238.0" AnchorPane.topAnchor="226.05078125">
     </Text>
 
-    <TextField alignment="CENTER" layoutX="357.0" layoutY="540.0" prefHeight="69.0" prefWidth="600.0" promptText="Enter your answer" styleClass="textPrompt" AnchorPane.topAnchor="400" AnchorPane.leftAnchor="238.5"/>
+    <TextField fx:id="textField" alignment="CENTER" layoutX="357.0" layoutY="540.0" onKeyTyped="#checkInput" prefHeight="69.0" prefWidth="600.0" promptText="Enter your answer" styleClass="textPrompt" AnchorPane.leftAnchor="238.5" AnchorPane.topAnchor="400" />
 
     <Label fx:id="score" alignment="CENTER" layoutX="554.0" layoutY="910.0" prefHeight="40.0" prefWidth="405.0" styleClass="score" text="Score: 1200" textAlignment="CENTER" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="336.0">
     </Label>
-    <Text fx:id="result" layoutX="698.0" layoutY="235.0" wrappingWidth="800" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" styleClass="result-text" text=" " AnchorPane.topAnchor="120.0" AnchorPane.leftAnchor="138.5"/>
+    <Text fx:id="result" layoutX="698.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text=" " textAlignment="CENTER" wrappingWidth="800" AnchorPane.leftAnchor="138.5" AnchorPane.topAnchor="120.0" />
 
     <Button fx:id="submit" disable="true" layoutX="1312.0" layoutY="910.0" mnemonicParsing="false" onAction="#submitAnswer" prefHeight="40.0" prefWidth="150.0" text="Submit" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0">
         <styleClass>
@@ -37,6 +36,7 @@
             <String fx:value="bigButton" />
         </styleClass>
     </Button>
+   <Text fx:id="answerInput" fill="#38c768" layoutX="342.0" layoutY="519.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="answerInput" text="The correct answer was 123 you were 13% off" wrappingWidth="405.0" AnchorPane.topAnchor="506.0" />
 
     <stylesheets>
         <URL value="@/client/scenes/styles/styles.css" />

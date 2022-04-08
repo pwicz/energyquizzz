@@ -26,6 +26,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/")
 public class MainMessageController {
@@ -35,13 +36,13 @@ public class MainMessageController {
     private ScoreController scoreController;
     private HashMap<String, Game> games;
     private Game waitingRoom;
-    private boolean sentToAll = false;
 
     // game options
-    private final int questionsPerGame = 4;
+    private final int questionsPerGame = 20;
     private final double timeToAnswer = 10.0;
     private final int scoreBase = 100;          // points for correct answer
     private final int scoreBonusPerSecond = 10; // extra points for every second left
+    private final int jokerTimeSplit = 2;
 
     public MainMessageController(SimpMessagingTemplate simpMessagingTemplate,
                                  ActivityController activityController, ScoreController scoreController) {
@@ -58,7 +59,6 @@ public class MainMessageController {
     //CHECKSTYLE:OFF
     @MessageMapping("/general")
     public void handleClientMessages(ClientMessage msg) {
-        ServerMessage result = null;
         try {
             Game game = games.get(msg.gameID);
             Player player = null;
@@ -80,15 +80,15 @@ public class MainMessageController {
                     break;
                 case INIT_MULTIPLAYER:
 
-                    if(msg.serverName == null){
-                        //show server screen
-                    }
                     // if name is already taken
                     if(waitingRoom != null
                             && waitingRoom.getPlayers()
                             .stream().anyMatch(players ->
-                                    (players.getName()).equalsIgnoreCase(msg.playerName)))
+                                    (players.getName()).equalsIgnoreCase(msg.playerName))) {
+                        simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID,
+                                new ServerMessage(ServerMessage.Type.NAME_TAKEN));
                         return;
+                    }
 
                     joinWaitingRoom(msg);
                     break;
@@ -99,31 +99,25 @@ public class MainMessageController {
                     waitingRoom = new Game(new ArrayList<>(), UUID.randomUUID().toString());
 
                     System.out.println("[msg] init question");
+                    ServerMessage multiplayerStarts = new ServerMessage(ServerMessage.Type.NEW_MULTIPLAYER_GAME);
+                    sendMessageToAllPlayers(multiplayerStarts, game);
+
                     multiplayerSendNewQuestions(game);
                     break;
                 case SUBMIT_ANSWER:
                     if (game == null || player == null) return;
 
-                    processAnswer(msg, player, game);
+                    if(!player.hasAnswered() && game.acceptsAnswers()){
+                        processAnswer(msg, player, game);
 
-                    System.out.println("[msg] submit answer");
-                    if(game.getPlayersAnswered() == game.getPlayers().size()){
-                        // all players have answered
-                        game.questionEndAction.cancel();
-                        multiplayerShowAnswersProcedure(game);
-                        System.out.println("[msg] all players submitted!");
+                        System.out.println("[msg] submit answer");
+                        checkIfEveryoneAnswered(game);
                     }
-                    break;
-                case TEST:
-                    // for testing purposes
-                    result = new ServerMessage(ServerMessage.Type.TEST);
-                    System.out.println("[test] message received");
-                    simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
                     break;
                 case SUBMIT_SINGLEPLAYER:
                     if (game == null || player == null) return;
                     // check if specified game and player exist
-                    if (player.hasAnswered()) return;
+                    if (player.hasAnswered() || game.isMultiplayer()) return;
 
                     player.setHasAnswered(true);
                     submitSingleplayer(msg, game, player);
@@ -154,6 +148,50 @@ public class MainMessageController {
                     var pingResponse = new ServerMessage(ServerMessage.Type.PING);
                     simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, pingResponse);
                     break;
+                case USE_JOKER:
+                    if (game == null || player == null) return;
+
+                    switch(msg.joker){
+                        case CUT_ANSWER:
+                            if(player.isUsedCutAnswer()) return;
+                            else player.setUsedCutAnswer(true);
+
+                            // this joker has no effect for ESTIMATION question
+                            if(game.getCurrentQuestion().type == Question.Type.ESTIMATION) return;
+
+                            // send back the id of one of the incorrect answers
+                            ServerMessage response = new ServerMessage(ServerMessage.Type.REMOVE_ANSWER);
+                            response.incorrectID = game.getCurrentQuestion().getOneOfTheIncorrectOptions();
+
+                            simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, response);
+                            break;
+                        case SPLIT_TIME:
+                            if(player.isUsedSplitTime()) return;
+                            else player.setUsedSplitTime(true);
+
+                            // remake timers
+                            List<Player> otherPlayers = new ArrayList<>(game.getPlayers());
+                            if(!otherPlayers.remove(player)) return; // player not in game
+
+                            changeTimerForSome(game, otherPlayers);
+                            break;
+                        case DOUBLE_POINTS:
+                            if(player.isUsedDoublePoints()) return;
+                            else player.setUsedDoublePoints(true);
+
+                            // set the double score modifier
+                            player.setScoreModifier(player.getScoreModifier() * 2);
+                            break;
+                        default:
+                            return;
+                    }
+
+                    // send used joker information to other players
+                    ServerMessage jokerUsedNotification = new ServerMessage(ServerMessage.Type.JOKER_USED);
+                    jokerUsedNotification.jokerType = msg.joker;
+                    jokerUsedNotification.jokerUsedBy = player.getName();
+                    sendMessageToAllPlayers(jokerUsedNotification, game);
+                    break;
                 case SHOW_EMOJI:
                     ServerMessage serverMessage = new ServerMessage(ServerMessage.Type.SHOW_EMOJI);
                     serverMessage.imgName = msg.imgName;
@@ -167,23 +205,60 @@ public class MainMessageController {
             System.out.println("MessagingException on handleClientMessages: " + ex.getMessage());
         }
     }
+
+    private void checkIfEveryoneAnswered(Game game) {
+        if(game.getPlayersAnswered() == game.getPlayers().size()){
+            // all players have answered
+            game.questionEndAction.cancel();
+            multiplayerShowAnswersProcedure(game);
+            System.out.println("[msg] all players submitted!");
+        }
+    }
     //CHECKSTYLE:ON
 
-        public void processAnswer(ClientMessage msg, Player p, Game g) {
-            g.setPlayersAnswered(g.getPlayersAnswered() + 1);
+    public void processAnswer(ClientMessage msg, Player p, Game g) {
+        g.setPlayersAnswered(g.getPlayersAnswered() + 1);
+        p.setAnswerStatus(false);
+        int scoreForQuestion = 0;
+        double timeLeft = timeToAnswer -
+                (System.currentTimeMillis() - g.getQuestionStartTime() + p.getTimePenalty()) / 1000.0;
 
-            int scoreForQuestion = 0;
-            if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
-                double answerTime = timeToAnswer - (System.currentTimeMillis() - g.getQuestionStartTime()) / 1000.0;
-                scoreForQuestion = scoreBase + (int) (scoreBonusPerSecond * answerTime);
+        if(g.getType() == Question.Type.ESTIMATION){
+            // chosenActivity & correctAnswerID are here consumptions
+            double answerRatio = msg.chosenActivity / (double) g.getCorrectAnswerID();
+
+            // give points to players who answer in the range 0.5 - 1.5
+            if(answerRatio >= 0.5 && answerRatio <= 1.5)
+            {
+                int points = 100;
+                // subtract at most 99 points
+                points -= Math.min(Math.abs(1.0 - answerRatio) * 2 * 100, 99);
+
+                // add at most 5*points time bonus
+                scoreForQuestion = points + (int) (points * (timeLeft / 2));
+                System.out.println("Points received: " + points + " and time bonus: " + (scoreForQuestion - points));
                 p.setAnswerStatus(true);
             }
-            p.setScore(p.getScore() + scoreForQuestion);
-            p.setHasAnswered(true);
-            p.setAnswer(msg.chosenActivity);
+
+        } else if (Objects.equals(msg.chosenActivity, g.getCorrectAnswerID())) {
+            scoreForQuestion = scoreBase + (int) (scoreBonusPerSecond * timeLeft);
+            p.setAnswerStatus(true);
         }
 
-        private ServerMessage initSingleplayerGame(ClientMessage msg) {
+        // joker modifier
+        scoreForQuestion *= p.getScoreModifier();
+
+        if(p.getLockAnswerTimer() != null) p.getLockAnswerTimer().cancel();
+
+        System.out.println("LAST SCORE: " + p.getScore());
+
+        p.setScore(p.getScore() + scoreForQuestion);
+        p.setRecentlyReceivedPoints(scoreForQuestion);
+        p.setHasAnswered(true);
+        p.setAnswer(msg.chosenActivity);
+    }
+
+    private ServerMessage initSingleplayerGame(ClientMessage msg) {
         // 0. Check if player name is correct
         if (msg.playerName == null || msg.playerName.isEmpty()) {
             // TODO: send error message
@@ -211,52 +286,107 @@ public class MainMessageController {
         //Chose number for random question type
         Random rand = new Random();
         int randomType = rand.nextInt(Question.Type.values().length);
-        //Type = Compare
+
         if(randomType == 0){
-            //Get three activities from database
-             List<Activity> selectedActivities =
-                    List.of(Objects.requireNonNull(activityController.getRandom().getBody()),
-                        activityController.getRandom().getBody(),
-                        activityController.getRandom().getBody());
-            return new Question(selectedActivities, Question.Type.COMPARE);
-            //Type = Guess
+            // Type = Compare
+
+            return generateCompareQuestion();
+
         } else if(randomType == 1){
-            //Get random activity from database
-            List<Activity> selectedActivity =  List.of(
-                    Objects.requireNonNull(activityController.getRandom().getBody()));
+            // Type = Guess
 
-            //Get three possible options
-            List<Long> options = new ArrayList<>();
-            long correct = selectedActivity.get(0).consumptionInWh;    //Get correct answer
-            //Add options to list
-            options.add(correct);
-            options.addAll(getOptions(correct));
+            return generateGuessQuestion();
 
-            return new Question(selectedActivity, Question.Type.GUESS, options);
-            //Type = How many times
         } else if(randomType == 2) {
-            List<Activity> selectedActivities = new ArrayList<>();
-            //Get 2 random activities
-            selectedActivities.add(activityController.getRandom().getBody());
-            selectedActivities.add(activityController.getRandom().getBody());
-            //Check if activities are equal
-            while(selectedActivities.get(1).consumptionInWh <= selectedActivities.get(0).consumptionInWh){
-                selectedActivities.set(1, activityController.getRandom().getBody());
-            }
-            //Get three options
-            List<Long> options = new ArrayList<>();
-            long correct = selectedActivities.get(1).consumptionInWh / selectedActivities.get(0).consumptionInWh;
-            options.add(correct);
-            options.addAll(getOptions(correct));
+            // Type = How many times
 
-            return new Question(selectedActivities, Question.Type.HOW_MANY_TIMES, options);
-            //Type = Estimation
-        } else if(randomType == 3){
-            List<Activity> selectedActivity = List.of(
-                    Objects.requireNonNull(activityController.getRandom().getBody()));
-            return new Question(selectedActivity, Question.Type.ESTIMATION);
+            return generateHowManyTimesQuestion();
         }
-        return null;
+        //Type = Estimation
+        List<Activity> selectedActivity = List.of(
+                Objects.requireNonNull(activityController.getRandom().getBody()));
+        System.out.println(selectedActivity.get(0).consumptionInWh);
+        return new Question(selectedActivity, Question.Type.ESTIMATION);
+    }
+
+    private Question generateCompareQuestion(){
+//        List<Activity> selectedActivities =
+//                List.of(Objects.requireNonNull(activityController.getRandom().getBody()),
+//                        activityController.getRandom().getBody(),
+//                        activityController.getRandom().getBody());
+
+        Activity first = activityController.getRandom().getBody();
+        System.out.println("First generated ID: " + first.id);
+        if(first == null) return null;
+        Activity second = activityController.getRandomCloseTo(first.consumptionInWh, List.of(first.id));
+        System.out.println("Second generated ID: " + second.id);
+        Activity third = activityController.getRandomCloseTo(first.consumptionInWh, List.of(first.id, second.id));
+        System.out.println("Third generated ID: " + third.id);
+
+        return new Question(List.of(first, second, third), Question.Type.COMPARE);
+    }
+
+    private Question generateGuessQuestion(){
+        //Get random activity from database
+        List<Activity> selectedActivity =  List.of(
+                Objects.requireNonNull(activityController.getRandom().getBody()));
+
+        //Get three possible options
+        List<Long> options = new ArrayList<>();
+        long correct = selectedActivity.get(0).consumptionInWh;    //Get correct answer
+        //Add options to list
+        options.add(correct);
+        options.addAll(getOptions(correct));
+
+        return new Question(selectedActivity, Question.Type.GUESS, options);
+    }
+
+    private Question generateHowManyTimesQuestion(){
+        List<Activity> selectedActivities = new ArrayList<>();
+
+        long correct = 0;
+
+        Activity randActivity1 = null;
+        Activity randActivity2 = null;
+
+        int attempt = 1;
+
+        do{
+            System.out.println("Attempt: " + attempt++);
+            //Get 2 random activities
+            randActivity1 = activityController.getRandom().getBody();
+            randActivity2 = activityController.getRandom().getBody();
+
+            if(randActivity1 == null || randActivity2 == null) return null;
+
+            // Check if activities are equal
+            while(randActivity1.consumptionInWh == randActivity2.consumptionInWh){
+                System.out.println(randActivity1.consumptionInWh + " EQUALS " + randActivity2.consumptionInWh);
+                randActivity1 = activityController.getRandom().getBody();
+            }
+
+            if(randActivity1.consumptionInWh > randActivity2.consumptionInWh){
+                // swap activities because we need the first one to be smaller
+                // than the second one
+                var temp = randActivity1;
+                randActivity1 = randActivity2;
+                randActivity2 = temp;
+            }
+
+            correct = randActivity2.consumptionInWh / randActivity1.consumptionInWh;
+        } while(correct > 200);
+
+
+        selectedActivities.add(randActivity1);
+        selectedActivities.add(randActivity2);
+
+        // Get three options
+        List<Long> options = new ArrayList<>();
+
+        options.add(correct);
+        options.addAll(getOptions(correct));
+
+        return new Question(selectedActivities, Question.Type.HOW_MANY_TIMES, options);
     }
 
     /**
@@ -264,9 +394,8 @@ public class MainMessageController {
      * @param correct answer which determines bounds
      * @return option given a correct answer
      */
-    private long getRandomAnswer(long correct){
-        Random rand = new Random();
-        return (long) ((correct/2) + Math.random() * ((2 * correct) - (correct/2)));
+    private long getRandomAnswer(long correct, long addition){
+        return 1 + (long)(correct * Math.random()) + (long)(Math.random() * addition);
     }
 
     /**
@@ -276,13 +405,25 @@ public class MainMessageController {
      */
     private List<Long> getOptions(long correct){
         List<Long> res = new ArrayList<>();
-        long randomAnswer01 = getRandomAnswer(correct);
-        long randomAnswer02 = getRandomAnswer(correct);
+
+        long addition = (long)(correct * 0.2);
+
+        long randomAnswer01 = getRandomAnswer(correct, addition);
+        long randomAnswer02 = getRandomAnswer(correct, addition);
         //Check if selected options are equal
         while(randomAnswer01 == randomAnswer02 || randomAnswer01 == correct || randomAnswer02 == correct){
-            if(randomAnswer01 == correct) randomAnswer01 = getRandomAnswer(correct);
+
+            // addition makes sure that we don't end up with an infinite
+            // loop - we will start generating bigger and bigger values
+            // if the ratio is very small
+            addition = (long)((addition + 1) * 1.2);
+
+            System.out.println("RANDOM ANSWER 1: " + randomAnswer01);
+            System.out.println("RANDOM ANSWER 2: " + randomAnswer02);
+
+            if(randomAnswer01 == correct) randomAnswer01 = getRandomAnswer(correct, addition);
             if(randomAnswer02 == correct || randomAnswer02 == randomAnswer01){
-                randomAnswer02 = getRandomAnswer(correct);
+                randomAnswer02 = getRandomAnswer(correct, addition);
             }
         }
         res.add(randomAnswer01);
@@ -292,22 +433,11 @@ public class MainMessageController {
 
     private ServerMessage singleplayerSendNewQuestion(int playerScore, Game forGame) {
         ServerMessage result = new ServerMessage(ServerMessage.Type.NEXT_QUESTION);
-        List<Activity> selectedActivities =
-            List.of(Objects.requireNonNull(activityController.getRandom().getBody()),
-                    activityController.getRandom().getBody(),
-                    activityController.getRandom().getBody());
+        result.question = generateQuestion();
+        forGame.setCurrentQuestion(result.question);
+        forGame.setType(result.question.type);
 
-        result.question = new Question(selectedActivities, Question.Type.COMPARE);
-        // TEMPORARY SOLUTION
-        Activity max = selectedActivities.get(0);
-        for (int i = 1; i < selectedActivities.size(); ++i) {
-            Activity activity = selectedActivities.get(i);
-            if (activity.consumptionInWh > max.consumptionInWh) max = activity;
-        }
-
-        // save the correct answer in the Game object
-
-        forGame.setCorrectAnswerID(max.id);
+        forGame.setCorrectAnswerID(result.question.getCorrect());
         forGame.setQuestionStartTime(System.currentTimeMillis());
 
         result.score = playerScore;
@@ -320,7 +450,8 @@ public class MainMessageController {
             @Override
             public void run() {
                 // get the only player as it's singleplayer
-                Player p = forGame.getPlayers().get(0);
+                if(forGame.getPlayers().size() == 0) return;
+                    Player p = forGame.getPlayers().get(0);
 
                 ClientMessage dummy = new ClientMessage(ClientMessage.Type.SUBMIT_SINGLEPLAYER);
                 dummy.chosenActivity = -1L;
@@ -342,9 +473,12 @@ public class MainMessageController {
         // send score msg
         // send the correct answer id and the picked answer id
         ServerMessage m = new ServerMessage(ServerMessage.Type.RESULT);
-        m.correctAnswerID = g.getCorrectAnswerID();
-        m.pickedAnswerID = msg.chosenActivity;
+        m.typeQ = g.getType();
+        m.correctID = g.getCorrectAnswerID();
+        m.pickedID = msg.chosenActivity;
         m.score = p.getScore();
+        m.answeredCorrect = p.getAnswerStatus();
+        m.receivedPoints = p.getRecentlyReceivedPoints();
         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, m);
 
         if (g.getRound() < questionsPerGame) {
@@ -388,8 +522,11 @@ public class MainMessageController {
     public void joinWaitingRoom(ClientMessage msg) {
         // add player to waiting room and init game for him
         waitingRoom.addPlayer(new Player(msg.playerName, msg.playerID));
+
+
         ServerMessage result = new ServerMessage(ServerMessage.Type.INIT_PLAYER);
         result.gameID = waitingRoom.getID();
+        result.playerName = msg.playerName;
         simpMessagingTemplate.convertAndSend("/topic/client/" + msg.playerID, result);
 
 
@@ -425,18 +562,20 @@ public class MainMessageController {
         result.correctID = g.getCorrectAnswerID();
         result.correctlyAnswered = correctAnswer(g);
         result.incorrectlyAnswered = incorrectAnswer(g);
+        result.typeQ = g.getType();
+        result.answeredCorrect = p.getAnswerStatus();
+        result.receivedPoints = p.getRecentlyReceivedPoints();
 
         return result;
     }
 
-    public List<String> getTopScores(Game game) {
+    public List<Score> getTopScores(Game game) {
         List<Player> playerList = game.getPlayers().stream()
                 .sorted(Comparator.comparing(Player::getScore).thenComparing(Player::getID).reversed())
-                .limit(5)
                 .collect(Collectors.toList());
-        List<String> topScores = new ArrayList<>();
+        List<Score> topScores = new ArrayList<>();
         for (Player p : playerList) {
-            topScores.add(p.getName() + ":" + p.getScore());
+            topScores.add(new Score(p.getName(), p.getScore()));
         }
         return topScores;
     }
@@ -448,7 +587,7 @@ public class MainMessageController {
      */
     public List<String> correctAnswer(Game game){
         List<Player> playerList = game.getPlayers().stream()
-                .filter(p -> p.getAnswerStatus() == true)
+                .filter(Player::getAnswerStatus)
                 .collect(Collectors.toList());
         List<String> correctAnswers = new ArrayList<>();
         for (Player p : playerList) {
@@ -464,7 +603,7 @@ public class MainMessageController {
      */
     public List<String> incorrectAnswer(Game game){
         List<Player> playerList = game.getPlayers().stream()
-                .filter(p -> p.getAnswerStatus() == false)
+                .filter(p -> !p.getAnswerStatus())
                 .collect(Collectors.toList());
         List<String> incorrectAnswers = new ArrayList<>();
         for (Player p : playerList) {
@@ -474,10 +613,14 @@ public class MainMessageController {
     }
 
     private void multiplayerShowAnswersProcedure(Game g){
+        g.setAcceptsAnswers(false);
         // first reveal answers
         System.out.println("[msg] revealing answers to all players");
         for(var p : g.getPlayers()){
-            if(!p.hasAnswered()) p.setAnswer(-1L); // set incorrect ID so that 'you chose text' is not shown
+            if(!p.hasAnswered()) {
+                p.setHasAnswered(true);
+                p.setAnswer(-1L); // set incorrect ID so that 'you chose text' is not shown
+            }
             simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), displayAnswer(p, g));
         }
 
@@ -487,8 +630,8 @@ public class MainMessageController {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                for(var p : g.getPlayers()){
                     System.out.println("[msg] revealing in-between-scores to all players");
+                for(var p : g.getPlayers()){
                     ServerMessage result = new ServerMessage(ServerMessage.Type.DISPLAY_INBETWEENSCORES);
                     result.topScores = getTopScores(g);
                     result.questionCounter = g.getQuestionCounter();
@@ -518,8 +661,10 @@ public class MainMessageController {
                     System.out.println("[msg] ending game");
                     for(var p : g.getPlayers()){
                         ServerMessage result = new ServerMessage(ServerMessage.Type.END_GAME);
+                        result.topScores = getTopScores(g);
                         simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
                     }
+                    games.remove(g.getID());
                 }
             }, 6000);
         }
@@ -529,19 +674,12 @@ public class MainMessageController {
         g.incQuestionCounter();
 
         ServerMessage result = new ServerMessage(ServerMessage.Type.LOAD_NEW_QUESTIONS);
-        // TODO: Question class should be generated by a proper method
-        List<Activity> selectedActivities =
-                List.of(activityController.getRandom().getBody(),
-                        activityController.getRandom().getBody(),
-                        activityController.getRandom().getBody());
-        result.question = new Question(selectedActivities, Question.Type.COMPARE);
-        Activity max = selectedActivities.get(0);
-        for (int i = 1; i < selectedActivities.size(); ++i) {
-            Activity activity = selectedActivities.get(i);
-            if (activity.consumptionInWh > max.consumptionInWh) max = activity;
-        }
 
-        g.setCorrectAnswerID(max.id);
+        result.question = generateQuestion();
+
+        g.setCorrectAnswerID(result.question.getCorrect());
+        g.setCurrentQuestion(result.question);
+        g.setType(result.question.type);
         g.setQuestionStartTime(System.currentTimeMillis());
         g.setPlayersAnswered(0);
 
@@ -559,8 +697,51 @@ public class MainMessageController {
         for(var p : g.getPlayers()){
             p.setHasAnswered(false);
             p.setAnswerStatus(false);
+            p.setTimePenalty(0);
+            p.setScoreModifier(1);
+
             result.score = p.getScore();
             simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
+        }
+        g.setAcceptsAnswers(true);
+    }
+
+    private void changeTimerForSome(Game g, List<Player> players){
+        for(var p : players) {
+            // don't update timers of those who has already answered
+            if(p.hasAnswered()) continue;
+
+            long timeLeftMs = (int)(timeToAnswer * 1000)
+                    - (System.currentTimeMillis() - g.getQuestionStartTime() + p.getTimePenalty());
+
+            long newTimeMs = timeLeftMs / jokerTimeSplit;
+            p.setTimePenalty(p.getTimePenalty() + newTimeMs);
+
+            ServerMessage msg = new ServerMessage(ServerMessage.Type.UPDATE_TIMER);
+            msg.timerFull = timeToAnswer; // 10 seconds
+            msg.timerFraction = (newTimeMs / 1000.0) / timeToAnswer;
+
+            simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), msg);
+
+            if(p.getLockAnswerTimer() != null) p.getLockAnswerTimer().cancel();
+            p.setLockAnswerTimer(new Timer());
+            p.getLockAnswerTimer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+
+                    if(!p.hasAnswered()){
+                        // set player's answer to -1 (no answer)
+                        p.setHasAnswered(true);
+                        p.setAnswer(-1L);
+                        g.setPlayersAnswered(g.getPlayersAnswered() + 1);
+                        // send lock answer
+                        ServerMessage msg = new ServerMessage(ServerMessage.Type.LOCK_ANSWER);
+                        simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), msg);
+
+                        checkIfEveryoneAnswered(g);
+                    }
+                }
+            }, newTimeMs);
         }
     }
 }

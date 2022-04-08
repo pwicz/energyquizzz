@@ -20,14 +20,30 @@ public class LeaveCtrl {
     }
 
     public void leave(){
-        if(beforeLeave != null)
-            beforeLeave.doSomething();
+        if(beforeLeave != null) {
+            try {
+                beforeLeave.doSomething();
+            }catch (Exception e ){
+                mainCtrl.resetServer();
+                mainCtrl.showSplash();
+
+                if(afterLeave == null){
+                    // close the application
+                    mainCtrl.cleanupAndClose();
+                    mainCtrl.closePopup();
+                    return;
+                }
+
+                mainCtrl.closePopup();
+                return;
+            }
+        }
 
         mainCtrl.closePopup();
 
         if(afterLeave == null){
             // close the application
-            mainCtrl.getPrimaryStage().close();
+            mainCtrl.cleanupAndClose();
         }
         else
             afterLeave.doSomething();

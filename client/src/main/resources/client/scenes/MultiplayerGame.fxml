@@ -1,71 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import java.net.URL?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Text?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#enterAnswer" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#enterAnswer" prefHeight="982.0" prefWidth="1512.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerScreenCtrl">
 
     <Label fx:id="headTitle" alignment="CENTER" layoutX="210.0" layoutY="71.0" prefHeight="45.0" prefWidth="1200.0" styleClass="question" text="Question 5: Which activity consumes most energy?" AnchorPane.leftAnchor="-61.5" AnchorPane.topAnchor="50.0">
     </Label>
 
     <ProgressBar fx:id="timeBar" layoutX="138.5" layoutY="120.0" prefHeight="40.0" prefWidth="800.0" progress="0.0" styleClass="timeBar" />
 
-    <Label fx:id="title1" alignment="CENTER" layoutX="323.0" layoutY="634.0" prefHeight="30.0" prefWidth="200.0" styleClass="questionTitle" text="Gaming" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="175.5">
+    <Label fx:id="description1" alignment="CENTER" layoutX="176.0" layoutY="681.0" prefHeight="132.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="176.0">
     </Label>
-    <Label fx:id="title2" alignment="CENTER" layoutX="656.0" layoutY="634.0" prefHeight="30.0" prefWidth="200.0" styleClass="questionTitle" text="Charging a car" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="438.5">
+    <Label fx:id="description2" alignment="CENTER" layoutX="439.0" layoutY="678.0" prefHeight="132.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="439.0">
     </Label>
-    <Label fx:id="title3" alignment="CENTER" layoutX="987.0" layoutY="634.0" prefHeight="30.0" prefWidth="200.0" styleClass="questionTitle" text="Gaming" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="701.5">
-    </Label>
-
-    <Label fx:id="description1" alignment="CENTER" layoutX="306.0" layoutY="681.0" prefHeight="100.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="175.5">
-    </Label>
-    <Label fx:id="description2" alignment="CENTER" layoutX="641.0" layoutY="678.0" prefHeight="100.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="438.5">
-    </Label>
-    <Label fx:id="description3" alignment="CENTER" layoutX="974.0" layoutY="674.0" prefHeight="100.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="701.5">
+    <Label fx:id="description3" alignment="CENTER" layoutX="702.0" layoutY="674.0" prefHeight="132.0" prefWidth="200.0" styleClass="description" text="Playing computer games for 5 hours." textAlignment="CENTER" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="702.0">
     </Label>
 
-    <ImageView fx:id="image1" fitHeight="200.0" fitWidth="200.0" layoutX="319.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="175.5">
+    <ImageView fx:id="image1" fitHeight="200.0" fitWidth="200.0" layoutX="319.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="175.5">
         <Image url="@/client/scenes/images/tempShit.png" />
     </ImageView>
-    <ImageView fx:id="image2" fitHeight="200.0" fitWidth="200.0" layoutX="659.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="438.5">
+    <ImageView fx:id="image2" fitHeight="200.0" fitWidth="200.0" layoutX="659.0" layoutY="413.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="438.5">
         <Image url="@/client/scenes/images/tempShit.png" />
     </ImageView>
-    <ImageView fx:id="image3" fitHeight="200.0" fitWidth="200.0" layoutX="994.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" styleClass="pictures" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="701.5">
+    <ImageView fx:id="image3" fitHeight="200.0" fitWidth="200.0" layoutX="994.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="701.5">
         <Image url="@/client/scenes/images/tempShit.png" />
     </ImageView>
 
     <Text fx:id="picked" layoutX="367.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text="You picked this one" AnchorPane.topAnchor="165.0" />
     <Text fx:id="result" layoutX="698.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="result-text" text=" " textAlignment="CENTER" wrappingWidth="800" AnchorPane.leftAnchor="138.5" AnchorPane.topAnchor="120.0" />
 
-    <Label fx:id="jokerHolder" layoutX="63.0" layoutY="430.0" prefHeight="300.0" prefWidth="100.0" styleClass="gradientBox" AnchorPane.leftAnchor="30" AnchorPane.topAnchor="234.5">
+    <Label layoutX="63.0" layoutY="430.0" prefHeight="300.0" prefWidth="100.0" styleClass="gradientBox" AnchorPane.leftAnchor="30" AnchorPane.topAnchor="234.5">
     </Label>
 
-    <ImageView fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="445.0" onMouseClicked="#cutAnswer" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="255.0">
+    <ImageView fx:id="cutAnswer" fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="445.0" onMouseClicked="#cutAnswer" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="255.0">
         <styleClass>
-            <String fx:value="jokers" />
             <String fx:value="hover-element" />
         </styleClass>
         <Image url="@/client/scenes/images/scissor.png" />
     </ImageView>
-    <ImageView fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="541.0" onMouseClicked="#doublePoints" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="350">
+    <ImageView fx:id="doublePoints" fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="541.0" onMouseClicked="#doublePoints" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="350">
         <styleClass>
-            <String fx:value="jokers" />
             <String fx:value="hover-element" />
         </styleClass>
         <Image url="@/client/scenes/images/2x.png" />
     </ImageView>
-    <ImageView fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="78.0" layoutY="632.0" onMouseClicked="#lowerTime" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="40" AnchorPane.topAnchor="450">
+    <ImageView fx:id="splitTime" fitHeight="80.0" fitWidth="80.0" focusTraversable="true" layoutX="54.0" layoutY="441.0" onMouseClicked="#lowerTime" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="54.0" AnchorPane.topAnchor="440.0">
         <styleClass>
-            <String fx:value="jokers" />
             <String fx:value="hover-element" />
         </styleClass>
         <Image url="@/client/scenes/images/hourglass.png" />
@@ -108,11 +94,23 @@
             <String fx:value="hover-element" />
         </styleClass>
     </Rectangle>
+   <GridPane fx:id="jokerMessages" alignment="CENTER_RIGHT" layoutX="23.0" layoutY="14.0" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="1032.0">
+     <columnConstraints>
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+     </columnConstraints>
+     <rowConstraints>
+       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+     </rowConstraints>
+   </GridPane>
    <ListView fx:id="emojiHolder" layoutX="1296.0" layoutY="430.0" onMouseClicked="#sendEmoji" prefHeight="299.0" prefWidth="121.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="234.5">
       <styleClass>
          <String fx:value="gradientBox" />
-         <String fx:value="emojiH" />
       </styleClass></ListView>
+
+    <stylesheets>
+        <URL value="@/client/scenes/styles/styles.css" />
+        <URL value="@/client/scenes/styles/game.css" />
+    </stylesheets>
    <stylesheets>
       <URL value="@/client/scenes/styles/styles.css" />
       <URL value="@/client/scenes/styles/game.css" />

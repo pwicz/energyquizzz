@@ -13,7 +13,7 @@
     -fx-background-color: #272727;
 }
 
-.option{
+.option, .card{
     -fx-stroke: white;
     -fx-background-color: none;
     -fx-fill: TRANSPARENT;
@@ -53,6 +53,12 @@
     visibility: hidden;
 }
 
+.joker-notification{
+    -fx-text-alignment: right;
+    -fx-font-size: 20;
+    -fx-fill: "white";
+}
+
 .list-cell{
     -fx-background-color: #272727;
 }
@@ -65,3 +71,16 @@
     -fx-background-color: black;
 }
 
+.textPrompt{
+    -fx-border-color: white;
+    -fx-border-radius: 5;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 36;
+}
+
+.answerInput{
+    -fx-font-size: 25;
+    -fx-text-alignment: center;
+    -fx-text-fill: #38c768;
+}

@@ -3,20 +3,21 @@ package commons;
 import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class Game {
 
+    private String ID;
     private List<Player> players;
     private int playersAnswered = 0;
-    private String ID;
-    private boolean isMultiplayer;
     private int questionCounter = 0;
+    private Question currentQuestion;
     private long correctAnswerID;
     private int round;
     private boolean hasEnded;
+    private boolean isMultiplayer;
+    private boolean acceptsAnswers;
     private long questionStartTime;
-    private TimerTask endOfQuestionTask;
+    private Question.Type type;
 
     public Timer questionEndAction;
 
@@ -26,7 +27,6 @@ public class Game {
 
         this.round = 1;
     }
-
 
     public void addPlayer(Player p){
         players.add(p);
@@ -97,8 +97,12 @@ public class Game {
         return questionCounter;
     }
 
-    public void setQuestionCounter(int questionCounter) {
-        this.questionCounter = questionCounter;
+    public Question.Type getType() {
+        return type;
+    }
+
+    public void setType(Question.Type type) {
+        this.type = type;
     }
 
     public long getQuestionStartTime() {
@@ -115,5 +119,21 @@ public class Game {
 
     public void setPlayersAnswered(int playersAnswered) {
         this.playersAnswered = playersAnswered;
+    }
+
+    public Question getCurrentQuestion() {
+        return currentQuestion;
+    }
+
+    public void setCurrentQuestion(Question currentQuestion) {
+        this.currentQuestion = currentQuestion;
+    }
+
+    public boolean acceptsAnswers() {
+        return acceptsAnswers;
+    }
+
+    public void setAcceptsAnswers(boolean acceptsAnswers) {
+        this.acceptsAnswers = acceptsAnswers;
     }
 }
