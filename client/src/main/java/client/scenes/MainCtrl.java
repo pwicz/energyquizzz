@@ -577,10 +577,6 @@ public class MainCtrl {
         multiplayerScreenCtrl.useLowerTime();
     }
 
-    public Scene getInBetweenScore() {
-        return inBetweenScore;
-    }
-
     public Scene getMultiplayer() {
         return multiplayer;
     }
@@ -589,24 +585,8 @@ public class MainCtrl {
         return leave;
     }
 
-    public Scene getSingleLeaderboard() {
-        return singleLeaderboard;
-    }
-
-    public Scene getSplash() {
-        return splash;
-    }
-
-    public Scene getWaitingRoom() {
-        return waitingRoom;
-    }
-
     public Scene getSingleplayerScreen() {
         return singleplayerScreen;
-    }
-
-    public Scene getInputName() {
-        return inputName;
     }
 
     public String getClientID() {
@@ -615,14 +595,6 @@ public class MainCtrl {
 
     public String getGameID() {
         return gameID;
-    }
-
-    public AdminPanelCtrl getAdminPanelCtrl() {
-        return adminPanelCtrl;
-    }
-
-    public Scene getAdminPanel(){
-        return adminPanel;
     }
 
     public Stage getPrimaryStage() {
@@ -675,14 +647,6 @@ public class MainCtrl {
      */
     public boolean checkServerConnection(){
         return server.isConnected();
-    }
-
-    public Scene getEditActivity() {
-        return editActivity;
-    }
-
-    public Scene getCreateActivity() {
-        return createActivity;
     }
 
     public void setName(String name) {
