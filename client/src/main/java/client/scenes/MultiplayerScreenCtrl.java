@@ -184,6 +184,7 @@ public class MultiplayerScreenCtrl {
     }
 
     public void showAnswer(Long correctID, Long pickedID, int pointReceived) {
+        lockUI();
         timeBar.setProgress(0.0);
         for(var entry : optionToID.entrySet()){
             Long activityID = entry.getValue();
@@ -217,6 +218,7 @@ public class MultiplayerScreenCtrl {
     }
 
     public void showAnswerInput(boolean answeredCorrect, Long correctID, Long pickedID, int pointReceived){
+        lockUI();
         timeBar.setProgress(0.0);
 
         DecimalFormat df = new DecimalFormat("#.#");
