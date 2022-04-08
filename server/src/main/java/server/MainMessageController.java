@@ -108,10 +108,12 @@ public class MainMessageController {
                 case SUBMIT_ANSWER:
                     if (game == null || player == null) return;
 
-                    processAnswer(msg, player, game);
+                    if(!player.hasAnswered() && game.acceptsAnswers()){
+                        processAnswer(msg, player, game);
 
-                    System.out.println("[msg] submit answer");
-                    checkIfEveryoneAnswered(game);
+                        System.out.println("[msg] submit answer");
+                        checkIfEveryoneAnswered(game);
+                    }
                     break;
                 case SUBMIT_SINGLEPLAYER:
                     if (game == null || player == null) return;
@@ -592,6 +594,7 @@ public class MainMessageController {
     }
 
     private void multiplayerShowAnswersProcedure(Game g){
+        g.setAcceptsAnswers(false);
         // first reveal answers
         System.out.println("[msg] revealing answers to all players");
         for(var p : g.getPlayers()){
@@ -608,8 +611,8 @@ public class MainMessageController {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                for(var p : g.getPlayers()){
                     System.out.println("[msg] revealing in-between-scores to all players");
+                for(var p : g.getPlayers()){
                     ServerMessage result = new ServerMessage(ServerMessage.Type.DISPLAY_INBETWEENSCORES);
                     result.topScores = getTopScores(g);
                     result.questionCounter = g.getQuestionCounter();
@@ -680,6 +683,7 @@ public class MainMessageController {
             result.score = p.getScore();
             simpMessagingTemplate.convertAndSend("/topic/client/" + p.getID(), result);
         }
+        g.setAcceptsAnswers(true);
     }
 
     private void changeTimerForSome(Game g, List<Player> players){

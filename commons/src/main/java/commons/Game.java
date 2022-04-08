@@ -15,6 +15,7 @@ public class Game {
     private int round;
     private boolean hasEnded;
     private boolean isMultiplayer;
+    private boolean acceptsAnswers;
     private long questionStartTime;
     private Question.Type type;
 
@@ -130,5 +131,13 @@ public class Game {
 
     public void setCurrentQuestion(Question currentQuestion) {
         this.currentQuestion = currentQuestion;
+    }
+
+    public boolean acceptsAnswers() {
+        return acceptsAnswers;
+    }
+
+    public void setAcceptsAnswers(boolean acceptsAnswers) {
+        this.acceptsAnswers = acceptsAnswers;
     }
 }
