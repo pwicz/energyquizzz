@@ -138,4 +138,24 @@ public class ActivityController {
         System.out.println(repo.findById(id));
         return ResponseEntity.ok(activityToRemove.get());
     }
+
+    public Activity getRandomCloseTo(Long consumption, List<Long> excludeIDs){
+        List<Activity> fromDB = null;
+        int multiplier = 2;
+        do{
+            System.out.println("Looking in range: <"+consumption/multiplier+", " + consumption*multiplier + ">");
+            fromDB = repo.findActivitiesByConsumptionInWhBetween(consumption/multiplier,
+                    consumption*multiplier);
+            multiplier*=2;
+            System.out.println("Found " + fromDB.size() + " results!");
+        }
+        while(fromDB.size() < (excludeIDs.size() * 2 + 10) && multiplier < 256);
+
+        if(multiplier == 256) return getRandom().getBody();
+
+        Activity candidate = fromDB.get((int)(Math.random() * fromDB.size()));
+        while(excludeIDs.contains(candidate.id)) candidate = fromDB.get((int)(Math.random() * fromDB.size()));
+
+        return candidate;
+    }
 }

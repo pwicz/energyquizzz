@@ -286,8 +286,6 @@ public class MainMessageController {
         Random rand = new Random();
         int randomType = rand.nextInt(Question.Type.values().length);
 
-        System.out.println("[1] Trying to generate question type " + randomType);
-
         if(randomType == 0){
             // Type = Compare
 
@@ -311,11 +309,20 @@ public class MainMessageController {
     }
 
     private Question generateCompareQuestion(){
-        List<Activity> selectedActivities =
-                List.of(Objects.requireNonNull(activityController.getRandom().getBody()),
-                        activityController.getRandom().getBody(),
-                        activityController.getRandom().getBody());
-        return new Question(selectedActivities, Question.Type.COMPARE);
+//        List<Activity> selectedActivities =
+//                List.of(Objects.requireNonNull(activityController.getRandom().getBody()),
+//                        activityController.getRandom().getBody(),
+//                        activityController.getRandom().getBody());
+
+        Activity first = activityController.getRandom().getBody();
+        System.out.println("First generated ID: " + first.id);
+        if(first == null) return null;
+        Activity second = activityController.getRandomCloseTo(first.consumptionInWh, List.of(first.id));
+        System.out.println("Second generated ID: " + second.id);
+        Activity third = activityController.getRandomCloseTo(first.consumptionInWh, List.of(first.id, second.id));
+        System.out.println("Third generated ID: " + third.id);
+
+        return new Question(List.of(first, second, third), Question.Type.COMPARE);
     }
 
     private Question generateGuessQuestion(){
@@ -335,32 +342,45 @@ public class MainMessageController {
 
     private Question generateHowManyTimesQuestion(){
         List<Activity> selectedActivities = new ArrayList<>();
-        //Get 2 random activities
-        var randActivity1 = activityController.getRandom().getBody();
-        var randActivity2 = activityController.getRandom().getBody();
 
-        if(randActivity1 == null || randActivity2 == null) return null;
+        long correct = 0;
 
-        // Check if activities are equal
-        while(randActivity1.consumptionInWh == randActivity2.consumptionInWh){
-            System.out.println(randActivity1.consumptionInWh + " EQUALS " + randActivity2.consumptionInWh);
+        Activity randActivity1 = null;
+        Activity randActivity2 = null;
+
+        int attempt = 1;
+
+        do{
+            System.out.println("Attempt: " + attempt++);
+            //Get 2 random activities
             randActivity1 = activityController.getRandom().getBody();
-        }
+            randActivity2 = activityController.getRandom().getBody();
 
-        if(randActivity1.consumptionInWh > randActivity2.consumptionInWh){
-            // swap activities because we need the first one to be smaller
-            // than the second one
-            var temp = randActivity1;
-            randActivity1 = randActivity2;
-            randActivity2 = temp;
-        }
+            if(randActivity1 == null || randActivity2 == null) return null;
+
+            // Check if activities are equal
+            while(randActivity1.consumptionInWh == randActivity2.consumptionInWh){
+                System.out.println(randActivity1.consumptionInWh + " EQUALS " + randActivity2.consumptionInWh);
+                randActivity1 = activityController.getRandom().getBody();
+            }
+
+            if(randActivity1.consumptionInWh > randActivity2.consumptionInWh){
+                // swap activities because we need the first one to be smaller
+                // than the second one
+                var temp = randActivity1;
+                randActivity1 = randActivity2;
+                randActivity2 = temp;
+            }
+
+            correct = randActivity2.consumptionInWh / randActivity1.consumptionInWh;
+        } while(correct > 200);
+
 
         selectedActivities.add(randActivity1);
         selectedActivities.add(randActivity2);
 
         // Get three options
         List<Long> options = new ArrayList<>();
-        long correct = randActivity2.consumptionInWh / randActivity1.consumptionInWh;
 
         options.add(correct);
         options.addAll(getOptions(correct));
@@ -654,6 +674,7 @@ public class MainMessageController {
         ServerMessage result = new ServerMessage(ServerMessage.Type.LOAD_NEW_QUESTIONS);
 
         result.question = generateQuestion();
+
         g.setCorrectAnswerID(result.question.getCorrect());
         g.setCurrentQuestion(result.question);
         g.setType(result.question.type);

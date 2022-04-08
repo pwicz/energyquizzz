@@ -103,7 +103,6 @@ public class SingleplayerScreenCtrl {
 
     public void displayActivities(Question question, Scene scene){
 
-
         if (mainCtrl.getSingleplayerScreen().equals(scene)) {
             displayCompareActivities(question);
         } else if (mainCtrl.getSingleplayerGuessScreen().equals(scene)) {
@@ -117,6 +116,8 @@ public class SingleplayerScreenCtrl {
 
     private void displayCompareActivities(Question question) {
         List<Activity> activities = question.activities;
+        System.out.println("ACTIVITIES IDS: " + activities.get(0).id + ", " +
+                activities.get(1).id + ", " + activities.get(2).id );
         optionToID = new HashMap<>();
 
         // for convenience
@@ -133,6 +134,7 @@ public class SingleplayerScreenCtrl {
 
             descriptions.get(i).setText(a.title);
 
+            a.imagePath = a.imagePath.replace(" ", "%20");
             images.get(i).setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
         }
 
@@ -160,6 +162,7 @@ public class SingleplayerScreenCtrl {
         }
         description4.setText(a.title);
 
+        a.imagePath = a.imagePath.replace(" ", "%20");
         image.setImage(new Image("http://localhost:8080/activities/" + a.imagePath));
 
     }

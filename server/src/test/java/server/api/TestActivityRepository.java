@@ -185,4 +185,10 @@ public class TestActivityRepository implements ActivityRepository {
                                             Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return null;
     }
+
+    @Override
+    public List<Activity> findActivitiesByConsumptionInWhBetween(Long min, Long max) {
+        return null;
+    }
+
 }
