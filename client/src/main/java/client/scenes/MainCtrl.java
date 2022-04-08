@@ -416,6 +416,10 @@ public class MainCtrl {
     }
 
     public void showInputServer(){
+        if(primaryStage.getScene() == editActivity || primaryStage.getScene() == editActivity){
+            showSplash();
+            return;
+        }
         inputServerScreenCtrl.render(server.isConnected());
 
         this.stage = new Stage();
@@ -675,6 +679,10 @@ public class MainCtrl {
      */
     public boolean checkServerConnection(){
         return server.isConnected();
+    }
+
+    public void resetServer(){
+        server.setServerURL(null);
     }
 
     public Scene getEditActivity() {

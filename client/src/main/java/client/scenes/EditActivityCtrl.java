@@ -135,4 +135,6 @@ public class EditActivityCtrl {
     public void leave(){
         mainCtrl.showLeave(mainCtrl::showAdminPanel);
     }
+
+
 }
