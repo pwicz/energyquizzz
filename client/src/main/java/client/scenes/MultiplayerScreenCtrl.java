@@ -184,6 +184,7 @@ public class MultiplayerScreenCtrl {
     }
 
     public void showAnswer(Long correctID, Long pickedID, int pointReceived) {
+        lockUI();
         timeBar.setProgress(0.0);
         for(var entry : optionToID.entrySet()){
             Long activityID = entry.getValue();
@@ -219,6 +220,7 @@ public class MultiplayerScreenCtrl {
     }
 
     public void showAnswerInput(boolean answeredCorrect, Long correctID, Long pickedID, int pointReceived){
+        lockUI();
         timeBar.setProgress(0.0);
 
         DecimalFormat df = new DecimalFormat("#.#");
@@ -287,16 +289,8 @@ public class MultiplayerScreenCtrl {
             transition.play();
             ft.play();
 
-//            List<Rectangle> options = List.of();
-//            List<Node> titles = List.of(title1, title2, title3, description1, description2, description3,
-//                    image1, image2, image3, option1, option2, option3);
-
             anchorPane.getChildren().add(transitions.get(i));
-
-//            anchorPane.getChildren().removeAll(titles);
-//            anchorPane.getChildren().addAll(titles);
         }
-
     }
 
     private void removeImage(Node node) {
