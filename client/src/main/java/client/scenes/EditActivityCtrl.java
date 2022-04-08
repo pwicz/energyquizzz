@@ -134,8 +134,7 @@ public class EditActivityCtrl {
     }
 
     public void leave(){
-        mainCtrl.showLeave(mainCtrl::showAdminPanel,
-                () -> mainCtrl.getServer().send("/app/general", new ClientMessage(ClientMessage.Type.PING)));
+        mainCtrl.showLeave(mainCtrl::showAdminPanel);
     }
 
 

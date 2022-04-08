@@ -416,6 +416,10 @@ public class MainCtrl {
     }
 
     public void showInputServer(){
+        if(primaryStage.getScene() == editActivity || primaryStage.getScene() == editActivity){
+            showSplash();
+            return;
+        }
         inputServerScreenCtrl.render(server.isConnected());
 
         this.stage = new Stage();
