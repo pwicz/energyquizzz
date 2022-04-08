@@ -105,10 +105,6 @@ public class Game {
         this.type = type;
     }
 
-    public void setQuestionCounter(int questionCounter) {
-        this.questionCounter = questionCounter;
-    }
-
     public long getQuestionStartTime() {
         return questionStartTime;
     }

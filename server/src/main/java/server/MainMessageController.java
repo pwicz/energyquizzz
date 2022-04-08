@@ -36,7 +36,6 @@ public class MainMessageController {
     private ScoreController scoreController;
     private HashMap<String, Game> games;
     private Game waitingRoom;
-    private boolean sentToAll = false;
 
     // game options
     private final int questionsPerGame = 20;
