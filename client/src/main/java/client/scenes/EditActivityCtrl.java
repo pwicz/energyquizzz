@@ -1,6 +1,7 @@
 package client.scenes;
 
 import commons.Activity;
+import commons.ClientMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -133,6 +134,8 @@ public class EditActivityCtrl {
     }
 
     public void leave(){
-        mainCtrl.showLeave(mainCtrl::showAdminPanel);
+        mainCtrl.showLeave(mainCtrl::showAdminPanel, () -> mainCtrl.getServer().send("/app/general", new ClientMessage(ClientMessage.Type.PING)));
     }
+
+
 }
