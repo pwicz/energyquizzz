@@ -21,14 +21,15 @@ Improve your knowledge and gain more points to be displayed in the leaderboard!
 - Java & Java FX are required to run the project
 
 1. Start the server
-   - In Edit Configurations -> Add VM Options -> `--module-path="/Users/seb/Downloads/javafx-sdk-17.0.2/lib" --add-modules=javafx.controls,javafx.fxml`
-   - When running the server for the first time, enter the Command Line Argument `load`, which will import activities from an actvitiy bank in a specified location. Activities will then be saved in the database and, in the future, this `load` argument is not required anymore unless the client wants to import new activities into the game
+   - When running the server for the first time, enter the Command Line Argument `load`, which will import activities from an actvitiy bank in a specified location. Activities will then be saved in the database and, in the future, this `load` argument is not required anymore unless the server owner wants to import new activities into the game
    - Run `server/src/main/java/server/Main.java`
   
 2. Start the client
-   - In Edit Configurations -> Add VM Options -> `--module-path="/Users/seb/Downloads/javafx-sdk-17.0.2/lib" --add-modules=javafx.controls,javafx.fxml`
+   - In Edit Configurations -> Add VM Options -> `--module-path="/Users/seb/Downloads/javafx-sdk-17.0.2/lib" --add-modules=javafx.controls,javafx.fxml`. The path should point to the javaFX SDK, which can be downloaded [here](https://gluonhq.com/products/javafx/)
    - Run `client/src/main/java/client/Main.java`
    - You are now ready to play
+
+- You do not need to own a server to play, since you can connect to a server hosted on the internet throught its IP address
 
 ## How to contribute to it
 
